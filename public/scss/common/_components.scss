@@ -1,5 +1,7 @@
+@charset "utf-8";
+
 /* button */
-.MuiButton-root { font-family: "Pretendard" !important; 
+.MuiButton-root { min-width: 7rem !important; font-family: "Pretendard" !important; 
     // size
     &.MuiButton-sizeSmall { font-size: 1.3rem; line-height: 2.2rem; letter-spacing: 0.46px; }
     &.MuiButton-sizeMedium { height: 4rem; font-size: 1.4rem; }
