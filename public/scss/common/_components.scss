@@ -23,14 +23,18 @@
 /* form */
 // 1. textfield
 .MuiTextField-root {
-    .MuiInputBase-root { height: 4rem; font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: rgba(0, 0, 0, 0.6); font-family: "Pretendard"; }
+    .MuiInputBase-root { height: 4rem; font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-secondary); font-family: "Pretendard"; 
+        fieldset { top: 0; 
+            legend { display: none; }
+        }
+    }
 }
 
 // 2. select
 .MuiInputBase-root {
     .MuiSelect-select { font-family: "Pretendard"; }
-    &.MuiInputBase-sizeSmall { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: rgba(0, 0, 0, 0.87); }
+    &.MuiInputBase-sizeSmall { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-primary); }
 }
 
-// 3. pagination
+/* pagination */ 
 .MuiPaginationItem-root { font-size: 1.4rem !important; }

@@ -1,58 +1,28 @@
-import { AccessTime, AddCircle, Favorite, FilterAlt, LocationOn, Notifications, Person, Search } from '@mui/icons-material'
-import { Avatar, Badge, Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
+import { AccessTime, AddCircle, Favorite, FilterAlt, LocationOn, Search } from '@mui/icons-material'
+import { Avatar, Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
+import Header from '../Header';
 
-export default function ProjectListPage() {
+export default function ProjectListPage(){
     const [filter, setFilter] = useState('');
     const handleChange = (event: SelectChangeEvent) => {
         setFilter(event.target.value);
     };
 
-  return (
+    return (
         <div id='devHub' className='wh-100'>
             {/* header */}
-            <header>
-                <Paper className='header w-100 flex-middle flex-between' elevation={1}>
-                    <div className="header-left-box flex-middle">
-                        <h1 className="logo-box">
-                            <a href="/" className='flex-middle'>
-                                <img
-                                    src="/images/devHub-logo.png"
-                                    alt="devHub logo icon"
-                                    className="logo-icon"
-                                />
-                                <span className="logo-text">DevHub</span>
-                            </a>
-                        </h1>
-                        <nav className='menu-box'>
-                            <Button size='large' variant='text'>PROJECT</Button>
-                            <Button size='large' variant='text'>BOARD</Button>
-                            <Button size='large' variant='text'>SKILL TRENDS</Button>
-                        </nav>
-                    </div>
-                    <div className="header-right-box flex-middle">
-                        <Badge variant="dot" color="error" sx={{ '& .MuiBadge-dot': { width: 8, height: 8 }}} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} >
-                            <Avatar sx={{ width: 40, height: 40, bgcolor: 'transparent' }}>
-                                <Notifications sx={{ fontSize: 35, color: '#2196F3' }} />
-                            </Avatar>
-                        </Badge>
-                        <Avatar sx={{ width: 40, height: 40 }}>
-                            <Person sx={{ fontSize: 24 }}></Person>
-                        </Avatar>
-                    </div> 
-                </Paper>
-            </header>
+            <Header />
 
             {/* main */}
             <main className='main-content flex-col h-fit'>
                 <Paper className='search-box flex-middle' elevation={4}>
                     <TextField 
                         size='small' fullWidth 
-                        sx={{ '& legend': { display: 'none' }, '& fieldset': { top: 0 }}} 
                         placeholder='프로젝트 명을 입력해 주세요.'
                         slotProps={{ input: { startAdornment: (<InputAdornment position='start'><Search sx={{ fontSize: 24 }}></Search></InputAdornment>) } }}    
                     />
-                    <Button size='medium' variant='contained' sx={{ width: 75 }}>검색</Button>
+                    <Button size='medium' variant='contained' >검색</Button>
                 </Paper>
                 <div className='project-summary w-100 flex-middle flex-between'>
                     <strong className='project-count'>전체 <em>23</em>개 프로젝트</strong>
@@ -73,7 +43,7 @@ export default function ProjectListPage() {
                                     <strong>필터</strong>
                                     <p>원하는 조건으로 검색하세요.</p>
                                 </div>
-                                <Button size='small' variant='text' sx={{ width: 51 }}>초기화</Button>
+                                <Button size='small' variant='text'>초기화</Button>
                             </div>
                             <div className="filter-options flex-middle flex-wrap">
                                 <Button size='small' variant='contained'>전체</Button>
@@ -157,7 +127,7 @@ export default function ProjectListPage() {
                         </div>
                     </Paper>
                     <div className='project-list flex-col flex-middle'>
-                        <Paper className='project w-100 h-fit flex' elevation={2}>
+                        <Paper className='project w-100 h-fit flex' elevation={4}>
                             <div className="left-area flex-col flex-1">
                                 <div className="chip-box flex-middle">
                                     <Chip size='small' color='primary' label='모집중' />
@@ -202,7 +172,7 @@ export default function ProjectListPage() {
                                 </div>
                             </div>
                         </Paper>
-                        <Paper className='project w-100 h-fit flex' elevation={2}> 
+                        <Paper className='project w-100 h-fit flex' elevation={4}> 
                             <div className="left-area flex-col flex-1">
                                 <div className="chip-box flex-middle">
                                     <Chip size='small' color='primary' label='모집중' />
@@ -247,7 +217,7 @@ export default function ProjectListPage() {
                                 </div>
                             </div>
                         </Paper>
-                        <Paper className='project w-100 h-fit flex' elevation={2}>
+                        <Paper className='project w-100 h-fit flex' elevation={4}>
                             <div className="left-area flex-col flex-1">
                                 <div className="chip-box flex-middle">
                                     <Chip size='small' color='primary' label='모집중' />
@@ -292,7 +262,7 @@ export default function ProjectListPage() {
                                 </div>
                             </div>
                         </Paper>
-                        <Paper className='project w-100 h-fit flex' elevation={2}>
+                        <Paper className='project w-100 h-fit flex' elevation={4}>
                             <div className="left-area flex-col flex-1">
                                 <div className="chip-box flex-middle">
                                     <Chip size='small' color='primary' label='모집중' />
@@ -337,7 +307,7 @@ export default function ProjectListPage() {
                                 </div>
                             </div>
                         </Paper>
-                        <Paper className='project w-100 h-fit flex' elevation={2}>
+                        <Paper className='project w-100 h-fit flex' elevation={4}>
                             <div className="left-area flex-col flex-1">
                                 <div className="chip-box flex-middle">
                                     <Chip size='small' color='primary' label='모집중' />
@@ -384,7 +354,7 @@ export default function ProjectListPage() {
                         </Paper>
                         <div className="list-bottom-box w-100 flex-middle">
                             <Pagination count={10} showFirstButton showLastButton color='primary' className='w-100 flex-center-center' />
-                            <Button size='medium' variant='contained' sx={{ height: "3.6rem !important", minWidth: 72 }}>글쓰기</Button>
+                            <Button size='medium' variant='contained' sx={{ height: "3.6rem !important" }}>글쓰기</Button>
                         </div>
                     </div>
                 </div>
