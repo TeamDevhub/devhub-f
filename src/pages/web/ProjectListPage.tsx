@@ -1,7 +1,8 @@
 import { AccessTime, AddCircle, Favorite, FilterAlt, LocationOn, Search } from '@mui/icons-material'
-import { Avatar, Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
+import { Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
 import Header from '../Header';
+import CustomAvatar from '../../components/CustomAvatar';
 
 export default function ProjectListPage(){
   const [filter, setFilter] = useState('');
@@ -102,9 +103,7 @@ export default function ProjectListPage(){
                     <Chip size='small' variant='filled' label='SQL' color='primary' clickable onDelete={() => {}} />
                     <Chip size='small' variant='filled' label='Docker' color='primary' clickable onDelete={() => {}} />
                     <Chip size='small' variant='filled' label='git' color='primary' clickable onDelete={() => {}} />
-                    <Avatar sx={{ width: 24, height: 24, bgcolor: 'transparent', cursor: 'pointer' }}>
-                        <AddCircle sx={{ fontSize: 26, color: '#1E88E5' }} />
-                    </Avatar>
+                    <CustomAvatar size={24} sx={{ cursor: 'pointer' }} avatarIcon={<AddCircle sx={{ fontSize: 26, color: 'var(--primary-main)' }} />} />
                 </div>
             </div>
             <Divider />
@@ -131,9 +130,30 @@ export default function ProjectListPage(){
               <div className="left-area flex-col flex-1">
                 <div className="chip-box flex-middle">
                   <Chip size='small' color='primary' label='모집중' />
-                  <Chip size='small' avatar={<Avatar sx={{ backgroundColor: '#AEAEAE' }}><LocationOn sx={{ fontSize: 18, color: '#fff' }}></LocationOn></Avatar>} label='서울' />
+                  <Chip 
+                    size='small' 
+                    label='서울' 
+                    icon={
+                      <CustomAvatar
+                        size={18}
+                        sx={{ backgroundColor: '#AEAEAE' }}
+                        avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
+                      />
+                    } 
+                  />               
                   <Chip size='small' color='error' label='추가모집' />
-                  <Chip size='small' color='warning' avatar={<Avatar sx={{ backgroundColor: '#E65100' }}><AccessTime sx={{ fontSize: 18, color: '#fff' }}></AccessTime></Avatar>} label='D-13' />
+                  <Chip 
+                    size='small' 
+                    color='warning' 
+                    label='D-13' 
+                    icon={
+                      <CustomAvatar 
+                        size={18}
+                        sx={{ backgroundColor: '#E65100' }}
+                        avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
+                      />
+                    }
+                  />
                 </div>
                 <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
                 <div className="sub-text flex-col">
@@ -176,9 +196,30 @@ export default function ProjectListPage(){
               <div className="left-area flex-col flex-1">
                 <div className="chip-box flex-middle">
                   <Chip size='small' color='primary' label='모집중' />
-                  <Chip size='small' avatar={<Avatar sx={{ backgroundColor: '#AEAEAE' }}><LocationOn sx={{ fontSize: 18, color: '#fff' }}></LocationOn></Avatar>} label='서울' />
+                  <Chip 
+                    size='small' 
+                    label='서울' 
+                    icon={
+                      <CustomAvatar
+                        size={18}
+                        sx={{ backgroundColor: '#AEAEAE' }}
+                        avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
+                      />
+                    } 
+                  />               
                   <Chip size='small' color='error' label='추가모집' />
-                  <Chip size='small' color='warning' avatar={<Avatar sx={{ backgroundColor: '#E65100' }}><AccessTime sx={{ fontSize: 18, color: '#fff' }}></AccessTime></Avatar>} label='D-13' />
+                  <Chip 
+                    size='small' 
+                    color='warning' 
+                    label='D-13' 
+                    icon={
+                      <CustomAvatar 
+                        size={18}
+                        sx={{ backgroundColor: '#E65100' }}
+                        avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
+                      />
+                    }
+                  />
                 </div>
                 <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
                 <div className="sub-text flex-col">
@@ -221,9 +262,30 @@ export default function ProjectListPage(){
               <div className="left-area flex-col flex-1">
                 <div className="chip-box flex-middle">
                   <Chip size='small' color='primary' label='모집중' />
-                  <Chip size='small' avatar={<Avatar sx={{ backgroundColor: '#AEAEAE' }}><LocationOn sx={{ fontSize: 18, color: '#fff' }}></LocationOn></Avatar>} label='서울' />
+                  <Chip 
+                    size='small' 
+                    label='서울' 
+                    icon={
+                      <CustomAvatar
+                        size={18}
+                        sx={{ backgroundColor: '#AEAEAE' }}
+                        avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
+                      />
+                    } 
+                  />               
                   <Chip size='small' color='error' label='추가모집' />
-                  <Chip size='small' color='warning' avatar={<Avatar sx={{ backgroundColor: '#E65100' }}><AccessTime sx={{ fontSize: 18, color: '#fff' }}></AccessTime></Avatar>} label='D-13' />
+                  <Chip 
+                    size='small' 
+                    color='warning' 
+                    label='D-13' 
+                    icon={
+                      <CustomAvatar 
+                        size={18}
+                        sx={{ backgroundColor: '#E65100' }}
+                        avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
+                      />
+                    }
+                  />
                 </div>
                 <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
                 <div className="sub-text flex-col">
@@ -266,9 +328,30 @@ export default function ProjectListPage(){
               <div className="left-area flex-col flex-1">
                 <div className="chip-box flex-middle">
                   <Chip size='small' color='primary' label='모집중' />
-                  <Chip size='small' avatar={<Avatar sx={{ backgroundColor: '#AEAEAE' }}><LocationOn sx={{ fontSize: 18, color: '#fff' }}></LocationOn></Avatar>} label='서울' />
+                  <Chip 
+                    size='small' 
+                    label='서울' 
+                    icon={
+                      <CustomAvatar
+                        size={18}
+                        sx={{ backgroundColor: '#AEAEAE' }}
+                        avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
+                      />
+                    } 
+                  />               
                   <Chip size='small' color='error' label='추가모집' />
-                  <Chip size='small' color='warning' avatar={<Avatar sx={{ backgroundColor: '#E65100' }}><AccessTime sx={{ fontSize: 18, color: '#fff' }}></AccessTime></Avatar>} label='D-13' />
+                  <Chip 
+                    size='small' 
+                    color='warning' 
+                    label='D-13' 
+                    icon={
+                      <CustomAvatar 
+                        size={18}
+                        sx={{ backgroundColor: '#E65100' }}
+                        avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
+                      />
+                    }
+                  />
                 </div>
                 <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
                 <div className="sub-text flex-col">
@@ -311,9 +394,30 @@ export default function ProjectListPage(){
               <div className="left-area flex-col flex-1">
                 <div className="chip-box flex-middle">
                   <Chip size='small' color='primary' label='모집중' />
-                  <Chip size='small' avatar={<Avatar sx={{ backgroundColor: '#AEAEAE' }}><LocationOn sx={{ fontSize: 18, color: '#fff' }}></LocationOn></Avatar>} label='서울' />
+                  <Chip 
+                    size='small' 
+                    label='서울' 
+                    icon={
+                      <CustomAvatar
+                        size={18}
+                        sx={{ backgroundColor: '#AEAEAE' }}
+                        avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
+                      />
+                    } 
+                  />               
                   <Chip size='small' color='error' label='추가모집' />
-                  <Chip size='small' color='warning' avatar={<Avatar sx={{ backgroundColor: '#E65100' }}><AccessTime sx={{ fontSize: 18, color: '#fff' }}></AccessTime></Avatar>} label='D-13' />
+                  <Chip 
+                    size='small' 
+                    color='warning' 
+                    label='D-13' 
+                    icon={
+                      <CustomAvatar 
+                        size={18}
+                        sx={{ backgroundColor: '#E65100' }}
+                        avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
+                      />
+                    }
+                  />
                 </div>
                 <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
                 <div className="sub-text flex-col">

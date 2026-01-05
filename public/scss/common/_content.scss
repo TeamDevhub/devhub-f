@@ -1,72 +1,72 @@
 @charset "utf-8";
 
 #devHub { min-height: 100vh; background: linear-gradient(180deg, rgba(66, 165, 245, 0.08) 0%, rgba(186, 104, 200, 0.06) 100%);
-    /* header */
-    .header { height: 7rem; padding: 1.2rem 3.2rem;
-        .header-left-box { gap: 3.2rem;
-            .logo-box { 
-                a { gap: 0.6rem;
-                    .logo-icon { width: 3.6rem; height: 3.6rem; }
-                    .logo-text { font-size: 2.4rem; font-weight: 800; line-height: 100%; color: var(--text-primary); }
-                }
-            }
+  /* header */
+  .header { height: 7rem; padding: 1.2rem 3.2rem; border-radius: 0;
+    .header-left-box { gap: 3.2rem;
+      .logo-box { 
+        a { gap: 0.6rem;
+          .logo-icon { width: 3.6rem; height: 3.6rem; }
+          .logo-text { font-size: 2.4rem; font-weight: 800; line-height: 100%; color: var(--text-primary); }
         }
-        .header-right-box { gap: 1.6rem;
-            > * { cursor: pointer; }
-        }
+      }
     }
+    .header-right-box { gap: 1.6rem;
+      > * { cursor: pointer; }
+    }
+  }
 
-    /* main-content */
-    .main-content { width: 123rem; max-width: 123rem; padding: 2.4rem 0.5rem 3.1rem 0; margin: 0 auto; gap: 1rem;
-        .search-box { padding: 1.2rem; gap: 0.8rem; }
-        .project-summary { padding: 0.4rem 0;
-            .project-count { font-size: 2rem; font-weight: 600; line-height: 2.4rem; letter-spacing: 0.4px; color: #000; 
-                em { color: var(--primary-main); font-weight: 600; }
+  /* main-content */
+  .main-content { width: 123rem; max-width: 123rem; padding: 2.4rem 0.5rem 3.1rem 0; margin: 0 auto; gap: 1rem;
+    .search-box { padding: 1.2rem; gap: 0.8rem; }
+    .project-summary { padding: 0.4rem 0;
+      .project-count { font-size: 2rem; font-weight: 600; line-height: 2.4rem; letter-spacing: 0.4px; color: #000; 
+        em { color: var(--primary-main); font-weight: 600; }
+      }
+    }
+    .project-list-box { gap: 1.4rem;
+      .left-filter-bar { width: 26rem; min-width: 26rem; padding: 2rem; gap: 1.2rem;
+        .filter-box { gap: 0.8rem;
+          .filter-title {
+            .text-box { gap: 0.4rem; 
+              strong { font-size: 1.5rem; font-weight: 500; line-height: 100%; letter-spacing: 0.4px; color: #000; }
+              p { font-size: 1rem; font-weight: 300; line-height: 100%; letter-spacing: 0.4px; color: var(--text-secondary); }
             }
+          }
+          .filter-options { gap: 0.4rem; }
         }
-        .project-list-box { gap: 1.4rem;
-            .left-filter-bar { width: 26rem; min-width: 26rem; padding: 2rem; gap: 1.2rem;
-                .filter-box { gap: 0.8rem;
-                    .filter-title {
-                        .text-box { gap: 0.4rem; 
-                            strong { font-size: 1.5rem; font-weight: 500; line-height: 100%; letter-spacing: 0.4px; color: #000; }
-                            p { font-size: 1rem; font-weight: 300; line-height: 100%; letter-spacing: 0.4px; color: var(--text-secondary); }
-                        }
-                    }
-                    .filter-options { gap: 0.4rem; }
+        .filter-button-box { gap: 0.8rem; margin-top: auto; }
+      }
+        .project-list { width: calc(100% - 27.4rem); gap: 1.1rem;
+          > .project { min-width: 0; padding: 1.6rem 2.4rem; gap: 1.2rem; cursor: pointer;
+            .left-area { min-width: 0; gap: 1.5rem;
+              .chip-box { gap: 0.4rem; }
+              .main-text { overflow: hidden; font-size: 2rem; font-weight: 600; line-height: 120%; color: #000; white-space: nowrap; text-overflow: ellipsis; }
+              .sub-text { gap: 0.8rem; 
+                .top { gap: 2.4rem;
+                  > div { gap: 0.8rem;
+                    .title, p { gap: 0.4rem; font-size: 1.1rem; font-weight: 500; line-height: 1.6rem; letter-spacing: 0.5px; color: var(--text-primary);
+                      .MuiSvgIcon-root { width: 1.4rem; height: 1.4rem; color: #667EEA; }
+                    } 
+                    p { color: var(--text-disabled); }
+                  }
                 }
-                .filter-button-box { gap: 0.8rem; margin-top: auto; }
-            }
-            .project-list { width: calc(100% - 27.4rem); gap: 1.1rem;
-                > .project { min-width: 0; padding: 1.6rem 2.4rem; gap: 1.2rem; cursor: pointer;
-                    .left-area { min-width: 0; gap: 1.5rem;
-                        .chip-box { gap: 0.4rem; }
-                        .main-text { overflow: hidden; font-size: 2rem; font-weight: 600; line-height: 120%; color: #000; white-space: nowrap; text-overflow: ellipsis; }
-                        .sub-text { gap: 0.8rem; 
-                            .top { gap: 2.4rem;
-                                > div { gap: 0.8rem;
-                                    .title, p { gap: 0.4rem; font-size: 1.1rem; font-weight: 500; line-height: 1.6rem; letter-spacing: 0.5px; color: var(--text-primary);
-                                        .MuiSvgIcon-root { width: 1.4rem; height: 1.4rem; color: #667EEA; }
-                                    } 
-                                    p { color: var(--text-disabled); }
-                                }
-                            }
-                            .bottom { 
-                                p { font-size: 1rem; font-weight: 300; line-height: 100%; color: #000; }
-                            }
-                        }
-                    }
-                    .right-area { width: 24rem; min-width: 24rem;
-                        .heart-box { 
-                            p { width: 3.4rem; font-size: 1.4rem; line-height: 166%; letter-spacing: 0.4px; color: var(--error-main); text-align: center; }
-                        }
-                        .chip-box { gap: 0.4rem;
-                            > div { gap: 0.4rem; }
-                        }
-                    }
+                .bottom { 
+                  p { font-size: 1rem; font-weight: 300; line-height: 100%; color: #000; }
                 }
-                .list-bottom-box { margin-top: 1.3rem; }
+              }
             }
+            .right-area { width: 24rem; min-width: 24rem;
+              .heart-box { 
+                p { width: 3.4rem; font-size: 1.4rem; line-height: 166%; letter-spacing: 0.4px; color: var(--error-main); text-align: center; }
+              }
+              .chip-box { gap: 0.4rem;
+                > div { gap: 0.4rem; }
+              }
+            }
+          }
+          .list-bottom-box { margin-top: 1.3rem; }
         }
     }
+  }
 }
