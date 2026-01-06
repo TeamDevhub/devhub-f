@@ -29,8 +29,8 @@ export default function Header(){
           </nav>
         </div>
         <div className="header-right-box align-center">
-          <CustomAvatar useBadge avatarIcon={<Notifications sx={{ fontSize: 35, color: 'var(--primary-main)' }} />} />
-          <CustomAvatar bgColor='var(--avatar-fill)' avatarIcon={<Person sx={{ fontSize: 24 }} />} />
+          <CustomAvatar useBadge avatarIcon={<Notifications sx={{ fontSize: 35, color: 'primary.main' }} />} />
+          <CustomAvatar bgColor='text.disabled' avatarIcon={<Person sx={{ fontSize: 24 }} />} />
         </div> 
       </Paper>
     </header>

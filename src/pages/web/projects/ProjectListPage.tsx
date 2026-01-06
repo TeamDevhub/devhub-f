@@ -97,7 +97,7 @@ export default function ProjectListPage(){
                   <Chip size='small' variant='filled' label='SQL' color='primary' clickable onDelete={() => {}} />
                   <Chip size='small' variant='filled' label='Docker' color='primary' clickable onDelete={() => {}} />
                   <Chip size='small' variant='filled' label='git' color='primary' clickable onDelete={() => {}} />
-                  <IconButton size='small'><AddCircle sx={{ fontSize: 24, color: 'var(--primary-main)' }} /></IconButton>
+                  <IconButton size='small'><AddCircle sx={{ fontSize: 24, color: 'primary.main' }} /></IconButton>
               </div>
           </div>
           <Divider />
