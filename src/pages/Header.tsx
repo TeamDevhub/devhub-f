@@ -6,10 +6,10 @@ import CustomAvatar from '../components/CustomAvatar'
 export default function Header(){
   return (
     <header>
-      <Paper className='header w-100 flex-middle flex-between' elevation={1}>
-        <div className="header-left-box flex-middle">
+      <Paper className='header w-100 align-center justify-between' elevation={1}>
+        <div className="header-left-box align-center">
           <h1 className="logo-box">
-            <a href="/" className='flex-middle'>
+            <a href="/" className='align-center'>
               <img
                 src="/images/devHub-logo.png"
                 alt="devHub logo icon"
@@ -24,7 +24,7 @@ export default function Header(){
             <Button size='large' variant='text'>SKILL TRENDS</Button>
           </nav>
         </div>
-        <div className="header-right-box flex-middle">
+        <div className="header-right-box align-center">
           <CustomAvatar useBadge avatarIcon={<Notifications sx={{ fontSize: 35, color: 'var(--primary-main)' }} />} />
           <CustomAvatar bgColor='var(--avatar-fill)' avatarIcon={<Person sx={{ fontSize: 24 }} />} />
         </div> 
