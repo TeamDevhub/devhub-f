@@ -1,7 +1,9 @@
+import React from 'react'
 import { Notifications, Person } from '@mui/icons-material'
 import { Avatar, Badge, Button, Paper } from '@mui/material'
-import React from 'react'
-import CustomAvatar from '../components/CustomAvatar'
+import CustomAvatar from '@/components/CustomAvatar'
+import logo from '@/assets/images/devHub-logo.png'
+import { Link } from 'react-router-dom'
 
 export default function Header(){
   return (
@@ -9,17 +11,19 @@ export default function Header(){
       <Paper className='header w-100 align-center justify-between' elevation={1}>
         <div className="header-left-box align-center">
           <h1 className="logo-box">
-            <a href="/" className='align-center'>
+            <Link to={"/"} className='align-center'>
               <img
-                src="/images/devHub-logo.png"
+                src={logo}
                 alt="devHub logo icon"
                 className="logo-icon"
               />
               <span className="logo-text">DevHub</span>
-            </a>
+            </Link>
           </h1>
           <nav className='menu-box'>
-            <Button size='large' variant='text'>PROJECT</Button>
+            <Link to={"/projects"}>
+              <Button size='large' variant='text'>PROJECT</Button>
+            </Link>
             <Button size='large' variant='text'>BOARD</Button>
             <Button size='large' variant='text'>SKILL TRENDS</Button>
           </nav>
