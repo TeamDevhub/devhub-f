@@ -7,9 +7,7 @@ export default function MainLayout() {
     <div>
       <div id='devHub' className='wh-100'>
         <Header></Header>
-        <main>
-          <Outlet></Outlet>
-        </main>
+        <Outlet></Outlet>
       </div>
     </div>
   )

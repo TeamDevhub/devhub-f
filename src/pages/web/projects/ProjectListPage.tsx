@@ -1,7 +1,6 @@
 import { AccessTime, AddCircle, Favorite, FilterAlt, LocationOn, Search } from '@mui/icons-material'
 import { Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
-import Header from '@/components/Header';
 import CustomAvatar from '@/components/CustomAvatar';
 
 export default function ProjectListPage(){
