@@ -1,12 +1,10 @@
-import ProjectListPage from "./pages/web/ProjectListPage"
+import { RouterProvider } from 'react-router-dom';
+import router from '@/router/Router';
 
 function App() {
-
   return (
-    <>
-      <ProjectListPage></ProjectListPage>
-    </>
-  )
+    <RouterProvider router={router} />
+  );
 }
 
-export default App
+export default App;
