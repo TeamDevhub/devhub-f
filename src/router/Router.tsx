@@ -5,6 +5,7 @@ import MainPage from '@/pages/web/MainPage';
 import ProjectListPage from '@/pages/web/projects/ProjectListPage';
 import AuthLayout from '@/layout/AuthLayout';
 import ProjectDetailPage from '@/pages/web/projects/ProjectDetailPage';
+import ProjectCreatePage from '@/pages/web/projects/ProjectCreatePage';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
           {
             path: 'detail',
             element: <ProjectDetailPage />
+          },
+          {
+            path: 'create',
+            element: <ProjectCreatePage />
           },
         ]
       },

@@ -4,7 +4,6 @@ import { Chip, Divider, Paper, Tooltip } from '@mui/material'
 import React, { useCallback, useEffect, useState } from 'react'
 
 export default function ProjectDetailPage(){
-
   // top button
   const [showTopButton, setShowTopButton] = useState(false);
 

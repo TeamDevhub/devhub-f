@@ -153,7 +153,7 @@ export default function ProjectListPage(){
                   }
                 />
               </div>
-              <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
+              <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
               <div className='sub-text flex-col'>
                   <div className='top align-center'>
                       <div className='align-center'>
@@ -219,7 +219,7 @@ export default function ProjectListPage(){
                   }
                 />
               </div>
-              <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
+              <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
               <div className='sub-text flex-col'>
                   <div className='top align-center'>
                       <div className='align-center'>
@@ -285,7 +285,7 @@ export default function ProjectListPage(){
                   }
                 />
               </div>
-              <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
+              <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
               <div className='sub-text flex-col'>
                   <div className='top align-center'>
                       <div className='align-center'>
@@ -351,7 +351,7 @@ export default function ProjectListPage(){
                   }
                 />
               </div>
-              <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
+              <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
               <div className='sub-text flex-col'>
                   <div className='top align-center'>
                       <div className='align-center'>
@@ -417,7 +417,7 @@ export default function ProjectListPage(){
                   }
                 />
               </div>
-              <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
+              <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
               <div className='sub-text flex-col'>
                   <div className='top align-center'>
                       <div className='align-center'>
