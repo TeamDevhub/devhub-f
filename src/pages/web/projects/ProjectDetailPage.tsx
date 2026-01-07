@@ -1,15 +1,26 @@
 import CustomAvatar from '@/components/CustomAvatar'
 import { AccessTime, ArrowUpward, ContentPaste, Favorite, LocationOn, OpenInNew, People, Person, Settings, Visibility } from '@mui/icons-material'
 import { Chip, Divider, Paper, Tooltip } from '@mui/material'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 export default function ProjectDetailPage(){
+
+  // top button
+  const [showTopButton, setShowTopButton] = useState(false);
 
   const handleScrollTop = useCallback(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setShowTopButton(window.scrollY > 0);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
@@ -194,15 +205,17 @@ export default function ProjectDetailPage(){
             <OpenInNew sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
           </Paper>
         </Tooltip>
-        <Paper 
-          role='button'
-          tabIndex={0}
-          className='float-button top-button flex-center' 
-          elevation={5}
-          onClick={handleScrollTop}
-        >
-          <ArrowUpward sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
-        </Paper>
+        {showTopButton && (
+          <Paper
+            className='float-button top-button flex-center'
+            elevation={5}
+            role="button"
+            tabIndex={0}
+            onClick={handleScrollTop}
+          >
+            <ArrowUpward sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
+          </Paper>
+        )}
       </div>
     </div>
   )
