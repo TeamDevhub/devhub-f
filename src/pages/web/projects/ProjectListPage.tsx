@@ -10,7 +10,8 @@ export default function ProjectListPage(){
   };
 
   return (
-    <main className='main-content flex-col h-fit'>
+    <main className='project-page flex-col h-fit'>
+      {/* 1. search field */}
       <Paper className='search-box align-center' elevation={4}>
         <TextField 
           size='small' fullWidth 
@@ -19,6 +20,7 @@ export default function ProjectListPage(){
         />
           <Button size='medium' variant='contained'>검색</Button>
       </Paper>
+      {/* 2. project summary */}
       <div className='project-summary w-100 align-center justify-between'>
         <strong className='project-count'>전체 <em>23</em>개 프로젝트</strong>
         <FormControl variant='standard'>
@@ -31,6 +33,7 @@ export default function ProjectListPage(){
         </FormControl>
       </div>
       <div className='project-list-box wh-100 flex flex-1'>
+        {/* 3. filter area */}
         <Paper className='left-filter-bar flex-col flex-grow' elevation={4}>
           <div className='filter-box flex-col'>
             <div className='filter-title align-start justify-between'>
@@ -119,8 +122,9 @@ export default function ProjectListPage(){
               <Button className='flex-1' size='small' variant='contained'>필터 적용</Button>
           </div>
         </Paper>
+        {/* 4. project list */}
         <div className='project-list flex-col align-center'>
-          <Paper className='project w-100 h-fit flex' elevation={4}>
+          <Paper className='project-box w-100 h-fit flex' elevation={4}>
             <div className='left-area flex-col flex-1'>
               <div className='chip-box align-center'>
                 <Chip size='small' color='primary' label='모집중' />
@@ -186,7 +190,7 @@ export default function ProjectListPage(){
               </div>
             </div>
           </Paper>
-          <Paper className='project w-100 h-fit flex' elevation={4}>
+          <Paper className='project-box w-100 h-fit flex' elevation={4}>
             <div className='left-area flex-col flex-1'>
               <div className='chip-box align-center'>
                 <Chip size='small' color='primary' label='모집중' />
@@ -252,7 +256,7 @@ export default function ProjectListPage(){
               </div>
             </div>
           </Paper>
-          <Paper className='project w-100 h-fit flex' elevation={4}>
+          <Paper className='project-box w-100 h-fit flex' elevation={4}>
             <div className='left-area flex-col flex-1'>
               <div className='chip-box align-center'>
                 <Chip size='small' color='primary' label='모집중' />
@@ -318,7 +322,7 @@ export default function ProjectListPage(){
               </div>
             </div>
           </Paper>
-          <Paper className='project w-100 h-fit flex' elevation={4}>
+          <Paper className='project-box w-100 h-fit flex' elevation={4}>
             <div className='left-area flex-col flex-1'>
               <div className='chip-box align-center'>
                 <Chip size='small' color='primary' label='모집중' />
@@ -384,7 +388,7 @@ export default function ProjectListPage(){
               </div>
             </div>
           </Paper>
-          <Paper className='project w-100 h-fit flex' elevation={4}>
+          <Paper className='project-box w-100 h-fit flex' elevation={4}>
             <div className='left-area flex-col flex-1'>
               <div className='chip-box align-center'>
                 <Chip size='small' color='primary' label='모집중' />
