@@ -71,7 +71,7 @@
     }
 
     /* 2. project detail */
-    .project-detail-box { padding: 2rem 2.8rem; gap: 1.2rem; cursor: default;
+    .project-detail-box, .project-apply-box { padding: 2rem 2.8rem; gap: 1.2rem; cursor: default;
       .project-header { 
         .top { gap: 1.6rem; }
         .bottom { margin-top: 2rem; 
@@ -114,10 +114,10 @@
     }
 
     /* 3. project create */
-    .project-create-box { padding: 2rem 2.4rem; gap: 3.2rem;
-      .project-create-title { font-size: 2.4rem; font-weight: 600; line-height: 140%; letter-spacing: 0.15px; color: var(--text-primary); }
-      .project-create-form { gap: 3.2rem;
-        > .form-box { gap: 4.8rem;
+    .project-create-box, .project-apply-box { padding: 2rem 2.4rem; gap: 3.2rem;
+      .project-title { font-size: 2.4rem; font-weight: 600; line-height: 140%; letter-spacing: 0.15px; color: var(--text-primary); }
+      .project-form { gap: 3.2rem;
+        .form-box { gap: 4.8rem;
           .help-text { gap: 0.6rem; font-size: 1.2rem; line-height: 166%; letter-spacing: 0.4px; color: var(--text-secondary); 
             .dot { display: block; width: 0.3rem; height: 0.3rem; background-color: var(--text-secondary); border-radius: 50%; }
           }
@@ -136,6 +136,41 @@
       }
       .action-button-box { gap: 1rem;
         .MuiButtonBase-root { width: 12rem; }
+      }
+    }
+
+    /* 4. project apply */
+    .project-apply-box { gap: 1.2rem; 
+       .project-form { gap: 1.2rem;
+        > .form-box { 
+          &:has(.user-info-box) { gap: 1.2rem; }
+          .user-info-box { padding: 1.6rem 2.4rem; gap: 2.4rem; border-radius: 0.4rem; border: 1px solid rgba(33, 150, 243, 0.3);
+            .left-area { width: 30rem; gap: 1.2rem;
+              .top { gap: 1.6rem; 
+                .user-nickname { font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
+                .user-email { font-size: 1.4rem; line-height: 143%; letter-spacing: 0.17px; color: var(--text-secondary); }
+              }
+              .bottom { padding: 0 0.8rem; gap: 0.8rem;
+                .manner-text {
+                  p { font-size: 1.4rem; font-weight: 700; line-height: 2rem; letter-spacing: 0.15px;
+                   &.text { color: rgba(0, 0, 0, 0.87); }
+                   &.manner-temperature { color: var(--primary-main); } 
+                  }
+                }
+                .manner-figure { width: 100%; height: 1rem; border-radius: 2rem; background-color: #E3F2FD; 
+                  .current-figure { display: block; width: 10rem; border-radius: 2rem; background-color: var(--primary-main); }
+                }
+              }
+            }
+            .right-area { gap: 0.8rem;
+              > div { gap: 1.6rem;
+                .title { width: 15rem; font-size: 1.5rem; font-weight: 600; line-height: 150%; letter-spacing: 0.15px; color: var(--text-secondary); }
+                .content { gap: 0.4rem; font-size: 1.4rem; font-weight: 400; line-height: 140%; letter-spacing: 0.17px; color: var(--text-secondary); }
+              }
+            }
+          }
+          .inform-field-box { padding: 2.4rem 1.2rem; gap: 3.2rem; }
+        }
       }
     }
   }

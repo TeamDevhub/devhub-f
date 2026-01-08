@@ -63,7 +63,7 @@
 .MuiPaginationItem-root { font-size: 1.4rem !important; }
 
 /* project card(공통 컴포넌트로 생성할 예정) */
-.project-box, .project-detail-box { min-width: 0; padding: 1.6rem 2.4rem; gap: 1.2rem; cursor: pointer;
+.project-box { min-width: 0; padding: 1.6rem 2.4rem; gap: 1.2rem; cursor: pointer;
   .chip-box { gap: 0.4rem; }
   .main-text { font-size: 2rem; font-weight: 600; line-height: 120%; color: #000; }
   .sub-text { gap: 0.8rem; 

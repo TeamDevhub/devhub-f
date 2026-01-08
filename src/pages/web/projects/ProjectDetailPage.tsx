@@ -25,7 +25,7 @@ export default function ProjectDetailPage(){
   return (
     <div className='project-page'>
       {/* 1. project detail */}
-      <Paper className='project-detail-box flex-col' elevation={4}>
+      <Paper className='project-box project-detail-box flex-col' elevation={4}>
         <div className="project-header">
           <div className="top flex-col">
             <div className='chip-box align-center'>
