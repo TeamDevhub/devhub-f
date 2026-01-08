@@ -1,11 +1,11 @@
 @charset "utf-8";
 
 /* button */
-.MuiButton-root { min-width: 7rem !important; font-family: "Pretendard" !important; 
+.MuiButton-root { min-width: 7rem !important; font-family: "Pretendard" !important; white-space: nowrap;
   // size
   &.MuiButton-sizeSmall { font-size: 1.3rem; line-height: 2.2rem; letter-spacing: 0.46px; }
   &.MuiButton-sizeMedium { height: 4rem; font-size: 1.4rem; }
-  &.MuiButton-sizeLarge { font-size: 1.5rem; line-height: 2.6rem; letter-spacing: 0.46px; }
+  &.MuiButton-sizeLarge { padding: 0.8rem 1.1rem; font-size: 1.5rem; line-height: 2.6rem; letter-spacing: 0.46px; }
 
   // variant
   &.MuiButton-text { }
@@ -15,25 +15,48 @@
 
 /* chip */
 .MuiChip-root { 
-  .MuiChip-label { padding: 0.3rem 1rem; font-family: "Pretendard" !important; }
-  // size
-  &.MuiChip-sizeSmall { font-size: 1.3rem; line-height: 1.8rem; letter-spacing: 0.16px; }
+  .MuiChip-label { padding: 0.3rem 1rem; font-size: 1.3rem; line-height: 1.8rem; letter-spacing: 0.16px; font-family: "Pretendard" !important; }
 }
 
 /* form */
 // 1. textfield
-.MuiTextField-root {
-  .MuiInputBase-root { height: 4rem; font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-secondary); font-family: "Pretendard"; 
+.MuiTextField-root { width: 100%;
+  .MuiInputBase-root { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-secondary); font-family: "Pretendard";
+    .MuiInputBase-input { padding: 1.6rem 1.2rem; }
+    .MuiInputBase-inputSizeSmall { padding: 0.8rem 1.2rem; }
     fieldset { top: 0; 
       legend { display: none; }
     }
+    textarea { min-height: 12rem; padding: 0 !important; }
   }
+}
+.count-str { padding: 0.3rem 1.4rem; 
+  p { font-size: 1.2rem; line-height: 166%; letter-spacing: 0.4px; color: var(--text-secondary); text-align: right; }
 }
 
 // 2. select
 .MuiInputBase-root {
-  .MuiSelect-select { font-family: "Pretendard"; }
-  &.MuiInputBase-sizeSmall { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-primary); }
+  .MuiSelect-select { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-primary); font-family: "Pretendard"; }
+  fieldset { top: 0; 
+    legend { display: none; }
+  }
+}
+
+// 3. radio
+.MuiFormControl-root { gap: 0 !important;
+  .MuiFormLabel-root { font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
+  .MuiRadioGroup-root {
+    .MuiSvgIcon-root { font-size: 2.4rem; }
+    .MuiTypography-root { font-size: 1.6rem; font-weight: 400; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
+  }
+}
+
+// 4. checkbox
+.MuiFormGroup-root {
+  .MuiCheckbox-root {
+    .MuiSvgIcon-root { font-size: 2.4rem; }
+  }
+  .MuiTypography-root { font-size: 1.6rem; font-weight: 400; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
 }
 
 /* pagination */ 
