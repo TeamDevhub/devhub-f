@@ -6,6 +6,7 @@ import ProjectListPage from '@/pages/web/projects/ProjectListPage';
 import AuthLayout from '@/layout/AuthLayout';
 import ProjectDetailPage from '@/pages/web/projects/ProjectDetailPage';
 import ProjectCreatePage from '@/pages/web/projects/ProjectCreatePage';
+import ProjectApplyPage from '@/pages/web/projects/ProjectApplyPage';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
           {
             path: 'create',
             element: <ProjectCreatePage />
+          },
+          {
+            path: 'apply',
+            element: <ProjectApplyPage />
           },
         ]
       },
