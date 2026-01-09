@@ -7,6 +7,7 @@ import AuthLayout from '@/layout/AuthLayout';
 import ProjectDetailPage from '@/pages/web/projects/ProjectDetailPage';
 import ProjectCreatePage from '@/pages/web/projects/ProjectCreatePage';
 import ProjectApplyPage from '@/pages/web/projects/ProjectApplyPage';
+import BoardListPage from '@/pages/web/boards/BoardListPage';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,15 @@ const router = createBrowserRouter([
           {
             path: 'apply',
             element: <ProjectApplyPage />
+          },
+        ]
+      },
+      {
+        path: 'boards',
+        children: [
+          {
+            index: true,
+            element: <BoardListPage />
           },
         ]
       },

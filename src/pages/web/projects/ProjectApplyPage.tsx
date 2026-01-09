@@ -119,7 +119,7 @@ export default function ProjectApplyPage(){
             <div className="label-area">
               <p className='label-text'>지원 포지션</p>
             </div>
-            <div className="field-area flex-col flex-1" style={{ padding: '1.2rem', gap: '0.8rem' }}>
+            <div className="field-area flex-col" style={{ padding: '1.2rem', gap: '0.8rem' }}>
               <FormControl>
                 <RadioGroup aria-labelledby='recruitment-status-radio-group-label' defaultValue='001'>
                   <FormControlLabel 
