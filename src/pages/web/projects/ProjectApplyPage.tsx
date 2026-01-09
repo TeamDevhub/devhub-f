@@ -5,7 +5,7 @@ import React from 'react'
 
 export default function ProjectApplyPage(){
   return (
-    <div className='project-page'>
+    <div className='main-page project-page'>
       <Paper className='project-box project-apply-box flex-col' elevation={4}>
         {/* 1. project title */}
         <strong className="project-title">프로젝트 지원</strong>

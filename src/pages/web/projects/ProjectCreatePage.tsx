@@ -10,7 +10,7 @@ export default function ProjectCreatePage(){
     };
 
   return (
-    <div className='project-page'>
+    <div className='main-page project-page'>
       <Paper className='project-create-box flex-col' elevation={4}>
         {/* 1. project title */}
         <strong className="project-title">프로젝트 생성</strong>

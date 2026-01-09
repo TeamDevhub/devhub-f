@@ -23,7 +23,7 @@ export default function ProjectDetailPage(){
   }, []);
 
   return (
-    <div className='project-page'>
+    <div className='main-page project-page'>
       {/* 1. project detail */}
       <Paper className='project-box project-detail-box flex-col' elevation={4}>
         <div className="project-header">

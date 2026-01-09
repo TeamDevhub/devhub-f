@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-/* button */
+/* 1. button */
 .MuiButton-root { min-width: 7rem !important; font-family: "Pretendard" !important; white-space: nowrap;
   // size
   &.MuiButton-sizeSmall { font-size: 1.3rem; line-height: 2.2rem; letter-spacing: 0.46px; }
@@ -13,13 +13,13 @@
   &.MuiButton-outlined { }
 }
 
-/* chip */
+/* 2. chip */
 .MuiChip-root { 
   .MuiChip-label { padding: 0.3rem 1rem; font-size: 1.3rem; line-height: 1.8rem; letter-spacing: 0.16px; font-family: "Pretendard" !important; }
 }
 
-/* form */
-// 1. textfield
+/* 3. form */
+// 3-1. textfield
 .MuiTextField-root { width: 100%;
   .MuiInputBase-root { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-secondary); font-family: "Pretendard";
     .MuiInputBase-input { padding: 1.6rem 1.2rem; }
@@ -33,16 +33,14 @@
 .count-str { padding: 0.3rem 1.4rem; 
   p { font-size: 1.2rem; line-height: 166%; letter-spacing: 0.4px; color: var(--text-secondary); text-align: right; }
 }
-
-// 2. select
+// 3-2. select
 .MuiInputBase-root {
   .MuiSelect-select { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-primary); font-family: "Pretendard"; }
   fieldset { top: 0; 
     legend { display: none; }
   }
 }
-
-// 3. radio
+// 3-3. radio
 .MuiFormControl-root { gap: 0 !important;
   .MuiFormLabel-root { font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
   .MuiRadioGroup-root {
@@ -50,8 +48,7 @@
     .MuiTypography-root { font-size: 1.6rem; font-weight: 400; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
   }
 }
-
-// 4. checkbox
+// 3-4. checkbox
 .MuiFormGroup-root {
   .MuiCheckbox-root {
     .MuiSvgIcon-root { font-size: 2.4rem; }
@@ -59,10 +56,10 @@
   .MuiTypography-root { font-size: 1.6rem; font-weight: 400; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
 }
 
-/* pagination */ 
+/* 4. pagination */ 
 .MuiPaginationItem-root { font-size: 1.4rem !important; }
 
-/* project card(공통 컴포넌트로 생성할 예정) */
+/* 5. project card(공통 컴포넌트로 생성할 예정) */
 .project-box { min-width: 0; padding: 1.6rem 2.4rem; gap: 1.2rem; cursor: pointer;
   .chip-box { gap: 0.4rem; }
   .main-text { font-size: 2rem; font-weight: 600; line-height: 120%; color: #000; }
@@ -81,5 +78,10 @@
   }
 }
 
-/* tooltip */
+/* 6. tooltip */
 .MuiTooltip-tooltip { font-size: 1.2rem !important; font-weight: 400 !important; font-family: "Pretendard"; }
+
+/* 7. tabs */
+.MuiButtonBase-root {
+  &.MuiTab-root { padding: 0.9rem 1.6rem !important; font-size: 1.4rem; font-weight: 500; line-height: 2.4rem; letter-spacing: 0.4px; color: var(--text-secondary); }
+}
