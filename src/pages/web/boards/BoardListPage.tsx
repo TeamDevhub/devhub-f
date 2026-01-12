@@ -41,7 +41,7 @@ export default function BoardListPage(){
         <strong className='page-count'>전체 <em>23</em>개 게시글</strong>
       </div>
       {/* 4. board list */}
-      <div className="board-list flex-col">
+      <div className="board-list flex-col" style={{ gap: '0.8rem' }}>
         <Paper className='board-box w-100 flex-col align-center' elevation={4}>
           <div className="top w-100 justify-between">
             <div className="left-area flex-col align-start flex-1">

@@ -108,16 +108,37 @@
 
     /* 2. board */
     // 2-1. board list
-    .board-list { gap: 0.8rem;
-      .board-box, .board-detail-box { padding: 1.2rem 2rem; gap: 1.2rem; cursor: pointer;
-        .top { 
-          .left-area { gap: 1.2rem;
-            .main-text { font-size: 2rem; font-weight: 600; line-height: 120%; color: #000; }
-          }
+    .board-box, .board-detail-box { padding: 1.2rem 2rem; gap: 1.2rem; cursor: pointer;
+      > div { gap: 1.2rem; }
+      .top { 
+        .left-area { gap: 1.2rem;
+          .main-text { font-size: 2rem; font-weight: 600; line-height: 120%; color: #000; }
         }
-        .bottom {
-          > div { gap: 1.2rem;
-            p { font-size: 1rem; font-weight: 300; line-height: 100%; color: #000; }
+      }
+      .bottom {
+        > div { gap: 1.2rem;
+          p { font-size: 1rem; font-weight: 300; line-height: 100%; color: #000; }
+        }
+      }
+    }
+    // 2-2. board detail
+    .board-detail-box { padding: 2rem 2.4rem; gap: 2.8rem; cursor: default;
+      .board-content-box { 
+        .board-content { min-height: 33rem;
+          p { font-size: 1.4rem; }
+        }
+        .write-reply { gap: 0.4rem;
+          strong { font-size: 1.8rem; font-weight: 500; line-height: 160%; letter-spacing: 0.15px; color: var(--text-primary); }
+          > div { gap: 1rem; }
+        }
+      }
+      .board-reply { 
+        .reply-box { gap: 0;
+          .commenter-info { gap: 0.4rem;
+            p { font-size: 1.4rem; line-height: 120%; letter-spacing: 0.15px; color: var(--text-secondary); }
+          }
+          .reply-content {  
+            p { font-size: 1.6rem; line-height: 120%; letter-spacing: 0.15px; color: var(--text-primary); }
           }
         }
       }
