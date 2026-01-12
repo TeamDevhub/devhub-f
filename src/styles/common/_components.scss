@@ -59,29 +59,10 @@
 /* 4. pagination */ 
 .MuiPaginationItem-root { font-size: 1.4rem !important; }
 
-/* 5. project card(공통 컴포넌트로 생성할 예정) */
-.project-box { min-width: 0; padding: 1.6rem 2.4rem; gap: 1.2rem; cursor: pointer;
-  .chip-box { gap: 0.4rem; }
-  .main-text { font-size: 2rem; font-weight: 600; line-height: 120%; color: #000; }
-  .sub-text { gap: 0.8rem; 
-    .top { gap: 2.4rem;
-      > div { gap: 0.8rem;
-        .title, p { gap: 0.4rem; font-size: 1.1rem; font-weight: 500; line-height: 1.6rem; letter-spacing: 0.5px; color: var(--text-primary);
-          .MuiSvgIcon-root { width: 1.4rem; height: 1.4rem; color: #667EEA; }
-        } 
-        p { color: var(--text-disabled); }
-      }
-    }
-    .bottom { 
-      p { font-size: 1rem; font-weight: 300; line-height: 100%; color: #000; }
-    }
-  }
-}
-
-/* 6. tooltip */
+/* 5. tooltip */
 .MuiTooltip-tooltip { font-size: 1.2rem !important; font-weight: 400 !important; font-family: "Pretendard"; }
 
-/* 7. tabs */
+/* 6. tabs */
 .MuiButtonBase-root {
   &.MuiTab-root { padding: 0.9rem 1.6rem !important; font-size: 1.4rem; font-weight: 500; line-height: 2.4rem; letter-spacing: 0.4px; color: var(--text-secondary); }
 }
