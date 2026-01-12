@@ -5,14 +5,14 @@ import React, { useState } from 'react'
 export default function ProjectCreatePage(){
   // recruit field
   const [filter, setFilter] = useState('');
-    const handleChange = (event: SelectChangeEvent) => {
-      setFilter(event.target.value);
-    };
+  const handleChange = (event: SelectChangeEvent) => {
+    setFilter(event.target.value);
+  };
 
   return (
     <div className='main-page'>
       <Paper className='project-create-box flex-col' elevation={4}>
-        {/* 1. project title */}
+        {/* 1. page title */}
         <strong className="page-title">프로젝트 생성</strong>
         {/* 2. project create form */}
         <div className="form-wrap flex-col">

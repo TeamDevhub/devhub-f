@@ -7,7 +7,7 @@ export default function ProjectApplyPage(){
   return (
     <div className='main-page'>
       <Paper className='project-box project-apply-box flex-col' elevation={4}>
-        {/* 1. project title */}
+        {/* 1. page title */}
         <strong className="page-title">프로젝트 지원</strong>
         {/* 2. project header */}
         <div className="project-header">
