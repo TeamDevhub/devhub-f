@@ -8,6 +8,9 @@ import ProjectDetailPage from '@/pages/web/projects/ProjectDetailPage';
 import ProjectCreatePage from '@/pages/web/projects/ProjectCreatePage';
 import ProjectApplyPage from '@/pages/web/projects/ProjectApplyPage';
 import BoardListPage from '@/pages/web/boards/BoardListPage';
+import BoardDetailPage from '@/pages/web/boards/BoardDetailPage';
+import BoardCreatePage from '@/pages/web/boards/BoardCreatePage';
+import BoardModifyPage from '@/pages/web/boards/BoardModifyPage';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +49,18 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <BoardListPage />
+          },
+          {
+            path: 'detail',
+            element: <BoardDetailPage />
+          },
+          {
+            path: 'create',
+            element: <BoardCreatePage />
+          },
+          {
+            path: 'modify',
+            element: <BoardModifyPage />
           },
         ]
       },

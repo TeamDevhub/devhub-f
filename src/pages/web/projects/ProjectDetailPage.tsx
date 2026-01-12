@@ -23,7 +23,7 @@ export default function ProjectDetailPage(){
   }, []);
 
   return (
-    <div className='main-page project-page'>
+    <div className='main-page'>
       {/* 1. project detail */}
       <Paper className='project-box project-detail-box flex-col' elevation={4}>
         <div className="project-header">
@@ -58,7 +58,7 @@ export default function ProjectDetailPage(){
             <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
           </div>
           <div className="bottom align-end justify-between">
-            <div className="user-info align-center">
+            <div className="  align-center">
               <div className="left-area">
                 <CustomAvatar 
                   sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}

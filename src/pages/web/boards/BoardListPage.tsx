@@ -12,7 +12,7 @@ export default function BoardListPage(){
   };
 
   return (
-    <div className='main-page board-page flex-col h-fit'>
+    <div className='main-page flex-col h-fit'>
       {/* 1. category tabs */}
       <Tabs
         value={value}
@@ -37,7 +37,7 @@ export default function BoardListPage(){
           <Button size='medium' variant='contained'>검색</Button>
       </Paper>
       {/* 3. board summary */}
-      <div className='page-summary board-summary'>
+      <div className='page-summary'>
         <strong className='page-count'>전체 <em>23</em>개 게시글</strong>
       </div>
       {/* 4. board list */}

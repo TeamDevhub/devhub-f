@@ -5,7 +5,7 @@ import React from 'react'
 
 export default function ProjectApplyPage(){
   return (
-    <div className='main-page project-page'>
+    <div className='main-page'>
       <Paper className='project-box project-apply-box flex-col' elevation={4}>
         {/* 1. project title */}
         <strong className="project-title">프로젝트 지원</strong>
@@ -65,7 +65,7 @@ export default function ProjectApplyPage(){
         </div>
         <Divider />
         {/* 3. project content */}
-        <div className="project-form project-apply-form flex-col">
+        <div className="project-form flex-col">
           {/* 3-1. 기본 정보 */}
           <div className="form-box w-100 flex-col">
             <div className="label-area">

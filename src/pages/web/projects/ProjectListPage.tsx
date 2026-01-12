@@ -10,7 +10,7 @@ export default function ProjectListPage(){
   };
 
   return (
-    <main className='main-page project-page flex-col h-fit'>
+    <main className='main-page flex-col h-fit'>
       {/* 1. search field */}
       <Paper className='search-box align-center' elevation={4}>
         <TextField 
@@ -21,7 +21,7 @@ export default function ProjectListPage(){
           <Button size='medium' variant='contained'>검색</Button>
       </Paper>
       {/* 2. project summary */}
-      <div className='page-summary project-summary w-100 align-center justify-between'>
+      <div className='page-summary w-100 align-center justify-between'>
         <strong className='page-count'>전체 <em>23</em>개 프로젝트</strong>
         <FormControl variant='standard'>
           <Select 
@@ -167,8 +167,8 @@ export default function ProjectListPage(){
                       </div>
                   </div>
                   <div className='bottom align-center justify-between'>
-                      <p className='write-info'>홍길동 . 2025.12.03</p>
-                      <p className='view-count'>view 1017</p>
+                    <p className='write-info'>홍길동 . 2025.12.03</p>
+                    <p className='view-count'>view 1017</p>
                   </div>
               </div>
             </div>
