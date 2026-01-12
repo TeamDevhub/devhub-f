@@ -8,7 +8,7 @@ export default function ProjectApplyPage(){
     <div className='main-page'>
       <Paper className='project-box project-apply-box flex-col' elevation={4}>
         {/* 1. project title */}
-        <strong className="project-title">프로젝트 지원</strong>
+        <strong className="page-title">프로젝트 지원</strong>
         {/* 2. project header */}
         <div className="project-header">
           <div className="top flex-col">
@@ -65,7 +65,7 @@ export default function ProjectApplyPage(){
         </div>
         <Divider />
         {/* 3. project content */}
-        <div className="project-form flex-col">
+        <div className="form-wrap flex-col">
           {/* 3-1. 기본 정보 */}
           <div className="form-box w-100 flex-col">
             <div className="label-area">
@@ -83,7 +83,7 @@ export default function ProjectApplyPage(){
                     <p className='user-email'>email@gmail.com</p>
                   </div>
                 </div>
-                <div className="bottom flex-col">
+                <div className="bottom manner-box flex-col">
                   <div className="manner-text justify-between">
                     <p className='text'>매너온도</p>
                     <p className='manner-temperature'>36.5°C</p>

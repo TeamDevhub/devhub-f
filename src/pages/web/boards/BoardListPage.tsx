@@ -51,8 +51,10 @@ export default function BoardListPage(){
               </strong>
             </div>
             <div className="right-area flex-col">
-              <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-              <p className='heart-count'>206</p>
+              <div className='heart-box flex-col align-end'>
+                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
+                <p className='heart-count'>206</p>
+              </div>
             </div>
           </div>
           <div className="bottom w-100 align-center justify-between">
@@ -80,8 +82,10 @@ export default function BoardListPage(){
               </strong>
             </div>
             <div className="right-area flex-col">
-              <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-              <p className='heart-count'>206</p>
+              <div className='heart-box flex-col align-end'>
+                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
+                <p className='heart-count'>206</p>
+              </div>
             </div>
           </div>
           <div className="bottom w-100 align-center justify-between">
@@ -109,8 +113,10 @@ export default function BoardListPage(){
               </strong>
             </div>
             <div className="right-area flex-col">
-              <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-              <p className='heart-count'>206</p>
+              <div className='heart-box flex-col align-end'>
+                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
+                <p className='heart-count'>206</p>
+              </div>
             </div>
           </div>
           <div className="bottom w-100 align-center justify-between">
@@ -138,8 +144,10 @@ export default function BoardListPage(){
               </strong>
             </div>
             <div className="right-area flex-col">
-              <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-              <p className='heart-count'>206</p>
+              <div className='heart-box flex-col align-end'>
+                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
+                <p className='heart-count'>206</p>
+              </div>
             </div>
           </div>
           <div className="bottom w-100 align-center justify-between">
@@ -167,8 +175,10 @@ export default function BoardListPage(){
               </strong>
             </div>
             <div className="right-area flex-col">
-              <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-              <p className='heart-count'>206</p>
+              <div className='heart-box flex-col align-end'>
+                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
+                <p className='heart-count'>206</p>
+              </div>
             </div>
           </div>
           <div className="bottom w-100 align-center justify-between">
@@ -196,8 +206,10 @@ export default function BoardListPage(){
               </strong>
             </div>
             <div className="right-area flex-col">
-              <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-              <p className='heart-count'>206</p>
+              <div className='heart-box flex-col align-end'>
+                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
+                <p className='heart-count'>206</p>
+              </div>
             </div>
           </div>
           <div className="bottom w-100 align-center justify-between">
@@ -216,7 +228,7 @@ export default function BoardListPage(){
             </div>
           </div>
         </Paper>
-        <div className='list-bottom-box w-100 align-center'>
+        <div className='list-bottom-box w-100 align-center mt-14'>
           <Pagination count={10} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
           <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }}>글쓰기</Button>
         </div>

@@ -24,7 +24,9 @@ export default function Header(){
             <Link to={"/projects"}>
               <Button size='large' variant='text'>PROJECT</Button>
             </Link>
-            <Button size='large' variant='text'>BOARD</Button>
+            <Link to={"/boards"}>
+              <Button size='large' variant='text'>BOARD</Button>
+            </Link>
             <Button size='large' variant='text'>SKILL TRENDS</Button>
           </nav>
         </div>

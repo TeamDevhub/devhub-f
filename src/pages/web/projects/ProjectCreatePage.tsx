@@ -13,9 +13,9 @@ export default function ProjectCreatePage(){
     <div className='main-page'>
       <Paper className='project-create-box flex-col' elevation={4}>
         {/* 1. project title */}
-        <strong className="project-title">프로젝트 생성</strong>
+        <strong className="page-title">프로젝트 생성</strong>
         {/* 2. project create form */}
-        <div className="project-form flex-col">
+        <div className="form-wrap flex-col">
           {/* 1. 모집 유형 */}
           <div className="form-box">
             <FormControl>

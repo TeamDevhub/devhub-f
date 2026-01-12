@@ -420,20 +420,20 @@ export default function ProjectListPage(){
               </div>
               <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
               <div className='sub-text flex-col'>
-                  <div className='top align-center'>
-                      <div className='align-center'>
-                          <div className='title flex'><AccessTime />모집기간</div>
-                          <p className='flex'>2025.12.03 ~ 2026.02.03</p>
-                      </div>
-                      <div className='align-center'>
-                          <div className='title flex'><AccessTime />진행기간</div>
-                          <p>2025.12.03 ~ 2026.02.03</p>
-                      </div>
+                <div className='top align-center'>
+                  <div className='align-center'>
+                    <div className='title flex'><AccessTime />모집기간</div>
+                    <p className='flex'>2025.12.03 ~ 2026.02.03</p>
                   </div>
-                  <div className='bottom align-center justify-between'>
-                      <p className='write-info'>홍길동 . 2025.12.03</p>
-                      <p className='view-count'>view 1017</p>
+                  <div className='align-center'>
+                    <div className='title flex'><AccessTime />진행기간</div>
+                    <p>2025.12.03 ~ 2026.02.03</p>
                   </div>
+                </div>
+                <div className='bottom align-center justify-between'>
+                  <p className='write-info'>홍길동 . 2025.12.03</p>
+                  <p className='view-count'>view 1017</p>
+                </div>
               </div>
             </div>
             <Divider orientation='vertical' />
@@ -455,7 +455,7 @@ export default function ProjectListPage(){
               </div>
             </div>
           </Paper>
-          <div className='list-bottom-box w-100 align-center'>
+          <div className='list-bottom-box w-100 align-center mt-a'>
             <Pagination count={10} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
             <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }}>글쓰기</Button>
           </div>
