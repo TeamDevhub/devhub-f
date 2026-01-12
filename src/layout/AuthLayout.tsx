@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 export default function AuthLayout() {
   return (
-    <div className='auth-layout'>
+    <div id='devHub' className='wh-100'>
       <main>
         <Outlet></Outlet>
       </main>

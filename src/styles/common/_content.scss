@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 #devHub { min-height: 100vh; background: linear-gradient(180deg, rgba(66, 165, 245, 0.08) 0%, rgba(186, 104, 200, 0.06) 100%);
-  /* main-content */
+  /* main page */
   .main-page { width: 123rem; max-width: 123rem; padding: 2.4rem 0.5rem 3.1rem 0; margin: 0 auto; gap: 1rem;
     /* 1. project */
     // 1-1. project list
@@ -148,5 +148,10 @@
     &:has(.board-create-box, .board-modify-box) { display: flex; min-height: calc(100vh - 14rem); padding: 0; align-items: center; justify-content: center; 
       > div { width: 100%; }
     }
+  }
+
+  /* auth page */
+  .auth-page { width: 100%; min-height: 100vh;
+
   }
 }
