@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* 1. button */
-.MuiButton-root { min-width: 7rem !important; font-family: "Pretendard" !important; white-space: nowrap;
+.MuiButton-root { min-width: 7rem !important; font-family: "Pretendard" !important; white-space: nowrap; text-transform: none !important;
   // size
   &.MuiButton-sizeSmall { font-size: 1.3rem; line-height: 2.2rem; letter-spacing: 0.46px; }
   &.MuiButton-sizeMedium { height: 4rem; font-size: 1.4rem; }
@@ -11,6 +11,8 @@
   &.MuiButton-text { }
   &.MuiButton-contained { }
   &.MuiButton-outlined { }
+
+  .MuiSvgIcon-root { font-size: 1.2rem !important; }
 }
 
 /* 2. chip */
