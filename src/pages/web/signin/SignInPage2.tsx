@@ -1,22 +1,10 @@
-import { ArrowForwardIos, LockOutline, PersonOutlined, Visibility, VisibilityOff } from '@mui/icons-material'
-import { Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
+import { PersonOutlined } from '@mui/icons-material'
+import { Button, Chip, Divider, Paper, TextField } from '@mui/material'
 import logo from '@/assets/images/devHub-logo.png'
-import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import React from 'react'
 
 export default function SignInPage2(){
-  // email select
-  const [email, setEmail] = useState('');
-  const handleChange = (event: SelectChangeEvent) => {
-    setEmail(event.target.value);
-  };
-
-  // password textfield
-  const [showPassword, setShowPassword] = useState<boolean>(false)
-  const handleClickShowPassword = () => {
-    setShowPassword(prev => !prev)
-  }
-
   return (
     <div className='auth-page flex-center'>
       <div className="flex-col" style={{ gap: '0.8rem' }}>
