@@ -37,8 +37,8 @@
             }
           }
           .right-area { width: 24rem; min-width: 24rem;
-            .chip-box {
-              > div { gap: 0.4rem; }
+            .chip-box { 
+              > div { overflow: hidden; gap: 0.4rem; white-space: nowrap; }
             }
           }
         }

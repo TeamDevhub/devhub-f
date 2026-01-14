@@ -1,13 +1,23 @@
-import { AccessTime, AddCircle, Favorite, FilterAlt, LocationOn, Search } from '@mui/icons-material'
+import { AccessTime, AddCircle, Favorite, FilterAlt, Search } from '@mui/icons-material'
 import { Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
 import CustomAvatar from '@/components/CustomAvatar';
+import type { ProjectCardProps } from '@/types/ProjectTypes';
+import { ProgressRegionChip, RecruitmentChip } from './design/ProjectChips';
+
+//개발용 json 파일
+import jsonData from '@/assets/jsonData/projectsPage/projectListApi.json'
 
 export default function ProjectListPage(){
+
+  // project summary select
   const [filter, setFilter] = useState('');
   const handleChange = (event: SelectChangeEvent) => {
     setFilter(event.target.value);
   };
+
+  // json data
+  const { dataList } = jsonData;
 
   return (
     <main className='main-page flex-col h-fit'>
@@ -125,336 +135,9 @@ export default function ProjectListPage(){
         </Paper>
         {/* 4. project list */}
         <div className='project-list flex-col align-center'>
-          <Paper className='project-box w-100 h-fit flex' elevation={4}>
-            <div className='left-area flex-col flex-1'>
-              <div className='chip-box align-center'>
-                <Chip size='small' color='primary' label='모집중' />
-                <Chip 
-                  size='small' 
-                  label='서울' 
-                  icon={
-                    <CustomAvatar
-                      size={18}
-                      sx={{ backgroundColor: '#AEAEAE' }}
-                      avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
-                    />
-                  } 
-                />               
-                <Chip size='small' color='error' label='추가모집' />
-                <Chip 
-                  size='small' 
-                  color='warning' 
-                  label='D-13' 
-                  icon={
-                    <CustomAvatar 
-                      size={18}
-                      sx={{ backgroundColor: '#E65100' }}
-                      avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
-                    />
-                  }
-                />
-              </div>
-              <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
-              <div className='sub-text flex-col'>
-                  <div className='top align-center'>
-                      <div className='align-center'>
-                          <div className='title flex'><AccessTime />모집기간</div>
-                          <p className='flex'>2025.12.03 ~ 2026.02.03</p>
-                      </div>
-                      <div className='align-center'>
-                          <div className='title flex'><AccessTime />진행기간</div>
-                          <p>2025.12.03 ~ 2026.02.03</p>
-                      </div>
-                  </div>
-                  <div className='bottom align-center justify-between'>
-                    <p className='write-info'>홍길동 . 2025.12.03</p>
-                    <p className='view-count'>view 1017</p>
-                  </div>
-              </div>
-            </div>
-            <Divider orientation='vertical' />
-            <div className='right-area flex-col justify-between'>
-              <div className='heart-box flex-col align-end'>
-                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-                <p className='heart-count'>206</p>
-              </div>
-              <div className='chip-box flex-col'>
-                <div className='recruit-chip-box align-center flex-wrap'>
-                  <Chip variant='outlined' color='primary' size='small' label='서버개발자' />
-                  <Chip variant='outlined' color='primary' size='small' label='총괄기획' />
-                </div>
-                <div className='tech-chip-box align-center flex-wrap'>
-                  <Chip variant='outlined' color='secondary' size='small' label='JAVA' />
-                  <Chip variant='outlined' color='secondary' size='small' label='ORACLE' />
-                  <Chip variant='outlined' color='secondary' size='small' label='JS' />
-                </div>
-              </div>
-            </div>
-          </Paper>
-          <Paper className='project-box w-100 h-fit flex' elevation={4}>
-            <div className='left-area flex-col flex-1'>
-              <div className='chip-box align-center'>
-                <Chip size='small' color='primary' label='모집중' />
-                <Chip 
-                  size='small' 
-                  label='서울' 
-                  icon={
-                    <CustomAvatar
-                      size={18}
-                      sx={{ backgroundColor: '#AEAEAE' }}
-                      avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
-                    />
-                  } 
-                />               
-                <Chip size='small' color='error' label='추가모집' />
-                <Chip 
-                  size='small' 
-                  color='warning' 
-                  label='D-13' 
-                  icon={
-                    <CustomAvatar 
-                      size={18}
-                      sx={{ backgroundColor: '#E65100' }}
-                      avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
-                    />
-                  }
-                />
-              </div>
-              <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
-              <div className='sub-text flex-col'>
-                  <div className='top align-center'>
-                      <div className='align-center'>
-                          <div className='title flex'><AccessTime />모집기간</div>
-                          <p className='flex'>2025.12.03 ~ 2026.02.03</p>
-                      </div>
-                      <div className='align-center'>
-                          <div className='title flex'><AccessTime />진행기간</div>
-                          <p>2025.12.03 ~ 2026.02.03</p>
-                      </div>
-                  </div>
-                  <div className='bottom align-center justify-between'>
-                      <p className='write-info'>홍길동 . 2025.12.03</p>
-                      <p className='view-count'>view 1017</p>
-                  </div>
-              </div>
-            </div>
-            <Divider orientation='vertical' />
-            <div className='right-area flex-col justify-between'>
-              <div className='heart-box flex-col align-end'>
-                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-                <p className='heart-count'>206</p>
-              </div>
-              <div className='chip-box flex-col'>
-                <div className='recruit-chip-box align-center flex-wrap'>
-                  <Chip variant='outlined' color='primary' size='small' label='서버개발자' />
-                  <Chip variant='outlined' color='primary' size='small' label='총괄기획' />
-                </div>
-                <div className='tech-chip-box align-center flex-wrap'>
-                  <Chip variant='outlined' color='secondary' size='small' label='JAVA' />
-                  <Chip variant='outlined' color='secondary' size='small' label='ORACLE' />
-                  <Chip variant='outlined' color='secondary' size='small' label='JS' />
-                </div>
-              </div>
-            </div>
-          </Paper>
-          <Paper className='project-box w-100 h-fit flex' elevation={4}>
-            <div className='left-area flex-col flex-1'>
-              <div className='chip-box align-center'>
-                <Chip size='small' color='primary' label='모집중' />
-                <Chip 
-                  size='small' 
-                  label='서울' 
-                  icon={
-                    <CustomAvatar
-                      size={18}
-                      sx={{ backgroundColor: '#AEAEAE' }}
-                      avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
-                    />
-                  } 
-                />               
-                <Chip size='small' color='error' label='추가모집' />
-                <Chip 
-                  size='small' 
-                  color='warning' 
-                  label='D-13' 
-                  icon={
-                    <CustomAvatar 
-                      size={18}
-                      sx={{ backgroundColor: '#E65100' }}
-                      avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
-                    />
-                  }
-                />
-              </div>
-              <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
-              <div className='sub-text flex-col'>
-                  <div className='top align-center'>
-                      <div className='align-center'>
-                          <div className='title flex'><AccessTime />모집기간</div>
-                          <p className='flex'>2025.12.03 ~ 2026.02.03</p>
-                      </div>
-                      <div className='align-center'>
-                          <div className='title flex'><AccessTime />진행기간</div>
-                          <p>2025.12.03 ~ 2026.02.03</p>
-                      </div>
-                  </div>
-                  <div className='bottom align-center justify-between'>
-                      <p className='write-info'>홍길동 . 2025.12.03</p>
-                      <p className='view-count'>view 1017</p>
-                  </div>
-              </div>
-            </div>
-            <Divider orientation='vertical' />
-            <div className='right-area flex-col justify-between'>
-              <div className='heart-box flex-col align-end'>
-                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-                <p className='heart-count'>206</p>
-              </div>
-              <div className='chip-box flex-col'>
-                <div className='recruit-chip-box align-center flex-wrap'>
-                  <Chip variant='outlined' color='primary' size='small' label='서버개발자' />
-                  <Chip variant='outlined' color='primary' size='small' label='총괄기획' />
-                </div>
-                <div className='tech-chip-box align-center flex-wrap'>
-                  <Chip variant='outlined' color='secondary' size='small' label='JAVA' />
-                  <Chip variant='outlined' color='secondary' size='small' label='ORACLE' />
-                  <Chip variant='outlined' color='secondary' size='small' label='JS' />
-                </div>
-              </div>
-            </div>
-          </Paper>
-          <Paper className='project-box w-100 h-fit flex' elevation={4}>
-            <div className='left-area flex-col flex-1'>
-              <div className='chip-box align-center'>
-                <Chip size='small' color='primary' label='모집중' />
-                <Chip 
-                  size='small' 
-                  label='서울' 
-                  icon={
-                    <CustomAvatar
-                      size={18}
-                      sx={{ backgroundColor: '#AEAEAE' }}
-                      avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
-                    />
-                  } 
-                />               
-                <Chip size='small' color='error' label='추가모집' />
-                <Chip 
-                  size='small' 
-                  color='warning' 
-                  label='D-13' 
-                  icon={
-                    <CustomAvatar 
-                      size={18}
-                      sx={{ backgroundColor: '#E65100' }}
-                      avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
-                    />
-                  }
-                />
-              </div>
-              <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
-              <div className='sub-text flex-col'>
-                  <div className='top align-center'>
-                      <div className='align-center'>
-                          <div className='title flex'><AccessTime />모집기간</div>
-                          <p className='flex'>2025.12.03 ~ 2026.02.03</p>
-                      </div>
-                      <div className='align-center'>
-                          <div className='title flex'><AccessTime />진행기간</div>
-                          <p>2025.12.03 ~ 2026.02.03</p>
-                      </div>
-                  </div>
-                  <div className='bottom align-center justify-between'>
-                      <p className='write-info'>홍길동 . 2025.12.03</p>
-                      <p className='view-count'>view 1017</p>
-                  </div>
-              </div>
-            </div>
-            <Divider orientation='vertical' />
-            <div className='right-area flex-col justify-between'>
-              <div className='heart-box flex-col align-end'>
-                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-                <p className='heart-count'>206</p>
-              </div>
-              <div className='chip-box flex-col'>
-                <div className='recruit-chip-box align-center flex-wrap'>
-                  <Chip variant='outlined' color='primary' size='small' label='서버개발자' />
-                  <Chip variant='outlined' color='primary' size='small' label='총괄기획' />
-                </div>
-                <div className='tech-chip-box align-center flex-wrap'>
-                  <Chip variant='outlined' color='secondary' size='small' label='JAVA' />
-                  <Chip variant='outlined' color='secondary' size='small' label='ORACLE' />
-                  <Chip variant='outlined' color='secondary' size='small' label='JS' />
-                </div>
-              </div>
-            </div>
-          </Paper>
-          <Paper className='project-box w-100 h-fit flex' elevation={4}>
-            <div className='left-area flex-col flex-1'>
-              <div className='chip-box align-center'>
-                <Chip size='small' color='primary' label='모집중' />
-                <Chip 
-                  size='small' 
-                  label='서울' 
-                  icon={
-                    <CustomAvatar
-                      size={18}
-                      sx={{ backgroundColor: '#AEAEAE' }}
-                      avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
-                    />
-                  } 
-                />               
-                <Chip size='small' color='error' label='추가모집' />
-                <Chip 
-                  size='small' 
-                  color='warning' 
-                  label='D-13' 
-                  icon={
-                    <CustomAvatar 
-                      size={18}
-                      sx={{ backgroundColor: '#E65100' }}
-                      avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
-                    />
-                  }
-                />
-              </div>
-              <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
-              <div className='sub-text flex-col'>
-                <div className='top align-center'>
-                  <div className='align-center'>
-                    <div className='title flex'><AccessTime />모집기간</div>
-                    <p className='flex'>2025.12.03 ~ 2026.02.03</p>
-                  </div>
-                  <div className='align-center'>
-                    <div className='title flex'><AccessTime />진행기간</div>
-                    <p>2025.12.03 ~ 2026.02.03</p>
-                  </div>
-                </div>
-                <div className='bottom align-center justify-between'>
-                  <p className='write-info'>홍길동 . 2025.12.03</p>
-                  <p className='view-count'>view 1017</p>
-                </div>
-              </div>
-            </div>
-            <Divider orientation='vertical' />
-            <div className='right-area flex-col justify-between'>
-              <div className='heart-box flex-col align-end'>
-                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-                <p className='heart-count'>206</p>
-              </div>
-              <div className='chip-box flex-col'>
-                <div className='recruit-chip-box align-center flex-wrap'>
-                  <Chip variant='outlined' color='primary' size='small' label='서버개발자' />
-                  <Chip variant='outlined' color='primary' size='small' label='총괄기획' />
-                </div>
-                <div className='tech-chip-box align-center flex-wrap'>
-                  <Chip variant='outlined' color='secondary' size='small' label='JAVA' />
-                  <Chip variant='outlined' color='secondary' size='small' label='ORACLE' />
-                  <Chip variant='outlined' color='secondary' size='small' label='JS' />
-                </div>
-              </div>
-            </div>
-          </Paper>
+          {dataList.map((item)=>{
+            return <ProjectCard projectData={item}></ProjectCard>
+          })}
           <div className='list-bottom-box w-100 align-center mt-a'>
             <Pagination count={10} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
             <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }}>글쓰기</Button>
@@ -463,4 +146,83 @@ export default function ProjectListPage(){
       </div>
     </main>
   )
+}
+
+function ProjectCard({projectData} : ProjectCardProps){
+  const {
+    category, 
+    title, 
+    recruitmentStartDate, // 모집기간 시작일
+    recruitmentEndDate, // 모집기간 마감일
+    progressStartDate, // 진행기간 시작일
+    progressEndDate, // 진행기간 마감일
+    username, 
+    regDt, // 작성일
+    viewCount,
+    likeCount,
+    recruitmentType, // 모집유형
+    prgressRegion
+  } = projectData;
+
+ return (
+  <Paper className='project-box w-100 h-fit flex' elevation={4}>
+    <div className='left-area flex-col flex-1'>
+      <div className='chip-box align-center'>
+        <Chip size='small' color='primary' label='모집중' />
+        <ProgressRegionChip region={prgressRegion} />       
+        <RecruitmentChip recruitmentType={recruitmentType} />
+        <Chip 
+          size='small' 
+          color='warning' 
+          label='D-13' 
+          icon={
+            <CustomAvatar 
+              size={18}
+              sx={{ backgroundColor: '#E65100' }}
+              avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
+            />
+          }
+        />
+      </div>
+      <strong className='main-text text-ellipsis'>{category} {title}</strong>
+      <div className='sub-text flex-col'>
+          <div className='top align-center'>
+              <div className='align-center'>
+                  <div className='title flex'><AccessTime />모집기간</div>
+                  <p className='flex'>{recruitmentStartDate} ~ {recruitmentEndDate}</p>
+              </div>
+              <div className='align-center'>
+                  <div className='title flex'><AccessTime />진행기간</div>
+                  <p>{progressStartDate} ~ {progressEndDate}</p>
+              </div>
+          </div>
+          <div className='bottom align-center justify-between'>
+            <p className='write-info'>{username} . {regDt}</p>
+            <p className='view-count'>view {viewCount}</p>
+          </div>
+      </div>
+    </div>
+    <Divider orientation='vertical' />
+    <div className='right-area flex-col justify-between'>
+      <div className='heart-box flex-col align-end'>
+        <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
+        <p className='heart-count'>{likeCount}</p>
+      </div>
+      <div className='chip-box flex-col'>
+        {/* 문제점: css만으로는 넘치는 chip을 깔끔하게 자를 수 없음 js 처리해야함 */}
+        <div className='recruit-chip-box align-center'>
+          <Chip variant='outlined' color='primary' size='small' label='서버개발자' />
+          <Chip variant='outlined' color='primary' size='small' label='총괄기획' />
+          <Chip variant='outlined' color='primary' size='small' label='웹퍼블리셔' />
+          <Chip variant='outlined' color='primary' size='small' label='디자이너' />
+        </div>
+        <div className='tech-chip-box align-center flex-wrap'>
+          <Chip variant='outlined' color='secondary' size='small' label='JAVA' />
+          <Chip variant='outlined' color='secondary' size='small' label='ORACLE' />
+          <Chip variant='outlined' color='secondary' size='small' label='JS' />
+        </div>
+      </div>
+    </div>
+  </Paper>
+ )
 }

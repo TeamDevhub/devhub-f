@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* 1. button */
-.MuiButton-root { min-width: 7rem !important; font-family: "Pretendard" !important; white-space: nowrap; text-transform: none !important;
+.MuiButton-root { min-width: 7rem !important; white-space: nowrap; text-transform: none !important;
   // size
   &.MuiButton-sizeSmall { font-size: 1.3rem; line-height: 2.2rem; letter-spacing: 0.46px; }
   &.MuiButton-sizeMedium { height: 4rem; font-size: 1.4rem; }
@@ -17,13 +17,13 @@
 
 /* 2. chip */
 .MuiChip-root { 
-  .MuiChip-label { padding: 0.3rem 1rem; font-size: 1.3rem; line-height: 1.8rem; letter-spacing: 0.16px; font-family: "Pretendard" !important; }
+  .MuiChip-label { padding: 0.3rem 1rem; font-size: 1.3rem; line-height: 1.8rem; letter-spacing: 0.16px; }
 }
 
 /* 3. form */
 // 3-1. textfield
 .MuiTextField-root { width: 100%;
-  .MuiInputBase-root { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-secondary); font-family: "Pretendard";
+  .MuiInputBase-root { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-secondary);
     .MuiInputBase-input { padding: 1.6rem 1.2rem; }
     .MuiInputBase-inputSizeSmall { padding: 0.8rem 1.2rem; }
     fieldset { top: 0; 
@@ -37,7 +37,7 @@
 }
 // 3-2. select
 .MuiInputBase-root {
-  .MuiSelect-select { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-primary); font-family: "Pretendard"; }
+  .MuiSelect-select { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-primary); }
   fieldset { top: 0; 
     legend { display: none; }
   }
@@ -62,7 +62,7 @@
 .MuiPaginationItem-root { font-size: 1.4rem !important; }
 
 /* 5. tooltip */
-.MuiTooltip-tooltip { font-size: 1.2rem !important; font-weight: 400 !important; font-family: "Pretendard"; }
+.MuiTooltip-tooltip { font-size: 1.2rem !important; font-weight: 400 !important; }
 
 /* 6. tabs */
 .MuiButtonBase-root {
