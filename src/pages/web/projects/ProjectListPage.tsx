@@ -2,7 +2,7 @@ import { AccessTime, AddCircle, Favorite, FilterAlt, Search } from '@mui/icons-m
 import { Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
 import CustomAvatar from '@/components/CustomAvatar';
-import type { ProjectCardProps } from '@/types/ProjectTypes';
+import type { ProjectCardProps } from '@/types/projects.type';
 import { ProgressRegionChip, RecruitmentChip } from './design/ProjectChips';
 
 //개발용 json 파일

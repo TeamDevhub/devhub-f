@@ -14,3 +14,9 @@ export interface ProjectCardProps {
     prgressRegion: string;
   };
 }
+
+export interface ProjectSearchRequest {};
+export interface UpdateProjectRequest {};
+
+export interface ProjectListResponse {};
+export interface ProjectDetailResponse {};
