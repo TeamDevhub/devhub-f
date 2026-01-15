@@ -1,8 +1,9 @@
-import { ArrowForwardIos, LockOutline, MailOutline, Visibility, VisibilityOff } from '@mui/icons-material'
-import { Button, Divider, FormControl, IconButton, InputAdornment, MenuItem, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
+import { ArrowForwardIos, LockOutline, MailOutline } from '@mui/icons-material'
+import { Button, Divider, FormControl, MenuItem, Paper, Select, type SelectChangeEvent } from '@mui/material'
 import logo from '@/assets/images/devHub-logo.png'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import CustomTextfield from '@/components/common/CustomTextfield';
 
 export default function SignInPage1(){
   // email select
@@ -47,7 +48,7 @@ export default function SignInPage1(){
             <div className="field-content flex-col">
               <div className="content-box align-stretch">
                 <span className='required'>*</span>
-                <TextField size='medium' placeholder='이메일' />
+                <CustomTextfield placeholder='이메일' />
                 <p className='flex-center'>@</p>
                 <FormControl fullWidth variant='outlined'>
                   <Select 
@@ -62,7 +63,7 @@ export default function SignInPage1(){
               </div>
               <div className="content-box align-stretch">
                 <span className='required'>*</span>
-                <TextField size='medium' placeholder='인증번호' />
+                <CustomTextfield placeholder='인증번호' />
               </div>
             </div>
           </div>
@@ -75,51 +76,11 @@ export default function SignInPage1(){
             <div className="field-content flex-col">
               <div className="content-box align-stretch">
                 <span className='required'>*</span>
-                <TextField 
-                  size='medium' 
-                  placeholder='특수문자, 숫자 포함 10자 이상' 
-                  slotProps={{
-                  input: {
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          edge="end"
-                          size='large'
-                          onClick={handleClickShowPassword}
-                          aria-label="toggle password visibility"
-                          sx={{ '& svg': { fontSize: 24 } }}
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }
-                }}  
-                />
+                <CustomTextfield type='password' placeholder='특수문자, 숫자 포함 10자 이상' />  
               </div>
               <div className="content-box align-stretch">
                 <span className='required'>*</span>
-                <TextField 
-                  size='medium' 
-                  placeholder='비밀번호 확인' 
-                  slotProps={{
-                  input: {
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          edge="end"
-                          size='large'
-                          onClick={handleClickShowPassword}
-                          aria-label="toggle password visibility"
-                          sx={{ '& svg': { fontSize: 24 } }}
-                        >
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }
-                }}  
-                />
+                <CustomTextfield type='password' placeholder='비밀번호 확인' />   
               </div>
             </div>
           </div>
@@ -128,6 +89,7 @@ export default function SignInPage1(){
           <Button 
             size='large' variant='contained' color='primary'
             endIcon={<ArrowForwardIos />}
+            className='next-button'
           >
             다음
           </Button>

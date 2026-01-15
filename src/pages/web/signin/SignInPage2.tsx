@@ -1,8 +1,9 @@
 import { PersonOutlined } from '@mui/icons-material'
-import { Button, Chip, Divider, Paper, TextField } from '@mui/material'
+import { Button, Chip, Divider, Paper } from '@mui/material'
 import logo from '@/assets/images/devHub-logo.png'
 import { Link } from 'react-router-dom';
 import React from 'react'
+import CustomTextfield from '@/components/common/CustomTextfield';
 
 export default function SignInPage2(){
   return (
@@ -36,14 +37,14 @@ export default function SignInPage2(){
               <div className="content-box align-start">
                 <span className='required'>*</span>
                 <div className="flex-col">
-                  <TextField size='medium' placeholder='닉네임' />
+                  <CustomTextfield placeholder='닉네임' />  
                   <span className='help-text'>다른 사용자에게 표시되는 이름입니다</span>
                 </div>
               </div>
               <div className="content-box align-stretch">
                 <span className='required'>*</span>
                 <div className="flex-col">
-                  <TextField multiline size='medium' placeholder='자신을 소개해 주세요.' />
+                  <CustomTextfield type='textarea' rows={2} placeholder='자신을 소개해 주세요.' />  
                   <span className='help-text'>간단한 자기소개를 작성해 주세요</span>
                 </div>
               </div>

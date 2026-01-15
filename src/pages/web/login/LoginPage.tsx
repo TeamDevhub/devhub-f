@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import logo from '@/assets/images/devHub-logo.png'
 import { GitHub,  Visibility, VisibilityOff } from '@mui/icons-material';
 import googleIcon from '@/assets/images/google-icon.svg'
+import CustomTextfield from '@/components/common/CustomTextfield';
 
 export default function LoginPage(){
   // password textfield
@@ -26,30 +27,8 @@ export default function LoginPage(){
           </Link>
         </div>
         <div className="input-box flex-col">
-          <TextField size='medium' placeholder='아이디' />
-          <TextField
-            size="medium"
-            placeholder="비밀번호"
-            type={showPassword ? 'text' : 'password'}
-            fullWidth
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      edge="end"
-                      size='large'
-                      onClick={handleClickShowPassword}
-                      aria-label="toggle password visibility"
-                      sx={{ '& svg': { fontSize: 24 } }}
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                )
-              }
-            }}
-          />
+          <CustomTextfield placeholder='아이디' />
+          <CustomTextfield type='password' placeholder='비밀번호' />
         </div>
         <div className="button-box flex-col">
           <Button size='large' variant='contained' color='primary'>로그인</Button>

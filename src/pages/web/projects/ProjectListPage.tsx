@@ -1,11 +1,12 @@
-import { AccessTime, AddCircle, FilterAlt, Search } from '@mui/icons-material'
-import { Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
+import { AccessTime, AddCircle, FilterAlt } from '@mui/icons-material'
+import { Button, Chip, Divider, FormControl, IconButton, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
 import CustomAvatar from '@/components/common/CustomAvatar';
 import type { ProjectListResponse } from '@/api/projects/projects.type';
 import { ProgressRegionChip, RecruitmentChip } from '../../../components/projects/ProjectChips';
 import { useSelectProjects } from '@/api/projects/projects.json.hook';
 import HeartButton from '@/components/common/HeartButton';
+import CustomTextfield from '@/components/common/CustomTextfield';
 
 export default function ProjectListPage(){
   // project summary select
@@ -26,12 +27,8 @@ export default function ProjectListPage(){
     <main className='main-page flex-col h-fit'>
       {/* 1. search field */}
       <Paper className='search-box align-center' elevation={4}>
-        <TextField 
-          size='small' fullWidth 
-          placeholder='프로젝트 명을 입력해 주세요.'
-          slotProps={{ input: { startAdornment: (<InputAdornment position='start'><Search sx={{ fontSize: 24 }}></Search></InputAdornment>) } }}    
-        />
-          <Button size='medium' variant='contained'>검색</Button>
+        <CustomTextfield size='small' type='search' placeholder='프로젝트 명을 입력해 주세요.' />
+        <Button size='medium' variant='contained'>검색</Button>
       </Paper>
       {/* 2. project summary */}
       <div className='page-summary w-100 align-center justify-between'>

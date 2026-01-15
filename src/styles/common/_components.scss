@@ -13,7 +13,7 @@
   &.MuiButton-contained { }
   &.MuiButton-outlined { }
 
-  .MuiSvgIcon-root { font-size: 1.2rem !important; }
+  // .MuiSvgIcon-root { font-size: 1.2rem !important; }
 }
 
 /* 2. chip */
@@ -30,7 +30,7 @@
     fieldset { top: 0; 
       legend { display: none; }
     }
-    textarea { min-height: 12rem; padding: 0 !important; }
+    textarea { padding: 0 !important; }
   }
 }
 .count-str { padding: 0.3rem 1.4rem; 

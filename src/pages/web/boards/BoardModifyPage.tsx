@@ -1,4 +1,5 @@
-import { Button, FormControl, MenuItem, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
+import CustomTextfield from '@/components/common/CustomTextfield';
+import { Button, FormControl, MenuItem, Paper, Select, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
 
 export default function BoardModifyPage(){
@@ -37,7 +38,7 @@ export default function BoardModifyPage(){
               <p className='label-text'>제목</p>
             </div>
             <div className="field-area flex-col flex-1" style={{ gap: '1.2rem' }}>
-              <TextField size='medium' fullWidth placeholder='제목을 입력해 주세요.' />
+              <CustomTextfield placeholder='제목을 입력해 주세요.' />
             </div>
           </div>
           <div className="form-box w-100 align-start">
@@ -47,10 +48,7 @@ export default function BoardModifyPage(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <TextField multiline placeholder='내용을 입력해 주세요.' />
-                <div className="count-str">
-                  <p>0/100</p>
-                </div>
+                <CustomTextfield type='textarea' placeholder='내용을 입력해 주세요.' />
               </div>
             </div>
           </div>
