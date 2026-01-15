@@ -2,11 +2,9 @@ import { AccessTime, AddCircle, Favorite, FilterAlt, Search } from '@mui/icons-m
 import { Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
 import CustomAvatar from '@/components/CustomAvatar';
-import type { ProjectCardProps } from '@/api/projects/projects.type';
+import type { ProjectCardProps, ProjectListResponse } from '@/api/projects/projects.type';
 import { ProgressRegionChip, RecruitmentChip } from './design/ProjectChips';
-
-//개발용 json 파일
-import jsonData from '@/assets/jsonData/projectsPage/projectListApi.json'
+import { useSelectProjects } from '@/api/projects/projects.json.hook';
 
 export default function ProjectListPage(){
 
@@ -16,8 +14,13 @@ export default function ProjectListPage(){
     setFilter(event.target.value);
   };
 
-  // json data
-  const { dataList } = jsonData;
+  // api (개발)
+  const [searchData, setSearchData] = useState({}); //조회조건
+  const { 
+    res, //가져온 데이터 
+    loading, //로딩관련 (개발중)
+    refetch //재조회
+  } = useSelectProjects(searchData);
 
   return (
     <main className='main-page flex-col h-fit'>
@@ -135,8 +138,8 @@ export default function ProjectListPage(){
         </Paper>
         {/* 4. project list */}
         <div className='project-list flex-col align-center'>
-          {dataList.map((item)=>{
-            return <ProjectCard projectData={item}></ProjectCard>
+          {res?.dataList?.map((item)=>{
+            return <ProjectCard {...item}></ProjectCard>
           })}
           <div className='list-bottom-box w-100 align-center mt-a'>
             <Pagination count={10} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
@@ -148,7 +151,7 @@ export default function ProjectListPage(){
   )
 }
 
-function ProjectCard({projectData} : ProjectCardProps){
+function ProjectCard(projectData : ProjectListResponse){
   const {
     category, 
     title, 

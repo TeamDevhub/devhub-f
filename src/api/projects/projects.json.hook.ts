@@ -8,7 +8,7 @@ import apiSuccessResJSON from '@/assets/jsonData/apiSuccessRes.json'
 
 // 개발용 JSON 호출
 
-
+//조회
 export const useSelectProjects = (req: ProjectSearchRequest) => {
   const mockGetProjects = async (): Promise<ApiResponse<ProjectListResponse>> => {
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -36,6 +36,8 @@ export const useSelectProjectDetail = (projectId?: string) => {
   });
 }
 
+
+//생성 수정 삭제
 export const useUpdateProject = () => {
   const mockUpdateProject = async (): Promise<ApiResponse<void>> => {
     await new Promise((resolve) => setTimeout(resolve, 500));

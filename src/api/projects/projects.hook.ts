@@ -8,7 +8,7 @@ export const useSelectProjects = (req: ProjectSearchRequest) =>
     req,
     cacheKey: `projects-${JSON.stringify(req)}`,
   });
-  //const { data, loading, refetch } = useProjects({ page: 1 });
+  //const { res, loading, refetch } = useSelectProjects({ page: 1 });
   
 export const useSelectProjectDetail = (projectId?: string) =>
   useSelect<ProjectDetailResponse, string>({
@@ -17,7 +17,7 @@ export const useSelectProjectDetail = (projectId?: string) =>
     enabled: !!projectId,
     cacheKey: `project-${projectId}`,
   });
-  //const { data, loading } = useProjectDetail(1);
+  //const { res, loading } = useSelectProjectDetail(1);
 
 export const useUpdateProject = () =>
   useMutation<{

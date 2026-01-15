@@ -2,7 +2,7 @@ export interface ApiResponse<T> {
   success: boolean;
   code : string;
   data?: T;
-  dataList?: T;
+  dataList?: T[];
   pagination?: {
     page: number;
     size: number;
