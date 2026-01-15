@@ -1,4 +1,5 @@
-import { ErrorCode, type ApiResponse } from '@/types/api.type';
+import type { ApiResponse } from '@/types/api.type';
+import { ErrorCode } from '@/types/common.type';
 import { getLocalStorage } from '@/utils/common.util';
 import axios, {
   AxiosError,

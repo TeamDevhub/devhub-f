@@ -1,5 +1,5 @@
 import { useMutation, useSelect } from "@/hooks/api.hook";
-import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/types/projects.type";
+import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/api/projects/projects.type";
 import { getProjectDetail, getProjects, updateProject } from "./projects.api";
 
 export const useProjects = (req: ProjectSearchRequest) =>

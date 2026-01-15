@@ -1,4 +1,4 @@
-import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/types/projects.type";
+import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/api/projects/projects.type";
 import fetcher from "@/utils/api.util";
 
 // api/project.api.ts
