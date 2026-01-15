@@ -34,17 +34,13 @@
 }
 
 /* box */
-// 1. heart
-.heart-box { 
-  .heart-count { width: 3.4rem; font-size: 1.4rem; line-height: 166%; letter-spacing: 0.4px; color: var(--error-main); text-align: center; }
-}
-// 2. chip
+// 1. chip
 .chip-box { gap: 0.4rem; }
-// 3. action button(used in form)
+// 2. action button(used in form)
 .action-button-box { gap: 1rem !important;
   .MuiButtonBase-root { width: 12rem; }
 }
-// 4. search field
+// 3. search field
 .search-box { padding: 1.2rem; gap: 0.8rem; }
 
 /* user&view info */

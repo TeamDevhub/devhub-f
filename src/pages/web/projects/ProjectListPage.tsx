@@ -1,13 +1,13 @@
-import { AccessTime, AddCircle, Favorite, FilterAlt, Search } from '@mui/icons-material'
+import { AccessTime, AddCircle, FilterAlt, Search } from '@mui/icons-material'
 import { Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
 import CustomAvatar from '@/components/common/CustomAvatar';
-import type { ProjectCardProps, ProjectListResponse } from '@/api/projects/projects.type';
+import type { ProjectListResponse } from '@/api/projects/projects.type';
 import { ProgressRegionChip, RecruitmentChip } from '../../../components/projects/ProjectChips';
 import { useSelectProjects } from '@/api/projects/projects.json.hook';
+import HeartButton from '@/components/common/HeartButton';
 
 export default function ProjectListPage(){
-
   // project summary select
   const [filter, setFilter] = useState('');
   const handleChange = (event: SelectChangeEvent) => {
@@ -207,10 +207,7 @@ function ProjectCard(projectData : ProjectListResponse){
     </div>
     <Divider orientation='vertical' />
     <div className='right-area flex-col justify-between'>
-      <div className='heart-box flex-col align-end'>
-        <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-        <p className='heart-count'>{likeCount}</p>
-      </div>
+      <HeartButton likeCount={likeCount} />
       <div className='chip-box flex-col'>
         {/* 문제점: css만으로는 넘치는 chip을 깔끔하게 자를 수 없음 js 처리해야함 */}
         <div className='recruit-chip-box align-center'>
