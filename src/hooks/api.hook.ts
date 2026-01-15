@@ -17,7 +17,7 @@ export const useSelect = <TRes, TReq>({
   cacheKey,
   enabled = true,
 }: UseSelectOptions<TRes, TReq>) => {
-  const [data, setData] = useState<TRes | null>(null);
+  const [data, setData] = useState<ApiResponse<TRes> | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -32,10 +32,10 @@ export const useSelect = <TRes, TReq>({
       }
 
       const res = await apiFn(req);
-      setData(res.data);
+      setData(res);
 
       if (cacheKey) {
-        cacheStore.set(cacheKey, res.data);
+        cacheStore.set(cacheKey, res);
       }
     } catch (e) {
       setError(e as Error);
@@ -50,7 +50,7 @@ export const useSelect = <TRes, TReq>({
   }, [JSON.stringify(req), enabled]);
 
   return {
-    data,
+    res: data,
     loading,
     error,
     refetch: fetchData,
@@ -63,12 +63,12 @@ export const useMutation = <TReq, TRes>(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const mutate = async (req: TReq): Promise<TRes> => {
+  const mutate = async (req: TReq): Promise<ApiResponse<TRes>> => {
     try {
       setLoading(true);
       setError(null);
       const res = await mutationFn(req);
-      return res.data;
+      return res;
     } catch (e) {
       setError(e as Error);
       throw e;

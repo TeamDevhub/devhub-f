@@ -2,7 +2,7 @@ import { useMutation, useSelect } from "@/hooks/api.hook";
 import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/api/projects/projects.type";
 import { getProjectDetail, getProjects, updateProject } from "./projects.api";
 
-export const useProjects = (req: ProjectSearchRequest) =>
+export const useSelectProjects = (req: ProjectSearchRequest) =>
   useSelect<ProjectListResponse, ProjectSearchRequest>({
     apiFn: getProjects,
     req,
@@ -10,8 +10,8 @@ export const useProjects = (req: ProjectSearchRequest) =>
   });
   //const { data, loading, refetch } = useProjects({ page: 1 });
   
-export const useProjectDetail = (projectId?: number) =>
-  useSelect<ProjectDetailResponse, number>({
+export const useSelectProjectDetail = (projectId?: string) =>
+  useSelect<ProjectDetailResponse, string>({
     apiFn: getProjectDetail,
     req: projectId!,
     enabled: !!projectId,
@@ -21,7 +21,7 @@ export const useProjectDetail = (projectId?: number) =>
 
 export const useUpdateProject = () =>
   useMutation<{
-    projectId: number;
+    projectId: string;
     data: UpdateProjectRequest;
   }, void>(updateProject);
   //const { mutate, loading } = useUpdateProject();
@@ -29,5 +29,4 @@ export const useUpdateProject = () =>
   //   projectId: 1,
   //   data: { title: "수정됨" },
   // });
-
 

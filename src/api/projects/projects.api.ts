@@ -1,7 +1,6 @@
 import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/api/projects/projects.type";
 import fetcher from "@/utils/api.util";
 
-// api/project.api.ts
 export const getProjects = (req: ProjectSearchRequest) =>
   fetcher<ProjectListResponse, ProjectSearchRequest>(
     "/projects",
@@ -9,7 +8,7 @@ export const getProjects = (req: ProjectSearchRequest) =>
     { method: "get" }
   );
 
-export const getProjectDetail = (projectId: number) =>
+export const getProjectDetail = (projectId: string) =>
   fetcher<ProjectDetailResponse>(
     `/projects/${projectId}`,
     undefined,
@@ -17,7 +16,7 @@ export const getProjectDetail = (projectId: number) =>
   );
 
 export const updateProject = (req: {
-  projectId: number;
+  projectId: string;
   data: UpdateProjectRequest;
 }) =>
   fetcher<void, UpdateProjectRequest>(

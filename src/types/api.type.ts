@@ -1,7 +1,15 @@
 export interface ApiResponse<T> {
   success: boolean;
-  data: T;
-  dataList: T;
-  message?: string;
-  errorCode?: string;
+  code : string;
+  data?: T;
+  dataList?: T;
+  pagination?: {
+    page: number;
+    size: number;
+    totalPages: number;
+    totalElements: number;
+    first: boolean;
+    last: boolean;
+  } | null;
+  error?: string | null;
 }
