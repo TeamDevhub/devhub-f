@@ -1,4 +1,5 @@
 import CustomAvatar from '@/components/common/CustomAvatar'
+import CustomTextfield from '@/components/common/CustomTextfield'
 import { AccessTime, LocationOn, Person, Visibility } from '@mui/icons-material'
 import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, Paper, Radio, RadioGroup, Stack, TextField } from '@mui/material'
 import React from 'react'
@@ -187,28 +188,32 @@ export default function ProjectApplyPage(){
                   <p className='label-text'>이름</p>
                 </div>
                 <div className="field-area flex-1">
-                  <TextField size='medium' fullWidth placeholder='이름을 입력해 주세요.' />                </div>
+                  <CustomTextfield placeholder='이름을 입력해 주세요.' />              
+                </div>
               </div>
               <div className="form-box w-100 align-start">
                  <div className="label-area">
                   <p className='label-text'>나이</p>
                 </div>
                 <div className="field-area flex-1">
-                  <TextField size='medium' fullWidth placeholder='나이를 입력해 주세요.' />                </div>
+                  <CustomTextfield placeholder='나이를 입력해 주세요.' />              
+                </div>
               </div>
               <div className="form-box w-100 align-start">
                  <div className="label-area">
                   <p className='label-text'>지원동기</p>
                 </div>
                 <div className="field-area flex-1">
-                  <TextField size='medium' fullWidth placeholder='지원동기를 입력해 주세요.' />                </div>
+                  <CustomTextfield placeholder='지원동기를 입력해 주세요.' />                            
+                </div>
               </div>
               <div className="form-box w-100 align-start">
                  <div className="label-area">
                   <p className='label-text'>경력</p>
                 </div>
                 <div className="field-area flex-1">
-                  <TextField size='medium' fullWidth placeholder='경력을 입력해 주세요.' />                </div>
+                  <CustomTextfield placeholder='경력을 입력해 주세요.' />              
+                </div>
               </div>
               <div className="form-box w-100 align-start">
                  <div className="label-area">
@@ -222,6 +227,7 @@ export default function ProjectApplyPage(){
                 </div>
                 </div>
                 <div className="field-area flex-1">
+                  {/* Drag and Drop 변경 필요 */}
                   <TextField multiline placeholder='Link or drag and drop' />
                 </div>
               </div>

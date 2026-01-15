@@ -1,9 +1,10 @@
+import CustomTextfield from '@/components/common/CustomTextfield';
 import { AddCircle, Remove, Search } from '@mui/icons-material';
 import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, MenuItem, Paper, Radio, RadioGroup, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
 
 export default function ProjectCreatePage(){
-  // recruit field
+  // recruit field select
   const [filter, setFilter] = useState('');
   const handleChange = (event: SelectChangeEvent) => {
     setFilter(event.target.value);
@@ -36,8 +37,8 @@ export default function ProjectCreatePage(){
               <p className='label-text'>기본 정보</p>
             </div>
             <div className="field-area flex-col flex-1" style={{ gap: '1.2rem' }}>
-              <TextField size='medium' fullWidth placeholder='제목을 입력해 주세요.' />
-              <TextField size='medium' fullWidth placeholder='카테고리를 입력해 주세요.' />
+              <CustomTextfield placeholder='제목을 입력해 주세요.' />              
+              <CustomTextfield placeholder='카테고리를 입력해 주세요.' />              
             </div>
           </div>
           {/* 3. 모집 정보 */}
@@ -50,9 +51,9 @@ export default function ProjectCreatePage(){
               <div className="field-box flex-col">
                 <p className="field-title">모집기간</p>
                 <div className="align-center">
-                  <TextField size='medium' fullWidth placeholder='시작일을 입력해 주세요.' />
+                  <CustomTextfield placeholder='시작일을 입력해 주세요.' />              
                   -
-                  <TextField size='medium' fullWidth placeholder='종료일을 입력해 주세요.' />
+                  <CustomTextfield placeholder='종료일을 입력해 주세요.' />              
                 </div>
               </div>
               <div className="recruit-field flex-col align-start">
@@ -75,7 +76,7 @@ export default function ProjectCreatePage(){
                       <MenuItem value=''>None</MenuItem>
                     </Select>
                   </FormControl>
-                  <TextField size='medium' sx={{ width: '6rem' }} />
+                  <CustomTextfield sx={{ width: '6rem' }} />              
                   <p>명</p>
                   <IconButton size='small'><Remove sx={{ fontSize: 24, color: 'text.disabled' }} /></IconButton>
                 </div>
@@ -98,7 +99,7 @@ export default function ProjectCreatePage(){
                         <MenuItem value=''>None</MenuItem>
                       </Select>
                     </FormControl>
-                    <TextField size='medium' sx={{ width: '6rem' }} />
+                    <CustomTextfield sx={{ width: '6rem' }} />    
                     <p>명</p>
                     <IconButton size='small'><Remove sx={{ fontSize: 24, color: 'text.disabled' }} /></IconButton>
                   </div>
@@ -136,12 +137,12 @@ export default function ProjectCreatePage(){
               <div className="field-box flex-col">
                 <p className="field-title">진행지역</p>
                 <div className="align-stretch">
-                  <TextField size='medium' fullWidth placeholder='지역 명을 입력해 주세요.' />
+                  <CustomTextfield placeholder='지역 명을 입력해 주세요.' />    
                   <Button 
                     size='large' 
                     variant='contained' 
                     color='primary' 
-                    startIcon={<Search/>}
+                    startIcon={<Search sx={{ fontSize: 24 }}/>}
                     sx={{ minWidth: '9.9rem !important' }}
                   >
                     찾기
@@ -151,9 +152,9 @@ export default function ProjectCreatePage(){
               <div className="field-box flex-col">
                 <p className="field-title">진행기간</p>
                 <div className="align-center">
-                  <TextField size='medium' fullWidth placeholder='시작일을 입력해 주세요.' />
+                  <CustomTextfield placeholder='시작일을 입력해 주세요.' />    
                   -
-                  <TextField size='medium' fullWidth placeholder='종료일을 입력해 주세요.' />
+                  <CustomTextfield placeholder='종료일을 입력해 주세요.' />    
                 </div>
               </div>
             </div>
@@ -166,10 +167,7 @@ export default function ProjectCreatePage(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <TextField multiline placeholder='상세 내용을 입력해 주세요.' />
-                <div className="count-str">
-                  <p>0/100</p>
-                </div>
+                <CustomTextfield type='textarea' placeholder='상세내용을 입력해 주세요.' />    
               </div>
             </div>
           </div>
@@ -182,6 +180,7 @@ export default function ProjectCreatePage(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
+                {/* Drag and Drop 변경 필요 */}
                 <TextField multiline placeholder='Link or drag and drop' /> 
               </div>
             </div>
@@ -194,6 +193,7 @@ export default function ProjectCreatePage(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
+                {/* Drag and Drop 변경 필요 */}
                 <TextField multiline placeholder='Link or drag and drop' /> 
               </div>
             </div>

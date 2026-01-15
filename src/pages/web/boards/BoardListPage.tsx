@@ -1,5 +1,6 @@
-import { Create, Favorite, Search, Visibility } from '@mui/icons-material'
-import { Button, Chip, IconButton, InputAdornment, Pagination, Paper, Tab, Tabs, TextField } from '@mui/material'
+import CustomTextfield from '@/components/common/CustomTextfield';
+import { Create, Favorite, Visibility } from '@mui/icons-material'
+import { Button, Chip, IconButton, Pagination, Paper, Tab, Tabs } from '@mui/material'
 import React from 'react'
 
 export default function BoardListPage(){
@@ -29,11 +30,7 @@ export default function BoardListPage(){
       </Tabs>
       {/* 2. search field */}
       <Paper className='search-box align-center' elevation={4}>
-        <TextField 
-          size='small' fullWidth 
-          placeholder='제목을 입력해 주세요.'
-          slotProps={{ input: { startAdornment: (<InputAdornment position='start'><Search sx={{ fontSize: 24 }}></Search></InputAdornment>) } }}    
-        />
+        <CustomTextfield size='small' type='search' placeholder='제목을 입력해 주세요.' />
           <Button size='medium' variant='contained'>검색</Button>
       </Paper>
       {/* 3. board summary */}

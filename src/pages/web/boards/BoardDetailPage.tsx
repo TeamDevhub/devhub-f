@@ -1,6 +1,7 @@
 import CustomAvatar from '@/components/common/CustomAvatar'
+import CustomTextfield from '@/components/common/CustomTextfield'
 import { Create, Favorite, Person, Visibility } from '@mui/icons-material'
-import { Button, Chip, Divider, IconButton, Paper, TextField } from '@mui/material'
+import { Button, Chip, Divider, IconButton, Paper } from '@mui/material'
 import React from 'react'
 
 export default function BoardDetailPage(){
@@ -59,7 +60,7 @@ export default function BoardDetailPage(){
           <div className="write-reply flex-col">
             <strong>댓글</strong>
             <div className="align-center">
-              <TextField size='small' fullWidth placeholder='댓글을 입력하세요.' />
+              <CustomTextfield size='small' placeholder='댓글을 입력하세요.' />
               <Button size='medium' variant='contained' color='primary'>글쓰기</Button>
             </div>
           </div>

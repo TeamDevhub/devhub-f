@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+/*** MUI ***/
 /* 1. button */
 .MuiButton-root { min-width: 7rem !important; white-space: nowrap; text-transform: none !important;
   // size
@@ -12,7 +13,7 @@
   &.MuiButton-contained { }
   &.MuiButton-outlined { }
 
-  .MuiSvgIcon-root { font-size: 1.2rem !important; }
+  // .MuiSvgIcon-root { font-size: 1.2rem !important; }
 }
 
 /* 2. chip */
@@ -29,7 +30,7 @@
     fieldset { top: 0; 
       legend { display: none; }
     }
-    textarea { min-height: 12rem; padding: 0 !important; }
+    textarea { padding: 0 !important; }
   }
 }
 .count-str { padding: 0.3rem 1.4rem; 
@@ -67,4 +68,10 @@
 /* 6. tabs */
 .MuiButtonBase-root {
   &.MuiTab-root { padding: 0.9rem 1.6rem !important; font-size: 1.4rem; font-weight: 500; line-height: 2.4rem; letter-spacing: 0.4px; color: var(--text-secondary); }
+}
+
+/*** CUSTOM ***/
+// 1. heart button
+.heart-box { 
+  .heart-count { width: 3.4rem; font-size: 1.4rem; line-height: 166%; letter-spacing: 0.4px; color: var(--error-main); text-align: center; }
 }
