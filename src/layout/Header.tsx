@@ -1,7 +1,7 @@
 import React from 'react'
 import { Notifications, Person } from '@mui/icons-material'
 import { Avatar, Badge, Button, Paper } from '@mui/material'
-import CustomAvatar from '@/components/CustomAvatar'
+import CustomAvatar from '@/components/common/CustomAvatar'
 import logo from '@/assets/images/devHub-logo.png'
 import { Link } from 'react-router-dom'
 

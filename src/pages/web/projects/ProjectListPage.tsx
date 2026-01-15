@@ -1,9 +1,9 @@
 import { AccessTime, AddCircle, Favorite, FilterAlt, Search } from '@mui/icons-material'
 import { Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
-import CustomAvatar from '@/components/CustomAvatar';
+import CustomAvatar from '@/components/common/CustomAvatar';
 import type { ProjectCardProps, ProjectListResponse } from '@/api/projects/projects.type';
-import { ProgressRegionChip, RecruitmentChip } from './design/ProjectChips';
+import { ProgressRegionChip, RecruitmentChip } from '../../../components/projects/ProjectChips';
 import { useSelectProjects } from '@/api/projects/projects.json.hook';
 
 export default function ProjectListPage(){

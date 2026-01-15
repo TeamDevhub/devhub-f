@@ -1,4 +1,4 @@
-import CustomAvatar from '@/components/CustomAvatar'
+import CustomAvatar from '@/components/common/CustomAvatar'
 import { Create, Favorite, Person, Visibility } from '@mui/icons-material'
 import { Button, Chip, Divider, IconButton, Paper, TextField } from '@mui/material'
 import React from 'react'

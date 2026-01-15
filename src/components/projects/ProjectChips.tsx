@@ -1,6 +1,6 @@
 import { Chip } from '@mui/material';
 import { LocationOn } from '@mui/icons-material';
-import CustomAvatar from '@/components/CustomAvatar';
+import CustomAvatar from '@/components/common/CustomAvatar';
 
 // 1. 모집유형(일반/추가)
 const recruitmentCode = { "001" : "일반모집", "002" : "추가모집" } as const;
