@@ -12,12 +12,6 @@ export default function SignInPage1(){
     setEmail(event.target.value);
   };
 
-  // password textfield
-  const [showPassword, setShowPassword] = useState<boolean>(false)
-  const handleClickShowPassword = () => {
-    setShowPassword(prev => !prev)
-  }
-
   return (
     <div className='auth-page flex-center'>
       <div className="flex-col" style={{ gap: '0.8rem' }}>

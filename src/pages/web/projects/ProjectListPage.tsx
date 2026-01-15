@@ -1,12 +1,12 @@
 import { AccessTime, AddCircle, FilterAlt } from '@mui/icons-material'
-import { Button, Chip, Divider, FormControl, IconButton, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
-import React, { useState } from 'react'
+import { Button, Chip, Divider, FormControl, IconButton, MenuItem, Pagination, Paper, Select, type SelectChangeEvent } from '@mui/material'
 import CustomAvatar from '@/components/common/CustomAvatar';
 import type { ProjectListResponse } from '@/api/projects/projects.type';
 import { ProgressRegionChip, RecruitmentChip } from '../../../components/projects/ProjectChips';
 import { useSelectProjects } from '@/api/projects/projects.json.hook';
 import HeartButton from '@/components/common/HeartButton';
 import CustomTextfield from '@/components/common/CustomTextfield';
+import React, { useState } from 'react'
 
 export default function ProjectListPage(){
   // project summary select

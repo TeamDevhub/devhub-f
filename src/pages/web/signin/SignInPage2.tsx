@@ -2,8 +2,8 @@ import { PersonOutlined } from '@mui/icons-material'
 import { Button, Chip, Divider, Paper } from '@mui/material'
 import logo from '@/assets/images/devHub-logo.png'
 import { Link } from 'react-router-dom';
-import React from 'react'
 import CustomTextfield from '@/components/common/CustomTextfield';
+import React from 'react'
 
 export default function SignInPage2(){
   return (

@@ -4,7 +4,7 @@ import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGro
 import React, { useState } from 'react'
 
 export default function ProjectCreatePage(){
-  // recruit field
+  // recruit field select
   const [filter, setFilter] = useState('');
   const handleChange = (event: SelectChangeEvent) => {
     setFilter(event.target.value);

@@ -1,18 +1,12 @@
-import { Button, Divider, IconButton, InputAdornment, Paper, TextField } from '@mui/material'
-import React, { useState } from 'react'
+import { Button, Divider, Paper } from '@mui/material'
 import { Link } from 'react-router-dom'
 import logo from '@/assets/images/devHub-logo.png'
-import { GitHub,  Visibility, VisibilityOff } from '@mui/icons-material';
+import { GitHub } from '@mui/icons-material';
 import googleIcon from '@/assets/images/google-icon.svg'
 import CustomTextfield from '@/components/common/CustomTextfield';
+import React from 'react'
 
 export default function LoginPage(){
-  // password textfield
-  const [showPassword, setShowPassword] = useState<boolean>(false)
-  const handleClickShowPassword = () => {
-    setShowPassword(prev => !prev)
-  }
-
   return (
     <div className='auth-page flex-center'>
       <Paper className='auth-box flex-col' elevation={4}>
