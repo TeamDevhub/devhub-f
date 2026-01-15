@@ -1,15 +1,21 @@
-export interface ApiResponse<T> {
-  success: boolean;
-  code : string;
-  data?: T;
-  dataList?: T[];
-  pagination?: {
+export interface Pagination {
     page: number;
     size: number;
     totalPages: number;
     totalElements: number;
     first: boolean;
     last: boolean;
-  } | null;
-  error?: string | null;
 }
+
+export interface ApiResponse<T> {
+  success: boolean;
+  code : string;
+  data?: T;
+  dataList?: T[];
+  pagination?: Pagination | null;
+  error?: {
+    code: string;
+    message: string;
+  } | null;
+}
+

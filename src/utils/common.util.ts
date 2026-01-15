@@ -1,5 +1,4 @@
-import type { CommonCodeItem, CommonCodeMap } from "@/types/common.type";
-
+import type { CommonCode, CommonCodeItem, CommonCodeMap } from "@/types/common.type";
 
 let commonCodeStore: CommonCodeMap = {};
 
@@ -15,20 +14,20 @@ export const getCommonCodes = (): CommonCodeMap => {
   return commonCodeStore;
 };
 
-export const getCodesByGroup = (group: string): CommonCodeItem[] => {
+export const getCodesByGroup = (group: CommonCode): CommonCodeItem[] => {
   return commonCodeStore[group] ?? [];
 };
 
 export const getCodeName = (
-  group: string,
-  code: number
+  group: CommonCode,
+  code: string
 ): string => {
   return (
     commonCodeStore[group]?.find(item => item.code === code)?.name ?? ""
   );
 };
 
-export const getSelectOptions = (group: string) => {
+export const getSelectOptions = (group: CommonCode) => {
   return (commonCodeStore[group] ?? []).map(item => ({
     value: item.code,
     label: item.name

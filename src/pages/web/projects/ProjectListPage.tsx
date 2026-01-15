@@ -2,9 +2,11 @@ import { AccessTime, AddCircle, Favorite, FilterAlt, Search } from '@mui/icons-m
 import { Button, Chip, Divider, FormControl, IconButton, InputAdornment, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'
 import CustomAvatar from '@/components/common/CustomAvatar';
-import type { ProjectCardProps, ProjectListResponse } from '@/api/projects/projects.type';
-import { ProgressRegionChip, RecruitmentChip } from '../../../components/projects/ProjectChips';
+import type { ProjectListResponse } from '@/api/projects/projects.type';
+import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from '../../../components/projects/ProjectChips';
 import { useSelectProjects } from '@/api/projects/projects.json.hook';
+import { getCodeName } from '@/utils/common.util';
+import { COMMON_CODE } from '@/types/common.type';
 
 export default function ProjectListPage(){
 
@@ -35,7 +37,7 @@ export default function ProjectListPage(){
       </Paper>
       {/* 2. project summary */}
       <div className='page-summary w-100 align-center justify-between'>
-        <strong className='page-count'>전체 <em>23</em>개 프로젝트</strong>
+        <strong className='page-count'>전체 <em>{res?.pagination?.totalElements}</em>개 프로젝트</strong>
         <FormControl variant='standard'>
           <Select 
             id='filter' value={filter} onChange={handleChange} size='small' displayEmpty
@@ -153,79 +155,71 @@ export default function ProjectListPage(){
 
 function ProjectCard(projectData : ProjectListResponse){
   const {
-    category, 
     title, 
+    category, 
+    username, 
+    recruitmentTypeCd, // 모집유형
+    prgressRegionCd, // 진행 지역
     recruitmentStartDate, // 모집기간 시작일
     recruitmentEndDate, // 모집기간 마감일
     progressStartDate, // 진행기간 시작일
     progressEndDate, // 진행기간 마감일
-    username, 
-    regDt, // 작성일
     viewCount,
     likeCount,
-    recruitmentType, // 모집유형
-    prgressRegion
+    registeredDate, // 작성일
+    skillList,
+    positionList,
   } = projectData;
 
- return (
-  <Paper className='project-box w-100 h-fit flex' elevation={4}>
-    <div className='left-area flex-col flex-1'>
-      <div className='chip-box align-center'>
-        <Chip size='small' color='primary' label='모집중' />
-        <ProgressRegionChip region={prgressRegion} />       
-        <RecruitmentChip recruitmentType={recruitmentType} />
-        <Chip 
-          size='small' 
-          color='warning' 
-          label='D-13' 
-          icon={
-            <CustomAvatar 
-              size={18}
-              sx={{ backgroundColor: '#E65100' }}
-              avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
-            />
-          }
-        />
-      </div>
-      <strong className='main-text text-ellipsis'>{category} {title}</strong>
-      <div className='sub-text flex-col'>
-          <div className='top align-center'>
-              <div className='align-center'>
-                  <div className='title flex'><AccessTime />모집기간</div>
-                  <p className='flex'>{recruitmentStartDate} ~ {recruitmentEndDate}</p>
-              </div>
-              <div className='align-center'>
-                  <div className='title flex'><AccessTime />진행기간</div>
-                  <p>{progressStartDate} ~ {progressEndDate}</p>
-              </div>
-          </div>
-          <div className='bottom align-center justify-between'>
-            <p className='write-info'>{username} . {regDt}</p>
-            <p className='view-count'>view {viewCount}</p>
-          </div>
-      </div>
-    </div>
-    <Divider orientation='vertical' />
-    <div className='right-area flex-col justify-between'>
-      <div className='heart-box flex-col align-end'>
-        <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-        <p className='heart-count'>{likeCount}</p>
-      </div>
-      <div className='chip-box flex-col'>
-        {/* 문제점: css만으로는 넘치는 chip을 깔끔하게 자를 수 없음 js 처리해야함 */}
-        <div className='recruit-chip-box align-center'>
-          <Chip variant='outlined' color='primary' size='small' label='서버개발자' />
-          <Chip variant='outlined' color='primary' size='small' label='총괄기획' />
-          <Chip variant='outlined' color='primary' size='small' label='웹퍼블리셔' />
-          <Chip variant='outlined' color='primary' size='small' label='디자이너' />
+  return (
+    <Paper className='project-box w-100 h-fit flex' elevation={4}>
+      <div className='left-area flex-col flex-1'>
+        <div className='chip-box align-center'>
+          <RecruitStatusChip
+            recruitmentStartDate={recruitmentStartDate}
+            recruitmentEndDate={recruitmentEndDate}
+          />
+          <ProgressRegionChip regionCd={prgressRegionCd} />       
+          <RecruitmentChip recruitTypeCd={recruitmentTypeCd} />
+          <DDayChip recruitmentEndDate={recruitmentEndDate}/>
         </div>
-        <div className='tech-chip-box align-center flex-wrap'>
-          <Chip variant='outlined' color='secondary' size='small' label='JAVA' />
-          <Chip variant='outlined' color='secondary' size='small' label='ORACLE' />
-          <Chip variant='outlined' color='secondary' size='small' label='JS' />
+        <strong className='main-text text-ellipsis'>{category} {title}</strong>
+        <div className='sub-text flex-col'>
+            <div className='top align-center'>
+                <div className='align-center'>
+                    <div className='title flex'><AccessTime />모집기간</div>
+                    <p className='flex'>{recruitmentStartDate} ~ {recruitmentEndDate}</p>
+                </div>
+                <div className='align-center'>
+                    <div className='title flex'><AccessTime />진행기간</div>
+                    <p>{progressStartDate} ~ {progressEndDate}</p>
+                </div>
+            </div>
+            <div className='bottom align-center justify-between'>
+              <p className='write-info'>{username} . {registeredDate}</p>
+              <p className='view-count'>view {viewCount}</p>
+            </div>
         </div>
       </div>
-    </div>
-  </Paper>
- )
+      <Divider orientation='vertical' />
+      <div className='right-area flex-col justify-between'>
+        <div className='heart-box flex-col align-end'>
+          <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
+          <p className='heart-count'>{likeCount}</p>
+        </div>
+        <div className='chip-box flex-col'>
+          <div className='recruit-chip-box align-center'>
+            {positionList.map((position)=> 
+              (<Chip variant='outlined' color='primary' size='small' label={getCodeName(COMMON_CODE.POSITION_CODE, position.position)} />)
+            )}
+          </div>
+          <div className='tech-chip-box align-center flex-wrap'>
+            {skillList.map((skill)=> 
+              (<Chip variant='outlined' color='secondary' size='small' label={getCodeName(COMMON_CODE.SKILL_CODE, skill)} />)
+            )}
+          </div>
+        </div>
+      </div>
+    </Paper>
+  )
 }

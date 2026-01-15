@@ -33,8 +33,7 @@
   "PROJECT_RECRUIT_STATUS": [
     { "code": 3201, "parentCode": "PROJECT_RECRUIT_STATUS", "name": "모집중", "depth": 1 },
     { "code": 3202, "parentCode": "PROJECT_RECRUIT_STATUS", "name": "모집완료", "depth": 1 },
-    { "code": 3203, "parentCode": "PROJECT_RECRUIT_STATUS", "name": "모집취소", "depth": 1 },
-    { "code": 3204, "parentCode": "PROJECT_RECRUIT_STATUS", "name": "모집대기", "depth": 1 }
+    { "code": 3203, "parentCode": "PROJECT_RECRUIT_STATUS", "name": "모집대기", "depth": 1 }
   ],
 
   "PROJECT_APPROVAL_STATUS": [

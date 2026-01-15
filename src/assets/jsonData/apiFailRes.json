@@ -1,4 +1,8 @@
 {
   "success": false,
-  "code" : "SUC.DVH.0002"
+  "code" : "SUC.DVH.0002",
+  "error" : {
+    "code" : "ERROR..",
+    "message" : "error msg"
+  }
 }

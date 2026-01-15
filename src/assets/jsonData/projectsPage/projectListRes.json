@@ -8,73 +8,26 @@
       "username": "Goonerd",
       "category" : "[PG 플랫폼]",
       "title": "PG 플랫폼 구축 프로젝트 모집합니다.",
-      "recruitmentType": "001",
-      "positionResponseDtoList": [
-        {
-          "position": "001",
-          "capacity": 2,
-          "level": "001",
-          "full": false
-        },
-        {
-          "position": "002",
-          "capacity": 2,
-          "level": "002",
-          "full": false
-        },
-        {
-          "position": "003",
-          "capacity": 1,
-          "level": "001",
-          "full": false
-        }
-      ],
-      "skillList": [
-        "001",
-        "002",
-        "003",
-        "004"
-      ],
-      "progressPeriod" : "3",
-      "recruitmentStartDate" : "2025-12-25",
-      "recruitmentEndDate" : "2026-01-25",
-      "progressType" : "001",
-      "prgressRegion" : "001",    
-      "progressStartDate": "2026-01-26",
-      "progressEndDate": "2026-04-26",
-      "viewCount" : 10,
-      "likeCount" : 5,
-      "deleteYn" : "N",
-      "rgtrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "regDt": "2025-12-22T23:08:55.795686",
-      "mdfrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "mdfcnDt": "2025-12-22T23:08:55.795686" 
-    },
-    {
-      "projectGuid": "c1ba0f7821a54fc6a4561b4e06da4e76",
-      "userGuid": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "username": "Goonerd",
-      "category" : "[PG 플랫폼]",
-      "title": "PG 플랫폼 구축 프로젝트 모집합니다.",
-      "recruitmentType": "002",
+      "recruitmentTypeCd": "001",
+      "content": "",
       "positionList": [
         {
           "position": "001",
           "capacity": 2,
           "level": "001",
-          "full": false
+          "isFull": false
         },
         {
           "position": "002",
           "capacity": 2,
           "level": "002",
-          "full": false
+          "isFull": false
         },
         {
           "position": "003",
           "capacity": 1,
           "level": "001",
-          "full": false
+          "isFull": false
         }
       ],
       "skillList": [
@@ -86,209 +39,17 @@
       "progressPeriod" : "3",
       "recruitmentStartDate" : "2025-12-25",
       "recruitmentEndDate" : "2026-01-25",
-      "progressType" : "001",
-      "prgressRegion" : "002",    
+      "progressTypeCd" : "001",
+      "prgressRegionCd" : "001",    
       "progressStartDate": "2026-01-26",
       "progressEndDate": "2026-04-26",
-      "viewCount" : 10,
-      "likeCount" : 5,
+      "viewCount" : "10",
+      "likeCount" : "5",
       "deleteYn" : "N",
-      "rgtrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "regDt": "2025-12-22T23:08:55.795686",
-      "mdfrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "mdfcnDt": "2025-12-22T23:08:55.795686"
-    },
-    {
-      "projectGuid": "c1ba0f7821a54fc6a4561b4e06da4e76",
-      "userGuid": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "username": "Goonerd",
-      "category" : "[PG 플랫폼]",
-      "title": "PG 플랫폼 구축 프로젝트 모집합니다.",
-      "recruitmentType": "002",
-      "positionList": [
-        {
-          "position": "001",
-          "capacity": 2,
-          "level": "001",
-          "full": false
-        },
-        {
-          "position": "002",
-          "capacity": 2,
-          "level": "002",
-          "full": false
-        },
-        {
-          "position": "003",
-          "capacity": 1,
-          "level": "001",
-          "full": false
-        }
-      ],
-      "skillList": [
-        "001",
-        "002",
-        "003",
-        "004"
-      ],
-      "progressPeriod" : "3",
-      "recruitmentStartDate" : "2025-12-25",
-      "recruitmentEndDate" : "2026-01-25",
-      "progressType" : "001",
-      "prgressRegion" : "002",    
-      "progressStartDate": "2026-01-26",
-      "progressEndDate": "2026-04-26",
-      "viewCount" : 10,
-      "likeCount" : 5,
-      "deleteYn" : "N",
-      "rgtrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "regDt": "2025-12-22T23:08:55.795686",
-      "mdfrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "mdfcnDt": "2025-12-22T23:08:55.795686"
-    },
-    {
-      "projectGuid": "c1ba0f7821a54fc6a4561b4e06da4e76",
-      "userGuid": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "username": "Goonerd",
-      "category" : "[PG 플랫폼]",
-      "title": "PG 플랫폼 구축 프로젝트 모집합니다.",
-      "recruitmentType": "001",
-      "positionList": [
-        {
-          "position": "001",
-          "capacity": 2,
-          "level": "001",
-          "full": false
-        },
-        {
-          "position": "002",
-          "capacity": 2,
-          "level": "002",
-          "full": false
-        },
-        {
-          "position": "003",
-          "capacity": 1,
-          "level": "001",
-          "full": false
-        }
-      ],
-      "skillList": [
-        "001",
-        "002",
-        "003",
-        "004"
-      ],
-      "progressPeriod" : "3",
-      "recruitmentStartDate" : "2025-12-25",
-      "recruitmentEndDate" : "2026-01-25",
-      "progressType" : "001",
-      "prgressRegion" : "002",    
-      "progressStartDate": "2026-01-26",
-      "progressEndDate": "2026-04-26",
-      "viewCount" : 10,
-      "likeCount" : 5,
-      "deleteYn" : "N",
-      "rgtrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "regDt": "2025-12-22T23:08:55.795686",
-      "mdfrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "mdfcnDt": "2025-12-22T23:08:55.795686"
-    },
-    {
-      "projectGuid": "c1ba0f7821a54fc6a4561b4e06da4e76",
-      "userGuid": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "username": "Goonerd",
-      "category" : "[PG 플랫폼]",
-      "title": "PG 플랫폼 구축 프로젝트 모집합니다.",
-      "recruitmentType": "001",
-      "positionList": [
-        {
-          "position": "001",
-          "capacity": 2,
-          "level": "001",
-          "full": false
-        },
-        {
-          "position": "002",
-          "capacity": 2,
-          "level": "002",
-          "full": false
-        },
-        {
-          "position": "003",
-          "capacity": 1,
-          "level": "001",
-          "full": false
-        }
-      ],
-      "skillList": [
-        "001",
-        "002",
-        "003",
-        "004"
-      ],
-      "progressPeriod" : "3",
-      "recruitmentStartDate" : "2025-12-25",
-      "recruitmentEndDate" : "2026-01-25",
-      "progressType" : "001",
-      "prgressRegion" : "002",    
-      "progressStartDate": "2026-01-26",
-      "progressEndDate": "2026-04-26",
-      "viewCount" : 10,
-      "likeCount" : 5,
-      "deleteYn" : "N",
-      "rgtrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "regDt": "2025-12-22T23:08:55.795686",
-      "mdfrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "mdfcnDt": "2025-12-22T23:08:55.795686"
-    },
-    {
-      "projectGuid": "c1ba0f7821a54fc6a4561b4e06da4e76",
-      "userGuid": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "username": "Goonerd",
-      "category" : "[PG 플랫폼]",
-      "title": "PG 플랫폼 구축 프로젝트 모집합니다.",
-      "recruitmentType": "001",
-      "positionList": [
-        {
-          "position": "001",
-          "capacity": 2,
-          "level": "001",
-          "full": false
-        },
-        {
-          "position": "002",
-          "capacity": 2,
-          "level": "002",
-          "full": false
-        },
-        {
-          "position": "003",
-          "capacity": 1,
-          "level": "001",
-          "full": false
-        }
-      ],
-      "skillList": [
-        "001",
-        "002",
-        "003",
-        "004"
-      ],
-      "progressPeriod" : "3",
-      "recruitmentStartDate" : "2025-12-25",
-      "recruitmentEndDate" : "2026-01-25",
-      "progressType" : "001",
-      "prgressRegion" : "002",    
-      "progressStartDate": "2026-01-26",
-      "progressEndDate": "2026-04-26",
-      "viewCount" : 10,
-      "likeCount" : 5,
-      "deleteYn" : "N",
-      "rgtrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "regDt": "2025-12-22T23:08:55.795686",
-      "mdfrId": "e5gz6s9851b54dd234561b4e24mn8t12",
-      "mdfcnDt": "2025-12-22T23:08:55.795686"
+      "registerId": "e5gz6s9851b54dd234561b4e24mn8t12",
+      "registeredDate": "2025-12-22T23:08:55.795686",
+      "modifiderId": "e5gz6s9851b54dd234561b4e24mn8t12",
+      "modifiedDate": "2025-12-22T23:08:55.795686" 
     }
 	  ],
     "pagination" : {

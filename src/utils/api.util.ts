@@ -1,5 +1,5 @@
 import type { ApiResponse } from '@/types/api.type';
-import { ErrorCode } from '@/types/common.type';
+import { ERROR_CODE } from '@/types/common.type';
 import { getLocalStorage } from '@/utils/common.util';
 import axios, {
   AxiosError,
@@ -60,10 +60,10 @@ const responseErrorInterceptor = async (err: unknown) => {
   
   //에러 인터페이스에 따라 처리 추후 추가
   if (status === 401) {
-    if (errorCode === ErrorCode.EXPIRE_ACCESS_TOKEN) {
+    if (errorCode === ERROR_CODE.EXPIRE_ACCESS_TOKEN) {
         // 리프레쉬토큰 발급
-    } else if ( errorCode === ErrorCode.DUP_LOGIN ) {
-    } else if (errorCode === ErrorCode.SIGNATURE_ERROR_ACCESS_TOKEN) {
+    } else if ( errorCode === ERROR_CODE.DUP_LOGIN ) {
+    } else if (errorCode === ERROR_CODE.SIGNATURE_ERROR_ACCESS_TOKEN) {
     } else {
       try {
             // signOut();

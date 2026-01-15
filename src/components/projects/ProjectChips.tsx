@@ -1,28 +1,57 @@
-import { Chip } from '@mui/material';
-import { LocationOn } from '@mui/icons-material';
+import { Chip, type ChipProps } from '@mui/material';
+import { AccessTime, LocationOn } from '@mui/icons-material';
 import CustomAvatar from '@/components/common/CustomAvatar';
+import { getCodeName } from '@/utils/common.util';
+import { COMMON_CODE, PROJECT_PROGRESS_TYPE, PROJECT_RECRUIT_TYPE } from '@/types/common.type';
+import { getDiffDays, getTodayStr, isBetween, isPast } from '@/utils/date.util';
 
-// 1. 모집유형(일반/추가)
-const recruitmentCode = { "001" : "일반모집", "002" : "추가모집" } as const;
+export const RecruitStatusChip = ({ 
+    recruitmentStartDate, 
+    recruitmentEndDate
+}: { 
+    recruitmentStartDate: string,
+    recruitmentEndDate: string
+}) => {
+    const today = getTodayStr();
+    
+    let color: ChipProps['color'] = "default";
+    let name = "";
 
-export const RecruitmentChip = ({ recruitmentType }: { recruitmentType: string }) => {
-	if (recruitmentType !== '002') return null;
+    if (isPast(today, recruitmentStartDate)) {
+        color = "default";
+        name = PROJECT_PROGRESS_TYPE.WAITING.NAME;
+    } else if (isBetween(today, recruitmentStartDate, recruitmentEndDate)) {
+        color = "primary";
+        name = PROJECT_PROGRESS_TYPE.RECRUITING.NAME;
+    } else {
+        color = "success";
+        name = PROJECT_PROGRESS_TYPE.COMPLETED.NAME;
+    }
 
+    return (
+        <Chip size="small" color={color} label={name} />
+    );
+};
+
+// 모집유형(일반/추가)
+export const RecruitmentChip = ({ recruitTypeCd }: { recruitTypeCd: string }) => {
+	//PROJECT_RECRUIT_TYPE
+	if(recruitTypeCd == PROJECT_RECRUIT_TYPE.ADDITIONAL.CODE) return;
+
+	const recruitCdName = getCodeName(COMMON_CODE.PROJECT_RECRUIT_TYPE, recruitTypeCd);
 	return (
-		<Chip size="small" color="error" label={recruitmentCode[recruitmentType]}/>
+		<Chip size="small" color="error" label={recruitCdName}/>
 	);
 };
 
-// 2. 지역
-const prgressRegionCode = { "001" : "서울", "002" : "경기" ,"003" : "부산" } as const;
+// 지역
+export const ProgressRegionChip = ({ regionCd }: { regionCd: string }) => {
 
-export const ProgressRegionChip = ({ region }: { region: string }) => {
-	const name = prgressRegionCode[region as keyof typeof prgressRegionCode] ?? '';
-
+	const regionCdName = getCodeName(COMMON_CODE.REGION_CODE, regionCd);
 	return (
 		<Chip 
 			size='small' 
-			label={name} 
+			label={regionCdName} 
 			icon={
 				<CustomAvatar
 					size={18}
@@ -34,4 +63,26 @@ export const ProgressRegionChip = ({ region }: { region: string }) => {
 	)
 };
 
+export const DDayChip = ({ 
+    recruitmentEndDate
+}: { 
+    recruitmentEndDate: string
+}) => {
+    const today = getTodayStr();
+    const dday = getDiffDays(today, recruitmentEndDate);
 
+    return (
+		<Chip 
+		size='small' 
+		color='warning' 
+		label={`D-${dday}`}
+		icon={
+			<CustomAvatar 
+			size={18}
+			sx={{ backgroundColor: '#E65100' }}
+			avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
+			/>
+		}
+		/>
+    );
+};
