@@ -3,7 +3,7 @@ import { IconButton } from '@mui/material'
 import React, { useState } from 'react'
 
 export interface HeartButtonProps {
-  likeCount: number;
+  likeCount: string;
 }
 
 export default function HeartButton({likeCount}: HeartButtonProps){
