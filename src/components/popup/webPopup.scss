@@ -1,0 +1,31 @@
+.back-drop{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  overflow: hidden;
+
+  .web-popup{
+    position: relative;
+    margin: auto;
+    margin-top: max(auto, 180px);
+
+    .popup-title-box{
+      padding: 24px 12px;
+      background: linear-gradient(180deg, rgba(66, 165, 245, 0.08) 0%, rgba(186, 104, 200, 0.06) 100%);
+      .popup-title{
+        color: #fff;  
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 100%;
+      }
+    }
+
+    .popup-button-box{
+      padding: 24px;
+    }
+  }
+}
+

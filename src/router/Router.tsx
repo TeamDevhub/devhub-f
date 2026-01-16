@@ -14,6 +14,7 @@ import BoardModifyPage from '@/pages/web/boards/BoardModifyPage';
 import LoginPage from '@/pages/web/login/LoginPage';
 import SignInPage1 from '@/pages/web/signin/SignInPage1';
 import SignInPage2 from '@/pages/web/signin/SignInPage2';
+import ProjectList from '@/pages/web/projects/ProjectList';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
           {
             path: 'apply',
             element: <ProjectApplyPage />
+          },
+          {
+            path: 'dev-list',
+            element: <ProjectList />
           },
         ]
       },
