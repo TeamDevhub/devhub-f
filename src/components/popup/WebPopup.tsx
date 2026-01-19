@@ -1,15 +1,16 @@
 import React from 'react'
-import { Button, IconButton, Paper } from '@mui/material'
+import { Button, Dialog, IconButton, Paper } from '@mui/material'
 import { Close } from '@mui/icons-material';
 
 export interface WebPopupProps{
   title:string;
   onClose?:()=>void;
-  onSubmit:()=>void;
+  onSubmit?:()=>void;
   children:React.ReactNode;
   isOpen:boolean;
   setOpen:(open:boolean)=>void;
-  submitText:string
+  submitText?:string;
+  size?: "small" | "large" | "medium"
 }
 export default function WebPopup({
   title,
@@ -18,36 +19,43 @@ export default function WebPopup({
   children,
   isOpen,
   setOpen,
-  submitText,
+  submitText='확인',
+  size = 'small'
 }:WebPopupProps) {
-
-  if (!isOpen) return null;
 
   const handleClose = () => {
     onClose && onClose();
     setOpen(false);
   }
   const handleSubmit = () => {
-    onSubmit();
+    onSubmit && onSubmit();
+    setOpen(false);
+  }
+
+  let _size : string;
+  switch(size){
+    case 'large' : _size = '1200'; break;
+    case 'medium' : _size = '800'; break;
+    case 'small' : _size = '400'; break;
   }
 
   return (
-    <div className='back-drop'>
+    <Dialog open={isOpen} onClose={handleClose} scroll='body'>
       <Paper className='web-popup' elevation={4}>
-        <div className='popup-title-box flex-col justify-between align-center'>
+        <div className='popup-title-box justify-between align-center'>
           <p className='popup-title'>{title}</p>
           <IconButton onClick={handleClose}>
             <Close color='primary' fontSize='medium'></Close>
           </IconButton>
         </div>
-        <div>
+        <div style={{width:`${_size}px`}}>
           {children}
         </div>
-        <div className='popup-button-box flex-col align-center'>
+        <div className='popup-button-box align-center'>
           <Button className='w-100' variant='outlined' onClick={handleClose}>취소</Button>
           <Button className='w-100' variant='contained' onClick={handleSubmit}>{submitText}</Button>
         </div>
       </Paper>
-    </div>
+    </Dialog>
   )
 }
