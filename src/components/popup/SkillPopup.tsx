@@ -7,19 +7,19 @@ import { Button } from '@mui/material';
 import type { CommonCodeItem } from '@/types/common.type';
 
 export interface SkillPopupProps{
-  onClose?:()=>void;
   isOpen:boolean;
-  setOpen:(open:boolean)=>void;
   values:string[],
+  setOpen:(open:boolean)=>void;
   setValues: (value: string[]) => void;
+  onClose?:()=>void;
 }
 
 export default function SkillPopup({
-  onClose,
   isOpen,
-  setOpen,
   values,
+  setOpen,
   setValues,
+  onClose,
 }:SkillPopupProps) {
 
   const [skillCode, setSkillCode] = useState<CommonCodeItem[]>([]);

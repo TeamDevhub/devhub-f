@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FilterAlt } from '@mui/icons-material'
-import { Button, Divider, FormControl, MenuItem, Pagination, Paper, Select, type SelectChangeEvent } from '@mui/material'
+import { Button, Divider, FormControl, MenuItem, Pagination, Paper, Select, TextField, type SelectChangeEvent } from '@mui/material'
 import { useSelectProjects } from '@/api/projects/projects.json.hook';
 import CustomTextfield from '@/components/common/CustomTextfield';
 import ProjectCard from './ProjectCard';
@@ -8,6 +8,8 @@ import FilterBox from './FilterBox';
 import { COMMON_CODE } from '@/types/common.type';
 import type { ProjectSearchRequest } from '@/api/projects/projects.type';
 import SkillPopup from '@/components/popup/SkillPopup';
+import WebPopup from '@/components/popup/WebPopup';
+import { DatePicker } from '@mui/x-date-pickers';
 
 export default function ProjectListPage(){
   // api (개발)
@@ -43,18 +45,16 @@ export default function ProjectListPage(){
       }));
   };
   
-  const handleResetFilter = () => {
-    setSearchData(initData);
-  }
+  const handleResetFilter = () => {setSearchData(initData);}
 
-  const clickOpenSkillPopup = () => { setOpenSkillPopup(true); }
-  const clickOpenFilterPopup = () => { setOpenFilterPopup(true); }
+  const clickOpenSkillPopup = () => {setOpenSkillPopup(true);}
+  const clickOpenFilterPopup = () => {setOpenFilterPopup(true);}
 
 
   return (
     <main className='main-page flex-col h-fit'>
 
-      <Paper className='search-box align-center' elevation={4}>
+      <Paper className='search-box align-stretch' elevation={4}>
         <CustomTextfield size='small' type='search' placeholder='프로젝트 명을 입력해 주세요.' />
         <Button size='medium' variant='contained'>검색</Button>
       </Paper>
@@ -70,64 +70,11 @@ export default function ProjectListPage(){
 
       <div className='project-list-box wh-100 flex flex-1'>
         <Paper className='left-filter-bar flex-col flex-grow' elevation={4}>
-          <Button className='reset-btn' size='small' variant='text' onClick={handleResetFilter}>초기화</Button>
-          <FilterBox
-            title='필터'
-            subText='원하는 조건으로 검색하세요'
-            type='button'
-            codeName={COMMON_CODE.PROJECT_RECRUIT_STATUS}
-            values={searchData.projectRecruitStatusList}
-            setValues={handleStateChange('projectRecruitStatusList')}
-          />
-          <Divider />
-          <FilterBox
-            title='모집구분'
-            subText='모집구분'
-            type='button'
-            codeName={COMMON_CODE.PROJECT_RECRUIT_TYPE}
-            values={searchData.projectRecruitTypeList}
-            setValues={handleStateChange('projectRecruitTypeList')}
-          />
-          <Divider />
-          <FilterBox
-            title='모집분야'
-            subText='모집분야'
-            type='chip'
-            codeName={COMMON_CODE.POSITION_CODE}
-            values={searchData.positionCodeList}
-            setValues={handleStateChange('positionCodeList')}
-          />
-          <Divider />
-          <FilterBox
-            title='요구 능력치'
-            subText='요구 능력치'
-            type='button'
-            codeName={COMMON_CODE.POSITION_LEVEL_CODE}
-            values={searchData.positionLevelCodeList}
-            setValues={handleStateChange('positionLevelCodeList')}
-          />
-          <Divider />
-          <FilterBox
-            title='기술 스텍'
-            subText='기술 스텍'
-            type='addableChip'
-            codeName={COMMON_CODE.SKILL_CODE}
-            values={searchData.skillCodeList}
-            setValues={handleStateChange('skillCodeList')}
-            onClickAddBtn={clickOpenSkillPopup}
-          />
-          <Divider />
-          <FilterBox
-            title='진행 기간'
-            subText='진행 기간'
-            type='button'
-            options={[
-              {code: '1', name: '1개월'},
-              {code: '3', name: '3개월'},
-              {code: '6', name: '6개월'},
-            ]}
-            values={searchData.progressPeriodList}
-            setValues={handleStateChange('progressPeriodList')}
+          <FilterList 
+            searchData={searchData} 
+            clickOpenSkillPopup={clickOpenSkillPopup} 
+            handleResetFilter={handleResetFilter} 
+            handleStateChange={handleStateChange}
           />
           <div className='filter-button-box w-100 align-center'>
               <Button className='flex-1' size='small' variant='outlined' startIcon={<FilterAlt />} onClick={clickOpenFilterPopup}>상세 필터</Button>
@@ -145,8 +92,162 @@ export default function ProjectListPage(){
           </div>
         </div>
       </div>
-
       <SkillPopup isOpen={openSkillPopup} setOpen={setOpenSkillPopup} values={searchData.skillCodeList} setValues={handleStateChange('skillCodeList')}/>
+      <WebPopup
+        isOpen={openFilterPopup}
+        setOpen={setOpenFilterPopup}
+        onSubmit={refetch}
+        title='상태 필터'
+        submitText='적용'
+      >
+        <div className='left-filter-bar flex-col flex-grow' style={{width:'100%'}}>
+          <FilterList 
+            searchData={searchData} 
+            clickOpenSkillPopup={clickOpenSkillPopup} 
+            handleResetFilter={handleResetFilter} 
+            handleStateChange={handleStateChange}
+          />
+          <Divider />
+          <div className='filter-box flex-col'>
+            <div className='filter-title align-start justify-between'>
+              <div className='text-box flex-col'>
+                <strong>모집기간</strong>
+                <p>모집기간</p>
+              </div>
+            </div>
+            <div className='filter-options align-center'>
+              <DatePicker
+                slotProps={{
+                  textField: {
+                    size: 'small'
+                  },
+                }}
+              />
+              ~
+              <DatePicker
+                slotProps={{
+                  textField: {
+                    size: 'small'
+                  },
+                }}
+              />
+            </div>
+          </div>
+          <Divider />
+          <div className='filter-box flex-col'>
+            <div className='filter-title align-start justify-between'>
+              <div className='text-box flex-col'>
+                <strong>프로젝트 시작 일자</strong>
+                <p>프로젝트 시작 일자</p>
+              </div>
+            </div>
+            <div className='filter-options align-center'>
+              <DatePicker
+                slotProps={{
+                  textField: {
+                    size: 'small',
+                  },
+                }}
+              />
+            </div>
+          </div>
+          <Divider />
+          <FilterBox
+            title='진행방식'
+            subText='진행방식'
+            type='button'
+            codeName={COMMON_CODE.PROJECT_RECRUIT_TYPE}
+            values={searchData.projectRecruitTypeList}
+            setValues={handleStateChange('projectRecruitTypeList')}
+          />
+          <Divider />
+          <FilterBox
+            title='진행지역'
+            subText='진행지역'
+            type='addableChip'
+            codeName={COMMON_CODE.PROJECT_RECRUIT_TYPE}
+            values={searchData.projectRecruitTypeList}
+            setValues={handleStateChange('projectRecruitTypeList')}
+            onClickAddBtn={clickOpenSkillPopup}
+          />
+        </div>
+      </WebPopup>
     </main>
+  )
+}
+
+function FilterList({
+  searchData,
+  handleResetFilter,
+  handleStateChange,
+  clickOpenSkillPopup
+}:{
+  searchData:ProjectSearchRequest;
+  handleStateChange: (key: keyof ProjectSearchRequest) => (newCodes: string[]) => void
+  handleResetFilter: () => void;
+  clickOpenSkillPopup: () => void;
+}){
+  return (
+    <>
+      <Button className='reset-btn' size='small' variant='text' onClick={handleResetFilter}>초기화</Button>
+      <FilterBox
+        title='필터'
+        subText='원하는 조건으로 검색하세요'
+        type='button'
+        codeName={COMMON_CODE.PROJECT_RECRUIT_STATUS}
+        values={searchData.projectRecruitStatusList}
+        setValues={handleStateChange('projectRecruitStatusList')}
+      />
+      <Divider />
+      <FilterBox
+        title='모집구분'
+        subText='모집구분'
+        type='button'
+        codeName={COMMON_CODE.PROJECT_RECRUIT_TYPE}
+        values={searchData.projectRecruitTypeList}
+        setValues={handleStateChange('projectRecruitTypeList')}
+      />
+      <Divider />
+      <FilterBox
+        title='모집분야'
+        subText='모집분야'
+        type='chip'
+        codeName={COMMON_CODE.POSITION_CODE}
+        values={searchData.positionCodeList}
+        setValues={handleStateChange('positionCodeList')}
+      />
+      <Divider />
+      <FilterBox
+        title='요구 능력치'
+        subText='요구 능력치'
+        type='button'
+        codeName={COMMON_CODE.POSITION_LEVEL_CODE}
+        values={searchData.positionLevelCodeList}
+        setValues={handleStateChange('positionLevelCodeList')}
+      />
+      <Divider />
+      <FilterBox
+        title='기술 스텍'
+        subText='기술 스텍'
+        type='addableChip'
+        codeName={COMMON_CODE.SKILL_CODE}
+        values={searchData.skillCodeList}
+        setValues={handleStateChange('skillCodeList')}
+        onClickAddBtn={clickOpenSkillPopup}
+      />
+      <Divider />
+      <FilterBox
+        title='진행 기간'
+        subText='진행 기간'
+        type='button'
+        options={[
+          {code: '1', name: '1개월'},
+          {code: '3', name: '3개월'},
+          {code: '6', name: '6개월'},
+        ]}
+        values={searchData.progressPeriodList}
+        setValues={handleStateChange('progressPeriodList')}
+      />
+    </>
   )
 }
