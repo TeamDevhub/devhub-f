@@ -60,6 +60,12 @@
   }
 }
 
+@for $i from 1 through 20 {
+  .gap-#{$i * 4} {
+    gap: #{$i * 4}px !important;
+  }
+}
+
 /* auto */
 .mt-a { margin-top: auto !important; }
 .ml-a { margin-left: auto !important; }

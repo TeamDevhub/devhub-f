@@ -6,7 +6,8 @@
     /* 1. project */
     // 1-1. project list
     .project-list-box { gap: 1.4rem;
-      .left-filter-bar { width: 26rem; min-width: 26rem; padding: 2rem; gap: 1.2rem;
+      .left-filter-bar { width: 26rem; min-width: 26rem; padding: 2rem; gap: 1.2rem; position: relative;
+        .reset-btn {position: absolute; top: 2rem; right: 2rem;}
         .filter-box { gap: 0.8rem;
           .filter-title {
             .text-box { gap: 0.4rem; 
@@ -199,5 +200,27 @@
         .MuiSvgIcon-root { font-size: 1.2rem; }
       }
     }
+  }
+
+}
+
+.web-popup{
+  width: fit-content;
+  position: relative;
+
+  .popup-title-box{
+    padding: 12px 24px;
+    background: linear-gradient(to right, rgba(66, 165, 245, 1) 0%, rgba(156, 39, 176, 0.3));
+    .popup-title{
+      color: #fff;  
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 100%;
+    }
+  }
+
+  .popup-button-box{
+    gap: 4px;
+    padding: 24px;
   }
 }

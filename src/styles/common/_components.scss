@@ -70,6 +70,10 @@
   &.MuiTab-root { padding: 0.9rem 1.6rem !important; font-size: 1.4rem; font-weight: 500; line-height: 2.4rem; letter-spacing: 0.4px; color: var(--text-secondary); }
 }
 
+.MuiDialog-container {
+  padding: 120px 0;
+}
+
 /*** CUSTOM ***/
 // 1. heart button
 .heart-box { 
