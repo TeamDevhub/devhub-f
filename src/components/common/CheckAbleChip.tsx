@@ -1,6 +1,5 @@
 import type { CheckAbleComponentProps } from "@/types/components.type";
 import { Chip } from "@mui/material";
-import { useState } from "react";
 
 export default function CheckAbleChip({
   name,
@@ -10,11 +9,8 @@ export default function CheckAbleChip({
   ...res
 } : CheckAbleComponentProps){
 
-  const [_checked, setChecked] = useState<boolean>(checked);
   const handleOnClick = () => {
-    const returnChecked = !_checked;
-    setChecked(returnChecked);
-    onClick(value, returnChecked);
+    onClick(value, !checked);
   }
 
   return (
@@ -24,7 +20,7 @@ export default function CheckAbleChip({
       label={name} 
       clickable 
       onClick={handleOnClick}
-      color={_checked ? 'primary' : 'default'}
+      color={checked ? 'primary' : 'default'}
       {...res}
     />
   )

@@ -57,12 +57,16 @@ export default function FilterBox({
     setValues((prev) => prev.filter((item) => item != value));
   }
 
+  const hasValue = (value: string) => {
+    return values.includes(value);
+  }
+
   const setButtonGroup = () => {
     return (
       <>
         {useAll && <CheckAbleButton name='전체' value='' checked={true} onClick={handleOnClick}/>}
         {codeGroup.map((item)=>(
-          <CheckAbleButton name={item.name} value={item.code} onClick={handleOnClick}/>
+          <CheckAbleButton checked={hasValue(item.code)} name={item.name} value={item.code} onClick={handleOnClick}/>
         ))}
       </>
     )
@@ -73,7 +77,7 @@ export default function FilterBox({
       <>
         {useAll && <CheckAbleChip name='전체' value='' checked={true} onClick={handleOnClick}/>}
         {codeGroup.map((item)=>(
-          <CheckAbleChip name={item.name} value={item.code} onClick={handleOnClick}/>
+          <CheckAbleChip checked={hasValue(item.code)} name={item.name} value={item.code} onClick={handleOnClick}/>
         ))}
       </>
     )
