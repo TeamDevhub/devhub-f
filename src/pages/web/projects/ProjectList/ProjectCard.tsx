@@ -61,13 +61,13 @@ export default function ProjectCard(projectData : ProjectDetail){
         </div>
         <div className='chip-box flex-col'>
           <div className='recruit-chip-box align-center'>
-            {positionList.map((position)=> 
-              (<Chip variant='outlined' color='primary' size='small' label={getCodeName(COMMON_CODE.POSITION_CODE, position.position)} />)
+            {positionList.map((position, index)=> 
+              (<Chip key={index} variant='outlined' color='primary' size='small' label={getCodeName(COMMON_CODE.POSITION_CODE, position.position)} />)
             )}
           </div>
           <div className='tech-chip-box align-center flex-wrap'>
-            {skillList.map((skill)=> 
-              (<Chip variant='outlined' color='secondary' size='small' label={getCodeName(COMMON_CODE.SKILL_CODE, skill)} />)
+            {skillList.map((skill, index)=> 
+              (<Chip key={index} variant='outlined' color='secondary' size='small' label={getCodeName(COMMON_CODE.SKILL_CODE, skill)} />)
             )}
           </div>
         </div>

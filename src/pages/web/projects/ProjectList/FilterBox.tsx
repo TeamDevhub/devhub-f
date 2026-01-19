@@ -4,7 +4,7 @@ import type { CommonCode, CommonCodeItem } from "@/types/common.type";
 import { getCodesByGroup, getCodeName } from "@/utils/common.util";
 import { AddCircle } from "@mui/icons-material";
 import { Chip, IconButton } from "@mui/material";
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, useState } from "react";
 
 export interface FilterBoxProps {
   title: string;
@@ -14,7 +14,8 @@ export interface FilterBoxProps {
   options?: CommonCodeItem[];
   useAll?: boolean;
   values: string[];
-  setValues: Dispatch<SetStateAction<string[]>>
+  setValues: (value: string[]) => void;
+  onClickAddBtn?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function FilterBox({
@@ -26,15 +27,18 @@ export default function FilterBox({
   useAll = false,
   values,
   setValues,
+  onClickAddBtn,
 } : FilterBoxProps){
 
-  let codeGroup :CommonCodeItem[] = [];
+  const [codeGroup, setCodeGroup] = useState<CommonCodeItem[]>([]);
 
-  if(codeName){
-    codeGroup = getCodesByGroup(codeName);
-  }else if(options){
-    codeGroup = options;
-  }
+  useEffect(()=>{
+    if(codeName){
+      setCodeGroup(getCodesByGroup(codeName));
+    }else if(options){
+      setCodeGroup(options);
+    }
+  },[])
 
   const getName = (v: string) => {
     if(codeName){
@@ -42,19 +46,18 @@ export default function FilterBox({
     }else if(options){
       options.find(item => item.code === v)?.name ?? ""
     }
-    
   }
 
   const handleOnClick = (value:string, checked:boolean) => {
     if(checked){
-      setValues((prev) => [...prev, value]);
+      setValues([...values, value]);
     }else{
-      setValues((prev) => prev.filter((item) => item != value));
+      handleOnDelete(value);
     }
   }
 
   const handleOnDelete = (value:string) => {
-    setValues((prev) => prev.filter((item) => item != value));
+    setValues(values.filter((item) => item != value));
   }
 
   const hasValue = (value: string) => {
@@ -65,8 +68,8 @@ export default function FilterBox({
     return (
       <>
         {useAll && <CheckAbleButton name='전체' value='' checked={true} onClick={handleOnClick}/>}
-        {codeGroup.map((item)=>(
-          <CheckAbleButton checked={hasValue(item.code)} name={item.name} value={item.code} onClick={handleOnClick}/>
+        {codeGroup.map((item, index)=>(
+          <CheckAbleButton key={index} checked={hasValue(item.code)} name={item.name} value={item.code} onClick={handleOnClick}/>
         ))}
       </>
     )
@@ -76,8 +79,8 @@ export default function FilterBox({
     return (
       <>
         {useAll && <CheckAbleChip name='전체' value='' checked={true} onClick={handleOnClick}/>}
-        {codeGroup.map((item)=>(
-          <CheckAbleChip checked={hasValue(item.code)} name={item.name} value={item.code} onClick={handleOnClick}/>
+        {codeGroup.map((item, index)=>(
+          <CheckAbleChip key={index} checked={hasValue(item.code)} name={item.name} value={item.code} onClick={handleOnClick}/>
         ))}
       </>
     )
@@ -86,10 +89,10 @@ export default function FilterBox({
   const setAddableChipGroup = () => {
     return (
       <>
-        {values.map((v)=>(
-          <Chip size='small' variant='filled' label={getName(v)} color='primary' clickable onDelete={()=>{handleOnDelete(v)}} />
+        {values.map((v, index)=>(
+          <Chip key={index} size='small' variant='filled' label={getName(v)} color='primary' clickable onDelete={()=>{handleOnDelete(v)}} />
         ))}
-        <IconButton size='small'><AddCircle sx={{ fontSize: 24, color: 'primary.main' }} /></IconButton>
+        <IconButton size='small' onClick={onClickAddBtn}><AddCircle sx={{ fontSize: 24, color: 'primary.main' }} /></IconButton>
       </>
     )
   }

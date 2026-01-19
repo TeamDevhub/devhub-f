@@ -136,8 +136,8 @@ export default function ProjectListPage(){
         </Paper>
         {/* 4. project list */}
         <div className='project-list flex-col align-center'>
-          {res?.dataList?.map((item)=>{
-            return <ProjectCard {...item}></ProjectCard>
+          {res?.dataList?.map((item, index)=>{
+            return <ProjectCard {...item} key={index}></ProjectCard>
           })}
           <div className='list-bottom-box w-100 align-center mt-a'>
             <Pagination count={10} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
@@ -205,8 +205,8 @@ function ProjectCard(projectData : ProjectListResponse){
         </div>
         <div className='chip-box flex-col'>
           <div className='recruit-chip-box align-center'>
-            {positionList.map((position)=> 
-              (<Chip variant='outlined' color='primary' size='small' label={getCodeName(COMMON_CODE.POSITION_CODE, position.position)} />)
+            {positionList.map((position, index)=> 
+              (<Chip key={index} variant='outlined' color='primary' size='small' label={getCodeName(COMMON_CODE.POSITION_CODE, position.position)} />)
             )}
           </div>
           <div className='tech-chip-box align-center flex-wrap'>

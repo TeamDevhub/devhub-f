@@ -34,7 +34,14 @@ export interface ProjectDetail extends ProjectBasic {
 }
 
 export interface ProjectSearchRequest {
-  recruitmentTypeList?: string[];
+  page:number;
+  order:string;
+  skillCodeList:string[];
+  positionCodeList:string[];
+  progressPeriodList:string[];
+  positionLevelCodeList:string[];
+  projectRecruitTypeList:string[];
+  projectRecruitStatusList:string[];
 };
 
 export interface ProjectListResponse extends ProjectDetail {
