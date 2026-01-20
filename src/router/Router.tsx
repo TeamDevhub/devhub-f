@@ -31,22 +31,6 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <ProjectListPage />
-          },
-          {
-            path: 'detail',
-            element: <ProjectDetailPage />
-          },
-          {
-            path: 'create',
-            element: <ProjectCreatePage />
-          },
-          {
-            path: 'apply',
-            element: <ProjectApplyPage />
-          },
-          {
-            path: 'dev-list',
             element: <ProjectList />
           },
         ]
@@ -76,6 +60,93 @@ const router = createBrowserRouter([
   },
   {
     path: '/auth',
+    element: <AuthLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'login',
+        children: [
+          {
+            index: true,
+            element: <LoginPage />
+          }
+        ]
+      },
+      {
+        path: 'signin1',
+        children: [
+          {
+            index: true,
+            element: <SignInPage1 />
+          }
+        ]
+      },
+      {
+        path: 'signin2',
+        children: [
+          {
+            index: true,
+            element: <SignInPage2 />
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/design',
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <MainPage />,
+      },
+      {
+        path: 'projects',
+        children: [
+          {
+            index: true,
+            element: <ProjectListPage />
+          },
+          {
+            path: 'detail',
+            element: <ProjectDetailPage />
+          },
+          {
+            path: 'create',
+            element: <ProjectCreatePage />
+          },
+          {
+            path: 'apply',
+            element: <ProjectApplyPage />
+          },
+        ]
+      },
+      {
+        path: 'boards',
+        children: [
+          {
+            index: true,
+            element: <BoardListPage />
+          },
+          {
+            path: 'detail',
+            element: <BoardDetailPage />
+          },
+          {
+            path: 'create',
+            element: <BoardCreatePage />
+          },
+          {
+            path: 'modify',
+            element: <BoardModifyPage />
+          },
+        ]
+      },
+    ],
+  },
+  {
+    path: '/design/auth',
     element: <AuthLayout />,
     errorElement: <ErrorPage />,
     children: [
