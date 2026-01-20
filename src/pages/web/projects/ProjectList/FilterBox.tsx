@@ -4,7 +4,7 @@ import type { CommonCode, CommonCodeItem } from "@/types/common.type";
 import { getCodesByGroup, getCodeName } from "@/utils/common.util";
 import { AddCircle } from "@mui/icons-material";
 import { Chip, IconButton } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export interface FilterBoxProps {
   title: string;
@@ -18,7 +18,7 @@ export interface FilterBoxProps {
   onClickAddBtn?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function FilterBox({
+const FilterBox = React.memo(({
   title,
   subText,
   type,
@@ -28,7 +28,7 @@ export default function FilterBox({
   values = [],
   setValues,
   onClickAddBtn,
-} : FilterBoxProps){
+} : FilterBoxProps) => {
 
   const [codeGroup, setCodeGroup] = useState<CommonCodeItem[]>([]);
 
@@ -104,7 +104,7 @@ export default function FilterBox({
       {type == "addableChip" && setAddableChipGroup()}
     </FilterWarpper>
   )
-}
+});
 
 export function FilterWarpper({
   title,
@@ -129,3 +129,5 @@ export function FilterWarpper({
     </div>
   )
 }
+
+export default FilterBox;
