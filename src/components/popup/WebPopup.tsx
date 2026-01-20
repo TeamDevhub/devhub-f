@@ -11,6 +11,7 @@ export interface WebPopupProps{
   setOpen:(open:boolean)=>void;
   submitText?:string;
   size?: "small" | "large" | "medium"
+  closeOnSubmit?: boolean
 }
 export default function WebPopup({
   title,
@@ -20,7 +21,8 @@ export default function WebPopup({
   isOpen,
   setOpen,
   submitText='확인',
-  size = 'small'
+  size = 'small',
+  closeOnSubmit = true
 }:WebPopupProps) {
 
   const handleClose = () => {
@@ -29,7 +31,7 @@ export default function WebPopup({
   }
   const handleSubmit = () => {
     onSubmit && onSubmit();
-    setOpen(false);
+    closeOnSubmit && setOpen(false);
   }
 
   let _size : string;
