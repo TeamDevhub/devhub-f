@@ -7,9 +7,9 @@ import MyInfoBox from './MyInfoBox'
 export default function MyPageHome(){
   return (
     <div className='main-page flex align-start'>
-      {/* 1. left box */}
-      <MyInfoBox />
-      {/* 2. right box */}
+      {/* 1. left area */}
+      <MyInfoBox selectedKey='home' />
+      {/* 2. right area */}
       <Paper className='mypage-box flex-col flex-grow' elevation={4}>
         {/* 2-1. 내 정보 */}
         <div className="top flex-col">
