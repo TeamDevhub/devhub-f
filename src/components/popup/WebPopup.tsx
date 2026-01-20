@@ -40,7 +40,7 @@ export default function WebPopup({
   }
 
   return (
-    <Dialog open={isOpen} onClose={handleClose} scroll='body'>
+    <Dialog open={isOpen} onClose={handleClose} scroll='body' disableRestoreFocus>
       <Paper className='web-popup' elevation={4}>
         <div className='popup-title-box justify-between align-center'>
           <p className='popup-title'>{title}</p>
