@@ -23,7 +23,7 @@ export default function HeartButton({likeCount}: HeartButtonProps){
         )}
       </IconButton>
       <p className='heart-count'>
-        {liked ? likeCount + 1 : likeCount}
+        {liked ? Number(likeCount) + 1 : Number(likeCount)}
       </p>
     </div>
   )
