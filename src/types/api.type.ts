@@ -1,10 +1,14 @@
+import type { Dayjs } from "dayjs";
+
+export type DateType = Dayjs | null;
+
 export interface Pagination {
-    page: number;
-    size: number;
-    totalPages: number;
-    totalElements: number;
-    first: boolean;
-    last: boolean;
+  page: number;
+  size: number;
+  totalPages: number;
+  totalElements: number;
+  first: boolean;
+  last: boolean;
 }
 
 export interface ApiResponse<T> {

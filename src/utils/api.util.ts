@@ -9,6 +9,7 @@ import axios, {
   type InternalAxiosRequestConfig,
   type Method,
 } from 'axios';
+import dayjs from 'dayjs';
 import { useEffect, useRef } from 'react';
 
 
@@ -24,6 +25,28 @@ interface CommonError {
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   skipErrorHandling?: boolean;
 }
+const convertDayjsToString = (data: any): any => {
+  if (dayjs.isDayjs(data)) {
+    return data.format('YYYY-MM-DD');
+  }
+  
+  if (Array.isArray(data)) {
+    return data.map(convertDayjsToString);
+  }
+  
+  if (data !== null && typeof data === 'object') {
+    return Object.keys(data).reduce((acc, key) => {
+      acc[key] = convertDayjsToString(data[key]);
+      return acc;
+    }, {} as any);
+  }
+  
+  return data;
+};
+
+/////////////////////////////////////////////////////
+//* 인터셉터
+/////////////////////////////////////////////////////
 
 /**
  * 요청 성공 처리
@@ -35,10 +58,6 @@ const requestSuccessInterceptor = async (
   //request.headers['Authorization'] = `Bearer ${accessToken}`;
   return request;
 };
-
-/////////////////////////////////////////////////////
-//* 인터셉터
-/////////////////////////////////////////////////////
 
 /**
  * 응답 성공 처리
@@ -127,6 +146,7 @@ export const fetcher = async <T = any, P = any>(
   } = config || {};
 
   const isGetMethod = method.toLowerCase() === "get";
+  data = convertDayjsToString(data);
 
   const res = await instance.request<ApiResponse<T>>({
     url,

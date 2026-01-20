@@ -5,6 +5,7 @@ import { setCommonCodes } from '@/utils/common.util'
 import commonCodeJson from "@/assets/jsonData/commonCode.json";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/ko';
 
 export default function MainLayout() {
 
