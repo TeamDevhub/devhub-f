@@ -11,7 +11,9 @@ export const useFormState = <T>(initialState: T) => {
     return (value: T[K]) => handleChange(key, value);
   };
 
-  return [state, handleChange, createHandler] as const;
+  const reset = () => setState(initialState);
+
+  return {state, setState, handleChange, createHandler, reset} as const;
 }
 
 // const [searchData, onChange, getHandler] = useFormState({
