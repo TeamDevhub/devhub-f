@@ -1,3 +1,5 @@
+import type { DateType } from "@/types/api.type";
+
 export interface ProjectBasic {
   projectGuid: string;
   userGuid: string;
@@ -35,13 +37,19 @@ export interface ProjectDetail extends ProjectBasic {
 
 export interface ProjectSearchRequest {
   page:number;
-  order:string;
-  skillCodeList:string[];
-  positionCodeList:string[];
-  progressPeriodList:string[];
-  positionLevelCodeList:string[];
-  projectRecruitTypeList:string[];
-  projectRecruitStatusList:string[];
+  order?:string;
+  keyword?:string;
+  skillCodeList?:string[];
+  regionCodeList?:string[];
+  positionCodeList?:string[];
+  progressPeriodList?:string[];
+  positionLevelCodeList?:string[];
+  projectRecruitTypeList?:string[];
+  projectProgressTypeList?:string[];
+  projectRecruitStatusList?:string[];
+  recruitmentStartDate?:DateType;
+  recruitmentEndDate?:DateType;
+  progressStartDate?:DateType;
 };
 
 export interface ProjectListResponse extends ProjectDetail {
