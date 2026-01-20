@@ -4,32 +4,48 @@ import { Button, Divider, FormControl, MenuItem, Pagination, Paper, Select, Text
 import { useSelectProjects } from '@/api/projects/projects.json.hook';
 import CustomTextfield from '@/components/common/CustomTextfield';
 import ProjectCard from './ProjectCard';
-import FilterBox from './FilterBox';
+import FilterBox, { FilterWarpper } from './FilterBox';
 import { COMMON_CODE } from '@/types/common.type';
 import type { ProjectSearchRequest } from '@/api/projects/projects.type';
 import SkillPopup from '@/components/popup/SkillPopup';
 import WebPopup from '@/components/popup/WebPopup';
 import { DatePicker } from '@mui/x-date-pickers';
+import type { Dayjs } from "dayjs";
 
 export default function ProjectListPage(){
   // api (개발)
   const initData:ProjectSearchRequest = {
     page:1,
     order:'',
+    keyword:'',
     skillCodeList:[],
+    regionCodeList:[],
     positionCodeList:[],
     progressPeriodList:[],
     positionLevelCodeList:[],
     projectRecruitTypeList:[],
+    projectProgressTypeList:[],
     projectRecruitStatusList:[],
+    recruitmentStartDate: null,
+    recruitmentEndDate: null,
+    progressStartDate: null,
   }
   const [searchData, setSearchData] = useState<ProjectSearchRequest>(initData);
+
   const [openSkillPopup, setOpenSkillPopup] = useState(false);
   const [openFilterPopup, setOpenFilterPopup] = useState(false);
+  const [openRegionPopup, setOpenRegionPopup] = useState(false);
+
+  const clickOpenSkillPopup = () => setOpenSkillPopup(true);
+  const clickOpenFilterPopup = () => setOpenFilterPopup(true);
+  const clickOpenRegionPopup = () => setOpenRegionPopup(true);
+
 
   const { res, loading, refetch } = useSelectProjects(searchData);
-
-  const handleStateChange = (key: keyof typeof searchData) => {
+  
+  const handleResetFilter = () => setSearchData(initData);
+  
+  const handleReturnStateChange = (key: keyof typeof searchData) => {
     return (newCodes: string[]) => {
       setSearchData(prev => ({
         ...prev,
@@ -37,19 +53,13 @@ export default function ProjectListPage(){
       }));
     };
   }
-  
-  const handleOrderChange = (event: SelectChangeEvent) => {
-      setSearchData(prev => ({
-        ...prev,
-        ['order']: event.target.value,
-      }));
+
+  const handleStateChange = <K extends keyof typeof searchData>(key: K, newValue: (typeof searchData)[K]) => {
+    setSearchData(prev => ({
+      ...prev,
+      [key]: newValue,
+    }));
   };
-  
-  const handleResetFilter = () => {setSearchData(initData);}
-
-  const clickOpenSkillPopup = () => {setOpenSkillPopup(true);}
-  const clickOpenFilterPopup = () => {setOpenFilterPopup(true);}
-
 
   return (
     <main className='main-page flex-col h-fit'>
@@ -62,7 +72,7 @@ export default function ProjectListPage(){
       <div className='page-summary w-100 align-center justify-between'>
         <strong className='page-count'>전체 <em>{res?.pagination?.totalElements}</em>개 프로젝트</strong>
         <FormControl variant='standard'>
-          <Select id='filter' value={searchData.order} onChange={handleOrderChange} size='small' displayEmpty>
+          <Select id='filter' value={searchData.order} onChange={(e)=>{handleStateChange('order', e.target.value);}} size='small' displayEmpty>
             <MenuItem value=''>기본순</MenuItem>
           </Select>
         </FormControl>
@@ -74,7 +84,7 @@ export default function ProjectListPage(){
             searchData={searchData} 
             clickOpenSkillPopup={clickOpenSkillPopup} 
             handleResetFilter={handleResetFilter} 
-            handleStateChange={handleStateChange}
+            handleReturnStateChange={handleReturnStateChange}
           />
           <div className='filter-button-box w-100 align-center'>
               <Button className='flex-1' size='small' variant='outlined' startIcon={<FilterAlt />} onClick={clickOpenFilterPopup}>상세 필터</Button>
@@ -92,7 +102,7 @@ export default function ProjectListPage(){
           </div>
         </div>
       </div>
-      <SkillPopup isOpen={openSkillPopup} setOpen={setOpenSkillPopup} values={searchData.skillCodeList} setValues={handleStateChange('skillCodeList')}/>
+      <SkillPopup isOpen={openSkillPopup} setOpen={setOpenSkillPopup} values={searchData.skillCodeList} setValues={handleReturnStateChange('skillCodeList')}/>
       <WebPopup
         isOpen={openFilterPopup}
         setOpen={setOpenFilterPopup}
@@ -105,70 +115,48 @@ export default function ProjectListPage(){
             searchData={searchData} 
             clickOpenSkillPopup={clickOpenSkillPopup} 
             handleResetFilter={handleResetFilter} 
-            handleStateChange={handleStateChange}
+            handleReturnStateChange={handleReturnStateChange}
           />
           <Divider />
-          <div className='filter-box flex-col'>
-            <div className='filter-title align-start justify-between'>
-              <div className='text-box flex-col'>
-                <strong>모집기간</strong>
-                <p>모집기간</p>
-              </div>
-            </div>
-            <div className='filter-options align-center'>
-              <DatePicker
-                slotProps={{
-                  textField: {
-                    size: 'small'
-                  },
-                }}
-              />
-              ~
-              <DatePicker
-                slotProps={{
-                  textField: {
-                    size: 'small'
-                  },
-                }}
-              />
-            </div>
-          </div>
+          <FilterWarpper title='모집기간' subText='모집기간'>
+            <DatePicker 
+              slotProps={{textField: {size: 'small'},}}
+              value={searchData.recruitmentStartDate}
+              onChange={(newValue) => handleStateChange('recruitmentStartDate', newValue)}
+            />
+            <p>~</p>
+            <DatePicker 
+              slotProps={{textField: {size: 'small'},}}
+              value={searchData.recruitmentEndDate}
+              onChange={(newValue) => handleStateChange('recruitmentEndDate', newValue)}
+            />
+          </FilterWarpper>
           <Divider />
-          <div className='filter-box flex-col'>
-            <div className='filter-title align-start justify-between'>
-              <div className='text-box flex-col'>
-                <strong>프로젝트 시작 일자</strong>
-                <p>프로젝트 시작 일자</p>
-              </div>
-            </div>
-            <div className='filter-options align-center'>
-              <DatePicker
-                slotProps={{
-                  textField: {
-                    size: 'small',
-                  },
-                }}
-              />
-            </div>
-          </div>
+          <FilterWarpper title='프로젝트 시작 일자' subText='프로젝트 시작 일자'>
+            <DatePicker 
+              slotProps={{textField: {size: 'small'},}}
+              value={searchData.progressStartDate}
+              onChange={(newValue) => handleStateChange('progressStartDate', newValue)}
+            />
+          </FilterWarpper>
           <Divider />
           <FilterBox
             title='진행방식'
             subText='진행방식'
             type='button'
-            codeName={COMMON_CODE.PROJECT_RECRUIT_TYPE}
-            values={searchData.projectRecruitTypeList}
-            setValues={handleStateChange('projectRecruitTypeList')}
+            codeName={COMMON_CODE.PROJECT_PROGRESS_TYPE}
+            values={searchData.projectProgressTypeList}
+            setValues={handleReturnStateChange('projectProgressTypeList')}
           />
           <Divider />
           <FilterBox
             title='진행지역'
             subText='진행지역'
             type='addableChip'
-            codeName={COMMON_CODE.PROJECT_RECRUIT_TYPE}
-            values={searchData.projectRecruitTypeList}
-            setValues={handleStateChange('projectRecruitTypeList')}
-            onClickAddBtn={clickOpenSkillPopup}
+            codeName={COMMON_CODE.REGION_CODE}
+            values={searchData.regionCodeList}
+            setValues={handleReturnStateChange('regionCodeList')}
+            onClickAddBtn={clickOpenRegionPopup}
           />
         </div>
       </WebPopup>
@@ -179,11 +167,11 @@ export default function ProjectListPage(){
 function FilterList({
   searchData,
   handleResetFilter,
-  handleStateChange,
+  handleReturnStateChange,
   clickOpenSkillPopup
 }:{
   searchData:ProjectSearchRequest;
-  handleStateChange: (key: keyof ProjectSearchRequest) => (newCodes: string[]) => void
+  handleReturnStateChange: (key: keyof ProjectSearchRequest) => (newCodes: string[]) => void
   handleResetFilter: () => void;
   clickOpenSkillPopup: () => void;
 }){
@@ -196,7 +184,7 @@ function FilterList({
         type='button'
         codeName={COMMON_CODE.PROJECT_RECRUIT_STATUS}
         values={searchData.projectRecruitStatusList}
-        setValues={handleStateChange('projectRecruitStatusList')}
+        setValues={handleReturnStateChange('projectRecruitStatusList')}
       />
       <Divider />
       <FilterBox
@@ -205,7 +193,7 @@ function FilterList({
         type='button'
         codeName={COMMON_CODE.PROJECT_RECRUIT_TYPE}
         values={searchData.projectRecruitTypeList}
-        setValues={handleStateChange('projectRecruitTypeList')}
+        setValues={handleReturnStateChange('projectRecruitTypeList')}
       />
       <Divider />
       <FilterBox
@@ -214,7 +202,7 @@ function FilterList({
         type='chip'
         codeName={COMMON_CODE.POSITION_CODE}
         values={searchData.positionCodeList}
-        setValues={handleStateChange('positionCodeList')}
+        setValues={handleReturnStateChange('positionCodeList')}
       />
       <Divider />
       <FilterBox
@@ -223,7 +211,7 @@ function FilterList({
         type='button'
         codeName={COMMON_CODE.POSITION_LEVEL_CODE}
         values={searchData.positionLevelCodeList}
-        setValues={handleStateChange('positionLevelCodeList')}
+        setValues={handleReturnStateChange('positionLevelCodeList')}
       />
       <Divider />
       <FilterBox
@@ -232,7 +220,7 @@ function FilterList({
         type='addableChip'
         codeName={COMMON_CODE.SKILL_CODE}
         values={searchData.skillCodeList}
-        setValues={handleStateChange('skillCodeList')}
+        setValues={handleReturnStateChange('skillCodeList')}
         onClickAddBtn={clickOpenSkillPopup}
       />
       <Divider />
@@ -246,7 +234,7 @@ function FilterList({
           {code: '6', name: '6개월'},
         ]}
         values={searchData.progressPeriodList}
-        setValues={handleStateChange('progressPeriodList')}
+        setValues={handleReturnStateChange('progressPeriodList')}
       />
     </>
   )

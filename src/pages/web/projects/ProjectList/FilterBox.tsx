@@ -13,7 +13,7 @@ export interface FilterBoxProps {
   codeName?: CommonCode;
   options?: CommonCodeItem[];
   useAll?: boolean;
-  values: string[];
+  values?: string[];
   setValues: (value: string[]) => void;
   onClickAddBtn?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -25,7 +25,7 @@ export default function FilterBox({
   codeName,
   options,
   useAll = false,
-  values,
+  values = [],
   setValues,
   onClickAddBtn,
 } : FilterBoxProps){
@@ -98,18 +98,34 @@ export default function FilterBox({
   }
 
   return (
-  <div className='filter-box flex-col'>
-    <div className='filter-title align-start justify-between'>
-      <div className='text-box flex-col'>
-        <strong>{title}</strong>
-        {subText && <p>{subText}</p>}
-      </div>
-    </div>
-    <div className='filter-options align-center flex-wrap'>
+    <FilterWarpper title={title} subText={subText}>
       {type == "button" && setButtonGroup()}
       {type == "chip" && setChipGroup()}
       {type == "addableChip" && setAddableChipGroup()}
+    </FilterWarpper>
+  )
+}
+
+export function FilterWarpper({
+  title,
+  subText,
+  children
+}:{
+  title: string;
+  subText?: string;
+  children: React.ReactNode;
+}){
+  return (
+    <div className='filter-box flex-col'>
+      <div className='filter-title align-start justify-between'>
+        <div className='text-box flex-col'>
+          <strong>{title}</strong>
+          {subText && <p>{subText}</p>}
+        </div>
+      </div>
+      <div className='filter-options align-center flex-wrap'>
+        {children}
+      </div>
     </div>
-  </div>
   )
 }

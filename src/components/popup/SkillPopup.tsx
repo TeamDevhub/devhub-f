@@ -8,7 +8,7 @@ import type { CommonCodeItem } from '@/types/common.type';
 
 export interface SkillPopupProps{
   isOpen:boolean;
-  values:string[],
+  values?:string[],
   setOpen:(open:boolean)=>void;
   setValues: (value: string[]) => void;
   onClose?:()=>void;
@@ -23,7 +23,7 @@ export default function SkillPopup({
 }:SkillPopupProps) {
 
   const [skillCode, setSkillCode] = useState<CommonCodeItem[]>([]);
-  const [_values, _setValues] = useState(values);
+  const [_values, _setValues] = useState(values??[]);
 
   useEffect(() => {
     const codeList = getCodesByGroup('SKILL_CODE');
@@ -31,8 +31,7 @@ export default function SkillPopup({
   }, []);
 
   useEffect(() => {
-    if (isOpen) _setValues(values);
-    
+    if (isOpen && values) _setValues(values);
   }, [isOpen, values]);
 
   const handleOnClick = (value:string, checked:boolean) => {
