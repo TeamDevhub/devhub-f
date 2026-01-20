@@ -76,8 +76,10 @@
 }
 
 /* 7. popup */
-.MuiDialog-container {
-  padding: 120px 0;
+.MuiDialog-paper { overflow-y: unset; max-width: none !important;
+  .MuiDialog-container {
+    padding: 120px 0;
+  }
 }
 
 /* 8. list */
