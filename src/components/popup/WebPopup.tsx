@@ -11,7 +11,7 @@ export interface WebPopupProps{
   setOpen:(open:boolean)=>void;
   submitText?:string;
   size?: "small" | "large" | "medium"
-  closeOnSubmit: boolean
+  closeOnSubmit?: boolean
 }
 export default function WebPopup({
   title,
