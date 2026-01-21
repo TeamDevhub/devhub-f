@@ -1,7 +1,7 @@
 import CheckAbleButton from "@/components/common/CheckAbleButton";
 import CheckAbleChip from "@/components/common/CheckAbleChip";
 import type { CommonCode, CommonCodeItem } from "@/types/common.type";
-import { getCodesByGroup, getCodeName } from "@/utils/common.util";
+import { getCodeName, getCodesByGroup } from "@/utils/common.util";
 import { AddCircle } from "@mui/icons-material";
 import { Chip, IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -42,7 +42,7 @@ const FilterBox = React.memo(({
 
   const getName = (v: string) => {
     if(codeName){
-      return getCodeName(codeName, v);
+      return getCodeName(codeGroup, v);
     }else if(options){
       options.find(item => item.code === v)?.name ?? ""
     }

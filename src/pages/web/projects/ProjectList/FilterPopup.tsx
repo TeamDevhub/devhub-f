@@ -1,12 +1,13 @@
+import type { ProjectSearchRequest } from "@/api/projects/projects.type";
+import RegionPopup from "@/components/popup/RegionPopup";
 import SkillPopup from "@/components/popup/SkillPopup";
 import WebPopup from "@/components/popup/WebPopup";
+import { useFormState } from "@/hooks/common.hook";
 import { COMMON_CODE } from "@/types/common.type";
 import { Divider } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useEffect, useState } from "react";
 import FilterBox, { FilterWarpper } from "./FilterBox";
-import type { ProjectSearchRequest } from "@/api/projects/projects.type";
-import { useFormState } from "@/hooks/common.hook";
 import FilterList from "./FilterList";
 
 type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword'>;
@@ -29,7 +30,6 @@ export default function FilterPopup({
     setState,
     handleChange, 
     createHandler, 
-    reset
   } = useFormState<FilterData>(initialValue);
 
   useEffect(() => {
@@ -42,6 +42,7 @@ export default function FilterPopup({
   const clickOpenSkillPopup = () => setOpenSkillPopup(true);
   const clickOpenRegionPopup = () => setOpenRegionPopup(true);
 
+  const reset = () => setState({});
   const handleSubmit = () => onSubmit(state);
   const handleClose = () => setState(initialValue);
 
@@ -108,6 +109,7 @@ export default function FilterPopup({
       </div>
     </WebPopup>
     <SkillPopup isOpen={openSkillPopup} setOpen={setOpenSkillPopup} values={state.skillCodeList} setValues={createHandler('skillCodeList')}/>
+    <RegionPopup isOpen={openRegionPopup} setOpen={setOpenRegionPopup} values={state.regionCodeList} setValues={createHandler('regionCodeList')} multiple/>
     </>
   )
 }

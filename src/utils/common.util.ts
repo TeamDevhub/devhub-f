@@ -19,13 +19,23 @@ export const getCodesByGroup = (group: CommonCode): CommonCodeItem[] => {
 };
 
 export const getCodeName = (
-  group: CommonCode,
+  group: CommonCodeItem[],
   code: string
 ): string => {
-  return (
-    commonCodeStore[group]?.find(item => item.code === code)?.name ?? ""
-  );
+
+  for (const item of group){
+    if(item.code == code){
+      return item.name
+    }
+    if(item.children && item.children.length > 0){
+      const found = getCodeName(item.children, code);
+      if(found) return found;
+    }
+  }
+  return '';
 };
+
+    
 
 export const getSelectOptions = (group: CommonCode) => {
   return (commonCodeStore[group] ?? []).map(item => ({

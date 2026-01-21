@@ -1,7 +1,7 @@
+import type { ProjectSearchRequest } from "@/api/projects/projects.type";
 import { COMMON_CODE } from "@/types/common.type";
 import { Button, Divider } from "@mui/material";
 import FilterBox from "./FilterBox";
-import type { ProjectSearchRequest } from "@/api/projects/projects.type";
 
 type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword'>;
 type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { FilterAlt } from '@mui/icons-material'
-import { Button, FormControl, MenuItem, Pagination, Paper, Select} from '@mui/material'
 import { useSelectProjects } from '@/api/projects/projects.json.hook';
-import CustomTextfield from '@/components/common/CustomTextfield';
-import ProjectCard from './ProjectCard';
 import type { ProjectSearchRequest } from '@/api/projects/projects.type';
+import CustomTextfield from '@/components/common/CustomTextfield';
 import SkillPopup from '@/components/popup/SkillPopup';
 import { useFormState } from '@/hooks/common.hook';
-import FilterPopup from './FilterPopup';
+import { FilterAlt } from '@mui/icons-material';
+import { Button, FormControl, MenuItem, Pagination, Paper, Select } from '@mui/material';
+import { useState } from 'react';
 import FilterList from './FilterList';
+import FilterPopup from './FilterPopup';
+import ProjectCard from './ProjectCard';
 
 type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword'>;
 type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
@@ -57,16 +57,13 @@ export default function ProjectListPage(){
 
   const { res, loading } = useSelectProjects(searchRequest);
 
-  useEffect(()=>{
-    console.log(1);
-  },[res])
-
   const handleSubmit = () => {
     setSearchRequest({...searchData, ...filterData});
   }
 
   const handleFilterPopupSubmit = (state:FilterData) => {
     setFilterData({...state});
+    setSearchRequest({...searchData, ...state});
   }
 
   return (
