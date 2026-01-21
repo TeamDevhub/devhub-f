@@ -47,7 +47,7 @@ export default function WebPopup({
         <div className='popup-title-box justify-between align-center'>
           <p className='popup-title'>{title}</p>
           <IconButton onClick={handleClose}>
-            <Close color='primary' fontSize='medium'></Close>
+            <Close color='primary' fontSize='medium' sx={{ fontSize: 24 }}></Close>
           </IconButton>
         </div>
         <div style={{width:`${_size}px`}}>

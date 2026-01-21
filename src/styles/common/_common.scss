@@ -16,19 +16,35 @@
 }
 
 /* project card */
-.project-box { min-width: 0; padding: 1.6rem 2.4rem; gap: 1.2rem; cursor: pointer;
+// 1. 프로젝트 조회
+.project-box, .project-box2 { min-width: 0; padding: 1.6rem 2.4rem; gap: 1.2rem; cursor: pointer;
   .main-text { font-size: 2rem; font-weight: 600; line-height: 120%; color: #000; }
   .sub-text { gap: 0.8rem; 
-    .top { gap: 2.4rem;
+    .top{ gap: 2.4rem;
       > div { gap: 0.8rem;
-        .title, p { gap: 0.4rem; font-size: 1.1rem; font-weight: 500; line-height: 1.6rem; letter-spacing: 0.5px; color: var(--text-primary);
-          .MuiSvgIcon-root { width: 1.4rem; height: 1.4rem; color: #667EEA; }
-        } 
         p { color: var(--text-disabled); }
       }
     }
+    .title, p { gap: 0.4rem; font-size: 1.1rem; font-weight: 500; line-height: 1.6rem; letter-spacing: 0.5px; color: var(--text-primary);
+      .MuiSvgIcon-root { width: 1.4rem; height: 1.4rem; color: #667EEA; }
+    } 
     .bottom { 
       p { font-size: 1rem; font-weight: 300; line-height: 100%; color: #000; }
+    }
+  }
+}
+// 2. 내 프로젝트 관리
+.project-box2 { padding: 1.6rem 2.4rem; gap: 1.2rem; border-radius: 0.4rem; border: 1px solid #E0E0E0; cursor: pointer;
+  .left-area { gap: 0.55rem;
+    .sub-text { gap: 2.4rem; }
+  }
+  .right-area { min-width: 19rem; max-width: 19rem; padding: 1rem; gap: 1rem;
+    > div { min-width: 5rem; gap: 0.4rem;
+      .count { font-size: 2rem; font-weight: 800; line-height: 100%; letter-spacing: -0.5px; color: #000; }
+      .count-text { font-size: 1rem; line-height: 100%; letter-spacing: 0.5px; color: var(--text-secondary); }
+    }
+    .bottom { gap: 0.4rem !important;
+      .MuiButton-root { min-width: 0 !important; }
     }
   }
 }
@@ -42,6 +58,27 @@
 }
 // 3. search field
 .search-box { padding: 1.2rem; gap: 0.8rem; }
+// 4. field box
+.field-box { gap: 0.8rem;
+  .field-title { height: 3.2rem; gap: 0.8rem;
+    p { font-size: 2rem; font-weight: 600; line-height: 100%; color: rgba(0, 0, 0, 0.87); }
+  }
+  .field-content { gap: 0.8rem;
+    .content-box { gap: 0.8rem;
+      > * { flex: 1; }
+      .required, p, .MuiButton-root { flex: 0 0 auto; }
+      p { font-size: 1.6rem; line-height: 2.4rem; letter-spacing: 0.15px; color: #000; }
+      .help-text { padding: 0.3rem 1.4rem; }
+      textarea { min-height: 5rem !important; }
+      &:not(:has(.required)) { padding-left: 1.6rem; }
+    }
+  }
+}
+.field-box2 { gap: 0.4rem;
+  .field-title { font-size: 1.6rem; font-weight: 500; line-height: 100%; color: rgba(0, 0, 0, 0.87); }
+  .content-box { gap: 0.8rem; }
+  .chip-box { padding: 1.2rem; gap: 0.4rem; border-radius: 0.4rem; border: 1px solid rgba(0, 0, 0, 0.23); }
+}
 
 /* user&view info */
 .user-nickname { font-size: 1.6rem !important; line-height: 150% !important; letter-spacing: 0.15px !important; color: var(--text-primary) !important; }
@@ -78,7 +115,7 @@
 }
 
 /* manner temperature */
-.manner-box {
+.manner-box { padding: 0 0.8rem; gap: 0.8rem;
   .manner-text {
     p { font-size: 1.4rem; font-weight: 700; line-height: 2rem; letter-spacing: 0.15px;
       &.text { color: rgba(0, 0, 0, 0.87); }

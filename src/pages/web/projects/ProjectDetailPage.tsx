@@ -6,9 +6,9 @@ import React from 'react'
 
 export default function ProjectDetailPage(){
   return (
-    <div className='main-page'>
+    <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. project detail */}
-      <Paper className='project-box project-detail-box flex-col' elevation={4}>
+      <Paper className='project-box project-detail-box w-100 flex-col' elevation={4}>
         <div className="project-header">
           <div className="top flex-col">
             <div className='chip-box align-center'>
