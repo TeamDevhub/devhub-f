@@ -15,7 +15,7 @@ export default function MyPageModify(){
   const [step, setStep] = useState(1);
 
   return (
-    <div className='main-page flex align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
+    <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. left area */}
       <MyInfoBox selectedKey='home' />
       {/* 2. right area */}
