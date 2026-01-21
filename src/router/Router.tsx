@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '@/layout/MainLayout';
+import AuthLayout from '@/layout/AuthLayout';
 import ErrorPage from '@/pages/ErrorPage';
 import MainPage from '@/pages/web/MainPage';
 import ProjectListPage from '@/pages/web/projects/ProjectListPage';
-import AuthLayout from '@/layout/AuthLayout';
 import ProjectDetailPage from '@/pages/web/projects/ProjectDetailPage';
 import ProjectCreatePage from '@/pages/web/projects/ProjectCreatePage';
 import ProjectApplyPage from '@/pages/web/projects/ProjectApplyPage';

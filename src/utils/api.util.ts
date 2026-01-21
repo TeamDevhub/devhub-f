@@ -10,8 +10,6 @@ import axios, {
   type Method,
 } from 'axios';
 import dayjs from 'dayjs';
-import { useEffect, useRef } from 'react';
-
 
 interface CommonError {
   status: HttpStatusCode;
@@ -22,10 +20,12 @@ interface CommonError {
   path: string;
 }
 
-interface CustomAxiosRequestConfig extends AxiosRequestConfig {
-  skipErrorHandling?: boolean;
-}
 const convertDayjsToString = (data: any): any => {
+  
+  if (data instanceof FormData) {
+    return data;
+  }
+
   if (dayjs.isDayjs(data)) {
     return data.format('YYYY-MM-DD');
   }
@@ -44,10 +44,34 @@ const convertDayjsToString = (data: any): any => {
   return data;
 };
 
+let activeRequests = 0;
+let loadingHandler = { show: () => {}, hide: () => {} };
+
+export const injectLoadingHandler = (handler: { show: () => void; hide: () => void }) => {
+  loadingHandler = handler;
+};
+
+// 로딩 처리를 위한 공통 함수
+const handleRequestStart = (config: InternalAxiosRequestConfig) => {
+  if (activeRequests === 0) loadingHandler.show();
+  activeRequests++;
+  return config;
+};
+
+const handleRequestEnd = () => {
+  activeRequests--;
+  if (activeRequests <= 0) {
+    activeRequests = 0;
+    loadingHandler.hide();
+  }
+};
+
 /////////////////////////////////////////////////////
 //* 인터셉터
 /////////////////////////////////////////////////////
-
+interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+  skipErrorHandling?: boolean;
+}
 /**
  * 요청 성공 처리
  */
@@ -55,9 +79,10 @@ const requestSuccessInterceptor = async (
   request: InternalAxiosRequestConfig<any>
 ) => {
   const accessToken = getLocalStorage('accessToken');
-  //request.headers['Authorization'] = `Bearer ${accessToken}`;
+  request.headers['Authorization'] = `Bearer ${accessToken}`;
   return request;
 };
+//bearer basic digest hoba ..
 
 /**
  * 응답 성공 처리
@@ -65,7 +90,6 @@ const requestSuccessInterceptor = async (
 const responseSuccessInterceptor = async (response: AxiosResponse<any>) => {
   return response;
 };
-
 /**
  * 에러 처리
  */
@@ -108,35 +132,35 @@ export const axiosInstance = axios.create({
   method: 'post',
 });
 
-export const axiosWithLoadingInstance = axios.create({
-  headers: {
-    'Content-Type': 'application/json',
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    await requestSuccessInterceptor(config);
+    return handleRequestStart(config);
   },
-  method: 'post',
-});
-
-axiosInstance.interceptors.request.use(requestSuccessInterceptor);
-
-axiosInstance.interceptors.response.use(
-  responseSuccessInterceptor,
-  responseErrorInterceptor
+  (error) => {
+    handleRequestEnd();
+    return Promise.reject(error);
+  }
 );
 
-
-export interface FetcherConfig extends AxiosRequestConfig {
-  withLoading?: boolean;
-}
+axiosInstance.interceptors.response.use(
+  async (response) => {
+    handleRequestEnd();
+    return responseSuccessInterceptor(response);
+  },
+  async (error) => {
+    handleRequestEnd();
+    return responseErrorInterceptor(error);
+  }
+);
 
 export const fetcher = async <T = any, P = any>(
   url: string,
   data?: P,
-  config?: FetcherConfig
+  config?: AxiosRequestConfig
 ): Promise<ApiResponse<T>> => {
-  let instance = axiosInstance;
-
-  if (config?.withLoading) {
-    instance = axiosWithLoadingInstance;
-  }
+  
+  const instance = axiosInstance;
 
   const {
     method = "post",
@@ -165,55 +189,6 @@ export const fetcher = async <T = any, P = any>(
   });
 
   return res.data;
-};
-
-export const useFetchWithLoading = () => {
-  // const { loading, setLoading } = useLoadingContext();
-  const activeRequests = useRef(0);
-
-  useEffect(() => {
-    const requestInterceptor =
-      axiosWithLoadingInstance.interceptors.request.use((config) => {
-        requestSuccessInterceptor(config);
-        if (activeRequests.current === 0) {
-          // setLoading(true);
-        }
-        activeRequests.current += 1;
-        return config;
-      });
-
-    const responseInterceptor =
-      axiosWithLoadingInstance.interceptors.response.use(
-        (response) => {
-          responseSuccessInterceptor(response);
-
-          activeRequests.current -= 1;
-          if (activeRequests.current === 0) {
-            // setLoading(false);
-          }
-          return response;
-        },
-        (error) => {
-          responseErrorInterceptor(error);
-          activeRequests.current -= 1;
-          if (activeRequests.current === 0) {
-            // setLoading(false);
-          }
-          return Promise.reject(error);
-        }
-      );
-
-    return () => {
-      axiosWithLoadingInstance.interceptors.request.eject(requestInterceptor);
-      axiosWithLoadingInstance.interceptors.response.eject(responseInterceptor);
-    };
-  }, []);
-
-  return {
-    // loading,
-    fetcher: (url: string, data?: any, config?: AxiosRequestConfig) =>
-      fetcher(url, data, { ...config, withLoading: true }),
-  };
 };
 
 export default fetcher;
