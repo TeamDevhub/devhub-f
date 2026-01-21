@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
-import Header from '@/layout/Header'
-import { Outlet } from 'react-router-dom'
-import { setCommonCodes } from '@/utils/common.util'
 import commonCodeJson from "@/assets/jsonData/commonCode.json";
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import 'dayjs/locale/ko';
+import { LoadingProvider, useLoading } from "@/hooks/LoadingContext";
+import Header from '@/layout/Header';
+import { injectLoadingHandler } from "@/utils/api.util";
+import { setCommonCodes } from '@/utils/common.util';
+import { useEffect } from 'react';
+import { Outlet, useNavigation } from 'react-router-dom';
 
 export default function MainLayout() {
 
@@ -14,13 +13,32 @@ export default function MainLayout() {
   }, []);  
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
-    <div id='devHub' className='wh-100'>
-      <Header></Header>
-      <main>
-        <Outlet></Outlet>
-      </main>
-    </div>
-    </LocalizationProvider>
+    <LoadingProvider>
+      <LoadingBridge />
+      <div id='devHub' className='wh-100'>
+        <Header></Header>
+        <main>
+          <Outlet></Outlet>
+        </main>
+      </div>
+    </LoadingProvider>
   )
 }
+
+const LoadingBridge = () => {
+  const { show, hide } = useLoading();
+  const navigation = useNavigation();
+  useEffect(() => {
+    if (navigation.state === 'loading') {
+      show();
+    } else {
+      hide();
+    }
+  }, [navigation.state, show, hide]);
+
+  useEffect(() => {
+    injectLoadingHandler({ show, hide });
+  }, [show, hide]);
+
+  return null;
+};

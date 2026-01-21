@@ -6,8 +6,8 @@ import React from 'react'
 
 export default function BoardDetailPage(){
   return (
-    <div className='main-page'>
-      <Paper className='board-detail-box flex-col' elevation={4}>
+    <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
+      <Paper className='board-detail-box w-100 flex-col' elevation={4}>
         {/* 1. board header */}
         <div className="board-header flex-col">
           <div className="top w-100 justify-between">

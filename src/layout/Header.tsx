@@ -1,8 +1,7 @@
-import React from 'react'
-import { Notifications, Person } from '@mui/icons-material'
-import { Avatar, Badge, Button, Paper } from '@mui/material'
-import CustomAvatar from '@/components/common/CustomAvatar'
 import logo from '@/assets/images/devHub-logo.png'
+import CustomAvatar from '@/components/common/CustomAvatar'
+import { Notifications, Person } from '@mui/icons-material'
+import { Button, Paper } from '@mui/material'
 import { Link } from 'react-router-dom'
 
 export default function Header(){

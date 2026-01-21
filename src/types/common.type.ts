@@ -3,6 +3,7 @@ export interface CommonCodeItem {
   parentCode?: string;
   name: string;
   depth?: number;
+  children?: CommonCodeItem[];
 }
 
 export type CommonCodeMap = Record<string, CommonCodeItem[]>;
