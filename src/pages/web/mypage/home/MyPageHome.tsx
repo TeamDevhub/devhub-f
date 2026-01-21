@@ -90,7 +90,7 @@ export default function MyPageHome({
                   </Button>
                 </div>
                 <div className="list-bottom flex-col">
-                  <div className="project-box w-100 justify-between">
+                  <div className="project-box2 w-100 justify-between">
                     <div className="left-area flex-col">
                       <div className="chip-box align-center">
                       <Chip size='small' variant='filled' color='primary' label='모집중' />
@@ -149,7 +149,7 @@ export default function MyPageHome({
                       </div>
                     </div>
                   </div>
-                  <div className="project-box w-100 justify-between">
+                  <div className="project-box2 w-100 justify-between">
                     <div className="left-area flex-col">
                       <div className="chip-box align-center">
                       <Chip size='small' variant='filled' color='primary' label='모집중' />
@@ -208,7 +208,7 @@ export default function MyPageHome({
                       </div>
                     </div>
                   </div>
-                  <div className="project-box w-100 justify-between">
+                  <div className="project-box2 w-100 justify-between">
                     <div className="left-area flex-col">
                       <div className="chip-box align-center">
                       <Chip size='small' variant='filled' color='primary' label='모집중' />
@@ -286,7 +286,7 @@ export default function MyPageHome({
                   </Button>
                 </div>
                 <div className="list-bottom flex-col">
-                  <div className="project-box w-100 justify-between">
+                  <div className="project-box2 w-100 justify-between">
                     <div className="left-area flex-col">
                       <div className="chip-box align-center">
                       <Chip size='small' variant='filled' color='primary' label='모집중' />
@@ -337,7 +337,7 @@ export default function MyPageHome({
                       </div>
                     </div>
                   </div>
-                  <div className="project-box w-100 justify-between">
+                  <div className="project-box2 w-100 justify-between">
                     <div className="left-area flex-col">
                       <div className="chip-box align-center">
                       <Chip size='small' variant='filled' color='primary' label='모집중' />
@@ -388,7 +388,7 @@ export default function MyPageHome({
                       </div>
                     </div>
                   </div>
-                  <div className="project-box w-100 justify-between">
+                  <div className="project-box2 w-100 justify-between">
                     <div className="left-area flex-col">
                       <div className="chip-box align-center">
                       <Chip size='small' variant='filled' color='primary' label='모집중' />
