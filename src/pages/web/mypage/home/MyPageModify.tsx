@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import MyInfoBox from './MyInfoBox'
 import { Button, Chip, Divider, Paper } from '@mui/material'
 import { LockOutline, MailOutline, PersonOutlined } from '@mui/icons-material'
 import CustomTextfield from '@/components/common/CustomTextfield'
 import WebPopup from '@/components/popup/WebPopup'
+import MyInfoBox from '@/pages/web/mypage/home/MyInfoBox'
+import React, { useState } from 'react'
 
 export default function MyPageModify(){
   // 비밀번호 변경 팝업
@@ -15,11 +15,12 @@ export default function MyPageModify(){
   const [step, setStep] = useState(1);
 
   return (
-    <div className='main-page flex align-start'>
+    <div className='main-page flex align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. left area */}
       <MyInfoBox selectedKey='home' />
       {/* 2. right area */}
       <Paper className='mypage-box flex-col flex-grow' elevation={4}>
+        {/* 2-1. 이메일 */}
         <div className="field-box flex-col">
           <div className="field-title align-center">
             <MailOutline sx={{ fontSize: 20, color: 'var(--primary-main)' }} />
@@ -31,6 +32,7 @@ export default function MyPageModify(){
             </div>
           </div>
         </div>
+        {/* 2-2. 비밀번호 */}
         <div className="field-box flex-col">
           <div className="field-title align-center">
             <LockOutline sx={{ fontSize: 20, color: 'var(--primary-main)' }} />
@@ -42,6 +44,7 @@ export default function MyPageModify(){
             </div>
           </div>
         </div>
+        {/* 2-3. 프로필 */}
         <div className="field-box flex-col">
           <div className="field-title align-center">
             <PersonOutlined sx={{ fontSize: 20, color: 'var(--primary-main)' }} />
@@ -63,6 +66,7 @@ export default function MyPageModify(){
             </div>
           </div>
         </div>
+        {/* 2-4. 관심 포지션 */}
         <div className="field-box2 flex-col">
           <div className="field-title align-center">
             <p>관심 포지션</p>
@@ -84,6 +88,7 @@ export default function MyPageModify(){
             </div>
           </div>
         </div>
+        {/* 2-5. 보유 스킬 */}
         <div className="field-box2 flex-col">
           <div className="field-title align-center">
             <p>보유 스킬</p>
@@ -112,7 +117,7 @@ export default function MyPageModify(){
         </div>
       </Paper>
       {/* 3. popup */}
-      {/* 3-1. 비밀번호 변경 */}
+      {/* 3-1. 비밀번호 변경(2개) */}
       <WebPopup
         isOpen={openPasswordPopup}
         setOpen={setOpenPasswordPopup}
