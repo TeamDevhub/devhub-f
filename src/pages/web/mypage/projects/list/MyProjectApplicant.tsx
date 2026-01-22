@@ -106,7 +106,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -151,7 +151,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -196,7 +196,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -241,7 +241,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -286,7 +286,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -371,7 +371,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -416,7 +416,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -461,7 +461,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -506,7 +506,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -551,7 +551,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -636,7 +636,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -681,7 +681,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -726,7 +726,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -771,7 +771,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
@@ -816,7 +816,7 @@ export default function MyProjectApplicant(){
               <SwiperSlide>
                 <Paper className='applicant-swiper-slide flex-col' elevation={4}>
                   <div className="top">
-                    <p className="application-date">지원일자 2025.05.01</p>
+                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
                   </div>
                   <div className="middle flex-col">
                     <div className="user-info-box flex-col">
