@@ -87,6 +87,11 @@
   .MuiListItemButton-root { padding: 1.2rem 1.6rem; font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
 }
 
+/* 9. rating */
+.MuiRating-root { width: 100% !important; font-size: 3rem !important; align-items: center; justify-content: center;
+
+}
+
 /*** CUSTOM ***/
 // 1. heart button
 .heart-box { 
