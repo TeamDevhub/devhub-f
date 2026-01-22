@@ -69,3 +69,31 @@ export const removeLocalStorage = (key: string): void => {
   if (typeof window === "undefined") return;
   localStorage.removeItem(key);
 };
+
+//벨리데이션
+
+export const Validators = {
+  // 필수값 체크
+  required: (msg: string = "필수 입력 항목입니다.") => 
+    (v: any) => (v !== null && v !== undefined && v !== "" ? null : msg),
+
+  // 최소 길이 체크
+  minLength: (min: number, msg?: string) => 
+    (v: string) => v.length >= min ? null : (msg || `최소 ${min}자 이상 입력해주세요.`),
+
+  // 최대 길이 체크
+  maxLength: (max: number, msg?: string) => 
+    (v: string) => v.length <= max ? null : (msg || `최대 ${max}자까지 가능합니다.`),
+
+  // 이메일 형식 체크
+  email: (msg: string = "올바른 이메일 형식이 아닙니다.") => 
+    (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? null : msg,
+
+  // 숫자만 입력 체크
+  onlyNumber: (msg: string = "숫자만 입력 가능합니다.") => 
+    (v: string) => /^\d+$/.test(v) ? null : msg,
+    
+  // 일치 여부 체크 (비밀번호 확인용)
+  match: (targetKey: string, msg: string) => 
+    (v: any, allState: any) => v === allState[targetKey] ? null : msg,
+};
