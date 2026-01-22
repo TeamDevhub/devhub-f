@@ -1,64 +1,180 @@
-import React from 'react';
-import { Button, Paper, Divider, Chip } from '@mui/material';
-import { LockOutline, PersonOutlined } from '@mui/icons-material';
-import CustomTextfield from '@/components/common/CustomTextfield';
+import React, { useState } from "react";
+import { PersonOutlined, ArrowForwardIos } from "@mui/icons-material";
+import { Button, Chip, Divider, Paper } from "@mui/material";
+import { Link } from "react-router-dom";
+import logo from "@/assets/images/devHub-logo.png";
+import CustomTextfield from "@/components/common/CustomTextfield";
 
 interface Props {
-  onBack: () => void;
+  onBack?: () => void;
+  onNext?: () => void;
 }
 
-export default function UserInfoPage({ onBack }: Props) {
+export default function UserInfoPage({ onNext }: Props) {
+  const [nickname, setNickname] = useState("");
+  const [intro, setIntro] = useState("");
+  const [positions, setPositions] = useState<string[]>([]);
+  const [skills, setSkills] = useState<string[]>([]);
+
+  const togglePosition = (pos: string) =>
+    setPositions((prev) =>
+      prev.includes(pos) ? prev.filter((p) => p !== pos) : [...prev, pos],
+    );
+
+  const toggleSkill = (skill: string) =>
+    setSkills((prev) =>
+      prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill],
+    );
+
+  const positionOptions = [
+    "Backend",
+    "Frontend",
+    "Fullstack",
+    "Mobile",
+    "DevOps Engineer",
+    "Cloud Engineer",
+    "SRE",
+    "UI/UX Designer",
+    "PM(Project/Product Manager)",
+  ];
+
+  const skillOptions = ["JAVA", "React", "GO", "SQL", "Docker", "Git"];
+
   return (
-    <Paper className='auth-box flex-col' elevation={4} style={{ padding: '1rem', gap: '1rem' }}>
-      {/* 비밀번호 설정 */}
-      <div className="field-box flex-col">
-        <div className="field-title align-center">
-          <LockOutline />
-          <p>비밀번호 설정</p>
+    <div className="auth-page flex-center">
+      <div className="flex-col" style={{ gap: "0.8rem" }}>
+        <div className="auth-logo-box">
+          <Link to="/" className="align-center">
+            <img src={logo} alt="devHub logo icon" className="logo-icon" />
+            <span className="logo-text">DevHub</span>
+          </Link>
         </div>
-        <div className="field-content flex-col" style={{ gap: '0.5rem' }}>
-          <CustomTextfield type='password' placeholder='특수문자, 숫자 포함 10자 이상' />
-          <CustomTextfield type='password' placeholder='비밀번호 확인' />
-        </div>
-      </div>
 
-      {/* 프로필 */}
-      <div className="field-box flex-col">
-        <div className="field-title align-center">
-          <PersonOutlined />
-          <p>프로필</p>
-        </div>
-        <div className="field-content flex-col" style={{ gap: '0.5rem' }}>
-          <CustomTextfield placeholder='닉네임' />
-          <CustomTextfield type='textarea' rows={2} placeholder='자신을 소개해 주세요.' />
-        </div>
-      </div>
+        <Paper className="auth-box flex-col" elevation={4}>
+          {/* title */}
+          <div className="text-box flex-col">
+            <strong>회원가입 정보 입력</strong>
+            <p>계정을 완성해 DevHub에서 함께 성장하세요!</p>
+          </div>
 
-      {/* 관심 포지션 */}
-      <div className="field-box2 flex-col">
-        <div className="field-title align-center"><p>관심 포지션</p></div>
-        <div className="chip-box w-100 align-center flex-wrap">
-          <Chip label='Backend' clickable />
-          <Chip label='Frontend' clickable />
-          <Chip label='Fullstack' clickable color='primary' />
-        </div>
-      </div>
+          <Divider />
 
-      {/* 보유 스킬 */}
-      <div className="field-box2 flex-col">
-        <div className="field-title align-center"><p>보유 스킬</p></div>
-        <div className="chip-box w-100 align-center flex-wrap">
-          <Chip label='JAVA' color='primary' onDelete={() => {}} />
-          <Chip label='React' color='primary' onDelete={() => {}} />
-        </div>
-        <Button variant='contained' color='primary'>+</Button>
-      </div>
+          {/* 프로필 */}
+          <div className="field-box flex-col">
+            <div className="field-title align-center">
+              <PersonOutlined
+                sx={{ fontSize: 20, color: "var(--primary-main)" }}
+              />
+              <p>프로필</p>
+            </div>
 
-      <Divider />
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Button variant='outlined' onClick={onBack}>이전</Button>
-        <Button variant='contained' color='primary'>회원가입</Button>
+            <div className="field-content flex-col" style={{ gap: "0.5rem" }}>
+              <CustomTextfield
+                placeholder="닉네임"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+              />
+              <span className="help-text">
+                다른 사용자에게 표시되는 이름입니다
+              </span>
+
+              <CustomTextfield
+                type="textarea"
+                rows={2}
+                placeholder="자신을 소개해 주세요."
+                value={intro}
+                onChange={(e) => setIntro(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* 관심 포지션 */}
+          <div className="field-box flex-col">
+            <div className="field-title align-center">
+              <p>관심 포지션</p>
+            </div>
+
+            <div className="field-content flex-col" style={{ gap: "0.5rem" }}>
+              <div className="content-box align-center flex-wrap">
+                <div className="chip-box w-100 align-center flex-wrap">
+                  {positionOptions.map((pos) => (
+                    <Chip
+                      key={pos}
+                      label={pos}
+                      color={positions.includes(pos) ? "primary" : "default"}
+                      clickable
+                      onClick={() => togglePosition(pos)}
+                    />
+                  ))}
+                </div>
+              </div>
+              <span className="help-text">
+                관심 있는 포지션을 선택해 주세요
+              </span>
+            </div>
+          </div>
+
+          {/* 보유 스킬 */}
+          <div className="field-box flex-col">
+            <div className="field-title align-center">
+              <p>보유 스킬</p>
+            </div>
+
+            <div className="field-content flex-col" style={{ gap: "0.5rem" }}>
+              <div
+                className="content-box"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "0.5rem",
+                }}
+              >
+                <div
+                  className="chip-box align-center flex-wrap"
+                  style={{ flex: 1 }}
+                >
+                  {skillOptions.map((skill) => (
+                    <Chip
+                      key={skill}
+                      label={skill}
+                      color={skills.includes(skill) ? "primary" : "default"}
+                      clickable
+                      onClick={() => toggleSkill(skill)}
+                    />
+                  ))}
+                </div>
+
+                <Button
+                  size="large"
+                  variant="contained"
+                  color="primary"
+                  sx={{ minWidth: 48, height: 48 }}
+                >
+                  +
+                </Button>
+              </div>
+
+              <span className="help-text">
+                자신 있는 기술을 선택하거나 추가할 수 있습니다
+              </span>
+            </div>
+          </div>
+
+          <Divider sx={{ marginY: "0.5rem" }} />
+
+          <Button
+            size="large"
+            variant="contained"
+            color="primary"
+            endIcon={<ArrowForwardIos />}
+            fullWidth
+            onClick={onNext}
+          >
+            회원가입
+          </Button>
+        </Paper>
       </div>
-    </Paper>
-  )
+    </div>
+  );
 }
