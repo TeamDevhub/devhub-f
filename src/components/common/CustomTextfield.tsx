@@ -53,7 +53,6 @@ export default function CustomTextfield({
       <TextField 
         id={id ? id: name + '-input'}
         fullWidth
-        name={name}
         multiline={isTextarea}
         rows={isTextarea ? rows : undefined}
         size={size}
