@@ -121,9 +121,9 @@ export default function MyProjectList(){
                   </div>
                 </div>
                 <div className="bottom align-center">
-                  <Button size='small' variant='outlined' color='primary' className='flex-1'>신청자</Button>
-                  <Button size='small' variant='outlined' color='primary' className='flex-1'>수정</Button>
-                  <Button size='small' variant='contained' color='primary' className='flex-1'>마감</Button>
+                  <Button fullWidth size='small' variant='outlined' color='primary'>신청자</Button>
+                  <Button fullWidth size='small' variant='outlined' color='primary'>수정</Button>
+                  <Button fullWidth size='small' variant='contained' color='primary'>마감</Button>
                 </div>
               </div>
             </div>
@@ -187,9 +187,9 @@ export default function MyProjectList(){
                   </div>
                 </div>
                 <div className="bottom align-center">
-                  <Button size='small' variant='outlined' color='primary' className='flex-1'>신청자</Button>
-                  <Button size='small' variant='outlined' color='primary' className='flex-1'>수정</Button>
-                  <Button size='small' variant='contained' color='primary' className='flex-1'>마감</Button>
+                  <Button fullWidth size='small' variant='outlined' color='primary'>신청자</Button>
+                  <Button fullWidth size='small' variant='outlined' color='primary'>수정</Button>
+                  <Button fullWidth size='small' variant='contained' color='primary'>마감</Button>
                 </div>
               </div>
             </div>
@@ -253,9 +253,9 @@ export default function MyProjectList(){
                   </div>
                 </div>
                 <div className="bottom align-center">
-                  <Button size='small' variant='outlined' color='primary' className='flex-1'>신청자</Button>
-                  <Button size='small' variant='outlined' color='primary' className='flex-1'>수정</Button>
-                  <Button size='small' variant='contained' color='primary' className='flex-1'>마감</Button>
+                  <Button fullWidth size='small' variant='outlined' color='primary'>신청자</Button>
+                  <Button fullWidth size='small' variant='outlined' color='primary'>수정</Button>
+                  <Button fullWidth size='small' variant='contained' color='primary'>마감</Button>
                 </div>
               </div>
             </div>
