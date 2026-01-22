@@ -1,6 +1,6 @@
 import { useMutation, useSelect } from "@/hooks/api.hook";
 import type { ApiResponse } from "@/types/api.type";
-import type { ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "./projects.type";
+import type { ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest, ProjectCreate } from "./projects.type";
 
 import selectListResJSON from '@/assets/jsonData/projectsPage/projectListRes.json';
 import selectDetailResJSON from '@/assets/jsonData/projectsPage/projectDetailRes.json';
@@ -48,4 +48,13 @@ export const useUpdateProject = () => {
     projectId: string;
     data: UpdateProjectRequest;
   }, void>(mockUpdateProject);
+}
+
+export const useCreateProject = () => {
+  const mockCreateProject = async (): Promise<ApiResponse<void>> => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    return apiSuccessResJSON as ApiResponse<void>;
+  };
+
+  useMutation<ProjectCreate, void>(mockCreateProject);
 }

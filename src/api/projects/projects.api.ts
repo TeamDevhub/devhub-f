@@ -1,4 +1,4 @@
-import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/api/projects/projects.type";
+import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest, ProjectCreate } from "@/api/projects/projects.type";
 import fetcher from "@/utils/api.util";
 
 export const getProjects = (req: ProjectSearchRequest) =>
@@ -24,3 +24,11 @@ export const updateProject = (req: {
     req.data,
     { method: "put" }
   );
+
+export const createProject = (req: ProjectCreate) => 
+  fetcher<void, ProjectCreate>(
+    '/projects',
+    req,
+    { method: "post" }
+  );
+

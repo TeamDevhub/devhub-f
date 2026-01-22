@@ -1,36 +1,61 @@
+import type { DateType } from "@/types/api.type";
+
 export interface ProjectBasic {
-  projectGuid: string;
-  userGuid: string;
-  username: string;
-  category: string;
-  title: string;
-  content: string;
-  recruitmentTypeCd: string;
-  recruitmentStartDate: string;
-  recruitmentEndDate: string;
-  progressTypeCd: string;
-  prgressRegionCd: string;
-  progressPeriod: string;
-  progressStartDate: string;
-  progressEndDate: string;
-  viewCount: string;
-  registerId: string;
-  registeredDate: string;
-  modifiderId: string;
-  modifiedDate: string;
+  projectGuid?: string;
+  userGuid?: string;
+  username?: string;
+  category?: string;
+  title?: string;
+  content?: string;
+  recruitmentTypeCd?: string;
+  recruitmentStartDate?: DateType;
+  recruitmentEndDate?: DateType;
+  progressTypeCd?: string;
+  prgressRegionCd?: string;
+  progressPeriod?: string;
+  progressStartDate?: DateType;
+  progressEndDate?: DateType;
+  viewCount?: string;
+  registerId?: string;
+  registeredDate?: string;
+  modifiderId?: string;
+  modifiedDate?: string;
 }
 
-export interface Postion {
-  position: string;
-  capacity: number;
-  level: string;
-  isFull: boolean;
+export interface Position {
+  position?: string;
+  level?: string;
+  capacity?: number;
+  isFull?: boolean;
+}
+
+export interface ApplicationFormBasic {
+  applicationFormGuid?: string;
+  typeCd?: string;
+  title?: string;
+  helpText?: string;
+  vertYn?: string;
+  customYn?: string;
+  useY?: string;
+  registerId?: string;
+  registeredDate?: DateType;
+  modifiderId?: string;
+  modifiedDate?: DateType;
 }
 
 export interface ProjectDetail extends ProjectBasic {
-  skillList: string[];
-  positionList: Postion[];
-  likeCount: string;
+  skillList?: string[];
+  positionList?: Position[];
+  likeCount?: string;
+}
+
+export interface ProjectCreate extends ProjectDetail {
+  applicationFormList: string[];
+  additionalFormList: ApplicationFormDetail[];
+}
+
+export interface ApplicationFormDetail extends ApplicationFormBasic {
+  itemList: string[];
 }
 
 export interface ProjectSearchRequest {

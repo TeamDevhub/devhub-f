@@ -1,6 +1,6 @@
 import { useMutation, useSelect } from "@/hooks/api.hook";
-import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/api/projects/projects.type";
-import { getProjectDetail, getProjects, updateProject } from "./projects.api";
+import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest, ProjectCreate } from "@/api/projects/projects.type";
+import { getProjectDetail, getProjects, updateProject, createProject } from "./projects.api";
 
 export const useSelectProjects = (req: ProjectSearchRequest) =>
   useSelect<ProjectListResponse, ProjectSearchRequest>({
@@ -30,3 +30,9 @@ export const useUpdateProject = () =>
   //   data: { title: "수정됨" },
   // });
 
+  export const useCreateProject = () => 
+    useMutation<ProjectCreate, void>(createProject);
+  //const { mutate, loading } = useCreateProject();
+  // await mutate({
+  //    title: "새 프로젝트"
+  // });

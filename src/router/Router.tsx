@@ -15,6 +15,7 @@ import LoginPage from '@/pages/web/login/LoginPage';
 import SignInPage1 from '@/pages/web/signin/SignInPage1';
 import SignInPage2 from '@/pages/web/signin/SignInPage2';
 import ProjectList from '@/pages/web/projects/ProjectList';
+import ProjectCreate from "@/pages/web/projects/ProjectCreate"
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <ProjectList />
+          },
+          {
+            path: 'create',
+            element: <ProjectCreate />
           },
         ]
       },
