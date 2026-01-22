@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { PersonOutlined, ArrowForwardIos } from "@mui/icons-material";
-import { Button, Chip, Divider, Paper } from "@mui/material";
+import {
+  Button,
+  Chip,
+  Divider,
+  Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import logo from "@/assets/images/devHub-logo.png";
 import CustomTextfield from "@/components/common/CustomTextfield";
@@ -15,16 +24,23 @@ export default function UserInfoPage({ onNext }: Props) {
   const [intro, setIntro] = useState("");
   const [positions, setPositions] = useState<string[]>([]);
   const [skills, setSkills] = useState<string[]>([]);
+  const [tempSkills, setTempSkills] = useState<string[]>([]);
+  const [openSkillDialog, setOpenSkillDialog] = useState(false);
 
   const togglePosition = (pos: string) =>
     setPositions((prev) =>
       prev.includes(pos) ? prev.filter((p) => p !== pos) : [...prev, pos],
     );
 
-  const toggleSkill = (skill: string) =>
-    setSkills((prev) =>
+  const toggleTempSkill = (skill: string) =>
+    setTempSkills((prev) =>
       prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill],
     );
+
+  const openSkillSelectDialog = () => {
+    setTempSkills(skills);
+    setOpenSkillDialog(true);
+  };
 
   const positionOptions = [
     "Backend",
@@ -89,7 +105,7 @@ export default function UserInfoPage({ onNext }: Props) {
           </div>
 
           {/* 관심 포지션 */}
-          <div className="field-box flex-col">
+          <div className="field-box2 flex-col">
             <div className="field-title align-center">
               <p>관심 포지션</p>
             </div>
@@ -115,41 +131,31 @@ export default function UserInfoPage({ onNext }: Props) {
           </div>
 
           {/* 보유 스킬 */}
-          <div className="field-box flex-col">
+          <div className="field-box2 flex-col">
             <div className="field-title align-center">
               <p>보유 스킬</p>
             </div>
 
             <div className="field-content flex-col" style={{ gap: "0.5rem" }}>
-              <div
-                className="content-box"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "0.5rem",
-                }}
-              >
+              <div className="content-box align-stretch">
                 <div
                   className="chip-box align-center flex-wrap"
                   style={{ flex: 1 }}
                 >
-                  {skillOptions.map((skill) => (
-                    <Chip
-                      key={skill}
-                      label={skill}
-                      color={skills.includes(skill) ? "primary" : "default"}
-                      clickable
-                      onClick={() => toggleSkill(skill)}
-                    />
-                  ))}
+                  {skills.length === 0 ? (
+                    <span className="help-text">선택된 스킬이 없습니다</span>
+                  ) : (
+                    skills.map((skill) => (
+                      <Chip key={skill} label={skill} color="primary" />
+                    ))
+                  )}
                 </div>
 
                 <Button
                   size="large"
                   variant="contained"
                   color="primary"
-                  sx={{ minWidth: 48, height: 48 }}
+                  onClick={openSkillSelectDialog}
                 >
                   +
                 </Button>
@@ -167,13 +173,55 @@ export default function UserInfoPage({ onNext }: Props) {
             size="large"
             variant="contained"
             color="primary"
-            endIcon={<ArrowForwardIos />}
+            endIcon={<ArrowForwardIos sx={{ fontSize: "1.2rem !important" }} />}
             fullWidth
             onClick={onNext}
           >
             회원가입
           </Button>
         </Paper>
+
+        <Dialog
+          open={openSkillDialog}
+          onClose={() => setOpenSkillDialog(false)}
+          fullWidth
+          maxWidth="sm"
+        >
+          <DialogTitle>보유 스킬 선택</DialogTitle>
+
+          <DialogContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.75rem",
+              marginTop: "0.5rem",
+            }}
+          >
+            <div className="chip-box align-center flex-wrap">
+              {skillOptions.map((skill) => (
+                <Chip
+                  key={skill}
+                  label={skill}
+                  color={tempSkills.includes(skill) ? "primary" : "default"}
+                  clickable
+                  onClick={() => toggleTempSkill(skill)}
+                />
+              ))}
+            </div>
+          </DialogContent>
+
+          <DialogActions>
+            <Button
+              variant="contained"
+              onClick={() => {
+                setSkills(tempSkills);
+                setOpenSkillDialog(false);
+              }}
+            >
+              확인
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );
