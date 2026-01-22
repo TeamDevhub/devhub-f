@@ -10,8 +10,8 @@ export interface WebPopupProps{
   isOpen:boolean;
   setOpen:(open:boolean)=>void;
   submitText?:string;
-  size?: "small" | "large" | "medium"
-  closeOnSubmit?: boolean
+  size?: 'small' | 'medium' | 'large' | 'auto';
+  closeOnSubmit?: boolean;
 }
 export default function WebPopup({
   title,
@@ -39,6 +39,7 @@ export default function WebPopup({
     case 'large' : _size = '1200'; break;
     case 'medium' : _size = '800'; break;
     case 'small' : _size = '400'; break;
+    case 'auto' : _size = 'auto'; break;
   }
 
   return (

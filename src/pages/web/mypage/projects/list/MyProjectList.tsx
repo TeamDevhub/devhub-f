@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import MyInfoBox from '@/pages/web/mypage/home/MyInfoBox'
-import { Box, Button, Chip, Pagination, Paper, Tab, Tabs } from '@mui/material'
+import { Box, Button, Chip, Pagination, Paper, Rating, Tab, Tabs } from '@mui/material'
 import CustomAvatar from '@/components/common/CustomAvatar'
-import { AccessTime, LocationOn } from '@mui/icons-material'
+import { AccessTime, LocationOn, Person } from '@mui/icons-material'
 import HeartButton from '@/components/common/HeartButton'
+import WebPopup from '@/components/popup/WebPopup'
 
 // tabs
 function TabPanel({ value, index, children }: {
@@ -25,10 +26,19 @@ function TabPanel({ value, index, children }: {
 }
 
 export default function MyProjectList(){
+  // tabs
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  // 내가 신청한 프로젝트 中 지원 취소 팝업
+  const [openCancelPopup, setOpenCancelPopup] = useState(false);
+  const clickOpenCancelPopup = () => {setOpenCancelPopup(true);}
+
+  // 참여한 프로젝트 中 팀원 평가 팝업
+  const [openEvaluatePopup, setOpenEvaluatePopup] = useState(false);
+  const clickOpenEvaluatePopup = () => {setOpenEvaluatePopup(true);}
 
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
@@ -301,7 +311,7 @@ export default function MyProjectList(){
               <div className="right-area flex-center" style={{ paddingTop: 0, paddingBottom: 0 }}>
                 <div className='w-100 flex-col align-center'>
                   <div className="count" style={{ color: 'var(--text-secondary)', padding: '1.05rem 3.5rem' }}>승인 대기중</div>
-                  <Button size='small' variant='outlined' color='primary' className='w-100'>신청 취소</Button>
+                  <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenCancelPopup}>신청 취소</Button>
                 </div>
               </div>
             </div>
@@ -352,7 +362,7 @@ export default function MyProjectList(){
               <div className="right-area flex-center" style={{ paddingTop: 0, paddingBottom: 0 }}>
                 <div className='w-100 flex-col align-center'>
                   <div className="count" style={{ color: 'var(--info-main)', padding: '1.05rem 3.5rem' }}>참가 승인</div>
-                  <Button size='small' variant='outlined' color='primary' className='w-100'>신청 취소</Button>
+                  <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenCancelPopup}>신청 취소</Button>
                 </div>
               </div>
             </div>
@@ -403,12 +413,24 @@ export default function MyProjectList(){
               <div className="right-area flex-center" style={{ paddingTop: 0, paddingBottom: 0 }}>
                 <div className='w-100 flex-col align-center'>
                   <div className="count" style={{ color: 'var(--error-main)', padding: '1.05rem 3.5rem' }}>참가 거절</div>
-                  <Button size='small' variant='outlined' color='primary' className='w-100'>신청 취소</Button>
+                  <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenCancelPopup}>신청 취소</Button>
                 </div>
               </div>
             </div>
           </div>
         </TabPanel>
+        {/* 지원 취소 팝업 */}
+        <WebPopup
+          isOpen={openCancelPopup}
+          setOpen={setOpenCancelPopup}
+          onSubmit={()=>{}}
+          title='프로젝트 지원 취소'
+          submitText='확인'
+        >
+          <div className='mypage-popup' style={{ paddingBottom: '1.6rem' }}>
+            <p>정말로 지원을 취소하시겠습니까?</p>
+          </div>
+        </WebPopup>
         {/* 2-3-3. 관심 프로젝트 */}
         <TabPanel value={value} index={2}>
           <div className="list-box flex-col">
@@ -666,7 +688,7 @@ export default function MyProjectList(){
               </div>
               <div className="right-area align-end" style={{ paddingTop: 0, paddingBottom: 0 }}>
                 <div className='w-100 flex-col align-center'>
-                  <Button size='small' variant='outlined' color='primary' className='w-100'>팀원 평가</Button>
+                  <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenEvaluatePopup}>팀원 평가</Button>
                 </div>
               </div>
             </div>
@@ -714,14 +736,161 @@ export default function MyProjectList(){
                   </div>
                 </div>
               </div>
-              <div className="right-area flex-center" style={{ paddingTop: 0, paddingBottom: 0 }}>
+              <div className="right-area align-end" style={{ paddingTop: 0, paddingBottom: 0 }}>
                 <div className='w-100 flex-col align-center'>
-                  <Button size='small' variant='outlined' color='primary' className='w-100'>팀원 평가</Button>
+                  <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenEvaluatePopup}>팀원 평가</Button>
                 </div>
               </div>
             </div>
           </div>
         </TabPanel>
+        {/* 팀원 평가 팝업 */}
+        <WebPopup
+          size='auto'
+          isOpen={openEvaluatePopup}
+          setOpen={setOpenEvaluatePopup}
+          onSubmit={()=>{}}
+          title='프로젝트 팀원 평가'
+          submitText='저장'
+        >
+          <div className='mypage-popup' style={{ paddingBottom: '1.6rem' }}>
+            <div className="evaluate-box">
+              <Paper className='evaluate-card flex-col' elevation={2}>
+                <div className="user-info align-center">
+                  <div className="left-area">
+                    <CustomAvatar 
+                      sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
+                      avatarIcon={<Person sx={{ fontSize: 24 }} />} 
+                    />
+                  </div>
+                  <div className="right-area">
+                    <p className='user-nickname'>닉네임</p>
+                    <p className='user-email'>email@gmail.com</p>
+                  </div>
+                </div>
+                <div className="manner-box flex-col">
+                  <div className="top flex-col">
+                    <div className="manner-text justify-between">
+                      <p className='text'>매너온도</p>
+                      <p className='manner-temperature'>36.5°C</p>
+                    </div>
+                    <div className="manner-figure">
+                      <span className='current-figure h-100'></span>
+                    </div>
+                  </div>
+                  <div className="bottom align-center justify-between">
+                    <p className='text'>참여 포지션</p>
+                    <Chip size='small' variant='outlined' color='primary' label='서버개발자' />
+                  </div>
+                </div>
+                <div className="rating-box flex-col">
+                  <Rating name="team-rating" defaultValue={0} precision={0.5} />
+                  <Button size='small' variant='contained' color='primary'>평가</Button>
+                </div>
+              </Paper>
+              <Paper className='evaluate-card flex-col' elevation={2}>
+                <div className="user-info align-center">
+                  <div className="left-area">
+                    <CustomAvatar 
+                      sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
+                      avatarIcon={<Person sx={{ fontSize: 24 }} />} 
+                    />
+                  </div>
+                  <div className="right-area">
+                    <p className='user-nickname'>닉네임</p>
+                    <p className='user-email'>email@gmail.com</p>
+                  </div>
+                </div>
+                <div className="manner-box flex-col">
+                  <div className="top flex-col">
+                    <div className="manner-text justify-between">
+                      <p className='text'>매너온도</p>
+                      <p className='manner-temperature'>36.5°C</p>
+                    </div>
+                    <div className="manner-figure">
+                      <span className='current-figure h-100'></span>
+                    </div>
+                  </div>
+                  <div className="bottom align-center justify-between">
+                    <p className='text'>참여 포지션</p>
+                    <Chip size='small' variant='outlined' color='primary' label='서버개발자' />
+                  </div>
+                </div>
+                <div className="rating-box flex-col">
+                  <Rating name="team-rating" defaultValue={2.5} disabled precision={0.5} />
+                  <strong className='rating-text flex-center'>평가 완료</strong>
+                </div>
+              </Paper>
+              <Paper className='evaluate-card flex-col' elevation={2}>
+                <div className="user-info align-center">
+                  <div className="left-area">
+                    <CustomAvatar 
+                      sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
+                      avatarIcon={<Person sx={{ fontSize: 24 }} />} 
+                    />
+                  </div>
+                  <div className="right-area">
+                    <p className='user-nickname'>닉네임</p>
+                    <p className='user-email'>email@gmail.com</p>
+                  </div>
+                </div>
+                <div className="manner-box flex-col">
+                  <div className="top flex-col">
+                    <div className="manner-text justify-between">
+                      <p className='text'>매너온도</p>
+                      <p className='manner-temperature'>36.5°C</p>
+                    </div>
+                    <div className="manner-figure">
+                      <span className='current-figure h-100'></span>
+                    </div>
+                  </div>
+                  <div className="bottom align-center justify-between">
+                    <p className='text'>참여 포지션</p>
+                    <Chip size='small' variant='outlined' color='primary' label='서버개발자' />
+                  </div>
+                </div>
+                <div className="rating-box flex-col">
+                  <Rating name="team-rating" defaultValue={0} precision={0.5} />
+                  <Button size='small' variant='contained' color='primary'>평가</Button>
+                </div>
+              </Paper>
+              <Paper className='evaluate-card flex-col' elevation={2}>
+                <div className="user-info align-center">
+                  <div className="left-area">
+                    <CustomAvatar 
+                      sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
+                      avatarIcon={<Person sx={{ fontSize: 24 }} />} 
+                    />
+                  </div>
+                  <div className="right-area">
+                    <p className='user-nickname'>닉네임</p>
+                    <p className='user-email'>email@gmail.com</p>
+                  </div>
+                </div>
+                <div className="manner-box flex-col">
+                  <div className="top flex-col">
+                    <div className="manner-text justify-between">
+                      <p className='text'>매너온도</p>
+                      <p className='manner-temperature'>36.5°C</p>
+                    </div>
+                    <div className="manner-figure">
+                      <span className='current-figure h-100'></span>
+                    </div>
+                  </div>
+                  <div className="bottom align-center justify-between">
+                    <p className='text'>참여 포지션</p>
+                    <Chip size='small' variant='outlined' color='primary' label='서버개발자' />
+                  </div>
+                </div>
+                <div className="rating-box flex-col">
+                  <Rating name="team-rating" defaultValue={0} precision={0.5} />
+                  <Button size='small' variant='contained' color='primary'>평가</Button>
+                </div>
+              </Paper>
+            </div>
+          </div>
+        </WebPopup>
+        {/* 2-4. pagination */}
         <Pagination count={10} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
       </Paper>
     </div>
