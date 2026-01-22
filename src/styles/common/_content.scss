@@ -74,24 +74,7 @@
     }
     // 1-4. project apply
     .project-apply-box { gap: 1.2rem; 
-      .form-wrap { gap: 1.2rem;
-        > .form-box { 
-          &:has(.user-info-box) { gap: 1.2rem; }
-          .user-info-box { padding: 1.6rem 2.4rem; gap: 2.4rem; border-radius: 0.4rem; border: 1px solid rgba(33, 150, 243, 0.3);
-            .left-area { min-width: 30rem; gap: 1.2rem;
-              .top { gap: 1.6rem; }
-              .bottom { gap: 0.8rem; }
-            }
-            .right-area { gap: 0.8rem;
-              > div { gap: 1.6rem;
-                .title { min-width: 15rem; font-size: 1.5rem; font-weight: 600; line-height: 150%; letter-spacing: 0.15px; color: var(--text-secondary); }
-                .content { gap: 0.4rem; font-size: 1.4rem; font-weight: 400; line-height: 140%; letter-spacing: 0.17px; color: var(--text-secondary); }
-              }
-            }
-          }
-          .inform-field-box { padding: 2.4rem 1.2rem; gap: 3.2rem; }
-        }
-      }
+
     }
 
     /* 2. board */
@@ -141,7 +124,7 @@
     .myinfo-box { position: sticky; top: 1rem; min-width: 26rem; padding: 2rem; gap: 1.2rem;
       .profile-area { padding: 1.5rem 2.5rem; gap: 1rem; }
     }
-    .mypage-box { padding: 2.8rem 3.2rem; gap: 1.6rem;
+    .mypage-box { min-width: 0; padding: 2.8rem 3.2rem; gap: 1.6rem;
       // 3-1. home
       .top { gap: 0.4rem;
         > div { line-height: 120%; letter-spacing: 0.15px; color: var(--text-secondary);
@@ -167,6 +150,44 @@
       // 3-2. projects
       .list-summary { display: block; font-size: 1.4rem; font-weight: 400; line-height: 100%; letter-spacing: 0.4px; text-align: end; color: var(--primary-dark); }
       .list-box { gap: 0.4rem; }
+      .applicant-box { gap: 0.4rem;
+        .top {
+          .left-area { gap: 0.4rem;
+            strong { font-size: 2rem; font-weight: bold; line-height: 120%; color: var(--text-primary); }
+          }
+          .right-area { gap: 1.2rem;
+            .count-text { gap: 0.4rem;
+              .title { font-size: 1.4rem; font-weight: 400; line-height: 143%; letter-spacing: 0.17px; color: var(--text-secondary); }
+              .count { font-size: 1.4rem; font-weight: 400; line-height: 143%; letter-spacing: 0.17px; color: var(--text-secondary); 
+                em { color: var(--info-main); }
+              }
+            }
+          }
+        }
+        .bottom { position: relative; 
+          .applicant-swiper { width: 100%; padding: 0.8rem 0.4rem 0 0.4rem;
+            .swiper-slide { width: 22rem;
+              .applicant-swiper-slide { width: 100%; padding: 2rem; gap: 1.2rem;
+                .top { font-size: 1rem; line-height: 100%; letter-spacing: 0.17px; color: var(--text-secondary); }
+                .middle { gap: 0.8rem;
+                  .user-info-box { gap: 0.4rem;
+                    .top-area { padding: 0.8rem 0; gap: 1.6rem; }
+                    .bottom-area { gap: 0.4rem; }
+                  }
+                }
+              }
+            }
+            .swiper-scrollbar { height: 0.6rem; margin-top: 1.2rem; border-radius: 1.2rem; background-color: #F3F4F6;
+              .swiper-scrollbar-drag { height: 0.6rem; border-radius: 1.2rem; background-color: var(--primary-main); cursor: pointer; }
+            }
+          }
+          .swiper-button-prev, .swiper-button-next { position: absolute; z-index: 100; top: 50%; transform: translateY(-50%); display: flex; width: 3.4rem; height: 3.4rem; align-items: center; justify-content: center; background-color: #fff; border-radius: 50%; box-shadow: 0px 2px 4px -1px #00000033, 0px 4px 5px 0px #00000024, 0px 1px 10px 0px #0000001F; cursor: pointer; background-repeat: no-repeat; background-size: 80% auto; background-position: center;
+            .swiper-navigation-icon { width: 0.7rem; display: none; }
+          }
+          .swiper-button-prev { left: -1rem; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14.2951 18L15.7051 16.59L11.1251 12L15.7051 7.41L14.2951 6L8.29508 12L14.2951 18Z' fill='black' fill-opacity='0.56'/%3E%3C/svg%3E%0A"); }
+          .swiper-button-next { right:- 1rem; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z' fill='black' fill-opacity='0.56'/%3E%3C/svg%3E%0A"); }
+        }
+      }
     }
   }
 
@@ -255,6 +276,21 @@
         }
         &.rating-box { gap: 1.6rem;
           .rating-text { height: 3rem; font-size: 1.6rem; font-weight: 600; line-height: 2rem; letter-spacing: 0.15px; color: var(--info-main); }
+        }
+      }
+    }
+  }
+  .inform-wrap {
+    > .inform-box { padding: 2rem 1.6rem; gap: 1.6rem;
+      .label-area { min-width: 25rem; max-width: 25rem; 
+        strong { font-size: 1.6rem; font-weight: 600; line-height: 100%; letter-spacing: 0.15px; color: var(--text-secondary); }
+      }
+      .field-area { width: 100%;
+        p { font-size: 1.6rem; line-height: 140%; letter-spacing: 0.15px; color: var(--text-secondary); }
+        &.history-part { 
+          > div { gap: 0.8rem;
+            span { display: block; width: 0.4rem; height: 0.4rem; border-radius: 50%; background-color: var(--text-secondary); }
+          }
         }
       }
     }
