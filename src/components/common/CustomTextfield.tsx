@@ -12,6 +12,7 @@ export interface CustomTextfieldProps extends Omit<TextFieldProps, 'type'> {
   className?: string;
   readonly?: boolean;
   maxLength?: number;
+  noCountStr?: boolean;
 }
 
 export default function CustomTextfield({
@@ -24,6 +25,7 @@ export default function CustomTextfield({
   className,
   readonly = false,
   maxLength = 100,
+  noCountStr = false,
   ...rest
   }: CustomTextfieldProps
 ){
@@ -89,7 +91,7 @@ export default function CustomTextfield({
         }}
         {...rest}
       />
-      {isTextarea && maxLength && (
+      {isTextarea && maxLength && !noCountStr && (
         <div className="count-str">
           <p>{valueLength}/{maxLength}</p>
         </div>
