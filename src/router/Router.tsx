@@ -14,11 +14,12 @@ import BoardModifyPage from '@/pages/web/boards/BoardModifyPage';
 import LoginPage from '@/pages/web/login/LoginPage';
 import SignInPage1 from '@/pages/web/signin/SignInPage1';
 import SignInPage2 from '@/pages/web/signin/SignInPage2';
-import ProjectList from '@/pages/web/projects/ProjectList';
 import MyPageHome from '@/pages/web/mypage/home/MyPageHome';
 import MyPageModify from '@/pages/web/mypage/home/MyPageModify';
 import MyProjectList from '@/pages/web/mypage/projects/list/MyProjectList';
 import MyProjectApplicant from '@/pages/web/mypage/projects/list/MyProjectApplicant';
+import Login from '@/pages/web/login';
+import ProjectList from '@/pages/web/projects/ProjectList';
 
 const router = createBrowserRouter([
   {
@@ -72,7 +73,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <LoginPage />
+            element: <Login />
           }
         ]
       },
