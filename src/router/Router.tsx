@@ -12,8 +12,8 @@ import BoardDetailPage from '@/pages/web/boards/BoardDetailPage';
 import BoardCreatePage from '@/pages/web/boards/BoardCreatePage';
 import BoardModifyPage from '@/pages/web/boards/BoardModifyPage';
 import LoginPage from '@/pages/web/login/LoginPage';
-import SignInPage1 from '@/pages/web/signin/SignInPage1';
-import SignInPage2 from '@/pages/web/signin/SignInPage2';
+import SignupPage from '@/pages/web/signup/SignupPage';
+import SignInPage2 from '@/pages/web/signup/SignInPage2';
 import ProjectList from '@/pages/web/projects/ProjectList';
 
 const router = createBrowserRouter([
@@ -73,11 +73,11 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: 'signin1',
+        path: 'signup',
         children: [
           {
             index: true,
-            element: <SignInPage1 />
+            element: <SignupPage />
           }
         ]
       },
@@ -160,11 +160,11 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: 'signin1',
+        path: 'signup',
         children: [
           {
             index: true,
-            element: <SignInPage1 />
+            element: <SignupPage />
           }
         ]
       },
