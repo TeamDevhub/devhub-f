@@ -69,6 +69,13 @@ export interface ProjectSearchRequest {
   projectRecruitStatusList:string[];
 };
 
+export interface ApplicationFormRequest {
+  title?: string;
+  formTypeCd?: string;
+  customYn?: string;
+  useYn?: string;
+}
+
 export interface ProjectListResponse extends ProjectDetail {
   //필요시 추가
 };

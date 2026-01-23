@@ -1,43 +1,52 @@
-import type { ProjectCreate, Position } from '@/api/projects/projects.type';
+import type { ProjectCreate, Position, ApplicationFormBasic } from '@/api/projects/projects.type';
 import CustomTextfield from '@/components/common/CustomTextfield';
 import { AddCircle, Search } from '@mui/icons-material';
 import { getCodesByGroup, getCodeName } from "@/utils/common.util";
 import { COMMON_CODE, type CommonCodeItem } from '@/types/common.type';
-import PositionField from './PositionField';
+import PositionGroup from './PositionGroup';
+import ApplicationFormGroup from '@/pages/web/projects/ProjectCreate/ApplicationFormGroup'
 import SkillPopup from '@/components/popup/SkillPopup'
-
-import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, Paper, Radio, RadioGroup, TextField } from '@mui/material'
+import RegionPopup from '@/components/popup/RegionPopup'
+import { DatePicker } from '@mui/x-date-pickers';
+import { type DateType } from '@/types/api.type'
+import { Button, Chip, Divider, FormControl, FormControlLabel, FormLabel, IconButton, Paper, Radio, RadioGroup, TextField } from '@mui/material'
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react'
+import { useSelectApplicationForms } from '@/api/projects/projects.json.hook'
 
 export default function ProjectCreatePage(){
   const [recruitmentTypeCdOption, setRecruitmentTypeCdOption] = useState<CommonCodeItem[]>([]);
   const [progressTypeCdOption, setProgressTypeCdOption] = useState<CommonCodeItem[]>([]);
   const [skillOption, setSkillOption] = useState<CommonCodeItem[]>([]);
-  const [skillValues, setSkillValues] = useState<string[]>([]);
-  const initData: ProjectCreate = {
-      category: '',
-      title: '',
-      content: '',
-      recruitmentTypeCd: '3001',
-      recruitmentStartDate: dayjs(),
-      recruitmentEndDate: dayjs(),
-      progressTypeCd: '3101',
-      prgressRegionCd: '',
-      progressPeriod: '',
-      progressStartDate: dayjs(),
-      progressEndDate: dayjs(),
-      skillList: [],
-      positionList: [{
-        position: '',
-        level: '',
-        capacity: 0,
-      }],
-      applicationFormList: [],
-      additionalFormList: []
-    };
-  const [values, setValues] = useState<ProjectCreate>(initData);
+  const { res, loading } = useSelectApplicationForms({customYn: 'N'});
+
   const [openSkillPopup, setOpenSkillPopup] = useState(false);
+  const [skillValues, setSkillValues] = useState<string[]>([]);
+  const [openRegionPopup, setOpenRegionPopup] = useState(false);
+  const [regionValues, setRegionValues] = useState<string>('');
+
+  const initData: ProjectCreate = {
+    category: '',
+    title: '',
+    content: '',
+    recruitmentTypeCd: '3001',
+    recruitmentStartDate: dayjs(),
+    recruitmentEndDate: dayjs(),
+    progressTypeCd: '3101',
+    prgressRegionCd: '',
+    progressPeriod: '',
+    progressStartDate: dayjs(),
+    progressEndDate: dayjs(),
+    skillList: [],
+    positionList: [{
+      position: '',
+      level: '',
+      capacity: 0,
+    }],
+    applicationFormList: [],
+    additionalFormList: []
+  };
+  const [values, setValues] = useState<ProjectCreate>(initData);
 
   const initialize = () => {
     setRecruitmentTypeCdOption(getCodesByGroup(COMMON_CODE.PROJECT_RECRUIT_TYPE));
@@ -54,42 +63,23 @@ export default function ProjectCreatePage(){
       ...values,
       skillList: skillValues
     })
-  }, [skillValues])
+  }, [skillValues]);
 
-  const onHandleEvent = (name: string, value: string) => {
+  useEffect(()=>{
+    setValues({
+      ...values,
+      prgressRegionCd: regionValues
+    })
+  }, [regionValues]);
+
+  const onHandleEvent = (name: string, value: any) => {
     setValues(prev => ({
       ...prev,
       [name]: value,
     }));
   }
 
-  const onHandlePositionField = (index1: number, newPosition?: Position) => {
-    if(!newPosition){
-      setValues({
-        ...values,
-        positionList: values.positionList?.filter((item, index2)=>index1 !== index2)
-      })
-    } else {
-      setValues({
-        ...values,
-        positionList: values.positionList?.map((item, index2)=>index1 === index2 ? newPosition : item)
-      })
-    }
-  }
-
-  const onHandleAddPositionField = () => {
-    setValues({
-        ...values,
-        positionList: values.positionList?.concat({
-          position: '',
-          level: '',
-          capacity: 0,
-        })
-      })
-  }
-
-  const onHandleDeleteSkillChip = (skillName: string) => {
-    const skillCode = skillOption.find(item => item.name === skillName)?.code;
+  const onHandleDeleteSkillChip = (skillCode: string) => {
     if(skillCode){
       setSkillValues(skillValues.filter(item => item !== skillCode))
     }
@@ -105,7 +95,7 @@ export default function ProjectCreatePage(){
           {/* 1. 모집 유형 */}
           <div className="form-box">
             <FormControl>
-              <RadioGroup row aria-labelledby='recruitment-status-radio-group-label' name='recruitmentTypeCd' defaultValue={initData.recruitmentTypeCd} onClick={(e) => onHandleEvent(e.target.name, e.target.value)}>
+              <RadioGroup row aria-labelledby='recruitment-status-radio-group-label' defaultValue={initData.recruitmentTypeCd} onClick={(e) => onHandleEvent("recruitmentTypeCd", e.target.value)}>
                 {recruitmentTypeCdOption.map((item, index)=>(
                   <FormControlLabel key={index} value={item.code} control={<Radio />} label={item.name} />
                 ))}
@@ -123,8 +113,8 @@ export default function ProjectCreatePage(){
               <p className='label-text'>기본 정보</p>
             </div>
             <div className="field-area flex-col flex-1" style={{ gap: '1.2rem' }}>
-              <CustomTextfield name="title" placeholder='제목을 입력해 주세요.' onChange={(e) => onHandleEvent(e.target.name, e.target.value)}/>              
-              <CustomTextfield name='category' placeholder='카테고리를 입력해 주세요.' onChange={(e) => onHandleEvent(e.target.name, e.target.value)}/>              
+              <CustomTextfield placeholder='제목을 입력해 주세요.' onChange={(e) => onHandleEvent("title", e.target.value)}/>              
+              <CustomTextfield placeholder='카테고리를 입력해 주세요.' onChange={(e) => onHandleEvent("category", e.target.value)}/>              
             </div>
           </div>
           {/* 3. 모집 정보 */}
@@ -136,24 +126,37 @@ export default function ProjectCreatePage(){
             <div className="field-area flex-col flex-1">
               <div className="field-box flex-col">
                 <p className="field-title">모집기간</p>
-                <div className="align-center">
-                  <CustomTextfield placeholder='시작일을 입력해 주세요.' />              
-                  -
-                  <CustomTextfield placeholder='종료일을 입력해 주세요.' />              
+                <div className='align-center'>
+                  <DatePicker
+                    onChange={(value: DateType) => onHandleEvent("recruitmentStartDate", value)}
+                    slotProps={{
+                      textField: {
+                        size: 'medium',
+                      },
+                    }}
+                  />
+                  ~
+                  <DatePicker
+                    onChange={(value: DateType) => onHandleEvent("recruitmentEndDate", value)}
+                    slotProps={{
+                      textField: {
+                        size: 'medium'
+                      },
+                    }}
+                  />
                 </div>
               </div>
               <div className="recruit-field flex-col align-start">
                 <div className="field-box flex-col">
                   <p className="field-title">모집인원</p>
                 </div>
-                 {values.positionList?.map((item, index)  => <PositionField index={index} position={item} onChange={onHandlePositionField}/>)}
-                  <IconButton size='small' onClick={onHandleAddPositionField}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
+                <PositionGroup positionList={values.positionList || []} onChange={(values: Position[]) => onHandleEvent("positionList", values)}/>
               </div>
               <div className="field-box flex-col align-start">
                 <p className="field-title">기술스택</p>
                 <div className="align-center">
                   {values.skillList?.map((item, index) => {
-                    return <Chip size='medium' variant='filled' label={getCodeName(COMMON_CODE.SKILL_CODE, item)} color='primary' onDelete={() => onHandleDeleteSkillChip(getCodeName(COMMON_CODE.SKILL_CODE, item))} />})}
+                    return <Chip size='medium' variant='filled' label={getCodeName(COMMON_CODE.SKILL_CODE, item)} color='primary' onDelete={() => onHandleDeleteSkillChip(item)} />})}
                 </div>
                 <IconButton size='small' onClick={()=>{setOpenSkillPopup(true)}}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
               </div>
@@ -170,7 +173,7 @@ export default function ProjectCreatePage(){
               <div className="field-box">
                 <FormControl>
                   <FormLabel id='project-info-radio-group'>진행방식</FormLabel>
-                  <RadioGroup row aria-labelledby='project-info-radio-group-label' name="progressTypeCd" defaultValue={initData.progressTypeCd} onClick={(e) => onHandleEvent(e.target.name, e.target.value)}>
+                  <RadioGroup row aria-labelledby='project-info-radio-group-label' defaultValue={initData.progressTypeCd} onClick={(e) => onHandleEvent("progressTypeCd", e.target.value)}>
                     {progressTypeCdOption.map((item, index)=>(
                       <FormControlLabel key={index} value={item.code} control={<Radio />} label={item.name} />
                     ))}
@@ -180,13 +183,14 @@ export default function ProjectCreatePage(){
               <div className="field-box flex-col">
                 <p className="field-title">진행지역</p>
                 <div className="align-stretch">
-                  <CustomTextfield placeholder='지역 명을 입력해 주세요.' />    
+                  <CustomTextfield value={getCodeName(COMMON_CODE.REGION_CODE, values.prgressRegionCd)} placeholder='지역 명을 입력해 주세요.' readonly/>    
                   <Button 
                     size='large' 
                     variant='contained' 
                     color='primary' 
                     startIcon={<Search sx={{ fontSize: 24 }}/>}
                     sx={{ minWidth: '9.9rem !important' }}
+                    onClick={()=>{setOpenRegionPopup(true);}}
                   >
                     찾기
                   </Button>
@@ -194,10 +198,24 @@ export default function ProjectCreatePage(){
               </div>
               <div className="field-box flex-col">
                 <p className="field-title">진행기간</p>
-                <div className="align-center">
-                  <CustomTextfield placeholder='시작일을 입력해 주세요.' />    
-                  -
-                  <CustomTextfield placeholder='종료일을 입력해 주세요.' />    
+                <div className='align-center'>
+                  <DatePicker
+                    onChange={(value: DateType) => onHandleEvent("progressStartDate", value)}
+                    slotProps={{
+                      textField: {
+                        size: 'medium',
+                      },
+                    }}
+                  />
+                  ~
+                  <DatePicker
+                    onChange={(value: DateType) => onHandleEvent("progressEndDate", value)}
+                    slotProps={{
+                      textField: {
+                        size: 'medium'
+                      },
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -210,7 +228,7 @@ export default function ProjectCreatePage(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <CustomTextfield name='content' type='textarea' placeholder='상세내용을 입력해 주세요.' onChange={(e) => onHandleEvent(e.target.name, e.target.value)}/>    
+                <CustomTextfield type='textarea' placeholder='상세내용을 입력해 주세요.' onChange={(e) => onHandleEvent("content", e.target.value)}/>    
               </div>
             </div>
           </div>
@@ -256,17 +274,8 @@ export default function ProjectCreatePage(){
               </div>
             </div>
             <div className="field-area flex flex-1" style={{ gap: '3.2rem' }}>
-              <FormGroup>
-                <FormControlLabel control={<Checkbox />} label='이름' />
-                <FormControlLabel control={<Checkbox />} label='나이' />
-                <FormControlLabel control={<Checkbox />} label='지원동기' />
-                <FormControlLabel control={<Checkbox />} label='경력' />
-                <FormControlLabel control={<Checkbox />} label='경험' />
-              </FormGroup>
-              <FormGroup>
-                <FormControlLabel control={<Checkbox />} label='첨부파일' />
-                <FormControlLabel control={<Checkbox />} label='참여가능 요일' />
-              </FormGroup>
+              <ApplicationFormGroup values={res?.dataList?.map((item: ApplicationFormBasic) => item.title) || []} 
+              onChange={(newValues: string[])=>{onHandleEvent("applicationFormList", newValues.map(item1=> res?.dataList?.find(item2 => item2.title === item1)?.typeCd))}}/>
             </div>
           </div>
           {/* 9. 추가 양식 */}
@@ -290,6 +299,8 @@ export default function ProjectCreatePage(){
       </Paper>
 
       {openSkillPopup && <SkillPopup isOpen={openSkillPopup} setOpen={setOpenSkillPopup} values={skillValues} setValues={setSkillValues}/>}
+      {openRegionPopup && <RegionPopup isOpen={openRegionPopup} setOpen={setOpenRegionPopup} values={regionValues} setValues={setRegionValues}/>}
+      
     </div>
   )
 }

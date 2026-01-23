@@ -1,10 +1,11 @@
 import { useMutation, useSelect } from "@/hooks/api.hook";
 import type { ApiResponse } from "@/types/api.type";
-import type { ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest, ProjectCreate } from "./projects.type";
+import type { ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest, ProjectCreate, ApplicationFormBasic, ApplicationFormRequest } from "./projects.type";
 
 import selectListResJSON from '@/assets/jsonData/projectsPage/projectListRes.json';
 import selectDetailResJSON from '@/assets/jsonData/projectsPage/projectDetailRes.json';
 import apiSuccessResJSON from '@/assets/jsonData/apiSuccessRes.json'
+import applicationFormListRes from '@/assets/jsonData/projectsPage/applicationFormListRes.json'
 
 // 개발용 JSON 호출
 
@@ -57,4 +58,16 @@ export const useCreateProject = () => {
   };
 
   useMutation<ProjectCreate, void>(mockCreateProject);
+}
+
+export const useSelectApplicationForms = (req: ApplicationFormRequest) => {
+  const mockGetApplicationForms = async (): Promise<ApiResponse<ApplicationFormBasic>> => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    return applicationFormListRes as ApiResponse<ApplicationFormBasic>;
+  };
+  return useSelect<ApplicationFormBasic, ApplicationFormRequest>({
+      apiFn: mockGetApplicationForms,
+      req,
+      cacheKey: 'applicationForms-${JSON.stringify(req)}',
+  })
 }

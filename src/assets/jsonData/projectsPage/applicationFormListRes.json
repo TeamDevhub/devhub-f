@@ -1,0 +1,59 @@
+{
+  "success" : true,
+  "code" : "SUC.DVH.0002",
+  "dataList" : [
+    {
+        "applicationFormGuid": "c1ba0f7821a54fc6a4561b4e06da4e76",
+        "title": "이름",
+        "typeCd": "001",
+        "useYn": "Y",
+        "customYn": "N",
+        "rgtrId": "system_admin",
+        "regDt": "2024-01-01 10:00:00",
+        "mdfrId": "system_admin",
+        "mdfcnDt": "2024-01-01 10:00:00"
+    },
+    {
+        "applicationFormGuid": "su3jvf7821a54fc6a4561b4e06da4e76",
+        "title": "나이",
+        "typeCd": "002",
+        "useYn": "Y",
+        "customYn": "N",
+        "rgtrId": "system_admin",
+        "regDt": "2024-01-01 10:00:00",
+        "mdfrId": "system_admin",
+        "mdfcnDt": "2024-01-01 10:00:00"
+    },
+    {
+        "applicationFormGuid": "oekj9x7821a54fc6a4561b4e06da4e76",
+        "title": "지원동기",
+        "typeCd": "003",
+        "useYn": "Y",
+        "customYn": "N",
+        "rgtrId": "system_admin",
+        "regDt": "2024-01-01 10:00:00",
+        "mdfrId": "system_admin",
+        "mdfcnDt": "2024-01-01 10:00:00"
+    },
+    {
+        "applicationFormGuid": "akckwx7821a54fc6a4561b4e06da4e76",
+        "title": "경력",
+        "typeCd": "004",
+        "useYn": "Y",
+        "customYn": "N",
+        "rgtrId": "system_admin",
+        "regDt": "2024-01-01 10:00:00",
+        "mdfrId": "system_admin",
+        "mdfcnDt": "2024-01-01 10:00:00"
+    }
+],
+"pagination" : {
+      "page": 0,
+      "size": 20,
+      "totalPages": 1,
+      "totalElements": 4,
+      "first": true,
+      "last": true
+	  },
+    "error": null
+}
