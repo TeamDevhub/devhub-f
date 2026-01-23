@@ -1,5 +1,5 @@
 import { FormGroup, FormControlLabel, Checkbox } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 interface CustomCheckboxGroupProps {
   values: string[];
@@ -7,7 +7,16 @@ interface CustomCheckboxGroupProps {
 }
 
 export default function ApplicationFormGroup({ values, onChange }: CustomCheckboxGroupProps) {
+    const [groupedValues, setGroupedValues] = useState<string[][]>([]);
     const [checkedValues, setCheckedValues] = useState<string[]>([]);
+    const rowCount = 5;
+    useEffect(()=>{
+        const tempGroupedValues: string[][] = [];
+        for(let i = 0 ; i < values.length ; i += rowCount) {
+            tempGroupedValues.push(values.slice(i, i+rowCount));
+        }
+        setGroupedValues(tempGroupedValues);
+    }, [values])
     const handleOnChange = (value: boolean, name: string) => {
         let newValues: string[] = [];
         if(value) {
@@ -19,7 +28,10 @@ export default function ApplicationFormGroup({ values, onChange }: CustomCheckbo
         onChange && onChange(newValues);
     };
 
-    return <FormGroup>
-        {values.map((item: string, index: number) => <FormControlLabel key={index} control={<Checkbox name={item} onChange={(e) => handleOnChange(e.target.checked, e.target.name)}/>} label={item} />)}
-    </FormGroup>
+    return <>
+    {groupedValues.map((item, index) => 
+    <FormGroup key={index}>
+        {item.map((item: string, index: number) => <FormControlLabel key={index} control={<Checkbox name={item} onChange={(e) => handleOnChange(e.target.checked, e.target.name)}/>} label={item} />)}
+    </FormGroup>)}
+    </>
 }
