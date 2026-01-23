@@ -7,6 +7,7 @@ import PositionGroup from './PositionGroup';
 import ApplicationFormGroup from '@/pages/web/projects/ProjectCreate/ApplicationFormGroup'
 import SkillPopup from '@/components/popup/SkillPopup'
 import RegionPopup from '@/components/popup/RegionPopup'
+import WebPopup from '@/components/popup/WebPopup';
 import { DatePicker } from '@mui/x-date-pickers';
 import { type DateType } from '@/types/api.type'
 import { Button, Chip, Divider, FormControl, FormControlLabel, FormLabel, IconButton, Paper, Radio, RadioGroup, TextField } from '@mui/material'
@@ -24,6 +25,7 @@ export default function ProjectCreatePage(){
   const [skillValues, setSkillValues] = useState<string[]>([]);
   const [openRegionPopup, setOpenRegionPopup] = useState(false);
   const [regionValues, setRegionValues] = useState<string>('');
+  const [openWebPopup, setOpenWebPopup] = useState(false);
 
   const initData: ProjectCreate = {
     category: '',
@@ -285,7 +287,7 @@ export default function ProjectCreatePage(){
             </div>
             <div className="field-area">
               <div className="field-box">
-                <IconButton size='small'><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
+                <IconButton size='small' onClick={()=>{setOpenWebPopup(true)}}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
               </div>
             </div>
           </div>
@@ -300,6 +302,7 @@ export default function ProjectCreatePage(){
 
       {openSkillPopup && <SkillPopup isOpen={openSkillPopup} setOpen={setOpenSkillPopup} values={skillValues} setValues={setSkillValues}/>}
       {openRegionPopup && <RegionPopup isOpen={openRegionPopup} setOpen={setOpenRegionPopup} values={regionValues} setValues={setRegionValues}/>}
+      {openWebPopup && <WebPopup isOpen={openWebPopup} setOpen={setOpenWebPopup} title='추가 양식'  children={<></>}/> }
       
     </div>
   )
