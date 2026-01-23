@@ -69,8 +69,8 @@ export default function UserInfoPage({ onNext }: Props) {
         <Paper className="auth-box flex-col" elevation={4}>
           {/* title */}
           <div className="text-box flex-col">
-            <strong>회원가입 정보 입력</strong>
-            <p>계정을 완성해 DevHub에서 함께 성장하세요!</p>
+            <strong>계정 만들기</strong>
+            <p>DevHub에서 함께 성장할 준비 되셨나요?</p>
           </div>
 
           <Divider />

@@ -1,33 +1,47 @@
 import { useMutation } from "@/hooks/api.hook";
 import type { ApiResponse } from "@/types/api.type";
-import type { SignupRequest, VerificationConfirmRequest, VerificationRequest } from './signup.type';
-
-import apiSuccessResJSON from '@/assets/jsonData/apiSuccessRes.json'
+import type {
+  SignupRequest,
+  VerificationConfirmRequest,
+  VerificationRequest,
+} from "./signup.type";
 
 // 개발용 JSON 호출
-export const usePublishVerification = () => {
-  const mockPublishVerification = async (): Promise<ApiResponse<void>> => {
+export const useSendVerification = () => {
+  const mockSendVerification = async (): Promise<ApiResponse<void>> => {
     await new Promise((resolve) => setTimeout(resolve, 500));
-    return apiSuccessResJSON as ApiResponse<void>;
+    return {
+      success: true,
+      code: "SUC.DVH.0001",
+      error: null,
+    } as ApiResponse<void>;
   };
 
-  useMutation<VerificationRequest, void>(mockPublishVerification);
+  return useMutation<VerificationRequest, void>(mockSendVerification);
 };
 
 export const useConfirmVerification = () => {
   const mockConfirmVerification = async (): Promise<ApiResponse<void>> => {
     await new Promise((resolve) => setTimeout(resolve, 500));
-    return apiSuccessResJSON as ApiResponse<void>;
+    return {
+      success: true,
+      code: "SUC.DVH.0001",
+      error: null,
+    } as ApiResponse<void>;
   };
 
-  useMutation<VerificationConfirmRequest, void>(mockConfirmVerification);
+  return useMutation<VerificationConfirmRequest, void>(mockConfirmVerification);
 };
 
 export const useSignup = () => {
   const mockSignup = async (): Promise<ApiResponse<void>> => {
     await new Promise((resolve) => setTimeout(resolve, 500));
-    return apiSuccessResJSON as ApiResponse<void>;
+    return {
+      success: true,
+      code: "SUC.DVH.0001",
+      error: null,
+    } as ApiResponse<void>;
   };
 
-  useMutation<SignupRequest, void>(mockSignup);
+  return useMutation<SignupRequest, void>(mockSignup);
 };

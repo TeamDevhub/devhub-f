@@ -12,33 +12,47 @@ import React, { useState } from "react";
 import CustomTextfield from "@/components/common/CustomTextfield";
 import { Link } from "react-router-dom";
 import logo from "@/assets/images/devHub-logo.png";
+import { useSendVerification } from "@/api/signup/signup.json.hook";
 
 interface Props {
-  onNext?: () => void; // 상위에서 Step 변경 콜백, 필요 시 전달
+  onNext?: () => void;
 }
 
 export default function VerificationPage({ onNext }: Props) {
   const [email, setEmail] = useState("");
-  const [isEmailSent, setIsEmailSent] = useState(false); // 인증 발송 상태
-  const [verificationCode, setVerificationCode] = useState(""); // 인증번호
+  const [isEmailSent, setIsEmailSent] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("");
   const [isError, setIsError] = useState(false);
+  const { mutate: sendVerificationEmail, loading } = useSendVerification();
 
   const handleChange = (event: SelectChangeEvent) =>
     setEmail(event.target.value);
 
-  const handleSendEmail = () => {
-    // TODO: 실제 이메일 발송 API 호출
-    setIsEmailSent(true);
-    console.log("이메일 발송 완료");
+  const handleSendEmail = async () => {
+    if (!email) return alert("이메일을 입력해주세요");
+    if (loading) return;
+
+    try {
+      const res = await sendVerificationEmail({ email });
+      if (res.success) {
+        setIsEmailSent(true);
+        alert("이메일 발송 완료");
+      } else {
+        alert("이메일 발송 실패");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("이메일 발송 실패");
+    }
   };
 
   const handleVerifyCode = () => {
     if (verificationCode === "") {
-      setIsError(true); // 입력 없으면 오류 표시
+      setIsError(true);
       return;
     }
     setIsError(false);
-    console.log("인증번호 확인 완료");
+    alert("인증번호 확인 완료");
     onNext?.();
   };
 
@@ -84,10 +98,9 @@ export default function VerificationPage({ onNext }: Props) {
                     size="medium"
                     displayEmpty
                     renderValue={(selected) =>
-                      selected === "" ? "gmail.com" : selected
+                      selected === "" ? "이메일을 선택해주세요" : selected
                     }
                   >
-                    <MenuItem value="">None</MenuItem>
                     <MenuItem value="gmail.com">gmail.com</MenuItem>
                     <MenuItem value="naver.com">naver.com</MenuItem>
                   </Select>
