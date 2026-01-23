@@ -7,7 +7,7 @@ import ProjectListPage from '@/pages/web/projects/ProjectListPage';
 import ProjectDetailPage from '@/pages/web/projects/ProjectDetailPage';
 import ProjectCreatePage from '@/pages/web/projects/ProjectCreatePage';
 import ProjectApplyPage from '@/pages/web/projects/ProjectApplyPage';
-import BoardListPage from '@/pages/web/boards/BoardListPage';
+import BoardListPage from '@/pages/web/boards/BoardList';
 import BoardDetailPage from '@/pages/web/boards/BoardDetailPage';
 import BoardCreatePage from '@/pages/web/boards/BoardCreatePage';
 import BoardModifyPage from '@/pages/web/boards/BoardModifyPage';
