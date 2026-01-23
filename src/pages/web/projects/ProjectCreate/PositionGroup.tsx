@@ -1,21 +1,64 @@
 import type { Position } from '@/api/projects/projects.type'
 import { FormControl, Select, MenuItem, IconButton } from '@mui/material';
 import CustomTextfield from '@/components/common/CustomTextfield';
-import { Remove } from '@mui/icons-material'
+import { AddCircle, Remove } from '@mui/icons-material'
 import { useState, useEffect } from 'react';
 import { COMMON_CODE, type CommonCodeItem } from '@/types/common.type';
 import { getCodesByGroup } from '@/utils/common.util';
 
-interface PositionFieldProps {
-    position: Position;
-    onChange?: (key: number, newPosition?: Position) => void;
-    index: number;
+interface PositionGroupProps {
+    positionList: Position[];
+    onChange?: (newPosition: Position[]) => void;
 }
 
-export default function PositionField ({
+interface PositionFieldProps {
+    position: Position;
+    index: number;
+    onChange?: (key: number, newPosition?: Position) => void;
+}
+
+export default function PositionGroup ({
+    positionList,
+    onChange
+}: PositionGroupProps) {
+
+    const onHandlePositionField = (index1: number, newPosition?: Position) => {
+        let newPositionList = positionList;
+        if(!newPosition){
+            newPositionList = positionList.filter((_, index2)=>index1 !== index2);
+        } else {
+            newPositionList = positionList.map((item, index2)=>index1 === index2 ? newPosition : item);
+        }
+        onChange?.(newPositionList);
+        }
+
+    const onHandleAddPositionField = () => {
+        const newPositionList = positionList.concat({
+            position: '',
+            level: '',
+            capacity: 0,
+        });
+        onChange?.(newPositionList);
+    }
+    return <>
+        <div className="field-box flex-col">
+            {positionList.map((position, index) => (
+                <PositionField
+                    key={index}
+                    position={position}
+                    onChange={onHandlePositionField}
+                    index={index}
+                />
+            ))}
+        </div>
+        <IconButton size='small' onClick={onHandleAddPositionField}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
+     </>
+}
+
+function PositionField ({
     position,
-    onChange,
-    index
+    index,
+    onChange
 }: PositionFieldProps){
     const [positionOptions, setPositionOptions] = useState<CommonCodeItem[]>([]);
     const [levelOptions, setLevelOptions] = useState<CommonCodeItem[]>([]);
@@ -24,6 +67,7 @@ export default function PositionField ({
         setPositionOptions(getCodesByGroup(COMMON_CODE.POSITION_CODE));
         setLevelOptions(getCodesByGroup(COMMON_CODE.POSITION_LEVEL_CODE));
     }
+
     const handleOnChange = (name: keyof Position, value: Position[keyof Position]) => {
         onChange?.(index, {
             ...position,
@@ -44,10 +88,9 @@ export default function PositionField ({
                     <FormControl variant='outlined' sx={{ minWidth: '27rem' }}>
                     <Select 
                         id='filter' 
-                        name='position'
                         value={position.position}
                         onChange={(e) =>handleOnChange(
-                                    e.target.name as keyof Position,
+                                    "position",
                                     e.target.value as Position[keyof Position]
                                 )} 
                         size='medium' 
@@ -60,10 +103,9 @@ export default function PositionField ({
                     <FormControl variant='outlined' sx={{ minWidth: '17rem' }}>
                     <Select 
                         id='filter'
-                        name='level'
                         value={position.level}
                         onChange={(e) => handleOnChange(
-                                    e.target.name as keyof Position,
+                                    "level",
                                     e.target.value as Position[keyof Position]
                                     )} 
                         size='medium'
@@ -74,11 +116,10 @@ export default function PositionField ({
                     </Select>
                     </FormControl>
                     <CustomTextfield 
-                        name='capacity' 
                         sx={{ width: '6rem' }}
                         value={position.capacity}
                         onChange={(e) => handleOnChange(
-                                    e.target.name as keyof Position,
+                                    "capacity",
                                     Number(e.target.value) as Position[keyof Position]
                                     )}  />              
                     <p>명</p>
