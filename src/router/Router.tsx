@@ -15,11 +15,12 @@ import LoginPage from '@/pages/web/login/LoginPage';
 import SignInPage1 from '@/pages/web/signin/SignInPage1';
 import SignInPage2 from '@/pages/web/signin/SignInPage2';
 import ProjectList from '@/pages/web/projects/ProjectList';
-import MyPageHome from '@/pages/web/mypage/home/MyPageHome';
-import MyPageModify from '@/pages/web/mypage/home/MyPageModify';
-import MyProjectList from '@/pages/web/mypage/projects/MyProjectList';
-import MyProjectApplicant from '@/pages/web/mypage/projects/MyProjectApplicant';
-import MyBoards from '@/pages/web/mypage/boards/MyBoards';
+import MyHomePage from '@/pages/web/mypage/home/MyHomePage';
+import MyHomeModifyPage from '@/pages/web/mypage/home/MyHomeModifyPage';
+import MyProjectApplicantPage from '@/pages/web/mypage/projects/MyProjectApplicantPage';
+import MyProjectListPage from '@/pages/web/mypage/projects/MyProjectListPage';
+import MyBoardPage from '@/pages/web/mypage/boards/MyBoardPage';
+import SkillTrendsPage from '@/pages/web/skilltrends/SkillTrendsPage';
 
 const router = createBrowserRouter([
   {
@@ -153,24 +154,33 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'home',
-            element: <MyPageHome />
+            element: <MyHomePage />
           },
           {
             path: 'home/modify',
-            element: <MyPageModify />
+            element: <MyHomeModifyPage />
           },
           {
             path: 'projects/list',
-            element: <MyProjectList />
+            element: <MyProjectListPage />
           },
           {
             path: 'projects/list/applicants',
-            element: <MyProjectApplicant />
+            element: <MyProjectApplicantPage />
           },
           {
             path: 'boards',
-            element: <MyBoards />
+            element: <MyBoardPage />
           }
+        ]
+      },
+      {
+        path: 'skilltrends',
+        children: [
+          {
+            index: true,
+            element: <SkillTrendsPage />
+          },
         ]
       },
     ],

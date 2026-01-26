@@ -5,7 +5,7 @@ import WebPopup from '@/components/popup/WebPopup'
 import MyInfoBox from '@/pages/web/mypage/home/MyInfoBox'
 import React, { useState } from 'react'
 
-export default function MyPageModify(){
+export default function MyHomeModifyPage(){
   // 비밀번호 변경 팝업
   const [openPasswordPopup, setOpenPasswordPopup] = useState(false);
   const clickOpenPasswordPopup = () => {

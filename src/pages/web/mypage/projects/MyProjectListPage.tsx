@@ -25,7 +25,7 @@ function TabPanel({ value, index, children }: {
   )
 }
 
-export default function MyProjectList(){
+export default function MyProjectListPage(){
   // tabs
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

@@ -9,7 +9,7 @@ import React, { useState } from 'react'
 import WebPopup from '@/components/popup/WebPopup'
 import CustomTextfield from '@/components/common/CustomTextfield'
 
-export default function MyProjectApplicant(){
+export default function MyProjectApplicantPage(){
   // 상세보기 팝업
   const [openDetailPopup, setOpenDetailPopup] = useState(false);
   const clickOpenDetailPopup = () => {setOpenDetailPopup(true);}

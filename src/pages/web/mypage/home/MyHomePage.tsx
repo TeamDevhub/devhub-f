@@ -9,7 +9,7 @@ export interface MyPageHomeProps { // 데이터가 없을 때, Divider가 안 �
   hasApplyProject?: boolean;
 }
 
-export default function MyPageHome({
+export default function MyHomePage({
   hasRegisterProject = true, 
   hasApplyProject = true,
 }: MyPageHomeProps){

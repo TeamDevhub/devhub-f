@@ -1,9 +1,9 @@
 import React from 'react'
-import MyInfoBox from '../home/MyInfoBox'
+import MyInfoBox from '@/pages/web/mypage/home/MyInfoBox'
 import { Button, Chip, Pagination, Paper } from '@mui/material'
 import { Create, Favorite, Visibility } from '@mui/icons-material'
 
-export default function MyBoards(){
+export default function MyBoardPage(){
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. left area */}
