@@ -58,7 +58,9 @@ export const useSelect = <TRes, TReq>({
 };
 
 export const useMutation = <TReq, TRes>(
-  mutationFn: (req: TReq) => Promise<ApiResponse<TRes>>
+  mutationFn: (req: TReq) => Promise<ApiResponse<TRes>>,
+  onSuccess?: (res: ApiResponse<TRes>) => void,
+  onFail?: (res: ApiResponse<TRes>) => void
 ) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -68,6 +70,10 @@ export const useMutation = <TReq, TRes>(
       setLoading(true);
       setError(null);
       const res = await mutationFn(req);
+      
+      if(res.success) onSuccess && onSuccess(res);
+      else onFail && onFail(res);
+
       return res;
     } catch (e) {
       setError(e as Error);
