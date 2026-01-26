@@ -18,7 +18,6 @@ import { useSelectApplicationForms } from '@/api/projects/projects.json.hook'
 export default function ProjectCreatePage(){
   const [recruitmentTypeCdOption, setRecruitmentTypeCdOption] = useState<CommonCodeItem[]>([]);
   const [progressTypeCdOption, setProgressTypeCdOption] = useState<CommonCodeItem[]>([]);
-  const [skillOption, setSkillOption] = useState<CommonCodeItem[]>([]);
   const { res, loading } = useSelectApplicationForms({customYn: 'N'});
 
   const [openSkillPopup, setOpenSkillPopup] = useState(false);
@@ -53,7 +52,6 @@ export default function ProjectCreatePage(){
   const initialize = () => {
     setRecruitmentTypeCdOption(getCodesByGroup(COMMON_CODE.PROJECT_RECRUIT_TYPE));
     setProgressTypeCdOption(getCodesByGroup(COMMON_CODE.PROJECT_PROGRESS_TYPE));
-    setSkillOption(getCodesByGroup(COMMON_CODE.SKILL_CODE));
   }
 
   useEffect(()=>{
