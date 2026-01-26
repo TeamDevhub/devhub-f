@@ -17,8 +17,9 @@
 
 /* project card */
 // 1. 프로젝트 조회
-.project-box, .project-box2 { min-width: 0; padding: 1.6rem 2.4rem; gap: 1.2rem; cursor: pointer;
-  .main-text { font-size: 2rem; font-weight: 600; line-height: 120%; color: #000; }
+.project-box, .project-box2 { padding: 1.6rem 2.4rem; gap: 1.2rem; cursor: pointer;
+  .left-area { min-width: 0; }
+  .main-text { width: 100%; min-width: 0; font-size: 2rem; font-weight: 600; line-height: 120%; color: #000; }
   .sub-text { gap: 0.8rem; 
     .top{ gap: 2.4rem;
       > div { gap: 0.8rem;

@@ -17,8 +17,9 @@ import SignInPage2 from '@/pages/web/signin/SignInPage2';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import MyPageHome from '@/pages/web/mypage/home/MyPageHome';
 import MyPageModify from '@/pages/web/mypage/home/MyPageModify';
-import MyProjectList from '@/pages/web/mypage/projects/list/MyProjectList';
-import MyProjectApplicant from '@/pages/web/mypage/projects/list/MyProjectApplicant';
+import MyProjectList from '@/pages/web/mypage/projects/MyProjectList';
+import MyProjectApplicant from '@/pages/web/mypage/projects/MyProjectApplicant';
+import MyBoards from '@/pages/web/mypage/boards/MyBoards';
 
 const router = createBrowserRouter([
   {
@@ -166,6 +167,10 @@ const router = createBrowserRouter([
             path: 'projects/list/applicants',
             element: <MyProjectApplicant />
           },
+          {
+            path: 'boards',
+            element: <MyBoards />
+          }
         ]
       },
     ],

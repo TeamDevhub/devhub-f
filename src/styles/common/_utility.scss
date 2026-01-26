@@ -13,7 +13,7 @@
 
 /* flex */
 // 1. basic
-.flex { display: flex; }
+.flex { display: flex !important; }
 
 // 2. direction
 .flex-row { display: flex; flex-direction: row; }
