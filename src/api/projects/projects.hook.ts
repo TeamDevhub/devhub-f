@@ -1,6 +1,6 @@
 import { useMutation, useSelect } from "@/hooks/api.hook";
 import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/api/projects/projects.type";
-import { getProjectDetail, getProjects, updateProject } from "./projects.api";
+import { getProjectDetail, getProjects, updateProject, updateProjectLike } from "./projects.api";
 
 export const useSelectProjects = (req: ProjectSearchRequest) =>
   useSelect<ProjectListResponse, ProjectSearchRequest>({
@@ -29,4 +29,9 @@ export const useUpdateProject = () =>
   //   projectId: 1,
   //   data: { title: "수정됨" },
   // });
+
+export const useUpdateProjectLike = () =>
+  useMutation<{projectId: string}, void>(
+    ({projectId}) => updateProjectLike(projectId)
+  );
 

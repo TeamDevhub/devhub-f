@@ -29,7 +29,7 @@ export const PROJECT_RECRUIT_TYPE = {
   ADDITIONAL : {CODE:'3002', NAME:'추가 모집'},
 } as const;
 
-export const PROJECT_PROGRESS_TYPE = {
+export const PROJECT_RECRUIT_STATUS = {
   RECRUITING: { CODE: '3201', NAME: '모집중' },
   COMPLETED: { CODE: '3202', NAME: '모집완료' },
   WAITING: { CODE: '3203', NAME: '모집대기' },

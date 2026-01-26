@@ -34,20 +34,22 @@ export interface ProjectDetail extends ProjectBasic {
 }
 
 export interface ProjectSearchRequest {
-  page:number;
-  order:string;
-  skillCodeList:string[];
-  positionCodeList:string[];
-  progressPeriodList:string[];
-  positionLevelCodeList:string[];
-  projectRecruitTypeList:string[];
-  projectRecruitStatusList:string[];
+  page: number;
+  order: string;
+  skillCodeList: string[];
+  positionCodeList: string[];
+  progressPeriodList: string[];
+  positionLevelCodeList: string[];
+  projectRecruitTypeList: string[];
+  projectRecruitStatusList: string[];
 };
 
 export interface ProjectListResponse extends ProjectDetail {
   //필요시 추가
 };
 
-export interface ProjectDetailResponse {};
+export interface ProjectDetailResponse extends ProjectDetail {
+  email: string;
+}
 
-export interface UpdateProjectRequest {};
+export interface UpdateProjectRequest { };
