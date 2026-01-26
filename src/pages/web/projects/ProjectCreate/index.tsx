@@ -21,9 +21,7 @@ export default function ProjectCreatePage(){
   const { res, loading } = useSelectApplicationForms({customYn: 'N'});
 
   const [openSkillPopup, setOpenSkillPopup] = useState(false);
-  const [skillValues, setSkillValues] = useState<string[]>([]);
   const [openRegionPopup, setOpenRegionPopup] = useState(false);
-  const [regionValues, setRegionValues] = useState<string>('');
   const [openWebPopup, setOpenWebPopup] = useState(false);
 
   const initData: ProjectCreate = {
@@ -58,20 +56,6 @@ export default function ProjectCreatePage(){
     initialize();
   }, []);
 
-  useEffect(()=>{
-    setValues({
-      ...values,
-      skillList: skillValues
-    })
-  }, [skillValues]);
-
-  useEffect(()=>{
-    setValues({
-      ...values,
-      prgressRegionCd: regionValues
-    })
-  }, [regionValues]);
-
   const onHandleEvent = (name: string, value: any) => {
     setValues(prev => ({
       ...prev,
@@ -81,7 +65,12 @@ export default function ProjectCreatePage(){
 
   const onHandleDeleteSkillChip = (skillCode: string) => {
     if(skillCode){
-      setSkillValues(skillValues.filter(item => item !== skillCode))
+      setValues(prev => ({
+        ...prev,
+        skillList: prev.skillList?.filter(
+          item => item !== skillCode
+        )
+      }));
     }
   }
 
@@ -298,8 +287,8 @@ export default function ProjectCreatePage(){
         </div>
       </Paper>
 
-      {openSkillPopup && <SkillPopup isOpen={openSkillPopup} setOpen={setOpenSkillPopup} values={skillValues} setValues={setSkillValues}/>}
-      {openRegionPopup && <RegionPopup isOpen={openRegionPopup} setOpen={setOpenRegionPopup} values={regionValues} setValues={setRegionValues}/>}
+      {openSkillPopup && <SkillPopup isOpen={openSkillPopup} setOpen={setOpenSkillPopup} values={values.skillList?values.skillList:[]} setValues={(values: string[])=>onHandleEvent("skillList",values)}/>}
+      {openRegionPopup && <RegionPopup isOpen={openRegionPopup} setOpen={setOpenRegionPopup} values={values.prgressRegionCd?[values.prgressRegionCd]:['']} setValues={(values: string[])=>onHandleEvent("prgressRegionCd",values.toString())}/>}
       {openWebPopup && <WebPopup isOpen={openWebPopup} setOpen={setOpenWebPopup} title='추가 양식'  children={<></>}/> }
       
     </div>
