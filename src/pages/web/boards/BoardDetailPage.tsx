@@ -13,7 +13,7 @@ export default function BoardDetailPage(){
           <div className="top w-100 justify-between">
             <div className="left-area flex-col align-start flex-1">
               <Chip size='small' variant='outlined' color='primary' label='모집중' />
-              <strong className='main-text text-ellipsis'>
+              <strong className='main-text'>
                 요즘 다들 어떤 취미를 가지고 계신가요? 취미 없는 저에게 추천해주실 취미 부자 분들 없나요?
               </strong>
             </div>

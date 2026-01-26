@@ -53,7 +53,7 @@ export default function MyProjectApplicant(){
                 } 
               />
             </div>
-            <strong className='main-text text-ellipsis'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.</strong>
+            <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.</strong>
             <div className='sub-text align-center'>
               <div className='align-center'>
                 <div className='title flex'><AccessTime />모집기간</div>
