@@ -140,14 +140,22 @@
 }
 
 /* manner temperature */
-.manner-box { padding: 0 0.8rem; gap: 0.8rem;
-  .manner-text {
+.manner-box, .popularity-box { padding: 0 0.8rem; gap: 0.8rem;
+  .manner-text, .popularity-text {
     p { font-size: 1.4rem; font-weight: 700; line-height: 2rem; letter-spacing: 0.15px;
       &.text { color: rgba(0, 0, 0, 0.87); }
       &.manner-temperature { color: var(--primary-main); } 
     }
   }
-  .manner-figure { width: 100%; height: 1rem; border-radius: 2rem; background-color: #E3F2FD; 
+  .manner-figure, .popularity-figure { width: 100%; height: 1rem; border-radius: 2rem; background-color: #E3F2FD; 
     .current-figure { display: block; width: 10rem; border-radius: 2rem; background-color: var(--primary-main); }
+  }
+}
+.popularity-box { padding: 0;
+  p { font-weight: 400 !important; color: rgba(255, 255, 255, 0.8) !important; 
+    &.popularity-percent { font-weight: 700 !important; color: #fff !important; }
+  }
+  .popularity-figure { height: 0.8rem; border-radius: 1.6rem; background-color: rgba(255, 255, 255, 0.2);
+    .current-figure { background-color: #fff; }
   }
 }

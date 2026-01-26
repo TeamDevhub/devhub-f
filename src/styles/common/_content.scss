@@ -72,10 +72,6 @@
     .project-create-box, .project-apply-box { padding: 2rem 2.4rem; gap: 3.2rem; 
       .recruit-field { gap: 0.8rem; }
     }
-    // 1-4. project apply
-    .project-apply-box { gap: 1.2rem; 
-
-    }
 
     /* 2. board */
     // 2-1. board list
@@ -205,6 +201,51 @@
         }
       }
     }
+
+    /* 4. skill trends */
+    &.skilltrends-page { gap: 2.4rem;
+      > div { gap: 2.4rem; 
+        > div { padding: 1.2rem; gap: 1rem;
+          .title { font-size: 2rem; font-weight: 700; line-height: 166%; color: #000; }
+          .sub-text { font-size: 1.2rem; font-weight: 300; line-height: 120%; color: #000; }
+          .count-area { padding: 1.5rem; gap: 0.8rem;
+            p { font-size: 3.4rem; font-weight: 700; line-height: 4.2rem; letter-spacing: 0.25px; color: #333; }
+          }
+        }
+        &.position-popular-skill-wrap, &.popular-skill-wrap {
+          > div { padding: 1.2rem;
+            &.popular-skill-container { gap: 1rem;
+              .skill-container { padding: 1.2rem 4.8rem;
+                .skill-box { overflow: hidden; position: relative; max-width: 20rem; padding: 3.35rem; gap: 1.6rem; border-radius: 1.2rem; border: 1.5px solid rgba(66, 165, 245, 0.2);
+                  .ranking { font-size: 4.8rem; font-weight: 900; line-height: 5.6rem; color: #42A5F5; }
+                  .skill-name { font-size: 2.4rem; font-weight: 700; line-height: 100%; color: #333; }
+                  .popularity-box {
+                    p { color: #666 !important; 
+                      &.popularity-percent { color: #42A5F5 !important; }
+                    }
+                    .popularity-figure { background-color: #E0E0E0;
+                      .current-figure { background-color: #42A5F5; }
+                    }
+                  }
+                  &.first-skill-box { background: linear-gradient(135deg, #42A5F5 0%, #9C27B0 100%); border: none;
+                    > * { color: #fff !important; }
+                    .popularity-box {
+                      p { color: rgba(255, 255, 255, 0.8) !important; 
+                        &.popularity-percent { color: #fff !important; }
+                      }
+                      .popularity-figure { background-color: rgba(255, 255, 255, 0.2);
+                        .current-figure { background-color: #fff; }
+                      }
+                    }
+                    .decoration-shape { position: absolute; top: -1.8rem; right: -1.8rem; width: 8rem; height: 8rem; border-radius: 50%; background-color: rgba(255, 255, 255, 0.2); }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   /* auth page */
@@ -241,26 +282,11 @@
 }
 
 /* popup */
-.web-popup{
-  overflow: hidden;
-  width: fit-content;
-  position: relative;
-
-  .popup-title-box{
-    padding: 12px 24px;
-    background: linear-gradient(to right, rgba(66, 165, 245, 1) 0%, rgba(156, 39, 176, 0.3));
-    .popup-title{
-      color: #fff;  
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 100%;
-    }
+.web-popup{ overflow: hidden; position: relative; width: fit-content; 
+  .popup-title-box{ padding: 12px 24px; background: linear-gradient(to right, rgba(66, 165, 245, 1) 0%, rgba(156, 39, 176, 0.3));
+    .popup-title{ font-size: 24px; font-weight: 700; line-height: 100%; color: #fff; }
   }
-
-  .popup-button-box{
-    gap: 10px;
-    padding: 24px;
-  }
+  .popup-button-box{ padding: 24px; gap: 10px; }
 }
 // 1. project
 .left-filter-bar { width: 26rem; min-width: 26rem; padding: 2rem; gap: 1.2rem; position: relative;

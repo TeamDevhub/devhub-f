@@ -7,7 +7,7 @@ import React from 'react'
 export default function ProjectApplyPage(){
   return (
     <div className='main-page'>
-      <Paper className='project-box project-apply-box flex-col' elevation={4}>
+      <Paper className='project-box project-apply-box flex-col gap-12' elevation={4}>
         {/* 1. page title */}
         <strong className="page-title">프로젝트 지원</strong>
         {/* 2. project header */}
