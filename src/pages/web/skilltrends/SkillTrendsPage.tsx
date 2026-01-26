@@ -136,13 +136,10 @@ export default function SkillTrendsPage(){
             ]}
             series={[
               {
+                // 수정 필요
                 dataKey: 'value',
-                barLabel: 'value',
+                // barLabel: 'value',
                 barLabelPlacement: 'center',
-                valueFormatter: (value, context) => {
-                  const toolName = dataset[context.dataIndex]?.tool;
-                  return `${toolName} ${value}%`;
-                },
               },
             ]}
             height={260}
@@ -173,7 +170,7 @@ export default function SkillTrendsPage(){
             sx={{
               '& .MuiChartsGrid-horizontalLine': {
                 strokeDasharray: '2 2',
-                stroke: '#e0e0e0',
+                stroke: '#ccc',
               },
               '& .MuiChartsAxis-line': {
                 stroke: '#e0e0e0',
@@ -212,11 +209,7 @@ export default function SkillTrendsPage(){
                 sx: {
                   fontSize: 12,
                   lineHeight: '100%',
-                  color: 'rgba(0, 0, 0, 0.7)',
-                  '& .MuiChartsLegend-mark': {
-                    width: 8,
-                    height: 8,
-                  }
+                  color: 'rgba(0, 0, 0, 0.7)'
                 }
               },
             }}
@@ -261,11 +254,7 @@ export default function SkillTrendsPage(){
                 sx: {
                   fontSize: 12,
                   lineHeight: '100%',
-                  color: 'rgba(0, 0, 0, 0.7)',
-                  '& .MuiChartsLegend-mark': {
-                    width: 8,
-                    height: 8,
-                  }
+                  color: 'rgba(0, 0, 0, 0.7)'
                 }
               },
             }}
@@ -310,11 +299,7 @@ export default function SkillTrendsPage(){
                 sx: {
                   fontSize: 12,
                   lineHeight: '100%',
-                  color: 'rgba(0, 0, 0, 0.7)',
-                  '& .MuiChartsLegend-mark': {
-                    width: 8,
-                    height: 8,
-                  }
+                  color: 'rgba(0, 0, 0, 0.7)'
                 }
               },
             }}

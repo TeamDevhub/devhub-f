@@ -88,9 +88,10 @@
 }
 
 /* 9. rating */
-.MuiRating-root { width: 100% !important; font-size: 3rem !important; align-items: center; justify-content: center;
+.MuiRating-root { width: 100% !important; font-size: 3rem !important; align-items: center; justify-content: center; }
 
-}
+/* 10. chart */
+.MuiChartsLabelMark-root { width: 0.8rem !important; }
 
 /*** CUSTOM ***/
 // 1. heart button
