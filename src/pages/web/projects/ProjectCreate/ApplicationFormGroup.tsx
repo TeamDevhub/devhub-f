@@ -9,7 +9,7 @@ interface CustomCheckboxGroupProps {
 export default function ApplicationFormGroup({ values, onChange }: CustomCheckboxGroupProps) {
     const [groupedValues, setGroupedValues] = useState<string[][]>([]);
     const [checkedValues, setCheckedValues] = useState<string[]>([]);
-    const rowCount = 5;
+    const rowCount = 3;
     useEffect(()=>{
         const tempGroupedValues: string[][] = [];
         for(let i = 0 ; i < values.length ; i += rowCount) {
@@ -17,7 +17,7 @@ export default function ApplicationFormGroup({ values, onChange }: CustomCheckbo
         }
         setGroupedValues(tempGroupedValues);
     }, [values])
-    const handleOnChange = (value: boolean, name: string) => {
+    const handleOnChange = (name: string, value: boolean) => {
         let newValues: string[] = [];
         if(value) {
             newValues = checkedValues.concat(name);
@@ -31,7 +31,7 @@ export default function ApplicationFormGroup({ values, onChange }: CustomCheckbo
     return <>
     {groupedValues.map((item, index) => 
     <FormGroup key={index}>
-        {item.map((item: string, index: number) => <FormControlLabel key={index} control={<Checkbox name={item} onChange={(e) => handleOnChange(e.target.checked, e.target.name)}/>} label={item} />)}
+        {item.map((item: string, index: number) => <FormControlLabel key={index} control={<Checkbox onChange={(e) => handleOnChange(item, e.target.checked)}/>} label={item} />)}
     </FormGroup>)}
     </>
 }
