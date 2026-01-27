@@ -24,3 +24,10 @@ export const updateProject = (req: {
     req.data,
     { method: "put" }
   );
+
+export const updateProjectLike = (projectId: string) =>
+  fetcher<void>(
+    `/projects/${projectId}/likes`,
+    undefined,
+    { method: "post" }
+  );

@@ -6,41 +6,42 @@
       "projectGuid": "c1ba0f7821a54fc6a4561b4e06da4e76",
       "userGuid": "e5gz6s9851b54dd234561b4e24mn8t12",
       "username": "Goonerd",
+      "email": "honggildong@naver.com",
       "category" : "[PG 플랫폼]",
       "title": "PG 플랫폼 구축 프로젝트 모집합니다.",
-      "recruitmentTypeCd": "001",
-      "content": "",
+      "recruitmentTypeCd": "3001",
+      "content": "프로젝트 상세 내용입니다. ",
       "positionList": [
         {
-          "position": "001",
+          "position": "2001",
           "capacity": 2,
-          "level": "001",
+          "level": "2101",
           "isFull": false
         },
         {
-          "position": "002",
+          "position": "2002",
           "capacity": 2,
-          "level": "002",
+          "level": "2102",
           "isFull": false
         },
         {
-          "position": "003",
+          "position": "2003",
           "capacity": 1,
-          "level": "001",
+          "level": "2103",
           "isFull": false
         }
       ],
       "skillList": [
-        "001",
-        "002",
-        "003",
-        "004"
+        "1001",
+        "1002",
+        "1003",
+        "1004"
       ],
       "progressPeriod" : "3",
       "recruitmentStartDate" : "2025-12-25",
-      "recruitmentEndDate" : "2026-01-25",
-      "progressTypeCd" : "001",
-      "prgressRegionCd" : "001",    
+      "recruitmentEndDate" : "2026-02-25",
+      "progressTypeCd" : "3101",
+      "prgressRegionCd" : "8100",    
       "progressStartDate": "2026-01-26",
       "progressEndDate": "2026-04-26",
       "viewCount" : "10",

@@ -1,10 +1,10 @@
 import { useMutation, useSelect } from "@/hooks/api.hook";
 import type { ApiResponse } from "@/types/api.type";
-import type { ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "./projects.type";
+import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "./projects.type";
 
-import selectListResJSON from '@/assets/jsonData/projectsPage/projectListRes.json';
+import apiSuccessResJSON from '@/assets/jsonData/apiSuccessRes.json';
 import selectDetailResJSON from '@/assets/jsonData/projectsPage/projectDetailRes.json';
-import apiSuccessResJSON from '@/assets/jsonData/apiSuccessRes.json'
+import selectListResJSON from '@/assets/jsonData/projectsPage/projectListRes.json';
 
 // 개발용 JSON 호출
 
@@ -23,12 +23,12 @@ export const useSelectProjects = (req: ProjectSearchRequest) => {
 };
 
 export const useSelectProjectDetail = (projectId?: string) => {
-  const mockGetProject = async (): Promise<ApiResponse<ProjectListResponse>> => {
+  const mockGetProject = async (): Promise<ApiResponse<ProjectDetailResponse>> => {
     await new Promise((resolve) => setTimeout(resolve, 500));
-    return selectDetailResJSON as ApiResponse<ProjectListResponse>;
+    return selectDetailResJSON as ApiResponse<ProjectDetailResponse>;
   };
 
-  return useSelect<ProjectListResponse, string>({
+  return useSelect<ProjectDetailResponse, string>({
     apiFn: mockGetProject,
     req: projectId!,
     enabled: !!projectId,

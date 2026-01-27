@@ -1,26 +1,27 @@
-import { createBrowserRouter } from 'react-router-dom';
-import MainLayout from '@/layout/MainLayout';
 import AuthLayout from '@/layout/AuthLayout';
+import MainLayout from '@/layout/MainLayout';
 import ErrorPage from '@/pages/ErrorPage';
-import MainPage from '@/pages/web/MainPage';
-import ProjectListPage from '@/pages/web/projects/ProjectListPage';
-import ProjectDetailPage from '@/pages/web/projects/ProjectDetailPage';
-import ProjectCreatePage from '@/pages/web/projects/ProjectCreatePage';
-import ProjectApplyPage from '@/pages/web/projects/ProjectApplyPage';
-import BoardListPage from '@/pages/web/boards/BoardListPage';
-import BoardDetailPage from '@/pages/web/boards/BoardDetailPage';
 import BoardCreatePage from '@/pages/web/boards/BoardCreatePage';
+import BoardDetailPage from '@/pages/web/boards/BoardDetailPage';
+import BoardListPage from '@/pages/web/boards/BoardListPage';
 import BoardModifyPage from '@/pages/web/boards/BoardModifyPage';
 import LoginPage from '@/pages/web/login/LoginPage';
-import SignInPage1 from '@/pages/web/signin/SignInPage1';
-import SignInPage2 from '@/pages/web/signin/SignInPage2';
-import ProjectList from '@/pages/web/projects/ProjectList';
-import MyHomePage from '@/pages/web/mypage/home/MyHomePage';
+import MainPage from '@/pages/web/MainPage';
+import MyBoardPage from '@/pages/web/mypage/boards/MyBoardPage';
 import MyHomeModifyPage from '@/pages/web/mypage/home/MyHomeModifyPage';
+import MyHomePage from '@/pages/web/mypage/home/MyHomePage';
 import MyProjectApplicantPage from '@/pages/web/mypage/projects/MyProjectApplicantPage';
 import MyProjectListPage from '@/pages/web/mypage/projects/MyProjectListPage';
-import MyBoardPage from '@/pages/web/mypage/boards/MyBoardPage';
+import ProjectApplyPage from '@/pages/web/projects/ProjectApplyPage';
+import ProjectCreatePage from '@/pages/web/projects/ProjectCreatePage';
+import ProjectDetail from '@/pages/web/projects/ProjectDetail';
+import ProjectDetailPage from '@/pages/web/projects/ProjectDetailPage';
+import ProjectList from '@/pages/web/projects/ProjectList';
+import ProjectListPage from '@/pages/web/projects/ProjectListPage';
+import SignInPage1 from '@/pages/web/signin/SignInPage1';
+import SignInPage2 from '@/pages/web/signin/SignInPage2';
 import SkillTrendsPage from '@/pages/web/skilltrends/SkillTrendsPage';
+import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <ProjectList />
+          },
+          {
+            path: 'detail',
+            element: <ProjectDetail />
           },
         ]
       },
