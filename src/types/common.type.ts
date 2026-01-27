@@ -20,6 +20,7 @@ export const COMMON_CODE = {
   REPORT_TYPE: "REPORT_TYPE",
   NOTIFICATION_TYPE: "NOTIFICATION_TYPE",
   REGION_CODE: "REGION_CODE",
+  BOARD_CATEGORY: "BOARD_CATEGORY",
 } as const;
 
 export type CommonCode = typeof COMMON_CODE[keyof typeof COMMON_CODE];
@@ -34,7 +35,13 @@ export const PROJECT_RECRUIT_STATUS = {
   COMPLETED: { CODE: '3202', NAME: '모집완료' },
   WAITING: { CODE: '3203', NAME: '모집대기' },
 } as const;
-  
+
+export const BOARD_CATEGORY = {
+  FREE: { CODE: '4001', NAME:'자유게시판'},
+  QNA: { CODE: '4002', NAME:'질문게시판'},
+  NOTICE: { CODE: '4003', NAME:'공지사항'},
+}as const;
+
 export const ERROR_CODE = {
   INVALID_INPUT_VALUE : 'ERR.DVH.0001', // 400
   NOT_FOUND_API_KEY : 'ERR.DVH.0005', //400

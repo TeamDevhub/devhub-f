@@ -3,7 +3,7 @@ import MainLayout from '@/layout/MainLayout';
 import ErrorPage from '@/pages/ErrorPage';
 import BoardCreatePage from '@/pages/web/boards/BoardCreatePage';
 import BoardDetailPage from '@/pages/web/boards/BoardDetailPage';
-import BoardListPage from '@/pages/web/boards/BoardListPage';
+import BoardListPage from '@/pages/web/boards/BoardList';
 import BoardModifyPage from '@/pages/web/boards/BoardModifyPage';
 import LoginPage from '@/pages/web/login/LoginPage';
 import MainPage from '@/pages/web/MainPage';
