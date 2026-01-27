@@ -21,7 +21,7 @@ export default function ProjectCreate(){
   const [recruitmentTypeCdOption, setRecruitmentTypeCdOption] = useState<SelectComponentProps[]>([]);
   const [progressTypeCdOption, setProgressTypeCdOption] = useState<SelectComponentProps[]>([]);
   const { res, loading } = useSelectApplicationForms({customYn: 'N'});
-
+ 
   const [openSkillPopup, setOpenSkillPopup] = useState(false);
   const [openRegionPopup, setOpenRegionPopup] = useState(false);
   const [openWebPopup, setOpenWebPopup] = useState(false);
