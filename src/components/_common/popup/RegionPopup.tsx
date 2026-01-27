@@ -1,13 +1,12 @@
 import type { CommonCodeItem } from '@/types/type._common';
 import { getCodeName, getCodesByGroup } from '@/utils/util._common';
 import { Checkbox, Chip, List, ListItemButton, ListItemIcon, ListItemText, Tab, Tabs } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import WebPopup from './WebPopup';
 
 export interface RegionPopupProps{
   isOpen:boolean;
   values?:string[],
-  setOpen:(open:boolean)=>void;
   setValues: (value: string[]) => void;
   onClose?:()=>void;
   multiple?:boolean;
@@ -16,7 +15,6 @@ export interface RegionPopupProps{
 export default function RegionPopup({
   isOpen,
   values,
-  setOpen,
   setValues,
   onClose,
   multiple = false,
@@ -25,37 +23,29 @@ export default function RegionPopup({
   const [regionCode, setRegionCode] = useState<CommonCodeItem[]>([]);
   const [_values, _setValues] = useState(values??[]);
   const [tab, setTab] = useState("");
-
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  const getChildren = (code: string) => {
-    return regionCode.find(item => item.code == code)?.children;
-  }
 
   useEffect(() => {
     const codeList = getCodesByGroup('REGION_CODE');
     setRegionCode(codeList);
+    if (codeList.length > 0) setTab(codeList[0].code);
   }, []);
 
   useEffect(() => {
-    regionCode && regionCode.length > 0 && setTab(regionCode[0].code);
-  }, [regionCode]);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = 0;
+    if (isOpen) {
+      _setValues(values ?? []);
+      if (regionCode.length > 0) setTab(regionCode[0].code);
     }
-  }, [tab]);
+  }, [isOpen, values, regionCode]);
 
-  useEffect(() => {
-    if (isOpen && values) _setValues(values);
-  }, [isOpen, values]);
-  
-  const hasValue = (value: string) => {
-    return _values.includes(value)
-  }
+  const currentChildren = useMemo(() => {
+    return regionCode.find(item => item.code === tab)?.children ?? [];
+  }, [regionCode, tab]);
 
-  const handleChange = (e: React.SyntheticEvent, newValue: string) => setTab(newValue);
+  const handleChangeTab = (e: React.SyntheticEvent, newValue: string) => {
+    setTab(newValue);
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  };
 
   const handleOnClick = (value:string, checked:boolean) => {
     if(checked){
@@ -66,13 +56,16 @@ export default function RegionPopup({
     }
   }
 
+  const hasValue = (value: string) => {
+    return _values.includes(value)
+  }
+
   const handleSubmit = () => setValues(_values);
   
   return (
     <WebPopup
       isOpen={isOpen}
       onSubmit={handleSubmit}
-      setOpen={setOpen}
       title='지역 선택'
       onClose={onClose}
     >
@@ -83,7 +76,7 @@ export default function RegionPopup({
               orientation="vertical"
               variant="scrollable"
               value={tab}
-              onChange={handleChange}
+              onChange={handleChangeTab}
               aria-label="Vertical tabs example"
               sx={{ borderRight: 1, borderColor: 'divider' }}
             >
@@ -94,7 +87,7 @@ export default function RegionPopup({
           </div>
           <div className='w-100' style={{overflowY:'scroll', display:'flex'}} ref={scrollRef}>
             <List className='w-100' sx={{padding: 0}}>
-              {getChildren(tab)?.map((item, index)=>(
+              {currentChildren.map((item, index)=>(
                 <ListItem 
                   key={index} 
                   label={item.name} 
@@ -142,7 +135,7 @@ function ListItem({
 }){
 
   const handleClick = ()=>{
-    onClick && onClick(value, !checked);
+    onClick?.(value, !checked);
   }
 
   return(

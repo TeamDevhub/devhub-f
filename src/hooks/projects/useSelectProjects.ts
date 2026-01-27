@@ -1,0 +1,103 @@
+import { getProjects } from "@/api/projects/projects.api";
+import { useFormState } from '@/hooks/_common/common.hook';
+import type { FilterData, ProjectListResponse, ProjectSearchRequest, SearchData } from "@/types/type.projects";
+import { useState } from "react";
+import { useSelect } from "../_common/api.hook";
+
+const initData:SearchData = {
+  page:1,
+  order:'',
+}
+
+const initFilterData:FilterData = {
+  skillCodeList: [],
+  regionCodeList: [],
+  positionCodeList: [],
+  progressPeriodList: [],
+  positionLevelCodeList: [],
+  projectRecruitTypeList: [],
+  projectProgressTypeList: [],
+  projectRecruitStatusList: [], 
+  recruitmentStartDate: null,
+  recruitmentEndDate: null,
+  progressStartDate: null,
+}
+
+export default function useSelectProjects(
+  initialFilter?: Partial<FilterData>,
+  initialSearch?: Partial<SearchData>,
+  initialKeyword?: string,
+){  
+
+  const baseFilter = { ...initFilterData, ...initialFilter };
+  const baseSearch = { ...initData, ...initialSearch };
+  const baseKeyword = initialKeyword ?? "";
+
+  const {
+    state: filters, 
+    setState: setFilters, 
+    handleChange: setFilter,
+    createHandler: createFilterHandler,
+    reset: resetFilters
+  } = useFormState<FilterData>(baseFilter);
+  const [keyword, setkeyword] = useState<string>(baseKeyword);
+  const [request, setRequest] = useState<ProjectSearchRequest>({
+    ...baseFilter,
+    ...baseSearch,
+    keyword: baseKeyword
+  });
+
+  const options = {
+    apiFn: getProjects,
+    req: request,
+    cacheKey: `projects-${JSON.stringify(request)}`,
+  }
+  const { res, loading } =   useSelect<ProjectListResponse, ProjectSearchRequest>(options);
+
+  const setPage = (page: number) => {
+    setRequest((prev) => ({...prev, page: page}));
+  }
+
+  const setOrder = (order: string) => {
+    setRequest((prev) => ({...prev, order: order, page: 1}));
+  }
+
+  const resetAll = () => {
+    resetFilters();
+    setkeyword(baseKeyword);
+    setRequest({
+      ...baseFilter,
+      ...baseSearch,
+      keyword: baseKeyword
+    });
+  };
+
+  const applySearch = () => {
+    resetFilters();
+    setRequest({
+      ...baseFilter,
+      ...baseSearch,
+      keyword: keyword,
+      page: 1,
+    });
+  }
+
+  const applyFilter = (filterData?:FilterData) => {
+    setRequest((prev)=>({
+      ...prev,
+      ...filters,
+      ...filterData,
+      page: 1
+    }));
+    filterData && setFilters(filterData);
+  }
+
+  return { 
+    filters, setFilters, setFilter, createFilterHandler, resetFilters,
+    request, setRequest,
+    keyword, setkeyword,
+    setPage, setOrder,
+    res, loading, 
+    applySearch, applyFilter, resetAll 
+  };
+}

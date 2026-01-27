@@ -29,6 +29,17 @@ export interface Position {
   isFull?: boolean;
 }
 
+export interface ProjectDetail extends ProjectBasic {
+  skillList: string[];
+  positionList: Position[];
+  likeCount?: string;
+}
+
+export interface ProjectCreate extends ProjectDetail {
+  applicationFormList: string[];
+  additionalFormList: ApplicationFormDetail[];
+}
+
 export interface ApplicationFormBasic {
   applicationFormGuid?: string;
   typeCd: string;
@@ -43,19 +54,15 @@ export interface ApplicationFormBasic {
   modifiedDate?: DateType;
 }
 
-export interface ProjectDetail extends ProjectBasic {
-  skillList: string[];
-  positionList: Position[];
-  likeCount?: string;
-}
-
-export interface ProjectCreate extends ProjectDetail {
-  applicationFormList: string[];
-  additionalFormList: ApplicationFormDetail[];
-}
-
 export interface ApplicationFormDetail extends ApplicationFormBasic {
   itemList: string[];
+}
+
+export interface ApplicationFormRequest {
+  title?: string;
+  formTypeCd?: string;
+  customYn?: string;
+  useYn?: string;
 }
 
 export interface ProjectSearchRequest {
@@ -74,13 +81,12 @@ export interface ProjectSearchRequest {
   recruitmentEndDate?:DateType;
   progressStartDate?:DateType;
 };
+export type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword'>;
+export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
-export interface ApplicationFormRequest {
-  title?: string;
-  formTypeCd?: string;
-  customYn?: string;
-  useYn?: string;
-}
+export interface UpdateProjectRequest {
+  
+};
 
 export interface ProjectListResponse extends ProjectDetail {
   //필요시 추가
@@ -89,5 +95,3 @@ export interface ProjectListResponse extends ProjectDetail {
 export interface ProjectDetailResponse extends ProjectDetail {
   email: string;
 }
-
-export interface UpdateProjectRequest { };
