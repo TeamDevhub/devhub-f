@@ -1,4 +1,5 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
+import CustomRadioGroup from '@/components/_common/customMUI/CustomRadioGroup';
 import RegionPopup from '@/components/_common/popup/RegionPopup';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
 import WebPopup from '@/components/_common/popup/WebPopup';
@@ -6,19 +7,19 @@ import ApplicationFormGroup from '@/components/projects/projectCreate/Applicatio
 import PositionGroup from '@/components/projects/projectCreate/PositionGroup';
 import { useSelectApplicationForms } from '@/hooks/projects/projects.json.hook';
 import { COMMON_CODE } from '@/types/const';
-import type { CommonCodeItem } from '@/types/type._common';
+import { type SelectComponentProps } from '@/types/type._common'
 import { type DateType } from '@/types/type.api';
 import type { ApplicationFormBasic, Position, ProjectCreate } from '@/types/type.projects';
-import { getCodeName, getCodesByGroup } from "@/utils/util._common";
+import { getCodeName, getSelectOptions } from "@/utils/util._common";
 import { AddCircle, Search } from '@mui/icons-material';
-import { Button, Chip, Divider, FormControl, FormControlLabel, FormLabel, IconButton, Paper, Radio, RadioGroup, TextField } from '@mui/material';
+import { Button, Chip, Divider, FormControl, FormLabel, IconButton, Paper, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
 export default function ProjectCreate(){
-  const [recruitmentTypeCdOption, setRecruitmentTypeCdOption] = useState<CommonCodeItem[]>([]);
-  const [progressTypeCdOption, setProgressTypeCdOption] = useState<CommonCodeItem[]>([]);
+  const [recruitmentTypeCdOption, setRecruitmentTypeCdOption] = useState<SelectComponentProps[]>([]);
+  const [progressTypeCdOption, setProgressTypeCdOption] = useState<SelectComponentProps[]>([]);
   const { res, loading } = useSelectApplicationForms({customYn: 'N'});
 
   const [openSkillPopup, setOpenSkillPopup] = useState(false);
@@ -49,8 +50,8 @@ export default function ProjectCreate(){
   const [values, setValues] = useState<ProjectCreate>(initData);
 
   const initialize = () => {
-    setRecruitmentTypeCdOption(getCodesByGroup(COMMON_CODE.PROJECT_RECRUIT_TYPE));
-    setProgressTypeCdOption(getCodesByGroup(COMMON_CODE.PROJECT_PROGRESS_TYPE));
+    setRecruitmentTypeCdOption(getSelectOptions(COMMON_CODE.PROJECT_RECRUIT_TYPE));
+    setProgressTypeCdOption(getSelectOptions(COMMON_CODE.PROJECT_PROGRESS_TYPE));
   }
 
   useEffect(()=>{
@@ -84,13 +85,7 @@ export default function ProjectCreate(){
         <div className="form-wrap flex-col">
           {/* 1. 모집 유형 */}
           <div className="form-box">
-            <FormControl>
-              <RadioGroup row aria-labelledby='recruitment-status-radio-group-label' defaultValue={initData.recruitmentTypeCd} onChange={(e) => onHandleEvent("recruitmentTypeCd", e.target.value)}>
-                {recruitmentTypeCdOption.map((item, index)=>(
-                  <FormControlLabel key={index} value={item.code} control={<Radio />} label={item.name} />
-                ))}
-              </RadioGroup>
-            </FormControl>
+            <CustomRadioGroup values={recruitmentTypeCdOption} defaultValue={values.recruitmentTypeCd} onChange={(_, value) => {onHandleEvent("recruitmentTypeCd", value)}}/>
             <p className="help-text align-center">
               <span className='dot'></span>
               기존 모집을 참고하여 동일한 프로젝트의 인원을 추가로 모집하는 경우 추가모집을 이용해주시기 바랍니다.
@@ -163,11 +158,7 @@ export default function ProjectCreate(){
               <div className="field-box">
                 <FormControl>
                   <FormLabel id='project-info-radio-group'>진행방식</FormLabel>
-                  <RadioGroup row aria-labelledby='project-info-radio-group-label' defaultValue={initData.progressTypeCd} onChange={(e) => onHandleEvent("progressTypeCd", e.target.value)}>
-                    {progressTypeCdOption.map((item, index)=>(
-                      <FormControlLabel key={index} value={item.code} control={<Radio />} label={item.name} />
-                    ))}
-                  </RadioGroup>
+                  <CustomRadioGroup values={progressTypeCdOption} defaultValue={values.progressTypeCd} onChange={(_, value) => {onHandleEvent("progressTypeCd", value)}}/>
                 </FormControl>
               </div>
               <div className="field-box flex-col">

@@ -18,3 +18,8 @@ export interface CheckAbleComponentProps {
   onClick: (value:string, checked:boolean)=> void; 
   checked?: boolean; 
 }
+
+export interface SelectComponentProps {
+  value: string;
+  label : string; 
+}
