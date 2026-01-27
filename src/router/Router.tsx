@@ -19,8 +19,8 @@ import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectDetailPage from '@/pages/web/projects/ProjectDetailPage';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import ProjectListPage from '@/pages/web/projects/ProjectListPage';
-import SignInPage1 from '@/pages/web/signin/SignInPage1';
 import SignInPage2 from '@/pages/web/signin/SignInPage2';
+import SignupPage from '@/pages/web/signup/SignupPage';
 import SkillTrendsPage from '@/pages/web/skilltrends/SkillTrendsPage';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -89,11 +89,11 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: 'signin1',
+        path: 'signup',
         children: [
           {
             index: true,
-            element: <SignInPage1 />
+            element: <SignupPage />
           }
         ]
       },
@@ -210,11 +210,11 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: 'signin1',
+        path: 'signup',
         children: [
           {
             index: true,
-            element: <SignInPage1 />
+            element: <SignupPage />
           }
         ]
       },
