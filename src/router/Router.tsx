@@ -13,6 +13,7 @@ import MyHomePage from '@/pages/web/mypage/home/MyHomePage';
 import MyProjectApplicantPage from '@/pages/web/mypage/projects/MyProjectApplicantPage';
 import MyProjectListPage from '@/pages/web/mypage/projects/MyProjectListPage';
 import ProjectApplyPage from '@/pages/web/projects/ProjectApplyPage';
+import ProjectCreate from "@/pages/web/projects/ProjectCreate";
 import ProjectCreatePage from '@/pages/web/projects/ProjectCreatePage';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectDetailPage from '@/pages/web/projects/ProjectDetailPage';
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
           {
             path: 'detail',
             element: <ProjectDetail />
+          },
+          {
+            path: 'create',
+            element: <ProjectCreate />
           },
         ]
       },

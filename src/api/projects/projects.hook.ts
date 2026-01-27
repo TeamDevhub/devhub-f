@@ -1,6 +1,6 @@
+import type { ApplicationFormBasic, ApplicationFormRequest, ProjectCreate, ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/api/projects/projects.type";
 import { useMutation, useSelect } from "@/hooks/api.hook";
-import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/api/projects/projects.type";
-import { getProjectDetail, getProjects, updateProject, updateProjectLike } from "./projects.api";
+import { createProject, getApplicationForms, getProjectDetail, getProjects, updateProject, updateProjectLike } from "./projects.api";
 
 export const useSelectProjects = (req: ProjectSearchRequest) =>
   useSelect<ProjectListResponse, ProjectSearchRequest>({
@@ -35,3 +35,16 @@ export const useUpdateProjectLike = () =>
     ({projectId}) => updateProjectLike(projectId)
   );
 
+export const useCreateProject = () => useMutation<ProjectCreate, void>(createProject);
+  //const { mutate, loading } = useCreateProject();
+  // await mutate({
+  //    title: "새 프로젝트"
+  // });
+
+export const useSelectApplicationForms = (req: ApplicationFormRequest) =>
+  useSelect<ApplicationFormBasic, ApplicationFormRequest>({
+    apiFn: getApplicationForms,
+    req,
+    cacheKey: 'applicationForms-${JSON.stringify(req)}',
+})
+//const { res, loading, refetch } = useSelectApplicationForms({ customYn: 'N });
