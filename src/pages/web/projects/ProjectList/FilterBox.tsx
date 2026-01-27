@@ -1,10 +1,10 @@
 import CheckAbleButton from "@/components/common/CheckAbleButton";
 import CheckAbleChip from "@/components/common/CheckAbleChip";
 import type { CommonCode, CommonCodeItem } from "@/types/common.type";
-import { getCodesByGroup, getCodeName } from "@/utils/common.util";
+import { getCodeName, getCodesByGroup } from "@/utils/common.util";
 import { AddCircle } from "@mui/icons-material";
 import { Chip, IconButton } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export interface FilterBoxProps {
   title: string;
@@ -13,22 +13,22 @@ export interface FilterBoxProps {
   codeName?: CommonCode;
   options?: CommonCodeItem[];
   useAll?: boolean;
-  values: string[];
+  values?: string[];
   setValues: (value: string[]) => void;
   onClickAddBtn?: (event?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function FilterBox({
+const FilterBox = React.memo(({
   title,
   subText,
   type,
   codeName,
   options,
   useAll = false,
-  values,
+  values = [],
   setValues,
   onClickAddBtn,
-} : FilterBoxProps){
+} : FilterBoxProps) => {
 
   const [codeGroup, setCodeGroup] = useState<CommonCodeItem[]>([]);
 
@@ -42,7 +42,7 @@ export default function FilterBox({
 
   const getName = (v: string) => {
     if(codeName){
-      return getCodeName(codeName, v);
+      return getCodeName(codeGroup, v);
     }else if(options){
       options.find(item => item.code === v)?.name ?? ""
     }
@@ -98,18 +98,36 @@ export default function FilterBox({
   }
 
   return (
-  <div className='filter-box flex-col'>
-    <div className='filter-title align-start justify-between'>
-      <div className='text-box flex-col'>
-        <strong>{title}</strong>
-        {subText && <p>{subText}</p>}
-      </div>
-    </div>
-    <div className='filter-options align-center flex-wrap'>
+    <FilterWarpper title={title} subText={subText}>
       {type == "button" && setButtonGroup()}
       {type == "chip" && setChipGroup()}
       {type == "addableChip" && setAddableChipGroup()}
+    </FilterWarpper>
+  )
+});
+
+export function FilterWarpper({
+  title,
+  subText,
+  children
+}:{
+  title: string;
+  subText?: string;
+  children: React.ReactNode;
+}){
+  return (
+    <div className='filter-box flex-col'>
+      <div className='filter-title align-start justify-between'>
+        <div className='text-box flex-col'>
+          <strong>{title}</strong>
+          {subText && <p>{subText}</p>}
+        </div>
+      </div>
+      <div className='filter-options align-center flex-wrap'>
+        {children}
+      </div>
     </div>
-  </div>
   )
 }
+
+export default FilterBox;

@@ -1,5 +1,5 @@
 import type { CommonCodeItem } from '@/types/common.type';
-import { getCodesByGroup } from '@/utils/common.util';
+import { getCodeName, getCodesByGroup } from '@/utils/common.util';
 import { Checkbox, Chip, List, ListItemButton, ListItemIcon, ListItemText, Tab, Tabs } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import WebPopup from './WebPopup';
@@ -30,19 +30,6 @@ export default function RegionPopup({
 
   const getChildren = (code: string) => {
     return regionCode.find(item => item.code == code)?.children;
-  }
-
-  const getName = (data:CommonCodeItem[], v: string):string => {
-    for (const item of data){
-      if(item.code == v){
-        return item.name
-      }
-      if(item.children && item.children.length > 0){
-        const found = getName(item.children, v);
-        if(found) return found;
-      }
-    }
-    return '';
   }
 
   useEffect(() => {
@@ -128,7 +115,7 @@ export default function RegionPopup({
                 size='small' 
                 variant='filled' 
                 color='primary' 
-                label={getName(regionCode, v)} 
+                label={getCodeName(regionCode, v)} 
                 onDelete={()=>{handleOnClick(v, false)}}
                 clickable 
               />

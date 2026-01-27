@@ -5,6 +5,7 @@ import BoardCreatePage from '@/pages/web/boards/BoardCreatePage';
 import BoardDetailPage from '@/pages/web/boards/BoardDetailPage';
 import BoardListPage from '@/pages/web/boards/BoardList';
 import BoardModifyPage from '@/pages/web/boards/BoardModifyPage';
+import Login from '@/pages/web/login';
 import LoginPage from '@/pages/web/login/LoginPage';
 import MainPage from '@/pages/web/MainPage';
 import MyBoardPage from '@/pages/web/mypage/boards/MyBoardPage';
@@ -84,7 +85,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <LoginPage />
+            element: <Login />
           }
         ]
       },

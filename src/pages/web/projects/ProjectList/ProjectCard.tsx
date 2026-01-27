@@ -1,10 +1,10 @@
 import type { ProjectDetail } from "@/api/projects/projects.type";
 import HeartButton from "@/components/common/HeartButton";
-import { RecruitStatusChip, ProgressRegionChip, RecruitmentChip, DDayChip } from "@/components/projects/ProjectChips";
+import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/projects/ProjectChips";
 import { COMMON_CODE } from "@/types/common.type";
-import { getCodeName } from "@/utils/common.util";
+import { getCodeName, getCodesByGroup } from "@/utils/common.util";
 import { AccessTime } from "@mui/icons-material";
-import { Paper, Divider, Chip } from "@mui/material";
+import { Chip, Divider, Paper } from "@mui/material";
 
 export default function ProjectCard(projectData : ProjectDetail){
   const {
@@ -62,12 +62,12 @@ export default function ProjectCard(projectData : ProjectDetail){
         <div className='chip-box flex-col'>
           <div className='recruit-chip-box align-center'>
             {positionList.map((position, index)=> 
-              (<Chip key={index} variant='outlined' color='primary' size='small' label={getCodeName(COMMON_CODE.POSITION_CODE, position.position)} />)
+              (<Chip key={index} variant='outlined' color='primary' size='small' label={getCodeName(getCodesByGroup(COMMON_CODE.POSITION_CODE), position.position)} />)
             )}
           </div>
           <div className='tech-chip-box align-center flex-wrap'>
             {skillList.map((skill, index)=> 
-              (<Chip key={index} variant='outlined' color='secondary' size='small' label={getCodeName(COMMON_CODE.SKILL_CODE, skill)} />)
+              (<Chip key={index} variant='outlined' color='secondary' size='small' label={getCodeName(getCodesByGroup(COMMON_CODE.POSITION_CODE), skill)} />)
             )}
           </div>
         </div>

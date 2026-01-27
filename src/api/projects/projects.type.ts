@@ -59,14 +59,20 @@ export interface ApplicationFormDetail extends ApplicationFormBasic {
 }
 
 export interface ProjectSearchRequest {
-  page: number;
-  order: string;
-  skillCodeList: string[];
-  positionCodeList: string[];
-  progressPeriodList: string[];
-  positionLevelCodeList: string[];
-  projectRecruitTypeList: string[];
-  projectRecruitStatusList: string[];
+  page:number;
+  order?:string;
+  keyword?:string;
+  skillCodeList?:string[];
+  regionCodeList?:string[];
+  positionCodeList?:string[];
+  progressPeriodList?:string[];
+  positionLevelCodeList?:string[];
+  projectRecruitTypeList?:string[];
+  projectProgressTypeList?:string[];
+  projectRecruitStatusList?:string[];
+  recruitmentStartDate?:DateType;
+  recruitmentEndDate?:DateType;
+  progressStartDate?:DateType;
 };
 
 export interface ApplicationFormRequest {
