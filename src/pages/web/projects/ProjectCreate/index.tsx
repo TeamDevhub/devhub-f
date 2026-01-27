@@ -1,21 +1,22 @@
-import type { ProjectCreate, Position, ApplicationFormBasic } from '@/api/projects/projects.type';
-import CustomTextfield from '@/components/common/CustomTextfield';
+import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
+import RegionPopup from '@/components/_common/popup/RegionPopup';
+import SkillPopup from '@/components/_common/popup/SkillPopup';
+import WebPopup from '@/components/_common/popup/WebPopup';
+import ApplicationFormGroup from '@/components/projects/projectCreate/ApplicationFormGroup';
+import PositionGroup from '@/components/projects/projectCreate/PositionGroup';
+import { useSelectApplicationForms } from '@/hooks/projects/projects.json.hook';
+import { COMMON_CODE } from '@/types/const';
+import type { CommonCodeItem } from '@/types/type._common';
+import { type DateType } from '@/types/type.api';
+import type { ApplicationFormBasic, Position, ProjectCreate } from '@/types/type.projects';
+import { getCodeName, getCodesByGroup } from "@/utils/util._common";
 import { AddCircle, Search } from '@mui/icons-material';
-import { getCodesByGroup, getCodeName } from "@/utils/common.util";
-import { COMMON_CODE, type CommonCodeItem } from '@/types/common.type';
-import PositionGroup from './PositionGroup';
-import ApplicationFormGroup from '@/pages/web/projects/ProjectCreate/ApplicationFormGroup'
-import SkillPopup from '@/components/popup/SkillPopup'
-import RegionPopup from '@/components/popup/RegionPopup'
-import WebPopup from '@/components/popup/WebPopup';
+import { Button, Chip, Divider, FormControl, FormControlLabel, FormLabel, IconButton, Paper, Radio, RadioGroup, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { type DateType } from '@/types/api.type'
-import { Button, Chip, Divider, FormControl, FormControlLabel, FormLabel, IconButton, Paper, Radio, RadioGroup, TextField } from '@mui/material'
 import dayjs from 'dayjs';
-import { useState, useEffect } from 'react'
-import { useSelectApplicationForms } from '@/api/projects/projects.json.hook'
+import { useEffect, useState } from 'react';
 
-export default function ProjectCreatePage(){
+export default function ProjectCreate(){
   const [recruitmentTypeCdOption, setRecruitmentTypeCdOption] = useState<CommonCodeItem[]>([]);
   const [progressTypeCdOption, setProgressTypeCdOption] = useState<CommonCodeItem[]>([]);
   const { res, loading } = useSelectApplicationForms({customYn: 'N'});
@@ -84,7 +85,7 @@ export default function ProjectCreatePage(){
           {/* 1. 모집 유형 */}
           <div className="form-box">
             <FormControl>
-              <RadioGroup row aria-labelledby='recruitment-status-radio-group-label' defaultValue={initData.recruitmentTypeCd} onClick={(e) => onHandleEvent("recruitmentTypeCd", e.target.value)}>
+              <RadioGroup row aria-labelledby='recruitment-status-radio-group-label' defaultValue={initData.recruitmentTypeCd} onChange={(e) => onHandleEvent("recruitmentTypeCd", e.target.value)}>
                 {recruitmentTypeCdOption.map((item, index)=>(
                   <FormControlLabel key={index} value={item.code} control={<Radio />} label={item.name} />
                 ))}
@@ -162,7 +163,7 @@ export default function ProjectCreatePage(){
               <div className="field-box">
                 <FormControl>
                   <FormLabel id='project-info-radio-group'>진행방식</FormLabel>
-                  <RadioGroup row aria-labelledby='project-info-radio-group-label' defaultValue={initData.progressTypeCd} onClick={(e) => onHandleEvent("progressTypeCd", e.target.value)}>
+                  <RadioGroup row aria-labelledby='project-info-radio-group-label' defaultValue={initData.progressTypeCd} onChange={(e) => onHandleEvent("progressTypeCd", e.target.value)}>
                     {progressTypeCdOption.map((item, index)=>(
                       <FormControlLabel key={index} value={item.code} control={<Radio />} label={item.name} />
                     ))}

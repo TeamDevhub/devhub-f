@@ -1,5 +1,5 @@
 // hooks/common/useSelect.ts
-import type { ApiResponse } from "@/types/api.type";
+import type { ApiResponse } from "@/types/type.api";
 import { useEffect, useState } from "react";
 
 const cacheStore = new Map<string, any>();

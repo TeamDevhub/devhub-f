@@ -1,17 +1,17 @@
-import { useUpdateProjectLike } from '@/api/projects/projects.hook';
-import { useSelectProjectDetail } from '@/api/projects/projects.json.hook';
-import CustomAvatar from '@/components/common/CustomAvatar';
-import TopButton from '@/components/common/TopButton';
+import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
+import TopButton from '@/components/_common/TopButton';
 import { DDayChip, PositionChips, ProgressRegionChip, RecruitmentChip, RecruitStatusChip, SkillChips } from '@/components/projects/ProjectChips';
-import { COMMON_CODE } from '@/types/common.type';
-import { getCodeName } from '@/utils/common.util';
+import { useUpdateProjectLike } from '@/hooks/projects/projects.hook';
+import { useSelectProjectDetail } from '@/hooks/projects/projects.json.hook';
+import { COMMON_CODE } from '@/types/const';
+import { getCodeName } from '@/utils/util._common';
 import { AccessTime, ContentPaste, Favorite, LocationOn, OpenInNew, People, Person, Settings, Visibility } from '@mui/icons-material';
-import { Chip, Divider, Paper, Tooltip } from '@mui/material';
+import { Divider, Paper, Tooltip } from '@mui/material';
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-export default function ProjectDetailPage() {
+export default function ProjectDetail() {
 const navigate = useNavigate();
   const projectId = 'c1ba0f7821a54fc6a4561b4e06da4e76';
 

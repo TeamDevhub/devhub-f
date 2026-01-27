@@ -1,19 +1,23 @@
-import { Chip, type ChipProps } from '@mui/material';
+import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
+import { COMMON_CODE, PROJECT_RECRUIT_STATUS, PROJECT_RECRUIT_TYPE } from '@/types/const';
+import type { DateType } from '@/types/type.api';
+import type { Position } from '@/types/type.projects';
+import { getCodeName } from '@/utils/util._common';
+import { convertString, getDiffDays, getTodayStr, isBetween, isPast } from '@/utils/util.date';
 import { AccessTime, LocationOn } from '@mui/icons-material';
-import CustomAvatar from '@/components/common/CustomAvatar';
-import { getCodeName } from '@/utils/common.util';
-import { COMMON_CODE, PROJECT_RECRUIT_STATUS, PROJECT_RECRUIT_TYPE } from '@/types/common.type';
-import { getDiffDays, getTodayStr, isBetween, isPast } from '@/utils/date.util';
-import type {Postion } from '@/api/projects/projects.type';
+import { Chip, type ChipProps } from '@mui/material';
 
 export const RecruitStatusChip = ({
 	recruitmentStartDate,
 	recruitmentEndDate
 }: {
-	recruitmentStartDate?: string,
-	recruitmentEndDate?: string
+	recruitmentStartDate?: string | DateType,
+	recruitmentEndDate?: string | DateType
 }) => {
 	if (!recruitmentStartDate || !recruitmentEndDate) return null;
+
+	if(typeof recruitmentStartDate != 'string') recruitmentStartDate = convertString(recruitmentStartDate);
+	if(typeof recruitmentEndDate != 'string') recruitmentEndDate = convertString(recruitmentEndDate);
 
 	const today = getTodayStr();
 
@@ -70,9 +74,11 @@ export const ProgressRegionChip = ({ regionCd }: { regionCd?: string }) => {
 export const DDayChip = ({
 	recruitmentEndDate
 }: {
-	recruitmentEndDate?: string
+	recruitmentEndDate?: string | DateType
 }) => {
 	if (!recruitmentEndDate) return null;
+	if(typeof recruitmentEndDate != 'string') recruitmentEndDate = convertString(recruitmentEndDate);
+	
 	const today = getTodayStr();
 	const dday = getDiffDays(today, recruitmentEndDate);
 
@@ -113,7 +119,7 @@ export const SkillChips = (
 };
 
 export const PositionChips = (
-	positionList?: Postion[]
+	positionList?: Position[]
 ) => {
 	if (!positionList || positionList.length === 0) return null;
 	return positionList.map((item, index) => {

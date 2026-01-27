@@ -1,19 +1,19 @@
-import { useSelectProjects } from '@/api/projects/projects.json.hook';
-import type { ProjectSearchRequest } from '@/api/projects/projects.type';
-import CustomTextfield from '@/components/common/CustomTextfield';
-import SkillPopup from '@/components/popup/SkillPopup';
+import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
+import SkillPopup from '@/components/_common/popup/SkillPopup';
+import FilterList from '@/components/projects/projectList/FilterList';
+import FilterPopup from '@/components/projects/projectList/FilterPopup';
+import ProjectCard from '@/components/projects/projectList/ProjectCard';
 import { useFormState } from '@/hooks/common.hook';
+import { useSelectProjects } from '@/hooks/projects/projects.json.hook';
+import type { ProjectSearchRequest } from '@/types/type.projects';
 import { FilterAlt } from '@mui/icons-material';
 import { Button, FormControl, MenuItem, Pagination, Paper, Select } from '@mui/material';
 import { useState } from 'react';
-import FilterList from './FilterList';
-import FilterPopup from './FilterPopup';
-import ProjectCard from './ProjectCard';
 
 type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword'>;
 type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
-export default function ProjectListPage(){
+export default function ProjectList(){
   // api (개발)
   const initData:SearchData = {
     page:1,

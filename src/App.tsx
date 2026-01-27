@@ -8,7 +8,7 @@ function App() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
-        <RouterProvider router={router}/>
+      <RouterProvider router={router}/>
     </LocalizationProvider>
   );
 }

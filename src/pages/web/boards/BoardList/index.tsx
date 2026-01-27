@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import CustomTextfield from '@/components/common/CustomTextfield';
-import { Button, Pagination, Paper, Tab, Tabs} from '@mui/material'
-import { useSelectBoards } from '@/api/boards/boards.json.hook';
-import BoardCard from './BoardCard';
-import type { BoardSearchRequest } from '@/api/boards/boards.type';
+import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
+import BoardCard from '@/components/boards/boardList/BoardCard';
+import { useSelectBoards } from '@/hooks/boards/boards.json.hook';
+import type { BoardSearchRequest } from '@/types/type.boards';
+import { Button, Pagination, Paper, Tab, Tabs } from '@mui/material';
+import React, { useState } from 'react';
 
 
-export default function BoardListPage(){
+export default function BoardList(){
     const initData : BoardSearchRequest = {
         page : 1,
         categoryCd: '',

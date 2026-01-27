@@ -1,28 +1,30 @@
 import AuthLayout from '@/layout/AuthLayout';
 import MainLayout from '@/layout/MainLayout';
+import BoardCreatePage from '@/pages/design/boards/BoardCreatePage';
+import BoardDetailPage from '@/pages/design/boards/BoardDetailPage';
+import BoardListPage from '@/pages/design/boards/BoardListPage';
+import BoardModifyPage from '@/pages/design/boards/BoardModifyPage';
+import LoginPage from '@/pages/design/login/LoginPage';
+import MyBoardPage from '@/pages/design/mypage/boards/MyBoardPage';
+import MyHomeModifyPage from '@/pages/design/mypage/home/MyHomeModifyPage';
+import MyHomePage from '@/pages/design/mypage/home/MyHomePage';
+import MyProjectApplicantPage from '@/pages/design/mypage/projects/MyProjectApplicantPage';
+import MyProjectListPage from '@/pages/design/mypage/projects/MyProjectListPage';
+import ProjectApplyPage from '@/pages/design/projects/ProjectApplyPage';
+import ProjectCreatePage from '@/pages/design/projects/ProjectCreatePage';
+import ProjectDetailPage from '@/pages/design/projects/ProjectDetailPage';
+import ProjectListPage from '@/pages/design/projects/ProjectListPage';
+import SignupPage from '@/pages/design/signup/SignInPage1';
+import SignInPage2 from '@/pages/design/signup/SignInPage2';
+import SkillTrendsPage from '@/pages/design/skilltrends/SkillTrendsPage';
 import ErrorPage from '@/pages/ErrorPage';
-import BoardCreatePage from '@/pages/web/boards/BoardCreatePage';
-import BoardDetailPage from '@/pages/web/boards/BoardDetailPage';
-import BoardListPage from '@/pages/web/boards/BoardList';
-import BoardModifyPage from '@/pages/web/boards/BoardModifyPage';
-import Login from '@/pages/web/login';
-import LoginPage from '@/pages/web/login/LoginPage';
+import BoardList from '@/pages/web/boards/BoardList';
+import Login from '@/pages/web/login/Login';
 import MainPage from '@/pages/web/MainPage';
-import MyBoardPage from '@/pages/web/mypage/boards/MyBoardPage';
-import MyHomeModifyPage from '@/pages/web/mypage/home/MyHomeModifyPage';
-import MyHomePage from '@/pages/web/mypage/home/MyHomePage';
-import MyProjectApplicantPage from '@/pages/web/mypage/projects/MyProjectApplicantPage';
-import MyProjectListPage from '@/pages/web/mypage/projects/MyProjectListPage';
-import ProjectApplyPage from '@/pages/web/projects/ProjectApplyPage';
-import ProjectCreate from "@/pages/web/projects/ProjectCreate";
-import ProjectCreatePage from '@/pages/web/projects/ProjectCreatePage';
+import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
-import ProjectDetailPage from '@/pages/web/projects/ProjectDetailPage';
 import ProjectList from '@/pages/web/projects/ProjectList';
-import ProjectListPage from '@/pages/web/projects/ProjectListPage';
-import SignInPage2 from '@/pages/web/signin/SignInPage2';
-import SignupPage from '@/pages/web/signup/SignupPage';
-import SkillTrendsPage from '@/pages/web/skilltrends/SkillTrendsPage';
+import Signup from '@/pages/web/signup/Signup';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -57,19 +59,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <BoardListPage />
-          },
-          {
-            path: 'detail',
-            element: <BoardDetailPage />
-          },
-          {
-            path: 'create',
-            element: <BoardCreatePage />
-          },
-          {
-            path: 'modify',
-            element: <BoardModifyPage />
+            element: <BoardList />
           },
         ]
       },
@@ -94,19 +84,10 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <SignupPage />
+            element: <Signup />
           }
         ]
       },
-      {
-        path: 'signin2',
-        children: [
-          {
-            index: true,
-            element: <SignInPage2 />
-          }
-        ]
-      }
     ]
   },
   {

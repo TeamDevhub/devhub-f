@@ -1,5 +1,5 @@
-import type { ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest, ProjectCreate, ApplicationFormRequest, ApplicationFormBasic } from "@/api/projects/projects.type";
-import fetcher from "@/utils/api.util";
+import type { ApplicationFormBasic, ApplicationFormRequest, ProjectCreate, ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/types/type.projects";
+import fetcher from "@/utils/util.api";
 
 export const getProjects = (req: ProjectSearchRequest) =>
   fetcher<ProjectListResponse, ProjectSearchRequest>(

@@ -1,5 +1,5 @@
-import type {BoardListResponse, BoardSearchRequest} from "@/api/boards/boards.type";
-import fetcher from "@/utils/api.util";
+import type { BoardListResponse, BoardSearchRequest } from "@/types/type.boards";
+import fetcher from "@/utils/util.api";
 
 export const getBoards = (req : BoardSearchRequest) => 
     fetcher<BoardListResponse, BoardSearchRequest>(

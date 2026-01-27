@@ -1,6 +1,6 @@
+import { COMMON_CODE } from '@/types/const';
+import { getCodeName } from '@/utils/util._common';
 import { Chip } from '@mui/material';
-import { getCodeName } from '@/utils/common.util';
-import { COMMON_CODE} from '@/types/common.type';
 
 // 모집유형(일반/추가)
 export const BoardCategoryChip = ({ categoryCd }: { categoryCd: string }) => {

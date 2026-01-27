@@ -1,8 +1,8 @@
 import commonCodeJson from "@/assets/jsonData/commonCode.json";
-import { LoadingProvider, useLoading } from "@/hooks/LoadingContext";
-import Header from '@/layout/Header';
-import { injectLoadingHandler } from "@/utils/api.util";
-import { setCommonCodes } from '@/utils/common.util';
+import { LoadingProvider, useLoading } from "@/contexts/LoadingContext";
+import Header from '@/components/_common/layout/Header';
+import { injectLoadingHandler } from "@/utils/util.api";
+import { setCommonCodes } from '@/utils/util._common';
 import { useEffect } from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
 

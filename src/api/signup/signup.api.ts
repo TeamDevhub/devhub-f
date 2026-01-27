@@ -1,10 +1,5 @@
-import type {
-  SignupRequest,
-  VerificationConfirmRequest,
-  VerificationRequest,
-} from "./signup.type";
-
-import fetcher from "@/utils/api.util";
+import type { SignupRequest, VerificationConfirmRequest, VerificationRequest } from "@/types/type.signup";
+import fetcher from "@/utils/util.api";
 
 export const sendVerification = (req: VerificationRequest) =>
   fetcher<void, VerificationRequest>("/auth/verification/email", req, {
