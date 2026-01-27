@@ -1,4 +1,4 @@
-import { useMutation } from "@/hooks/api.hook";
+import { useMutation } from "@/hooks/_common/api.hook";
 import type { ApiResponse } from "@/types/type.api";
 import type { SignupRequest, VerificationConfirmRequest, VerificationRequest } from "@/types/type.signup";
 

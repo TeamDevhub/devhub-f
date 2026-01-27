@@ -2,7 +2,6 @@ import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import { AccessTime, LocationOn, Person, Visibility } from '@mui/icons-material'
 import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, Paper, Radio, RadioGroup, Stack, TextField } from '@mui/material'
-import React from 'react'
 
 export default function ProjectApplyPage(){
   return (

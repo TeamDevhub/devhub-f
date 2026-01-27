@@ -1,5 +1,5 @@
 import { createProject, getApplicationForms, getProjectDetail, getProjects, updateProject, updateProjectLike } from "@/api/projects/projects.api";
-import { useMutation, useSelect } from "@/hooks/api.hook";
+import { useMutation, useSelect } from "@/hooks/_common/api.hook";
 import type { ApplicationFormBasic, ApplicationFormRequest, ProjectCreate, ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/types/type.projects";
 
 export const useSelectProjects = (req: ProjectSearchRequest) =>

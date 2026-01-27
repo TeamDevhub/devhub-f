@@ -1,5 +1,5 @@
 import { getBoards } from "@/api/boards/boards.api";
-import { useSelect } from "@/hooks/api.hook";
+import { useSelect } from "@/hooks/_common/api.hook";
 import type { BoardListResponse, BoardSearchRequest } from "@/types/type.boards";
 
 export const useSelectBoards = (req : BoardSearchRequest) =>

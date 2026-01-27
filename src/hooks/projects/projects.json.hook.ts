@@ -2,7 +2,7 @@ import apiSuccessResJSON from '@/assets/jsonData/apiSuccessRes.json';
 import applicationFormListRes from '@/assets/jsonData/projectsPage/applicationFormListRes.json';
 import selectDetailResJSON from '@/assets/jsonData/projectsPage/projectDetailRes.json';
 import selectListResJSON from '@/assets/jsonData/projectsPage/projectListRes.json';
-import { useMutation, useSelect } from "@/hooks/api.hook";
+import { useMutation, useSelect } from "@/hooks/_common/api.hook";
 import type { ApiResponse } from "@/types/type.api";
 import type { ApplicationFormBasic, ApplicationFormRequest, ProjectCreate, ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, UpdateProjectRequest } from "@/types/type.projects";
 

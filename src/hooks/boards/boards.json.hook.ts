@@ -1,5 +1,5 @@
 import selectListResJSON from '@/assets/jsonData/boardsPage/boardListRes.json';
-import { useSelect } from "@/hooks/api.hook";
+import { useSelect } from "@/hooks/_common/api.hook";
 import type { ApiResponse } from "@/types/type.api";
 import type { BoardSearchRequest, BoardSummary } from "@/types/type.boards";
 

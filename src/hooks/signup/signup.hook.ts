@@ -1,5 +1,5 @@
 import { confirmVerification, sendVerification, signup } from "@/api/signup/signup.api";
-import { useMutation } from "@/hooks/api.hook";
+import { useMutation } from "@/hooks/_common/api.hook";
 import type { SignupRequest, VerificationConfirmRequest, VerificationRequest } from "@/types/type.signup";
 
 
