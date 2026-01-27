@@ -8,7 +8,6 @@ export interface WebPopupProps{
   onSubmit?:()=>void;
   children:React.ReactNode;
   isOpen:boolean;
-  setOpen:(open:boolean)=>void;
   submitText?:string;
   size?: 'small' | 'medium' | 'large' | 'auto';
   closeOnSubmit?: boolean;
@@ -19,26 +18,24 @@ export default function WebPopup({
   onSubmit,
   children,
   isOpen,
-  setOpen,
   submitText='확인',
   size = 'small',
   closeOnSubmit = true
 }:WebPopupProps) {
 
   const handleClose = () => {
-    onClose && onClose();
-    setOpen(false);
+    onClose?.();
   }
   const handleSubmit = () => {
-    onSubmit && onSubmit();
-    closeOnSubmit && setOpen(false);
+    onSubmit?.();
+    closeOnSubmit && onClose?.();
   }
 
   let _size : string;
   switch(size){
-    case 'large' : _size = '1200'; break;
-    case 'medium' : _size = '800'; break;
-    case 'small' : _size = '400'; break;
+    case 'large' : _size = '1200px'; break;
+    case 'medium' : _size = '800px'; break;
+    case 'small' : _size = '400px'; break;
     case 'auto' : _size = 'auto'; break;
   }
 
@@ -51,7 +48,7 @@ export default function WebPopup({
             <Close color='primary' fontSize='medium' sx={{ fontSize: 24 }}></Close>
           </IconButton>
         </div>
-        <div style={{width:`${_size}px`}}>
+        <div style={{width:`${_size}`}}>
           {children}
         </div>
         <div className='popup-button-box align-center'>

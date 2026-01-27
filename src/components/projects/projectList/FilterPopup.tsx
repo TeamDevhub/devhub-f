@@ -1,28 +1,26 @@
-import type { ProjectSearchRequest } from "@/types/type.projects";
 import RegionPopup from "@/components/_common/popup/RegionPopup";
 import SkillPopup from "@/components/_common/popup/SkillPopup";
 import WebPopup from "@/components/_common/popup/WebPopup";
 import { useFormState } from "@/hooks/_common/common.hook";
+import { useDisclosure } from "@/hooks/_common/useDisclosure";
+import { COMMON_CODE } from "@/types/const";
+import type { FilterData } from "@/types/type.projects";
 import { Divider } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import FilterBox, { FilterWarpper } from "./FilterBox";
 import FilterList from "./FilterList";
-import { COMMON_CODE } from "@/types/const";
-
-type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword'>;
-type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
 export default function FilterPopup({
   isOpen,
-  setOpen,
   onSubmit,
+  onClose,
   initialValue,
 }:{
   isOpen:boolean;
-  setOpen:(open:boolean)=>void;
   onSubmit:(state:FilterData)=>void;
   initialValue:FilterData,
+  onClose?:()=>void;
 }){
 
   const { 
@@ -36,21 +34,23 @@ export default function FilterPopup({
     setState(initialValue);
   }, [initialValue]);
 
-  const [openSkillPopup, setOpenSkillPopup] = useState(false);
-  const [openRegionPopup, setOpenRegionPopup] = useState(false);
-
-  const clickOpenSkillPopup = () => setOpenSkillPopup(true);
-  const clickOpenRegionPopup = () => setOpenRegionPopup(true);
+  const skillPopup = useDisclosure();
+  const regionPopup = useDisclosure();
 
   const reset = () => setState({});
-  const handleSubmit = () => onSubmit(state);
-  const handleClose = () => setState(initialValue);
+  
+  const handleSubmit = () => {
+    onSubmit(state);
+  }
+  const handleClose = () => {
+    setState(initialValue);
+    onClose && onClose();
+  }
 
   return (
     <>
     <WebPopup
       isOpen={isOpen}
-      setOpen={setOpen}
       onSubmit={handleSubmit}
       onClose={handleClose}
       title='상태 필터'
@@ -59,7 +59,7 @@ export default function FilterPopup({
       <div className='left-filter-bar flex-col flex-grow' style={{width:'100%'}}>
         <FilterList
           filterData={state} 
-          clickOpenSkillPopup={clickOpenSkillPopup} 
+          clickOpenSkillPopup={skillPopup.open} 
           handleResetFilter={reset} 
           createHandler={createHandler}
         />
@@ -104,12 +104,12 @@ export default function FilterPopup({
           codeName={COMMON_CODE.REGION_CODE}
           values={state.regionCodeList}
           setValues={createHandler('regionCodeList')}
-          onClickAddBtn={clickOpenRegionPopup}
+          onClickAddBtn={regionPopup.open}
         />
       </div>
     </WebPopup>
-    <SkillPopup isOpen={openSkillPopup} setOpen={setOpenSkillPopup} values={state.skillCodeList} setValues={createHandler('skillCodeList')}/>
-    <RegionPopup isOpen={openRegionPopup} setOpen={setOpenRegionPopup} values={state.regionCodeList} setValues={createHandler('regionCodeList')} multiple/>
+    <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={state.skillCodeList} setValues={createHandler('skillCodeList')}/>
+    <RegionPopup isOpen={regionPopup.isOpen} onClose={regionPopup.close} values={state.regionCodeList} setValues={createHandler('regionCodeList')} multiple/>
     </>
   )
 }
