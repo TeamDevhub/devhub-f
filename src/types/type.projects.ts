@@ -38,6 +38,8 @@ export interface ProjectDetail extends ProjectBasic {
 export interface ProjectCreate extends ProjectDetail {
   applicationFormList: string[];
   additionalFormList: ApplicationFormDetail[];
+  attachments?: File[];
+  images?: File[];
 }
 
 export interface ApplicationFormBasic {

@@ -32,8 +32,8 @@ export const updateProjectLike = (projectId: string) =>
     { method: "post" }
   );
   
-export const createProject = (req: ProjectCreate) => 
-  fetcher<void, ProjectCreate>(
+export const createProject = (req: FormData) => 
+  fetcher<void, FormData>(
     '/projects',
     req,
     { method: "post" }
