@@ -27,8 +27,8 @@ export default function DragAndDropForm({
     }
 
     useEffect(()=>{
-        onHandleChange(files);
-    }, [files]);
+        onHandleChange?.(files);
+    }, [onHandleChange, files]);
 
     return <div
             onDragOver={e => e.preventDefault()}
