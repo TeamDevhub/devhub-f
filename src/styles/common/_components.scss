@@ -91,7 +91,10 @@
 .MuiRating-root { width: 100% !important; font-size: 3rem !important; align-items: center; justify-content: center; }
 
 /* 10. chart */
-.MuiChartsLabelMark-root { width: 0.8rem !important; }
+.MuiChartsLegend-root { gap: 0 !important;
+  .MuiChartsLegend-item { padding: 0.4rem; }
+}
+.MuiChartsLabelMark-root { width: 0.8rem !important; height: 0.8rem !important; }
 
 /*** CUSTOM ***/
 // 1. heart button
