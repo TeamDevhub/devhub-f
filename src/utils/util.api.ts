@@ -165,6 +165,9 @@ export const fetcher = async <T = any, P = any>(
   const isGetMethod = method.toLowerCase() === "get";
   data = convertDayjsToString(data);
 
+  const baseUrl = import.meta.env.VITE_API_URL;
+  url = baseUrl + url;
+
   const res = await instance.request<ApiResponse<T>>({
     url,
     method: method as Method,
