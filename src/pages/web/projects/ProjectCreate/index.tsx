@@ -5,7 +5,7 @@ import SkillPopup from '@/components/_common/popup/SkillPopup';
 import WebPopup from '@/components/_common/popup/WebPopup';
 import ApplicationFormGroup from '@/components/projects/projectCreate/ApplicationFormGroup';
 import PositionGroup from '@/components/projects/projectCreate/PositionGroup';
-import DragAndDropFormProps from '@/components/projects/projectCreate/DragAndDropForm'
+import DragAndDropFormProps from '@/components/_common/DragAndDropForm'
 import useCreateProject from '@/hooks/projects/useCreateProject'
 import { useDisclosure } from '@/hooks/_common/useDisclosure';
 import { COMMON_CODE } from '@/types/const';
@@ -14,7 +14,7 @@ import { type DateType } from '@/types/type.api';
 import type { Position, ProjectCreate } from '@/types/type.projects';
 import { getCodeName, getSelectOptions } from "@/utils/util._common";
 import { AddCircle, Search } from '@mui/icons-material';
-import { Button, Chip, Divider, FormControl, FormLabel, IconButton, Paper, TextField } from '@mui/material';
+import { Button, Chip, Divider, FormControl, FormLabel, IconButton, Paper } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useEffect, useState } from 'react';
 
@@ -26,18 +26,10 @@ export default function ProjectCreate(){
   const [recruitmentTypeCdOption, setRecruitmentTypeCdOption] = useState<SelectComponentProps[]>([]);
   const [progressTypeCdOption, setProgressTypeCdOption] = useState<SelectComponentProps[]>([]);
 
-
-
   const initialize = () => {
     setRecruitmentTypeCdOption(getSelectOptions(COMMON_CODE.PROJECT_RECRUIT_TYPE));
     setProgressTypeCdOption(getSelectOptions(COMMON_CODE.PROJECT_PROGRESS_TYPE));
   }
-
-  const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    setFiles(prev => [...prev, ...droppedFiles]);
-  };
 
   useEffect(()=>{
     initialize();
@@ -196,8 +188,7 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                {/* Drag and Drop 변경 필요 */}
-                <DragAndDropFormProps onHandleChange={(newFiles)=> onHandleEvent("attachments", newFiles)} placeHolder='파일을 드래그하거나 클릭하세요'/>
+                <DragAndDropFormProps name={"attachments"} onHandleChange={(newFiles)=> onHandleEvent("attachments", newFiles)}/>
               </div>
             </div>
           </div>
@@ -209,7 +200,7 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropFormProps onHandleChange={(newFiles)=> onHandleEvent("images", newFiles)} placeHolder='파일을 드래그하거나 클릭하세요'/>
+                <DragAndDropFormProps name={"images"} onHandleChange={(newFiles)=> onHandleEvent("images", newFiles)}/>
               </div>
             </div>
           </div>
