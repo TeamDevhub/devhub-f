@@ -3,11 +3,13 @@ import {useState, useEffect} from "react"
 export interface DragAndDropFormProps{
     onHandleChange?:(newFiles: File[]) => void;
     placeHolder?: string;
+    name?: string;
 }
 
 export default function DragAndDropForm({
     onHandleChange,
-    placeHolder = '파일을 드래그하거나 클릭하세요'
+    placeHolder = '파일을 드래그하거나 클릭하세요',
+    name
 }: DragAndDropFormProps) {
     const [files, setFiles] = useState<File[]>([]);
     const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -31,9 +33,10 @@ export default function DragAndDropForm({
     }, [files]);
 
     return <div
+            id={name}
             onDragOver={e => e.preventDefault()}
             onDrop={onDrop}
-            onClick={() => document.getElementById('fileInput')?.click()}
+            onClick={() => document.getElementById('fileInput'+name)?.click()}
             style={{
             border: '2px dashed #aaa',
             padding: '40px',
@@ -43,7 +46,8 @@ export default function DragAndDropForm({
         >
             {files[0]?.name || placeHolder}
             <input
-            id="fileInput"
+            id={"fileInput" + name}
+            data-role={name}
             type="file"
             multiple
             hidden
