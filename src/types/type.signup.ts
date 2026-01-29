@@ -1,17 +1,17 @@
-export interface VerificationRequest {
-  email:string;
-};
+export interface SendVerificationCodeRequest {
+  email: string;
+}
 
-export interface VerificationConfirmRequest {
-  email:string;
-  authCode:string;
-};
+export interface ConfrimVerificationCodeRequest {
+  email: string;
+  verificationCode: string;
+}
 
 export interface SignupRequest {
-  email:string;
-  password:string;
-  username:string;
-  introduction:string;
-  skillList:string[];
-  positionList:string[];
-};
+  email: string;
+  password: string;
+  username: string;
+  introduction: string;
+  skillList: string[];
+  positionList: string[];
+}
