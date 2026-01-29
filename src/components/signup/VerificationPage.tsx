@@ -10,6 +10,8 @@ interface Props {
   onVerified: (email: string) => void;
 }
 
+const EMAIL_HOST_OPTIONS = ['gmail.com', 'naver.com'];
+
 export default function VerificationPage({ onVerified }: Props) {
   const { emailAddress, isVerificationCodeSent, changeEmailId, changeEmailHost, applySendMail } = useSendVerificationCode();
   const { verificationCode, setVerificationCode, applyConfirmVerification, verifying } = useConfirmVerificationCode(`${emailAddress.emailId}@${emailAddress.emailHost}`, onVerified);
@@ -55,8 +57,11 @@ export default function VerificationPage({ onVerified }: Props) {
                     displayEmpty
                     renderValue={(selected) => (selected === '' ? '이메일을 선택해주세요' : selected)}
                   >
-                    <MenuItem value="gmail.com">gmail.com</MenuItem>
-                    <MenuItem value="naver.com">naver.com</MenuItem>
+                    {EMAIL_HOST_OPTIONS.map((emailHost) => (
+                      <MenuItem key={emailHost} value={emailHost}>
+                        {emailHost}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
 
