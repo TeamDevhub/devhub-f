@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 
 interface Props {
   email: string;
-  onBack?: () => void;
   onNext?: () => void;
 }
 
