@@ -109,7 +109,7 @@ export default function SkillTrendsPage(){
         </Paper>
       </div>
       {/* 2. 인기 포지션 */}
-      <div className="position-popular-skill-wra[ㄱ두p align-stretch">
+      <div className="position-popular-skill-wrap align-stretch">
         <Paper className='position-box flex-col flex-1' elevation={2}>
           <strong className='title'>인기 포지션 TOP 10</strong>
           <Divider />
