@@ -33,7 +33,7 @@ export default function useSendVerificationCode() {
 
   const applySendMail = async () => {
     if (checkError()) return;
-    await sendVerification({ email: `${emailAddress.emailId}@${emailAddress.emailHost}` });
+    await sendVerification({ verificationType: 'email', value: `${emailAddress.emailId}@${emailAddress.emailHost}` });
     setIsVerificationCodeSent(true);
   };
 

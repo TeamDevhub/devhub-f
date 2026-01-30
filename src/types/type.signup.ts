@@ -1,10 +1,12 @@
 export interface SendVerificationCodeRequest {
-  email: string;
+  verificationType: string;
+  value: string;
 }
 
 export interface ConfrimVerificationCodeRequest {
-  email: string;
-  verificationCode: string;
+  verificationType: string;
+  value: string;
+  code: string;
 }
 
 export interface SignupRequest {
