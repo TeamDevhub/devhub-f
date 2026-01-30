@@ -4,11 +4,11 @@ export interface BoardBasic {
     username: string;
     categoryCd: string;
     title: string;
-    viewCount:string;
-    registrantGuid: string;
-    registeredDate: string;
-    modifierGuid: string;
-    modifiedDate: string;
+    viewCount?:string;
+    registrantGuid?: string;
+    registeredDate?: string;
+    modifierGuid?: string;
+    modifiedDate?: string;
 }
 
 export interface comment {
@@ -16,15 +16,15 @@ export interface comment {
     content: string;
     userGuid: string;
     username: string;
-    registrantGuid: string;
-    registeredDate: string;
-    modifierGuid: string;
-    modifiedDate: string;
+    registrantGuid?: string;
+    registeredDate?: string;
+    modifierGuid?: string;
+    modifiedDate?: string;
 }
 
 export interface BoardSummary extends BoardBasic {
-    likeCount:string;
-    commentCount:string;
+    likeCount?:string;
+    commentCount?:string;
 }
 
 export interface BoardDetail extends BoardSummary {
@@ -33,9 +33,10 @@ export interface BoardDetail extends BoardSummary {
 
 export interface BoardSearchRequest {
     page:number;
-    categoryCd: string;
-    title: string;
+    categoryCd?: string;
+    title?: string;
 }
+export type SearchData = Pick<BoardSearchRequest, 'page' | 'categoryCd' | 'title'>;
 
 export interface BoardListResponse {
     

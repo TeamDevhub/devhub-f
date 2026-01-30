@@ -4,8 +4,16 @@ import type { BoardSummary } from "@/types/type.boards";
 import { Create, Visibility } from '@mui/icons-material';
 import { Paper } from '@mui/material';
 
-export default function BoardCard(boardData : BoardSummary){
+interface BoardCardProps {
+  boardData : BoardSummary;
+  handleLike:(boardGuid:string) => void;
+}
+export default function BoardCard({
+  boardData, 
+  handleLike
+} : BoardCardProps){
   const {
+    boardGuid,
     username,
     categoryCd,
     title,
@@ -26,7 +34,7 @@ export default function BoardCard(boardData : BoardSummary){
           </div>
           <div className="right-area flex-col">
             <div className='heart-box flex-col align-end'>
-              <HeartButton likeCount={likeCount} />
+              <HeartButton likeCount={likeCount} onClick={()=>handleLike(boardGuid)}/>
             </div>
           </div>
         </div>

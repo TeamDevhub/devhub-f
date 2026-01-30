@@ -7,18 +7,21 @@ export interface HeartButtonProps {
   className?: string;
   noCount?: boolean;
   defaultLiked?: boolean;
+  onClick?:() => void;
 }
 
 export default function HeartButton({
   likeCount, 
   className, 
   noCount = false,
-  defaultLiked = false
+  defaultLiked = false,
+  onClick
 }: HeartButtonProps){
   const [liked, setLiked] = useState(defaultLiked);
 
   const handleClick = () => {
     setLiked(prev => !prev);
+    onClick?.();
   };
 
   return (
