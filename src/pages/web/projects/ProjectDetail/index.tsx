@@ -51,7 +51,7 @@ const navigate = useNavigate();
                 recruitmentStartDate={res?.data?.recruitmentStartDate}
                 recruitmentEndDate={res?.data?.recruitmentEndDate}
               />
-              <ProgressRegionChip regionCd={res?.data?.prgressRegionCd} />
+              <ProgressRegionChip regionCd={res?.data?.progressRegionCd} />
               <RecruitmentChip recruitTypeCd={res?.data?.recruitmentTypeCd} />
               <DDayChip recruitmentEndDate={res?.data?.recruitmentEndDate} />
             </div>
@@ -132,10 +132,10 @@ const navigate = useNavigate();
                   <strong>지역</strong>
                 </div>
                 <p className="group-value align-center">
-                  {res?.data?.prgressRegionCd &&
+                  {res?.data?.progressRegionCd &&
                     getCodeName(
                       COMMON_CODE.REGION_CODE,
-                      res.data.prgressRegionCd
+                      res.data.progressRegionCd
                     )}
                 </p>
               </div>

@@ -1,10 +1,7 @@
-import type { ProjectSearchRequest } from "@/types/type.projects";
+import { COMMON_CODE } from "@/types/const";
+import type { FilterData } from "@/types/type.projects";
 import { Button, Divider } from "@mui/material";
 import FilterBox from "./FilterBox";
-import { COMMON_CODE } from "@/types/const";
-
-type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword'>;
-type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
 export default function FilterList({
   filterData,

@@ -6,6 +6,7 @@ import { useSelect } from "../_common/api.hook";
 
 const initData:SearchData = {
   page:1,
+  size:10,
   order:'',
 }
 
@@ -52,7 +53,7 @@ export default function useSelectProjects(
     req: request,
     cacheKey: `projects-${JSON.stringify(request)}`,
   }
-  const { res, loading } =   useSelect<ProjectListResponse, ProjectSearchRequest>(options);
+  const { res, loading } = useSelect<ProjectListResponse, ProjectSearchRequest>(options);
 
   const setPage = (page: number) => {
     setRequest((prev) => ({...prev, page: page}));
