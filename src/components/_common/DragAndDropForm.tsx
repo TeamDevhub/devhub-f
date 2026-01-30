@@ -4,12 +4,14 @@ export interface DragAndDropFormProps{
     onHandleChange?:(newFiles: File[]) => void;
     placeHolder?: string;
     name?: string;
+    multiple?: boolean;
 }
 
 export default function DragAndDropForm({
     onHandleChange,
     placeHolder = '파일을 드래그하거나 클릭하세요',
-    name
+    name,
+    multiple=false
 }: DragAndDropFormProps) {
     const [files, setFiles] = useState<File[]>([]);
     const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -21,11 +23,14 @@ export default function DragAndDropForm({
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         const newFiles = Array.from(e.target.files);
-
-        setFiles(prev => [
-            ...prev,
-            ...newFiles
-        ]);
+        if(multiple){
+            setFiles(prev => [
+                ...prev,
+                ...newFiles
+            ]);
+        } else{
+            setFiles(newFiles);
+        }
     }
 
     useEffect(()=>{
@@ -47,9 +52,8 @@ export default function DragAndDropForm({
             {files[0]?.name || placeHolder}
             <input
             id={"fileInput" + name}
-            data-role={name}
             type="file"
-            multiple
+            multiple={multiple}
             hidden
             onChange={onChange}
             />
