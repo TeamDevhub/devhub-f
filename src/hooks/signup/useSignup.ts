@@ -1,61 +1,86 @@
 import { signup } from '@/api/signup/signup.api';
+import { useMutation } from '../_common/api.hook';
+import { useFormState } from '../_common/common.hook';
+import { Validators } from '@/utils/util._common';
+
 import type { SignupRequest } from '@/types/type.signup';
-import { useState } from 'react';
+import type { ApiResponse } from '@/types/type.api';
 
-const initialData = 
+interface SignupFormState extends SignupRequest {
+  passwordConfirm: string;
+}
 
-export default function useSignup() {
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [intro, setIntro] = useState('');
-  const [positions, setPositions] = useState<string[]>([]);
-  const [skills, setSkills] = useState<string[]>([]);
-  const [tempSkills, setTempSkills] = useState<string[]>([]);
-  const [openSkillDialog, setOpenSkillDialog] = useState(false);
-
-  const { mutate: signup, loading } = useSignup();
-
-  const togglePosition = (pos: string) => setPositions((prev) => (prev.includes(pos) ? prev.filter((p) => p !== pos) : [...prev, pos]));
-
-  const toggleTempSkill = (skill: string) => setTempSkills((prev) => (prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]));
-
-  const openSkillSelectDialog = () => {
-    setTempSkills(skills);
-    setOpenSkillDialog(true);
+export default function useSignup(email: string, onSuccess?: () => void) {
+  const initData: SignupFormState = {
+    email: email,
+    password: '',
+    passwordConfirm: '',
+    username: '',
+    introduction: '',
+    skillList: [],
+    positionList: [],
   };
 
-  const handleSignup = async () => {
-    if (!password || password.length < 10) return alert('비밀번호는 특수문자, 숫자 포함 10자 이상이어야 합니다.');
-    if (password !== passwordConfirm) return alert('비밀번호가 일치하지 않습니다.');
-    if (!nickname) return alert('닉네임을 입력해주세요.');
-    if (positions.length === 0) return alert('관심 포지션을 선택해주세요.');
-    if (skills.length === 0) return alert('보유 스킬을 선택해주세요.');
+  const validations = {
+    password: [Validators.required(), Validators.minLength(10)],
+    passwordConfirm: [Validators.required()],
+    username: [Validators.required()],
+    skillList: [Validators.minArrayLength(1)],
+    positionList: [Validators.minArrayLength(1)],
+  };
+
+  const { state: userInfo, setState: setUserInfo, checkError } = useFormState(initData, { validations });
+
+  const changeUserInfo = <K extends keyof SignupFormState>(key: K, value: SignupFormState[K]) => {
+    setUserInfo((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const toggleArrayValue = (key: 'positionList' | 'skillList', value: string) => {
+    setUserInfo((prev) => ({
+      ...prev,
+      [key]: prev[key].includes(value) ? prev[key].filter((v) => v !== value) : [...prev[key], value],
+    }));
+  };
+
+  const handleSuccessSignup = (res: ApiResponse<void>) => {
+    alert(res.code);
+    onSuccess?.();
+  };
+
+  const handleFailSignup = (res: ApiResponse<void>) => {
+    alert(res.code);
+  };
+
+  const { mutate: requestSignup, loading } = useMutation<SignupRequest, void>(signup, handleSuccessSignup, handleFailSignup);
+
+  const applySignup = async () => {
+    if (checkError()) return;
+
+    if (userInfo.password !== userInfo.passwordConfirm) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return;
+    }
 
     const payload: SignupRequest = {
-      email,
-      password,
-      username: nickname,
-      introduction: intro,
-      skillList: skills,
-      positionList: positions,
+      email: userInfo.email,
+      password: userInfo.password,
+      username: userInfo.username,
+      introduction: userInfo.introduction,
+      skillList: userInfo.skillList,
+      positionList: userInfo.positionList,
     };
 
-    try {
-      const res = await signup(payload);
-      if (res.success) {
-        alert('회원가입 완료!');
-        onNext?.();
-      } else {
-        alert('회원가입 실패');
-      }
-    } catch (err) {
-      console.error(err);
-      alert('회원가입 중 오류가 발생했습니다.');
-    }
+    await requestSignup(payload);
   };
 
-  const positionOptions = ['Backend', 'Frontend', 'Fullstack', 'Mobile', 'DevOps Engineer', 'Cloud Engineer', 'SRE', 'UI/UX Designer', 'PM(Project/Product Manager)'];
-
-  const skillOptions = ['JAVA', 'React', 'GO', 'SQL', 'Docker', 'Git'];
+  return {
+    userInfo,
+    changeUserInfo,
+    toggleArrayValue,
+    applySignup,
+    loading,
+  };
 }

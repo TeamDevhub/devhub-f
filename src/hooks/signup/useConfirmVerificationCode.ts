@@ -19,11 +19,15 @@ export default function useConfirmVerificationCode(emailAddress: string, onVerif
     alert(res.code);
   };
 
-  const { mutate: confirmVerification, loading: verifying } = useMutation<ConfrimVerificationCodeRequest, void>(confirmEmailVerificationCode, handleSuccessVerification, handleFailVerification);
+  const { mutate: confirmVerification, loading: verifying } = useMutation<ConfrimVerificationCodeRequest, void>(
+    confirmEmailVerificationCode,
+    handleSuccessVerification,
+    handleFailVerification,
+  );
 
   const applyConfirmVerification = async () => {
     if (checkError()) return;
-    await confirmVerification({ email: emailAddress, verificationCode: verificationCode.verificationCode });
+    await confirmVerification({ verificationType: 'email', value: emailAddress, code: verificationCode.verificationCode });
   };
 
   return {

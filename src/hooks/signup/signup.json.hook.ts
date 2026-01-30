@@ -1,7 +1,6 @@
-import { useMutation } from "@/hooks/_common/api.hook";
-import type { ApiResponse } from "@/types/type.api";
-import type { SignupRequest, VerificationConfirmRequest, VerificationRequest } from "@/types/type.signup";
-
+import { useMutation } from '@/hooks/_common/api.hook';
+import type { ApiResponse } from '@/types/type.api';
+import type { SignupRequest, VerificationConfirmRequest, VerificationRequest } from '@/types/type.signup';
 
 // 개발용 JSON 호출
 export const useSendVerification = () => {
@@ -9,7 +8,7 @@ export const useSendVerification = () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     return {
       success: true,
-      code: "SUC.DVH.0001",
+      code: 'SUC.DVH.0001',
       error: null,
     } as ApiResponse<void>;
   };
@@ -22,7 +21,7 @@ export const useConfirmVerification = () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     return {
       success: true,
-      code: "SUC.DVH.0001",
+      code: 'SUC.DVH.0001',
       error: null,
     } as ApiResponse<void>;
   };
@@ -35,7 +34,7 @@ export const useSignup = () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     return {
       success: true,
-      code: "SUC.DVH.0001",
+      code: 'SUC.DVH.0001',
       error: null,
     } as ApiResponse<void>;
   };
