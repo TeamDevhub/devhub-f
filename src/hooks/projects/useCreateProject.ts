@@ -25,8 +25,8 @@ export default function useCreateProject() {
     }],
     applicationFormList: [],
     additionalFormList: [],
-    attachments: [],
-    images: []
+    attachment: undefined,
+    image: undefined,
     };
 
     const { state, setState, handleChange, ...rest } = useFormState(initData);
@@ -41,21 +41,17 @@ export default function useCreateProject() {
 
     const onSubmit = () => {
         const formData = new FormData();
-        const {attachments, images, ...jsonData} = state
+        const {attachment, image, ...jsonData} = state
 
         formData.append(
             "request",
             new Blob([JSON.stringify(jsonData)], {type: "application/json"})
         );
-        if(attachments && attachments.length > 0) {
-            attachments.forEach((attachment) => {
-                formData.append("attachments", attachment);
-            });
+        if(attachment) {
+                formData.append("attachment", attachment);
         }
-        if(images && images.length > 0) {
-            images.forEach((image) => {
-                formData.append("images", image);
-            });
+        if(image) {
+                formData.append("image", image);
         }
 
         mutate(formData);

@@ -188,7 +188,7 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropFormProps name={"attachments"} onHandleChange={(newFiles)=> onHandleEvent("attachments", newFiles)}/>
+                <DragAndDropFormProps name={"attachment"} onHandleChange={(newFiles)=> onHandleEvent("attachment", newFiles[0])}/>
               </div>
             </div>
           </div>
@@ -200,7 +200,7 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropFormProps name={"images"} onHandleChange={(newFiles)=> onHandleEvent("images", newFiles)}/>
+                <DragAndDropFormProps name={"image"} onHandleChange={(newFiles)=> onHandleEvent("image", newFiles[0])}/>
               </div>
             </div>
           </div>
