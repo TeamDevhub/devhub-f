@@ -20,7 +20,7 @@ export default function Login() {
             </Link>
           </div>
           <div className="input-box flex-col">
-            <CustomTextfield name="id" placeholder="아이디" value={loginInfo.id} onChange={(e) => changeId(e.target.value)} autoComplete="username" />
+            <CustomTextfield name="email" placeholder="아이디" value={loginInfo.email} onChange={(e) => changeId(e.target.value)} autoComplete="username" />
             <CustomTextfield
               name="password"
               type="password"

@@ -9,7 +9,7 @@ import type { LoginRequest, LoginResponse } from '@/types/type.login';
 import { useNavigate } from 'react-router-dom';
 
 const initData: LoginRequest = {
-  id: '',
+  email: '',
   password: '',
 };
 
@@ -17,14 +17,14 @@ export default function useLogin() {
   const navigate = useNavigate();
 
   const validations = {
-    id: [Validators.required(), Validators.email()],
+    email: [Validators.required(), Validators.email()],
     password: [Validators.required()],
   };
 
   const { state: loginInfo, setState: setLoginInfo, checkError } = useFormState(initData, { validations });
 
   const changeId = (value: string) => {
-    setLoginInfo((prev) => ({ ...prev, id: value }));
+    setLoginInfo((prev) => ({ ...prev, email: value }));
   };
 
   const changePassword = (value: string) => {
@@ -47,7 +47,7 @@ export default function useLogin() {
     if (checkError()) return;
 
     const payload: LoginRequest = {
-      id: loginInfo.id,
+      email: loginInfo.email,
       password: loginInfo.password,
     };
 

@@ -2,6 +2,7 @@ import { signup } from '@/api/signup/signup.api';
 import { useMutation } from '../_common/api.hook';
 import { useFormState } from '../_common/common.hook';
 import { Validators } from '@/utils/util._common';
+import { useNavigate } from 'react-router-dom';
 
 import type { SignupRequest } from '@/types/type.signup';
 import type { ApiResponse } from '@/types/type.api';
@@ -10,7 +11,9 @@ interface SignupFormState extends SignupRequest {
   passwordConfirm: string;
 }
 
-export default function useSignup(email: string, onSuccess?: () => void) {
+export default function useSignup(email: string) {
+  const navigate = useNavigate();
+
   const initData: SignupFormState = {
     email: email,
     password: '',
@@ -47,7 +50,7 @@ export default function useSignup(email: string, onSuccess?: () => void) {
 
   const handleSuccessSignup = (res: ApiResponse<void>) => {
     alert(res.code);
-    onSuccess?.();
+    navigate('/auth/login');
   };
 
   const handleFailSignup = (res: ApiResponse<void>) => {

@@ -14,7 +14,10 @@ const EMAIL_HOST_OPTIONS = ['gmail.com', 'naver.com'];
 
 export default function VerificationPage({ onVerified }: Props) {
   const { emailAddress, isVerificationCodeSent, changeEmailId, changeEmailHost, applySendMail } = useSendVerificationCode();
-  const { verificationCode, setVerificationCode, applyConfirmVerification, verifying } = useConfirmVerificationCode(`${emailAddress.emailId}@${emailAddress.emailHost}`, onVerified);
+  const { verificationCode, setVerificationCode, applyConfirmVerification, verifying } = useConfirmVerificationCode(
+    `${emailAddress.emailId}@${emailAddress.emailHost}`,
+    onVerified,
+  );
 
   return (
     <div className="auth-page flex-center">
