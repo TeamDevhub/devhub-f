@@ -9,7 +9,7 @@ import type { LoginRequest, LoginResponse } from '@/types/type.login';
 import { useNavigate } from 'react-router-dom';
 
 const initData: LoginRequest = {
-  id: '123',
+  id: '',
   password: '',
 };
 
