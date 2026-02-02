@@ -1,10 +1,10 @@
 import CheckAbleButton from "@/components/_common/CheckAbleButton";
 import CheckAbleChip from "@/components/_common/CheckAbleChip";
 import type { CommonCode, CommonCodeItem } from "@/types/type._common";
-import { getCodeName, getCodesByGroup } from "@/utils/util._common";
+import { getCodesByGroup } from "@/utils/util._common";
 import { AddCircle } from "@mui/icons-material";
 import { Chip, IconButton } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 
 export interface FilterBoxProps {
   title: string;
@@ -30,78 +30,83 @@ const FilterBox = React.memo(({
   onClickAddBtn,
 } : FilterBoxProps) => {
 
-  const [codeGroup, setCodeGroup] = useState<CommonCodeItem[]>([]);
-
-  useEffect(()=>{
-    if(codeName){
-      setCodeGroup(getCodesByGroup(codeName));
-    }else if(options){
-      setCodeGroup(options);
-    }
-  },[])
+  const codeGroup = useMemo(() => {
+    if (codeName) return getCodesByGroup(codeName);
+    if (options) return options;
+    return [];
+  }, [codeName, options]);
 
   const getName = (v: string) => {
-    if(codeName){
-      return getCodeName(codeGroup, v);
-    }else if(options){
-      options.find(item => item.code === v)?.name ?? ""
-    }
-  }
+    return codeGroup.find(item => item.code === v)?.name ?? "";
+  };
 
   const handleOnClick = (value:string, checked:boolean) => {
+    if (value === '') {
+      setValues([]);
+      return;
+    }
+
     if(checked){
       setValues([...values, value]);
     }else{
-      handleOnDelete(value);
+      setValues(values.filter((item) => item !== value));
     }
   }
 
-  const handleOnDelete = (value:string) => {
-    setValues(values.filter((item) => item != value));
-  }
-
   const hasValue = (value: string) => {
+    if (value === '') return values.length === 0;
     return values.includes(value);
-  }
+  };
 
-  const setButtonGroup = () => {
+  const renderItems = () => {
+    if (type === "addableChip") {
+      return (
+        <>
+          {values.map((v) => (
+            <Chip 
+              key={v} 
+              size='small' 
+              variant='filled' 
+              label={getName(v)} 
+              color='primary' 
+              onDelete={() => handleOnClick(v, false)} 
+            />
+          ))}
+          <IconButton size='small' onClick={onClickAddBtn}>
+            <AddCircle sx={{ fontSize: 24, color: 'primary.main' }} />
+          </IconButton>
+        </>
+      );
+    }
+
+    const Component = type === "button" ? CheckAbleButton : CheckAbleChip;
+
     return (
       <>
-        {useAll && <CheckAbleButton name='전체' value='' checked={true} onClick={handleOnClick}/>}
-        {codeGroup.map((item, index)=>(
-          <CheckAbleButton key={index} checked={hasValue(item.code)} name={item.name} value={item.code} onClick={handleOnClick}/>
+        {useAll && (
+          <Component 
+            name='전체' 
+            value='' 
+            checked={hasValue('')} 
+            onClick={handleOnClick} 
+          />
+        )}
+        {codeGroup.map((item) => (
+          <Component 
+            key={item.code} 
+            checked={hasValue(item.code)} 
+            name={item.name} 
+            value={item.code} 
+            onClick={handleOnClick} 
+          />
         ))}
       </>
-    )
-  }
-
-  const setChipGroup = () => {
-    return (
-      <>
-        {useAll && <CheckAbleChip name='전체' value='' checked={true} onClick={handleOnClick}/>}
-        {codeGroup.map((item, index)=>(
-          <CheckAbleChip key={index} checked={hasValue(item.code)} name={item.name} value={item.code} onClick={handleOnClick}/>
-        ))}
-      </>
-    )
-  }
-
-  const setAddableChipGroup = () => {
-    return (
-      <>
-        {values.map((v, index)=>(
-          <Chip key={index} size='small' variant='filled' label={getName(v)} color='primary' clickable onDelete={()=>{handleOnDelete(v)}} />
-        ))}
-        <IconButton size='small' onClick={onClickAddBtn}><AddCircle sx={{ fontSize: 24, color: 'primary.main' }} /></IconButton>
-      </>
-    )
-  }
+    );
+  };
 
   return (
     <FilterWarpper title={title} subText={subText}>
-      {type == "button" && setButtonGroup()}
-      {type == "chip" && setChipGroup()}
-      {type == "addableChip" && setAddableChipGroup()}
+      {renderItems()}
     </FilterWarpper>
   )
 });
