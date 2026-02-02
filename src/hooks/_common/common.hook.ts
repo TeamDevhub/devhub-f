@@ -5,13 +5,20 @@ export type ValidationRules<T> = {
   [K in keyof T]?: ValidationRule<T[K]>[];
 };
 
+type ArrayKeys<T> = {
+  [K in keyof T]: NonNullable<T[K]> extends any[] ? K : never;
+}[keyof T];
+
+type ElementOf<T> = NonNullable<T> extends (infer U)[] ? U : never;
+
 export const useFormState = <T extends object>(
   initialState: T,
   options?: {
     validations?: ValidationRules<T>;
     mode?: 'onChange' | 'manual';
   }
-) => {
+) => {  
+
   const [state, setState] = useState<T>(initialState);
   const [errors, setErrors] = useState<{ [K in keyof T]?: string }>({});
 
@@ -63,6 +70,23 @@ export const useFormState = <T extends object>(
     return (value: T[K]) => handleChange(key, value);
   }, [handleChange]);
 
+  const createToggle = useCallback(<K extends ArrayKeys<T>>(key: K) => {
+    return (value: ElementOf<T[K]>) => {
+      const currentValues = (state[key] as unknown as any[]) || [];
+
+      if ((value as any) === '') {
+        handleChange(key, [] as unknown as T[K]);
+        return;
+      }
+      const isIncluded = currentValues.includes(value);
+      const nextValues = isIncluded
+        ? currentValues.filter((item) => item !== value)
+        : [...currentValues, value];
+
+      handleChange(key, nextValues as unknown as T[K]);
+    };
+  }, [state, handleChange]);
+
   const reset = useCallback(() => {
     setState(initialState);
     setErrors({});
@@ -74,6 +98,7 @@ export const useFormState = <T extends object>(
     checkError, 
     setState, 
     handleChange, 
+    createToggle,
     createHandler, 
     reset 
   } as const;

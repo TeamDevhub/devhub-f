@@ -23,6 +23,8 @@ export default function ProjectList(){
     res,
     filters,
     resetFilters,
+    createToggle,
+    setFilter,
     createFilterHandler,
     applyFilter,
     request,
@@ -54,7 +56,8 @@ export default function ProjectList(){
             filterData={filters} 
             clickOpenSkillPopup={skillPopup.open} 
             handleResetFilter={resetFilters} 
-            createHandler={createFilterHandler}
+            setFilter={setFilter}
+            createToggle={createToggle}
           />
           <div className='filter-button-box w-100 align-center'>
               <Button className='flex-1' size='small' variant='outlined' startIcon={<FilterAlt />} onClick={filterPopup.open}>상세 필터</Button>

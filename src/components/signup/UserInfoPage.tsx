@@ -4,13 +4,14 @@ import useSignup from '@/hooks/signup/useSignup';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
 import PositionGroup from '@/components/signup/PositionGroup';
 import { useDisclosure } from '@/hooks/_common/useDisclosure';
-import { getCodeName } from '@/utils/util._common';
+import { getCodeName, getCodesByGroup } from '@/utils/util._common';
 import { COMMON_CODE } from '@/types/const';
 
 import { AddCircle } from '@mui/icons-material';
 import { LockOutline, PersonOutlined } from '@mui/icons-material';
 import { Button, Chip, Divider, Paper, TextField, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
+import SelectableGroup from './../_common/SelectableGroup';
 
 interface Props {
   email: string;
@@ -90,6 +91,24 @@ export default function UserInfoPage({ email }: Props) {
           </div>
 
           {/* 관심 포지션 */}
+          <div className="field-box2 flex-col">
+            <div className="field-title align-center">
+              <p>관심 포지션</p>
+            </div>
+
+            <div className="field-content flex-col" style={{ gap: '0.5rem' }}>
+              <div className="chip-box w-100 align-center flex-wrap">
+                <SelectableGroup
+                  items={getCodesByGroup(COMMON_CODE.POSITION_CODE)}
+                  onToggle={(v)=>{toggleArrayValue('positionList', v)}}
+                  type='chip'
+                  values={userInfo.positionList}
+                />
+              </div>
+
+              <span className="help-text">관심 포지션은 필수로 선택해야합니다.</span>
+            </div>
+          </div>
           <PositionGroup positionList={userInfo.positionList} onChange={(values) => changeUserInfo('positionList', values)} />
 
           {/* 기술스택 */}
