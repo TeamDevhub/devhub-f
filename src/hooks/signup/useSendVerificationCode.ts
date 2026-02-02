@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useMutation } from '@/hooks/_common/api.hook';
 import { sendEmailVerificationCode } from '@/api/signup/signup.api';
+import { useMutation } from '@/hooks/_common/api.hook';
 import type { ApiResponse } from '@/types/type.api';
 import type { SendVerificationCodeRequest } from '@/types/type.signup';
-import { useFormState } from '../_common/common.hook';
 import { Validators } from '@/utils/util._common';
+import { useState } from 'react';
+import { useFormState } from '../_common/common.hook';
 
 export default function useSendVerificationCode() {
   const [isVerificationCodeSent, setIsVerificationCodeSent] = useState(false);

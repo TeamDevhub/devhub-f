@@ -1,11 +1,10 @@
 import { signup } from '@/api/signup/signup.api';
-import { useMutation } from '../_common/api.hook';
-import { useFormState } from '../_common/common.hook';
+import type { ApiResponse } from '@/types/type.api';
+import type { SignupRequest } from '@/types/type.signup';
 import { Validators } from '@/utils/util._common';
 import { useNavigate } from 'react-router-dom';
-
-import type { SignupRequest } from '@/types/type.signup';
-import type { ApiResponse } from '@/types/type.api';
+import { useMutation } from '../_common/api.hook';
+import { useFormState } from '../_common/common.hook';
 
 interface SignupFormState extends SignupRequest {
   passwordConfirm: string;

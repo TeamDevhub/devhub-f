@@ -1,17 +1,15 @@
 import logo from '@/assets/images/devHub-logo.png';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import useSignup from '@/hooks/signup/useSignup';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
 import PositionGroup from '@/components/signup/PositionGroup';
 import { useDisclosure } from '@/hooks/_common/useDisclosure';
-import { getCodeName, getCodesByGroup } from '@/utils/util._common';
+import useSignup from '@/hooks/signup/useSignup';
 import { COMMON_CODE } from '@/types/const';
-
-import { AddCircle } from '@mui/icons-material';
-import { LockOutline, PersonOutlined } from '@mui/icons-material';
-import { Button, Chip, Divider, Paper, TextField, IconButton } from '@mui/material';
+import { getCodeName, getCodesByGroup } from '@/utils/util._common';
+import { AddCircle, LockOutline, PersonOutlined } from '@mui/icons-material';
+import { Button, Chip, Divider, IconButton, Paper, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
-import SelectableGroup from './../_common/SelectableGroup';
+import SelectableGroup from '@/components/_common/SelectableGroup';
 
 interface Props {
   email: string;

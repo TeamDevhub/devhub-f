@@ -1,10 +1,9 @@
-import { useMutation } from '@/hooks/_common/api.hook';
 import { confirmEmailVerificationCode } from '@/api/signup/signup.api';
-import { useFormState } from '../_common/common.hook';
-import { Validators } from '@/utils/util._common';
-
+import { useMutation } from '@/hooks/_common/api.hook';
 import type { ApiResponse } from '@/types/type.api';
 import type { ConfrimVerificationCodeRequest } from '@/types/type.signup';
+import { Validators } from '@/utils/util._common';
+import { useFormState } from '../_common/common.hook';
 
 export default function useConfirmVerificationCode(emailAddress: string, onVerified?: (email: string) => void) {
   const validations = { verificationCode: [Validators.required()] };
