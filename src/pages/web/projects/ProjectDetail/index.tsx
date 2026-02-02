@@ -1,5 +1,5 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
-import TopButton from '@/components/_common/TopButton';
+import TopButton from '@/components/_common/button/TopButton';
 import { DDayChip, PositionChips, ProgressRegionChip, RecruitmentChip, RecruitStatusChip, SkillChips } from '@/components/projects/ProjectChips';
 import { useUpdateProjectLike } from '@/hooks/projects/projects.hook';
 import { useSelectProjectDetail } from '@/hooks/projects/projects.json.hook';

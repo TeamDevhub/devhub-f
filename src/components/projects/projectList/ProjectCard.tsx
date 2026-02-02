@@ -1,5 +1,5 @@
 import type { ProjectDetail } from "@/types/type.projects";
-import HeartButton from "@/components/_common/HeartButton";
+import HeartButton from "@/components/_common/button/HeartButton";
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/projects/ProjectChips";
 import { getCodeName, getCodesByGroup } from "@/utils/util._common";
 import { AccessTime } from "@mui/icons-material";
