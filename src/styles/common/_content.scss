@@ -62,8 +62,8 @@
       }
     }
     .floating-button-box { position: fixed; right: 26rem; bottom: 4.6rem; gap: 1.6rem;
-      .float-button { width: 5.6rem; height: 5.6rem; border-radius: 50%; cursor: pointer;
-        &.active { background-color: var(--info-main); 
+      .float-button { width: 5.6rem; height: 5.6rem; border-radius: 50%; cursor: pointer; transition: background-color 0.3s ease;
+        &:hover, &.active { background-color: var(--info-main);
           .MuiSvgIcon-root { color: var(--primary-contrastText); }
         }
       }
