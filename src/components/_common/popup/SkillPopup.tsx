@@ -37,7 +37,9 @@ export default function SkillPopup({
     item.name.toLowerCase().includes(searchTrigger.toLowerCase())
   );
 
-  const handleOnClick = (value: string, checked: boolean) => {
+  const handleOnClick = (value: string) => {
+    const checked = _values.includes(value);
+    
     _setValues(prev => 
       checked ? [...prev, value] : prev.filter(v => v !== value)
     );

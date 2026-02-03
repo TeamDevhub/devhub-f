@@ -1,5 +1,5 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
-import TopButton from '@/components/_common/TopButton';
+import TopButton from '@/components/_common/button/TopButton';
 import { AccessTime, ContentPaste, Favorite, LocationOn, OpenInNew, People, Person, Settings, Visibility } from '@mui/icons-material'
 import { Chip, Divider, Paper, Tooltip } from '@mui/material'
 import React from 'react'

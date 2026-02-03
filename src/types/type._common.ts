@@ -15,7 +15,7 @@ export type CommonCode = typeof COMMON_CODE[keyof typeof COMMON_CODE];
 export interface CheckAbleComponentProps {
   name : string; 
   value: string;
-  onClick: (value:string, checked:boolean)=> void; 
+  onClick: (value:string)=> void; 
   checked?: boolean; 
 }
 

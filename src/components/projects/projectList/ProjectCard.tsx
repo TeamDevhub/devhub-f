@@ -1,5 +1,5 @@
 import type { ProjectDetail } from "@/types/type.projects";
-import HeartButton from "@/components/_common/HeartButton";
+import HeartButton from "@/components/_common/button/HeartButton";
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/projects/ProjectChips";
 import { getCodeName, getCodesByGroup } from "@/utils/util._common";
 import { AccessTime } from "@mui/icons-material";
@@ -13,7 +13,7 @@ export default function ProjectCard(projectData : ProjectDetail){
     category, 
     username, 
     recruitmentTypeCd, // 모집유형
-    prgressRegionCd, // 진행 지역
+    progressRegionCd, // 진행 지역
     recruitmentStartDate, // 모집기간 시작일
     recruitmentEndDate, // 모집기간 마감일
     progressStartDate, // 진행기간 시작일
@@ -33,7 +33,7 @@ export default function ProjectCard(projectData : ProjectDetail){
             recruitmentStartDate={recruitmentStartDate}
             recruitmentEndDate={recruitmentEndDate}
           />
-          <ProgressRegionChip regionCd={prgressRegionCd} />       
+          <ProgressRegionChip regionCd={progressRegionCd} />       
           <RecruitmentChip recruitTypeCd={recruitmentTypeCd} />
           <DDayChip recruitmentEndDate={recruitmentEndDate}/>
         </div>
