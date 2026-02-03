@@ -31,14 +31,7 @@ export default function useSignup(email: string) {
     positionList: [Validators.minArrayLength(1)],
   };
 
-  const { state: userInfo, setState: setUserInfo, checkError } = useFormState(initData, { validations });
-
-  const changeUserInfo = <K extends keyof SignupFormState>(key: K, value: SignupFormState[K]) => {
-    setUserInfo((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+  const { state: userInfo, setState: setUserInfo, handleChange, checkError } = useFormState(initData, { validations });
 
   const toggleArrayValue = (key: 'positionList' | 'skillList', value: string) => {
     setUserInfo((prev) => ({
@@ -80,7 +73,7 @@ export default function useSignup(email: string) {
 
   return {
     userInfo,
-    changeUserInfo,
+    handleChange,
     toggleArrayValue,
     applySignup,
     loading,
