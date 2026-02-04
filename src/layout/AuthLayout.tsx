@@ -1,6 +1,5 @@
 import commonCodeJson from "@/assets/jsonData/commonCode.json";
 import { LoadingProvider, useLoading } from "@/contexts/LoadingContext";
-import Header from '@/components/_common/layout/Header';
 import { injectLoadingHandler } from "@/utils/util.api";
 import { setCommonCodes } from '@/utils/util._common';
 import { useEffect } from 'react';
@@ -16,7 +15,6 @@ export default function AuthLayout() {
     <LoadingProvider>
       <LoadingBridge />
       <div id='devHub' className='wh-100'>
-        <Header></Header>
         <main>
           <Outlet></Outlet>
         </main>
