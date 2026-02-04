@@ -1,4 +1,4 @@
-import HeartButton from '@/components/_common/HeartButton';
+import HeartButton from '@/components/_common/button/HeartButton';
 import { BoardCategoryChip } from '@/components/boards/BoardChips';
 import type { BoardSummary } from "@/types/type.boards";
 import { Create, Visibility } from '@mui/icons-material';

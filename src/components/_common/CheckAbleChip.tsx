@@ -10,7 +10,7 @@ export default function CheckAbleChip({
 } : CheckAbleComponentProps){
 
   const handleOnClick = () => {
-    onClick(value, !checked);
+    onClick(value);
   }
 
   return (

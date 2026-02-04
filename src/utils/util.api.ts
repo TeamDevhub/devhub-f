@@ -37,6 +37,24 @@ const convertDayjsToString = (data: any): any => {
   return data;
 };
 
+const removeEmptyValues = (obj: any): any => {
+  const cleanObj = { ...obj };
+
+  Object.keys(cleanObj).forEach((key) => {
+    const value = cleanObj[key];
+
+    if (
+      value === null || 
+      value === undefined || 
+      (typeof value === 'string' && value.trim() === '')
+    ) {
+      delete cleanObj[key];
+    }
+  });
+
+  return cleanObj;
+};
+
 let activeRequests = 0;
 let loadingHandler = { show: () => {}, hide: () => {} };
 
@@ -72,7 +90,8 @@ const requestSuccessInterceptor = async (
   request: InternalAxiosRequestConfig<any>
 ) => {
   const accessToken = getLocalStorage('accessToken');
-  request.headers['Authorization'] = `Bearer ${accessToken}`;
+  if(accessToken) request.headers['Authorization'] = `Bearer ${accessToken}`;
+  
   return request;
 };
 //bearer basic digest hoba ..
@@ -163,7 +182,13 @@ export const fetcher = async <T = any, P = any>(
   } = config || {};
 
   const isGetMethod = method.toLowerCase() === "get";
+  data = removeEmptyValues(data);
   data = convertDayjsToString(data);
+
+  const baseUrl = import.meta.env.VITE_API_URL;
+  url = baseUrl + url;
+
+  console.log(url);
 
   const res = await instance.request<ApiResponse<T>>({
     url,

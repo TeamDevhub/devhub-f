@@ -1,14 +1,16 @@
+import AddableChipGroup from "@/components/_common/AddableChipGroup";
 import RegionPopup from "@/components/_common/popup/RegionPopup";
 import SkillPopup from "@/components/_common/popup/SkillPopup";
 import WebPopup from "@/components/_common/popup/WebPopup";
-import { useFormState } from "@/hooks/_common/common.hook";
-import { useDisclosure } from "@/hooks/_common/useDisclosure";
-import { COMMON_CODE } from "@/types/const";
-import type { FilterData } from "@/types/type.projects";
-import { Divider } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
-import { useEffect } from "react";
-import FilterBox, { FilterWarpper } from "./FilterBox";
+import SelectableGroup from "@/components/_common/SelectableGroup";
+import {useFormState} from "@/hooks/_common/common.hook";
+import {useDisclosure} from "@/hooks/_common/useDisclosure";
+import {COMMON_CODE} from "@/types/const";
+import type {FilterData} from "@/types/type.projects";
+import {getCodesByGroup} from "@/utils/util._common";
+import {Divider} from "@mui/material";
+import {DatePicker} from "@mui/x-date-pickers";
+import FilterWarpper from "./FilterWarpper";
 import FilterList from "./FilterList";
 
 export default function FilterPopup({
@@ -26,13 +28,10 @@ export default function FilterPopup({
   const { 
     state,
     setState,
-    handleChange, 
+    handleChange,
     createHandler, 
+    createToggle,
   } = useFormState<FilterData>(initialValue);
-
-  useEffect(() => {
-    setState(initialValue);
-  }, [initialValue]);
 
   const skillPopup = useDisclosure();
   const regionPopup = useDisclosure();
@@ -44,7 +43,7 @@ export default function FilterPopup({
   }
   const handleClose = () => {
     setState(initialValue);
-    onClose && onClose();
+    onClose?.();
   }
 
   return (
@@ -60,8 +59,9 @@ export default function FilterPopup({
         <FilterList
           filterData={state} 
           clickOpenSkillPopup={skillPopup.open} 
-          handleResetFilter={reset} 
-          createHandler={createHandler}
+          handleResetFilter={reset}
+          setFilter={handleChange}
+          createToggle={createToggle}
         />
         <Divider />
         <FilterWarpper title='모집기간' subText='모집기간'>
@@ -88,24 +88,24 @@ export default function FilterPopup({
           />
         </FilterWarpper>
         <Divider />
-        <FilterBox
-          title='진행방식'
-          subText='진행방식'
-          type='button'
-          codeName={COMMON_CODE.PROJECT_PROGRESS_TYPE}
-          values={state.projectProgressTypeList}
-          setValues={createHandler('projectProgressTypeList')}
-        />
-        <Divider />
-        <FilterBox
-          title='진행지역'
-          subText='진행지역'
-          type='addableChip'
-          codeName={COMMON_CODE.REGION_CODE}
-          values={state.regionCodeList}
-          setValues={createHandler('regionCodeList')}
-          onClickAddBtn={regionPopup.open}
-        />
+        <FilterWarpper title='진행방식' subText='진행방식'>
+          <SelectableGroup
+            items={getCodesByGroup(COMMON_CODE.PROJECT_PROGRESS_TYPE)} 
+            onToggle={createToggle('projectProgressTypeList')} 
+            type="button" 
+            values={state.projectProgressTypeList}
+          />
+        </FilterWarpper>
+        <FilterWarpper title='진행지역' subText='진행지역'>
+          <AddableChipGroup
+            items={getCodesByGroup(COMMON_CODE.REGION_CODE)} 
+            onAdd={regionPopup.open} 
+            onDelete={(value) => {
+              handleChange('regionCodeList', state.regionCodeList?.filter((item) => item !== value));
+            }}
+            values={state.regionCodeList}
+          />
+        </FilterWarpper>
       </div>
     </WebPopup>
     <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={state.skillCodeList} setValues={createHandler('skillCodeList')}/>

@@ -10,7 +10,7 @@ export default function CheckAbleButton({
 } : CheckAbleComponentProps){
 
   const handleOnClick = () => {
-    onClick(value, !checked);
+    onClick(value);
   }
 
   return (
@@ -19,7 +19,9 @@ export default function CheckAbleButton({
       variant={checked ? "contained" : "outlined"} 
       onClick={handleOnClick} 
       {...res}
-    >{name}</Button>
+    >
+      {name}
+    </Button>
   )
   
 }

@@ -5,7 +5,7 @@ import { getCodeName } from '@/utils/util._common';
 import { useSelectProjects } from '@/hooks/projects/projects.json.hook';
 import type { ProjectListResponse, ProjectSearchRequest } from '@/types/type.projects';
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from '../../../components/projects/ProjectChips';
-import HeartButton from '@/components/_common/HeartButton';
+import HeartButton from '@/components/_common/button/HeartButton';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { COMMON_CODE } from '@/types/const';
 import { convertString } from '@/utils/util.date';
