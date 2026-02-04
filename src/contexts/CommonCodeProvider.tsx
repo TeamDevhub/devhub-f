@@ -1,0 +1,55 @@
+import {type ReactNode, useMemo} from "react";
+import {getCommonCode} from "@/api/common/common.api.ts";
+import {useSelect} from "@/hooks/_common/api.hook.ts";
+import type {CommonCodeRequest, CommonCodeResponse} from "@/types/type.api.ts";
+import { CommonCodeContext } from "./CommonCodeContext";
+import type {CommonCode, CommonCodeItem} from "@/types/type._common.ts";
+
+export const CommonCodeProvider = ({ children } : { children: ReactNode}) => {
+
+    const options = {
+        apiFn: getCommonCode,
+        req: {},
+        cacheKey: `code-common`,
+    }
+    const { res, loading } = useSelect<CommonCodeResponse, CommonCodeRequest>(options);
+    const codes = res?.data;
+
+    const getCodesByGroup = useMemo(() =>
+            (groupCode: CommonCode): CommonCodeItem[] => {
+                if (!codes) return [];
+                return codes[groupCode] || [];
+            },
+        [codes]);
+
+    const getCodeName = useMemo(() =>
+            (groupCode: CommonCode, targetCode: string): string => {
+                const group = getCodesByGroup(groupCode);
+
+                const findName = (list: CommonCodeItem[]): string | undefined => {
+                    for (const item of list) {
+                        if (item.code === targetCode) return item.name;
+                        if (item.children) {
+                            const childName = findName(item.children);
+                            if (childName) return childName;
+                        }
+                    }
+                };
+
+                return findName(group) || targetCode;
+            },
+        [getCodesByGroup]);
+
+    const value = useMemo(() => ({
+        codes,
+        loading,
+        getCodesByGroup,
+        getCodeName,
+    }), [codes, loading, getCodesByGroup, getCodeName]);
+
+    return (
+        <CommonCodeContext.Provider value={value}>
+            {children}
+        </CommonCodeContext.Provider>
+    )
+}
