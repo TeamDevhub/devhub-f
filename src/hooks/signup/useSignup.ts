@@ -31,7 +31,7 @@ export default function useSignup(email: string) {
     positionList: [Validators.minArrayLength(1)],
   };
 
-  const { state: userInfo, setState: setUserInfo, handleChange, checkError } = useFormState(initData, { validations });
+  const { state: userInfo, setState: setUserInfo, handleChange, createHandler, checkError } = useFormState(initData, { validations });
 
   const toggleArrayValue = (key: 'positionList' | 'skillList', value: string) => {
     setUserInfo((prev) => ({
@@ -74,6 +74,7 @@ export default function useSignup(email: string) {
   return {
     userInfo,
     handleChange,
+    createHandler,
     toggleArrayValue,
     applySignup,
     loading,

@@ -18,7 +18,7 @@ interface Props {
 
 export default function UserInfoPage({ email }: Props) {
   const skillPopup = useDisclosure();
-  const { userInfo, handleChange, toggleArrayValue, applySignup, loading } = useSignup(email);
+  const { userInfo, handleChange, toggleArrayValue, createHandler, applySignup, loading } = useSignup(email);
 
   return (
     <div className="auth-page flex-center">
@@ -115,12 +115,7 @@ export default function UserInfoPage({ email }: Props) {
             </div>
           </FormSection>
 
-          <SkillPopup
-            isOpen={skillPopup.isOpen}
-            onClose={skillPopup.close}
-            values={userInfo.skillList}
-            setValues={(values: string[]) => handleChange('skillList', values)}
-          />
+          <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={userInfo.skillList} setValues={createHandler('skillList')} />
 
           <Divider sx={{ marginY: '0.5rem' }} />
 
