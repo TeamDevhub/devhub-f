@@ -1,9 +1,10 @@
-import { ArrowForwardIos, LockOutline, MailOutline } from '@mui/icons-material'
+import { ArrowForwardIos } from '@mui/icons-material'
 import { Button, Divider, FormControl, MenuItem, Paper, Select, type SelectChangeEvent } from '@mui/material'
 import logo from '@/assets/images/devHub-logo.png'
-import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
+import FieldBox from '@/pages/design/signup/FieldBox';
+import React, { useState } from 'react'
 
 export default function SignInPage1(){
   // email select
@@ -11,6 +12,45 @@ export default function SignInPage1(){
   const handleChange = (event: SelectChangeEvent) => {
     setEmail(event.target.value);
   };
+
+  // FieldBox Data
+  const emailVerifyItems = [
+    {
+      fieldValue: (
+        <>
+          <span className='required'>*</span>
+          <CustomTextfield placeholder='이메일' />
+          <p className='flex-center'>@</p>
+          <FormControl fullWidth variant='outlined'>
+            <Select
+              fullWidth
+              id='category'
+              value={email}
+              onChange={handleChange}
+              size='medium'
+              displayEmpty
+              renderValue={(selected) =>
+                selected === '' ? 'gmail.com' : selected
+              }
+            >
+              <MenuItem value=''>None</MenuItem>
+            </Select>
+          </FormControl>
+          <Button size='large' variant='contained' color='primary'>
+            인증
+          </Button>
+        </>
+      )
+    },
+    {
+      fieldValue: (
+        <>
+          <span className='required'>*</span>
+          <CustomTextfield placeholder='인증번호' />
+        </>
+      )
+    }
+  ];
 
   return (
     <div className='auth-page flex-center'>
@@ -34,50 +74,7 @@ export default function SignInPage1(){
           <Divider />
           {/* 2. field area */}
           {/* 2-1. 이메일 인증 */}
-          <div className="field-box flex-col">
-            <div className="field-title align-center">
-              <MailOutline sx={{ fontSize: 20, color: 'var(--primary-main)' }} />
-              <p>이메일 인증</p>
-            </div>
-            <div className="field-content flex-col">
-              <div className="content-box align-stretch">
-                <span className='required'>*</span>
-                <CustomTextfield placeholder='이메일' />
-                <p className='flex-center'>@</p>
-                <FormControl fullWidth variant='outlined'>
-                  <Select 
-                    fullWidth
-                    id='category' value={email} onChange={handleChange} size='medium' displayEmpty
-                    renderValue={(selected) => selected === '' ? 'gmail.com' : selected }
-                  >
-                    <MenuItem value=''>None</MenuItem>
-                  </Select>
-                </FormControl>
-                <Button size='large' variant='contained' color='primary'>인증</Button>
-              </div>
-              <div className="content-box align-stretch">
-                <span className='required'>*</span>
-                <CustomTextfield placeholder='인증번호' />
-              </div>
-            </div>
-          </div>
-          {/* 2-2. 비밀번호 설정 */}
-          <div className="field-box flex-col">
-            <div className="field-title align-center">
-              <LockOutline sx={{ fontSize: 20, color: 'var(--primary-main)' }} />
-              <p>비밀번호 설정</p>
-            </div>
-            <div className="field-content flex-col">
-              <div className="content-box align-stretch">
-                <span className='required'>*</span>
-                <CustomTextfield type='password' placeholder='특수문자, 숫자 포함 10자 이상' />  
-              </div>
-              <div className="content-box align-stretch">
-                <span className='required'>*</span>
-                <CustomTextfield type='password' placeholder='비밀번호 확인' />   
-              </div>
-            </div>
-          </div>
+          <FieldBox fieldLabel='이메일 인증' items={emailVerifyItems} />
           <Divider />
           {/* 3. next button */}
           <Button 
@@ -85,7 +82,7 @@ export default function SignInPage1(){
             endIcon={<ArrowForwardIos />}
             className='next-button'
           >
-            다음
+            인증 확인
           </Button>
         </Paper>
       </div>
