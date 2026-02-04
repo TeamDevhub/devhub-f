@@ -4,7 +4,7 @@ export interface CommonCodeItem {
   code: string;
   parentCode?: string;
   name: string;
-  depth?: number;
+  used?: boolean;
   children?: CommonCodeItem[];
 }
 
