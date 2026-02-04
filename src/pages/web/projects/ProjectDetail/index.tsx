@@ -1,5 +1,5 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
-import TopButton from '@/components/_common/TopButton';
+import TopButton from '@/components/_common/button/TopButton';
 import { DDayChip, PositionChips, ProgressRegionChip, RecruitmentChip, RecruitStatusChip, SkillChips } from '@/components/projects/ProjectChips';
 import { useUpdateProjectLike } from '@/hooks/projects/projects.hook';
 import { useSelectProjectDetail } from '@/hooks/projects/projects.json.hook';
@@ -51,7 +51,7 @@ const navigate = useNavigate();
                 recruitmentStartDate={res?.data?.recruitmentStartDate}
                 recruitmentEndDate={res?.data?.recruitmentEndDate}
               />
-              <ProgressRegionChip regionCd={res?.data?.prgressRegionCd} />
+              <ProgressRegionChip regionCd={res?.data?.progressRegionCd} />
               <RecruitmentChip recruitTypeCd={res?.data?.recruitmentTypeCd} />
               <DDayChip recruitmentEndDate={res?.data?.recruitmentEndDate} />
             </div>
@@ -132,10 +132,10 @@ const navigate = useNavigate();
                   <strong>지역</strong>
                 </div>
                 <p className="group-value align-center">
-                  {res?.data?.prgressRegionCd &&
+                  {res?.data?.progressRegionCd &&
                     getCodeName(
                       COMMON_CODE.REGION_CODE,
-                      res.data.prgressRegionCd
+                      res.data.progressRegionCd
                     )}
                 </p>
               </div>

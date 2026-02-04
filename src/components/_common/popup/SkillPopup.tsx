@@ -1,10 +1,10 @@
-import { COMMON_CODE } from '@/types/const';
-import { getCodesByGroup } from '@/utils/util._common';
-import { Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import CheckAbleChip from '../CheckAbleChip';
+import {COMMON_CODE} from '@/types/const';
+import {getCodesByGroup} from '@/utils/util._common';
+import {Button} from '@mui/material';
+import React, {useState} from 'react';
 import CustomTextfield from '../customMUI/CustomTextfield';
 import WebPopup from './WebPopup';
+import SelectableGroup from "@/components/_common/SelectableGroup.tsx";
 
 export interface SkillPopupProps{
   isOpen:boolean;
@@ -25,21 +25,13 @@ export default function SkillPopup({
   const [keyword, setKeyword] = useState('');
   const [searchTrigger, setSearchTrigger] = useState('');
 
-  useEffect(() => {
-    if (isOpen) {
-      _setValues(values ?? []);
-      setKeyword('');
-      setSearchTrigger('');
-    }
-  }, [isOpen, values]);
-
   const filteredSkills = allSkills.filter((item) =>
     item.name.toLowerCase().includes(searchTrigger.toLowerCase())
   );
 
-  const handleOnClick = (value: string, checked: boolean) => {
-    _setValues(prev => 
-      checked ? [...prev, value] : prev.filter(v => v !== value)
+  const handleOnClick = (value: string) => {
+    _setValues(prev =>
+        hasValue(value) ? prev.filter(v => v !== value) : [...prev, value]
     );
   };
 
@@ -68,15 +60,7 @@ export default function SkillPopup({
           <Button size='medium' variant='contained' onClick={handleClick}>검색</Button>
         </div>
         <div className='flex gap-4'>
-        {filteredSkills.map((item, index)=>(
-          <CheckAbleChip
-            checked={hasValue(item.code)}
-            name={item.name}
-            value={item.code}
-            onClick={handleOnClick}
-            key={index}
-          />
-        ))}
+          <SelectableGroup type="chip" values={_values} items={filteredSkills} onToggle={handleOnClick} />
         </div>
       </div>
     </WebPopup>

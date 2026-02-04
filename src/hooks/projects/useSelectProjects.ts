@@ -6,6 +6,7 @@ import { useSelect } from "../_common/api.hook";
 
 const initData:SearchData = {
   page:1,
+  size:10,
   order:'',
 }
 
@@ -23,6 +24,8 @@ const initFilterData:FilterData = {
   progressStartDate: null,
 }
 
+export type ListFilterData = Omit<FilterData, 'recruitmentStartDate' | 'recruitmentEndDate' | 'progressStartDate'>;
+
 export default function useSelectProjects(
   initialFilter?: Partial<FilterData>,
   initialSearch?: Partial<SearchData>,
@@ -37,6 +40,7 @@ export default function useSelectProjects(
     state: filters, 
     setState: setFilters, 
     handleChange: setFilter,
+    createToggle,
     createHandler: createFilterHandler,
     reset: resetFilters
   } = useFormState<FilterData>(baseFilter);
@@ -52,7 +56,7 @@ export default function useSelectProjects(
     req: request,
     cacheKey: `projects-${JSON.stringify(request)}`,
   }
-  const { res, loading } =   useSelect<ProjectListResponse, ProjectSearchRequest>(options);
+  const { res, loading } = useSelect<ProjectListResponse, ProjectSearchRequest>(options);
 
   const setPage = (page: number) => {
     setRequest((prev) => ({...prev, page: page}));
@@ -93,7 +97,7 @@ export default function useSelectProjects(
   }
 
   return { 
-    filters, setFilters, setFilter, createFilterHandler, resetFilters,
+    filters, setFilters, setFilter, createToggle, createFilterHandler, resetFilters,
     request, setRequest,
     keyword, setkeyword,
     setPage, setOrder,

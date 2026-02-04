@@ -1,83 +1,89 @@
-import type { ProjectSearchRequest } from "@/types/type.projects";
-import { Button, Divider } from "@mui/material";
-import FilterBox from "./FilterBox";
 import { COMMON_CODE } from "@/types/const";
+import type { FilterData } from "@/types/type.projects";
+import { Button, Divider } from "@mui/material";
+import SelectableGroup from '@/components/_common/SelectableGroup';
+import { getCodesByGroup } from "@/utils/util._common";
+import AddableChipGroup from '@/components/_common/AddableChipGroup';
+import FilterWarpper from "./FilterWarpper";
 
-type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword'>;
-type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
+export type ListFilterData = Omit<FilterData, 'recruitmentStartDate' | 'recruitmentEndDate' | 'progressStartDate'>;
 
 export default function FilterList({
   filterData,
+  createToggle,
+  setFilter,
   handleResetFilter,
-  createHandler,
   clickOpenSkillPopup
 }:{
-  filterData:FilterData;
-  createHandler: (key: keyof FilterData) => (newCodes: string[]) => void
+  filterData:ListFilterData;
+  setFilter: <K extends keyof ListFilterData>(key: K, value: ListFilterData[K]) => void;
+  createToggle: (key: keyof ListFilterData) => (v:string) => void;
   handleResetFilter: () => void;
   clickOpenSkillPopup: () => void;
 }){
+
   return (
     <>
       <Button className='reset-btn' size='small' variant='text' onClick={handleResetFilter}>초기화</Button>
-      <FilterBox
-        title='필터'
-        subText='원하는 조건으로 검색하세요'
-        type='button'
-        codeName={COMMON_CODE.PROJECT_RECRUIT_STATUS}
-        values={filterData.projectRecruitStatusList}
-        setValues={createHandler('projectRecruitStatusList')}
-      />
+      <FilterWarpper title='필터' subText='원하는 조건으로 검색하세요'>
+        <SelectableGroup 
+          items={getCodesByGroup(COMMON_CODE.PROJECT_RECRUIT_STATUS)} 
+          onToggle={createToggle('projectRecruitStatusList')} 
+          type="button" 
+          values={filterData.projectRecruitStatusList}
+        />
+      </FilterWarpper>
       <Divider />
-      <FilterBox
-        title='모집구분'
-        subText='모집구분'
-        type='button'
-        codeName={COMMON_CODE.PROJECT_RECRUIT_TYPE}
-        values={filterData.projectRecruitTypeList}
-        setValues={createHandler('projectRecruitTypeList')}
-      />
+      <FilterWarpper title='모집구분' subText='모집구분'>
+        <SelectableGroup 
+          items={getCodesByGroup(COMMON_CODE.PROJECT_RECRUIT_TYPE)} 
+          onToggle={createToggle('projectRecruitTypeList')} 
+          type="button" 
+          values={filterData.projectRecruitTypeList}
+        />
+      </FilterWarpper>
       <Divider />
-      <FilterBox
-        title='모집분야'
-        subText='모집분야'
-        type='chip'
-        codeName={COMMON_CODE.POSITION_CODE}
-        values={filterData.positionCodeList}
-        setValues={createHandler('positionCodeList')}
-      />
+      <FilterWarpper title='모집분야' subText='모집분야'>
+        <SelectableGroup 
+          items={getCodesByGroup(COMMON_CODE.POSITION_CODE)} 
+          onToggle={createToggle('positionCodeList')} 
+          type="chip" 
+          values={filterData.positionCodeList}
+        />
+      </FilterWarpper>
       <Divider />
-      <FilterBox
-        title='요구 능력치'
-        subText='요구 능력치'
-        type='button'
-        codeName={COMMON_CODE.POSITION_LEVEL_CODE}
-        values={filterData.positionLevelCodeList}
-        setValues={createHandler('positionLevelCodeList')}
-      />
+      <FilterWarpper title='요구 능력치' subText='요구 능력치'>
+        <SelectableGroup 
+          items={getCodesByGroup(COMMON_CODE.POSITION_LEVEL_CODE)} 
+          onToggle={createToggle('positionLevelCodeList')} 
+          type="button" 
+          values={filterData.positionLevelCodeList}
+        />
+      </FilterWarpper>
       <Divider />
-      <FilterBox
-        title='기술 스텍'
-        subText='기술 스텍'
-        type='addableChip'
-        codeName={COMMON_CODE.SKILL_CODE}
-        values={filterData.skillCodeList}
-        setValues={createHandler('skillCodeList')}
-        onClickAddBtn={clickOpenSkillPopup}
-      />
+      <FilterWarpper title='기술 스텍' subText='기술 스텍'>
+        <AddableChipGroup
+          items={getCodesByGroup(COMMON_CODE.SKILL_CODE)} 
+          onAdd={clickOpenSkillPopup} 
+          onDelete={(value) => {
+            setFilter('skillCodeList', filterData.skillCodeList?.filter((item) => item !== value));
+          }}
+          values={filterData.skillCodeList}
+        />
+      </FilterWarpper>
       <Divider />
-      <FilterBox
-        title='진행 기간'
-        subText='진행 기간'
-        type='button'
-        options={[
-          {code: '1', name: '1개월'},
-          {code: '3', name: '3개월'},
-          {code: '6', name: '6개월'},
-        ]}
-        values={filterData.progressPeriodList}
-        setValues={createHandler('progressPeriodList')}
-      />
+      <FilterWarpper title='진행 기간' subText='진행 기간'>
+        <SelectableGroup 
+          items={[
+            {code: '1', name: '1개월'},
+            {code: '3', name: '3개월'},
+            {code: '6', name: '6개월'},
+          ]} 
+          onToggle={createToggle('progressPeriodList')} 
+          type="button" 
+          values={filterData.progressPeriodList}
+        />
+      </FilterWarpper>
     </>
   )
 }

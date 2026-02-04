@@ -1,23 +1,19 @@
-import UserInfoPage from "@/components/signup/UserInfoPage";
-import VerificationPage from "@/components/signup/VerificationPage";
-import { useState } from "react";
+import UserInfoPage from '@/components/signup/UserInfoPage';
+import VerificationPage from '@/components/signup/VerificationPage';
+import { useState } from 'react';
 
 export default function Signup() {
-  const [step, setStep] = useState(1);
-  const [email, setEmail] = useState("");
+  const [emailAddress, setEmailAddress] = useState<string | null>(null);
 
-  const handleNextFromVerification = (verifiedEmail: string) => {
-    setEmail(verifiedEmail);
-    setStep(2);
+  const handleVerified = (verifiedEmailAddress: string) => {
+    setEmailAddress(verifiedEmailAddress);
   };
-
-  const handleBack = () => setStep(1);
 
   return (
     <div className="auth-page flex-center">
-      <div className="flex-col" style={{ gap: "0.8rem" }}>
-        {step === 1 && <VerificationPage onNext={handleNextFromVerification} />}
-        {step === 2 && <UserInfoPage email={email} onBack={handleBack} />}
+      <div className="flex-col" style={{ gap: '0.8rem' }}>
+        {!emailAddress && <VerificationPage onVerified={handleVerified} />}
+        {emailAddress && <UserInfoPage email={emailAddress} />}
       </div>
     </div>
   );

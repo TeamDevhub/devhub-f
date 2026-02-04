@@ -11,14 +11,14 @@ export interface ProjectBasic {
   recruitmentStartDate: DateType;
   recruitmentEndDate: DateType;
   progressTypeCd: string;
-  prgressRegionCd: string;
+  progressRegionCd: string;
   progressPeriod: string;
   progressStartDate: DateType;
   progressEndDate: DateType;
   viewCount?: string;
-  registerId?: string;
+  registrantGuid?: string;
   registeredDate?: string;
-  modifiderId?: string;
+  modifierGuid?: string;
   modifiedDate?: string;
 }
 
@@ -69,6 +69,7 @@ export interface ApplicationFormRequest {
 
 export interface ProjectSearchRequest {
   page:number;
+  size:number;
   order?:string;
   keyword?:string;
   skillCodeList?:string[];
@@ -83,7 +84,7 @@ export interface ProjectSearchRequest {
   recruitmentEndDate?:DateType;
   progressStartDate?:DateType;
 };
-export type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword'>;
+export type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword' | 'size'>;
 export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
 export interface UpdateProjectRequest {
