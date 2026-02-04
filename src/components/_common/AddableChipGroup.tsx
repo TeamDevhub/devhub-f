@@ -1,6 +1,7 @@
 import type { CommonCodeItem } from "@/types/type._common";
 import { AddCircle } from "@mui/icons-material";
 import { Chip, IconButton } from "@mui/material";
+import {getCodeName} from "@/utils/util._common.ts";
 
 export default function AddableChipGroup({ 
   values, 
@@ -16,7 +17,7 @@ export default function AddableChipGroup({
   return (
   <>
     {values?.map((v) => {
-      const label = items.find(item => item.code === v)?.name ?? "";
+      const label = getCodeName(items, v);
       return (
         <Chip key={v} size='small' variant='filled' label={label} color='primary' onDelete={() => onDelete(v)} />
       );

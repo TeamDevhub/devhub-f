@@ -108,7 +108,7 @@ export default function FilterPopup({
             onDelete={(value) => {
               handleChange('regionCodeList', state.regionCodeList?.filter((item) => item !== value));
             }}
-            values={state.skillCodeList}
+            values={state.regionCodeList}
           />
         </FilterWarpper>
       </div>

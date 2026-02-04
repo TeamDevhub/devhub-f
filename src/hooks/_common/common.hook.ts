@@ -72,13 +72,13 @@ export const useFormState = <T extends object>(
 
   const createToggle = useCallback(<K extends ArrayKeys<T>>(key: K) => {
     return (value: ElementOf<T[K]>) => {
-      const currentValues = (state[key] as unknown as any[]) || [];
+      const currentValues = (state[key] as unknown as never[]) || [];
 
-      if ((value as any) === '') {
+      if (value === '') {
         handleChange(key, [] as unknown as T[K]);
         return;
       }
-      const isIncluded = currentValues.includes(value);
+      const isIncluded = currentValues.includes(value as never);
       const nextValues = isIncluded
         ? currentValues.filter((item) => item !== value)
         : [...currentValues, value];

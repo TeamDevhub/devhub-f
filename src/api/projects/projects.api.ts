@@ -3,7 +3,7 @@ import fetcher from "@/utils/util.api";
 
 export const getProjects = (req: ProjectSearchRequest) =>
   fetcher<ProjectListResponse, ProjectSearchRequest>(
-    "/projects/list",
+    "/projects",
     req,
     { method: "get" }
   );
