@@ -18,7 +18,7 @@ export const CommonCodeProvider = ({ children } : { children: ReactNode}) => {
     const getCodesByGroup = useMemo(() =>
             (groupCode: CommonCode): CommonCodeItem[] => {
                 if (!codes) return [];
-                return codes[groupCode] || [];
+                return codes[groupCode].children || [];
             },
         [codes]);
 

@@ -28,5 +28,5 @@ export interface CommonCodeRequest {
   used?:boolean
 }
 
-export type CommonCodeResponse = Record<CommonCode, CommonCodeItem[]>;
+export type CommonCodeResponse = Record<CommonCode, CommonCodeItem>;
 
