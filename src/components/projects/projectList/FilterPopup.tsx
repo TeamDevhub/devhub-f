@@ -3,14 +3,13 @@ import RegionPopup from "@/components/_common/popup/RegionPopup";
 import SkillPopup from "@/components/_common/popup/SkillPopup";
 import WebPopup from "@/components/_common/popup/WebPopup";
 import SelectableGroup from "@/components/_common/SelectableGroup";
-import { useFormState } from "@/hooks/_common/common.hook";
-import { useDisclosure } from "@/hooks/_common/useDisclosure";
-import { COMMON_CODE } from "@/types/const";
-import type { FilterData } from "@/types/type.projects";
-import { getCodesByGroup } from "@/utils/util._common";
-import { Divider } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
-import { useEffect } from "react";
+import {useFormState} from "@/hooks/_common/common.hook";
+import {useDisclosure} from "@/hooks/_common/useDisclosure";
+import {COMMON_CODE} from "@/types/const";
+import type {FilterData} from "@/types/type.projects";
+import {getCodesByGroup} from "@/utils/util._common";
+import {Divider} from "@mui/material";
+import {DatePicker} from "@mui/x-date-pickers";
 import FilterWarpper from "./FilterWarpper";
 import FilterList from "./FilterList";
 
@@ -34,10 +33,6 @@ export default function FilterPopup({
     createToggle,
   } = useFormState<FilterData>(initialValue);
 
-  useEffect(() => {
-    setState(initialValue);
-  }, [initialValue]);
-
   const skillPopup = useDisclosure();
   const regionPopup = useDisclosure();
 
@@ -48,7 +43,7 @@ export default function FilterPopup({
   }
   const handleClose = () => {
     setState(initialValue);
-    onClose && onClose();
+    onClose?.();
   }
 
   return (

@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 
-export type ValidationRule<V> = (value: V, allState: any) => string | null;
+export type ValidationRule<V> = (value: V, allState: never) => string | null;
 export type ValidationRules<T> = {
   [K in keyof T]?: ValidationRule<T[K]>[];
 };
 
 type ArrayKeys<T> = {
-  [K in keyof T]: NonNullable<T[K]> extends any[] ? K : never;
+  [K in keyof T]: NonNullable<T[K]> extends never[] ? K : never;
 }[keyof T];
 
 type ElementOf<T> = NonNullable<T> extends (infer U)[] ? U : never;
@@ -26,8 +26,8 @@ export const useFormState = <T extends object>(
 
   const getFieldError = useCallback(<K extends keyof T>(key: K, value: T[K], currentState: T) => {
     if (!validations || !validations[key]) return "";
-    for (const rule of validations[key]!) {
-      const error = rule(value, currentState);
+    for (const rule of validations[key]) {
+      const error = (rule as (v: T[K], s: T) => string | undefined)(value, currentState);
       if (error) return error;
     }
     return "";
