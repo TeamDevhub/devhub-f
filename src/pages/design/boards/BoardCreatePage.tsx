@@ -1,6 +1,6 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { Button, FormControl, MenuItem, Paper, Select, type SelectChangeEvent } from '@mui/material'
-import FormBox from '@/pages/design/projects/FormBox'
+import FormBox from '@/components/design/FormField'
 import React, { useState } from 'react'
 
 export default function BoardCreatePage(){
