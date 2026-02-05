@@ -61,6 +61,12 @@
     { "code": "6003", "parentCode": "NOTIFICATION_TYPE", "name": "댓글 알림", "depth": 1 }
   ],
 
+  "APPLICATION_FORM_TYPE": [
+    { "code": "7001", "parentCode": "APPLICATION_FORM_TYPE", "name": "텍스트", "depth": 1 },
+    { "code": "7002", "parentCode": "APPLICATION_FORM_TYPE", "name": "선택박스", "depth": 1 },
+    { "code": "7003", "parentCode": "APPLICATION_FORM_TYPE", "name": "라디오버튼", "depth": 1 }
+  ],
+
   "REGION_CODE": [
     { "code": "8100", "parentCode": "REGION_CODE", "name": "서울", "depth": 1, "children": [
       { "code": "810001", "parentCode": "8100", "name": "강남구", "depth": 2 },
