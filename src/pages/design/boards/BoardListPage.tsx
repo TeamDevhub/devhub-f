@@ -1,7 +1,7 @@
 import HeartButton from '@/components/_common/button/HeartButton';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import { Create, Favorite, Visibility } from '@mui/icons-material'
-import { Box, Button, Chip, IconButton, Pagination, Paper, Tab, Tabs } from '@mui/material'
+import { Create, Visibility } from '@mui/icons-material'
+import { Box, Button, Chip, Pagination, Paper, Tab, Tabs } from '@mui/material'
 import React, { useState } from 'react'
 
 function TabPanel({ value, index, children }: {
@@ -32,24 +32,6 @@ export default function BoardListPage(){
     setValue(newValue);
   };
 
-  // BoardBox Data
-  const boardItems = [
-    {
-      boardTitle: '안녕하세요 게시판 첫 번째 글입니다. 게시판의 제목이 너무 길어지면 말 줄임표가 자동으로 적용됩니다. 그러니 마음껏 본인의 생각을 펼쳐보세요~',
-      userName: '홍길동',
-      registerDate: '2026.12.03',
-      viewCount: '100',
-      replyCount: '10'
-    },
-    {
-      boardTitle: '두 번째 글입니다. devHub에 많은 관심과 사랑 부탁드립니다.',
-      userName: '김철수',
-      registerDate: '2026.12.04',
-      viewCount: '50',
-      replyCount: '5'
-    },
-  ];
-
   return (
     <div className='main-page flex-col h-fit' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. category tabs */}
@@ -78,16 +60,20 @@ export default function BoardListPage(){
       {/* 4. board list */}
       <TabPanel value={value} index={0}>
         <div className="board-list flex-col h-100" style={{ gap: '0.8rem' }}>
-          {boardItems.map((item, index) => (
-            <BoardBox
-              key={index}
-              boardTitle={item.boardTitle}
-              userName={item.userName}
-              registerDate={item.registerDate}
-              viewCount={item.viewCount}
-              replyCount={item.replyCount}
-            />
-          ))}
+          <BoardBox 
+            boardTitle='안녕하세요 게시판 첫 번째 글입니다. 게시판의 제목이 너무 길어지면 말 줄임표가 자동으로 적용됩니다. 그러니 마음껏 본인의 생각을 펼쳐보세요~'
+            userName='홍길동'
+            registerDate='2025.02.03'
+            viewCount='100+'
+            replyCount='10'
+          />
+          <BoardBox 
+            boardTitle='게시판 두 번째 글입니다.'
+            userName='홍길동'
+            registerDate='2025.02.03'
+            viewCount='100+'
+            replyCount='10'
+          />
           <div className='list-bottom-box w-100 align-center mt-a'>
             <Pagination count={10} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
             <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }}>글쓰기</Button>
