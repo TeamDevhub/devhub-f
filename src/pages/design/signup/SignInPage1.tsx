@@ -3,7 +3,8 @@ import { Button, Divider, FormControl, MenuItem, Paper, Select, type SelectChang
 import logo from '@/assets/images/devHub-logo.png'
 import { Link } from 'react-router-dom';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import FieldBox from '@/pages/design/signup/FieldBox';
+import AuthField from '@/components/design/AuthField';
+import AuthFieldGroup from '@/components/design/AuthFieldGroup';
 import React, { useState } from 'react'
 
 export default function SignInPage1(){
@@ -12,45 +13,6 @@ export default function SignInPage1(){
   const handleChange = (event: SelectChangeEvent) => {
     setEmail(event.target.value);
   };
-
-  // FieldBox Data
-  const emailVerifyItems = [
-    {
-      fieldValue: (
-        <>
-          <span className='required'>*</span>
-          <CustomTextfield placeholder='이메일' />
-          <p className='flex-center'>@</p>
-          <FormControl fullWidth variant='outlined'>
-            <Select
-              fullWidth
-              id='category'
-              value={email}
-              onChange={handleChange}
-              size='medium'
-              displayEmpty
-              renderValue={(selected) =>
-                selected === '' ? 'gmail.com' : selected
-              }
-            >
-              <MenuItem value=''>None</MenuItem>
-            </Select>
-          </FormControl>
-          <Button size='large' variant='contained' color='primary'>
-            인증
-          </Button>
-        </>
-      )
-    },
-    {
-      fieldValue: (
-        <>
-          <span className='required'>*</span>
-          <CustomTextfield placeholder='인증번호' />
-        </>
-      )
-    }
-  ];
 
   return (
     <div className='auth-page flex-center'>
@@ -74,7 +36,35 @@ export default function SignInPage1(){
           <Divider />
           {/* 2. field area */}
           {/* 2-1. 이메일 인증 */}
-          <FieldBox fieldLabel='이메일 인증' items={emailVerifyItems} />
+          <AuthField label='이메일 인증'>
+            <AuthFieldGroup>
+              <span className='required'>*</span>
+              <CustomTextfield placeholder='이메일' />
+              <p className='flex-center'>@</p>
+              <FormControl fullWidth variant='outlined'>
+                <Select
+                  fullWidth
+                  id='category'
+                  value={email}
+                  onChange={handleChange}
+                  size='medium'
+                  displayEmpty
+                  renderValue={(selected) =>
+                    selected === '' ? 'gmail.com' : selected
+                  }
+                >
+                  <MenuItem value=''>None</MenuItem>
+                </Select>
+              </FormControl>
+              <Button size='large' variant='contained' color='primary'>
+                인증
+              </Button>
+            </AuthFieldGroup>
+            <AuthFieldGroup>
+              <span className='required'>*</span>
+              <CustomTextfield placeholder='인증번호' />
+            </AuthFieldGroup>
+          </AuthField>
           <Divider />
           {/* 3. next button */}
           <Button 
