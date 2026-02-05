@@ -1,4 +1,4 @@
-import MyInfoBox from '@/pages/design/mypage/home/MyInfoBox'
+import MyInfoBox from '@/components/design/MyInfoBox'
 import { Button, Chip, Divider, Paper } from '@mui/material'
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import { AccessTime, LocationOn, Person } from '@mui/icons-material'

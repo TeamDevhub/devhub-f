@@ -16,7 +16,7 @@ export default function AuthField({
 }: AuthFieldProps) {
   // renderIcon
   const renderIcon = (fieldLabel: fieldLabel) => {
-    const iconProps = { sx: { fontSize: 20, color: 'var(--primary-main)' } };
+    const iconProps = { sx: { fontSize: 20, color: 'primary.main' } };
 
     switch (fieldLabel) {
       case '이메일 인증':

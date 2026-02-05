@@ -1,5 +1,5 @@
 import React from 'react'
-import MyInfoBox from '@/pages/design/mypage/home/MyInfoBox'
+import MyInfoBox from '@/components/design/MyInfoBox'
 import { Button, Chip, Pagination, Paper } from '@mui/material'
 import { Create, Favorite, Visibility } from '@mui/icons-material'
 

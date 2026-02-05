@@ -2,7 +2,7 @@ import { Button, Chip, Divider, Paper } from '@mui/material'
 import { LockOutline, MailOutline, PersonOutlined } from '@mui/icons-material'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import WebPopup from '@/components/_common/popup/WebPopup'
-import MyInfoBox from '@/pages/design/mypage/home/MyInfoBox'
+import MyInfoBox from '@/components/design/MyInfoBox'
 import React, { useState } from 'react'
 
 export default function MyHomeModifyPage(){
