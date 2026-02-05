@@ -5,12 +5,13 @@ import FieldBox from './FieldBox';
 import { useDisclosure } from '@/hooks/_common/useDisclosure';
 import useSignup from '@/hooks/signup/useSignup';
 import { COMMON_CODE } from '@/types/const';
-import { getCodeName, getCodesByGroup } from '@/utils/util._common';
+import { getCodesByGroup } from '@/utils/util._common';
 import { AddCircle, LockOutline, PersonOutlined } from '@mui/icons-material';
-import { Button, Chip, Divider, IconButton, Paper, TextField } from '@mui/material';
+import { Button, Divider, IconButton, Paper, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import SelectableGroup from '@/components/_common/SelectableGroup';
 import { FormSection } from './FormSection';
+import AddableChipGroup from '../_common/AddableChipGroup';
 
 interface Props {
   email: string;
@@ -18,7 +19,7 @@ interface Props {
 
 export default function UserInfoPage({ email }: Props) {
   const skillPopup = useDisclosure();
-  const { userInfo, handleChange, toggleArrayValue, createHandler, applySignup, loading } = useSignup(email);
+  const { userInfo, handleChange, createToggle, createHandler, applySignup, loading } = useSignup(email);
 
   return (
     <div className="auth-page flex-center">
@@ -84,7 +85,7 @@ export default function UserInfoPage({ email }: Props) {
                 type="chip"
                 items={getCodesByGroup(COMMON_CODE.POSITION_CODE)}
                 values={userInfo.positionList}
-                onToggle={(v) => toggleArrayValue('positionList', v)}
+                onToggle={createToggle('positionList')}
               />
             </div>
           </FieldBox>
@@ -93,22 +94,13 @@ export default function UserInfoPage({ email }: Props) {
           <FormSection title="보유 스킬" className="field-box2" contentGap="0.5rem">
             <div className="content-box align-stretch">
               <div className="chip-box align-center flex-wrap" style={{ flex: 1, minHeight: '56px' }}>
-                {userInfo.skillList.length === 0 ? (
-                  <span className="help-text">선택된 스킬이 없습니다</span>
-                ) : (
-                  userInfo.skillList.map((item) => (
-                    <Chip
-                      key={item}
-                      size="medium"
-                      variant="filled"
-                      label={getCodeName(COMMON_CODE.SKILL_CODE, item)}
-                      color="primary"
-                      onDelete={() => toggleArrayValue('skillList', item)}
-                    />
-                  ))
-                )}
+                <AddableChipGroup
+                  values={userInfo.skillList}
+                  items={getCodesByGroup(COMMON_CODE.SKILL_CODE)}
+                  onDelete={(value) => createToggle('skillList')(value)}
+                  onAdd={() => skillPopup.toggle()}
+                />
               </div>
-
               <IconButton size="small" onClick={skillPopup.toggle}>
                 <AddCircle sx={{ fontSize: 35, color: 'primary.main' }} />
               </IconButton>
