@@ -5,16 +5,10 @@ import useLogin from '@/hooks/login/useLogin';
 import { GitHub } from '@mui/icons-material';
 import { Button, Divider, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 
 export default function Login() {
 
   const { loginInfo, changeId, changePassword, applyLogin } = useLogin();
-
-  useEffect(() => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-  }, []);
 
   return (
     <div className="auth-page flex-center">

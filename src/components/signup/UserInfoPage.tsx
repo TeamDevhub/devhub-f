@@ -106,7 +106,7 @@ export default function UserInfoPage({ email }: Props) {
             </div>
           </FormSection>
 
-          <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={userInfo.skillList} setValues={createHandler('skillList')} />
+          <SkillPopup key={skillPopup.isOpen ? 'open' : 'close'} isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={userInfo.skillList} setValues={createHandler('skillList')} />
 
           <Divider sx={{ marginY: '0.5rem' }} />
 
