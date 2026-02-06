@@ -1,4 +1,5 @@
 import type { CommonCodeMap, CommonCode, CommonCodeItem } from '@/types/type._common';
+import type {ValidationRule} from "@/hooks/_common/common.hook.ts";
 
 //공통 코드관련
 let commonCodeStore: CommonCodeMap = {};
@@ -83,7 +84,7 @@ export const removeLocalStorage = (key: string): void => {
 export const Validators = {
   // 필수값 체크
   required: (msg: string = "필수 입력 항목입니다.") => 
-    (v: any) => (v !== null && v !== undefined && v !== "" ? null : msg),
+    (v: unknown) => (v !== null && v !== undefined && v !== "" ? null : msg),
 
   // 최소 길이 체크
   minLength: (min: number, msg?: string) => 
@@ -106,6 +107,6 @@ export const Validators = {
     (v: string) => /^\d+$/.test(v) ? null : msg,
     
   // 일치 여부 체크 (비밀번호 확인용)
-  match: (targetKey: string, msg: string) => 
-    (v: any, allState: any) => v === allState[targetKey] ? null : msg,
+  match: <T>(targetKey: keyof T, msg: string): ValidationRule<unknown, T> =>
+      (v, allState) => v === allState[targetKey] ? null : msg,
 };

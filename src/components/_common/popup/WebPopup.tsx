@@ -28,7 +28,7 @@ export default function WebPopup({
   }
   const handleSubmit = () => {
     onSubmit?.();
-    closeOnSubmit && onClose?.();
+    if(closeOnSubmit) onClose?.();
   }
 
   let _size : string;
