@@ -8,7 +8,7 @@ export default function TopButton({ onClick }: { onClick: () => void }){
   const handleScrollTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     onClick();
-  }, []);
+  }, [onClick]);
 
   useEffect(() => {
     const onScroll = () => {

@@ -1,8 +1,8 @@
 // hooks/common/useSelect.ts
 import type { ApiResponse } from "@/types/type.api";
-import { useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 
-const cacheStore = new Map<string, any>();
+const cacheStore = new Map<string, unknown>();
 
 interface UseSelectOptions<TRes, TReq> {
   apiFn: (req: TReq) => Promise<ApiResponse<TRes>>;
@@ -21,13 +21,13 @@ export const useSelect = <TRes, TReq>({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
       if (cacheKey && cacheStore.has(cacheKey)) {
-        setData(cacheStore.get(cacheKey));
+        setData(cacheStore.get(cacheKey) as ApiResponse<TRes>);
         return;
       }
 
@@ -42,12 +42,12 @@ export const useSelect = <TRes, TReq>({
     } finally {
       setLoading(false);
     }
-  };
+  },[req, apiFn, cacheKey])
 
   useEffect(() => {
     if (!enabled) return;
-    fetchData();
-  }, [JSON.stringify(req), enabled]);
+    fetchData().then();
+  }, [enabled, fetchData]);
 
   return {
     res: data,
@@ -56,6 +56,7 @@ export const useSelect = <TRes, TReq>({
     refetch: fetchData,
   };
 };
+export default useSelect
 
 export const useMutation = <TReq, TRes>(
   mutationFn: (req: TReq) => Promise<ApiResponse<TRes>>,
@@ -71,8 +72,8 @@ export const useMutation = <TReq, TRes>(
       setError(null);
       const res = await mutationFn(req);
       
-      if(res.success) onSuccess && onSuccess(res);
-      else onFail && onFail(res);
+      if(res.success) onSuccess?.(res);
+      else onFail?.(res);
 
       return res;
     } catch (e) {
