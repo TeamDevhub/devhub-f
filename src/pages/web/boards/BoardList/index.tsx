@@ -3,7 +3,9 @@ import BoardCard from '@/components/boards/boardList/BoardCard';
 import useMutationBoards from '@/hooks/boards/useMutationBoards';
 import useSelecttBoards from '@/hooks/boards/useSelectBoards';
 import { Button, Pagination, Paper, Tab, Tabs } from '@mui/material';
-
+import type { CommonCodeItem } from '@/types/type._common';
+import {useState, useEffect} from 'react';
+import { getCodesByGroup } from '@/utils/util._common';
 
 export default function BoardList(){
     const {
@@ -18,12 +20,13 @@ export default function BoardList(){
         handleLike
     } = useMutationBoards();
 
-    const categoryTab = [
-        {value:"", label:'전체'},
-        {value:"4001", label:'자유게시판'},
-        {value:"4002", label:'질문게시판'},
-        {value:"4003", label:'공지사항'},
-    ]
+    const [regionCode, setRegionCode] = useState<CommonCodeItem[]>([]);
+    useEffect(() => {
+        const codeList = getCodesByGroup('BOARD_CATEGORY');
+        setRegionCode(codeList);
+        if (codeList.length > 0) setTab(codeList[0].code);
+    }, []);
+
 
     return (
         <div className='main-page flex-col h-fit'>
@@ -36,8 +39,8 @@ export default function BoardList(){
             indicatorColor="primary"
             aria-label="category-tabs"
         >
-        {categoryTab.map((item, index)=>(
-            <Tab key={index} value={item.value} label={item.label}/>
+        {regionCode.map((item, index)=>(
+            <Tab key={index} value={item.code} label={item.name}/>
         ))}
         </Tabs>
         {/* 2. search field */}

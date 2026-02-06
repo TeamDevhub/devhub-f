@@ -1,28 +1,31 @@
+import type { DateType } from '@/types/type.api';
+
 export interface BoardBasic {
     boardGuid: string;
     userGuid: string;
-    username: string;
+    userName: string;
     categoryCd: string;
     title: string;
     viewCount?:string;
     registrantGuid?: string;
-    registeredDate?: string;
+    registeredDate?: DateType;
     modifierGuid?: string;
-    modifiedDate?: string;
+    modifiedDate?: DateType;
 }
 
 export interface comment {
     commentGuid: string;
     content: string;
     userGuid: string;
-    username: string;
+    userName: string;
     registrantGuid?: string;
     registeredDate?: string;
     modifierGuid?: string;
     modifiedDate?: string;
 }
 
-export interface BoardSummary extends BoardBasic {
+export interface BoardSummary {
+    boardBasicResponseDto:BoardBasic;
     likeCount?:string;
     commentCount?:string;
 }
