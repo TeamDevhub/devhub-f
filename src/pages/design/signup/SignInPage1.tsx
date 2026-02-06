@@ -3,8 +3,8 @@ import { Button, Divider, FormControl, MenuItem, Paper, Select, type SelectChang
 import logo from '@/assets/images/devHub-logo.png'
 import { Link } from 'react-router-dom';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import AuthField from '@/components/design/AuthField';
-import AuthFieldGroup from '@/components/design/AuthFieldGroup';
+import FormField2 from '@/components/design/FormField2';
+import FieldGroup2 from '@/components/design/FieldGroup2';
 import React, { useState } from 'react'
 
 export default function SignInPage1(){
@@ -36,8 +36,8 @@ export default function SignInPage1(){
           <Divider />
           {/* 2. field area */}
           {/* 2-1. 이메일 인증 */}
-          <AuthField label='이메일 인증'>
-            <AuthFieldGroup>
+          <FormField2 label='이메일 인증'>
+            <FieldGroup2>
               <span className='required'>*</span>
               <CustomTextfield placeholder='이메일' />
               <p className='flex-center'>@</p>
@@ -59,12 +59,12 @@ export default function SignInPage1(){
               <Button size='large' variant='contained' color='primary'>
                 인증
               </Button>
-            </AuthFieldGroup>
-            <AuthFieldGroup>
+            </FieldGroup2>
+            <FieldGroup2>
               <span className='required'>*</span>
               <CustomTextfield placeholder='인증번호' />
-            </AuthFieldGroup>
-          </AuthField>
+            </FieldGroup2>
+          </FormField2>
           <Divider />
           {/* 3. next button */}
           <Button 

@@ -69,7 +69,7 @@
     p { font-size: 2rem; font-weight: 600; line-height: 100%; color: rgba(0, 0, 0, 0.87); }
   }
   .field-content { gap: 0.8rem;
-    .content-box { gap: 0.8rem;
+    .content-box { gap: 0.8rem; font-size: 1.4rem; line-height: 120%; letter-spacing: 0.15px; color: var(--text-secondary);
       > * { flex: 1; }
       .required, p, .MuiButton-root { flex: 0 0 auto; }
       p { font-size: 1.6rem; line-height: 2.4rem; letter-spacing: 0.15px; color: #000; }

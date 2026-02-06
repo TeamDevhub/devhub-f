@@ -5,22 +5,18 @@ import { AccessTime, LocationOn, Person } from '@mui/icons-material'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Scrollbar } from 'swiper/modules';
 import 'swiper/swiper.css';
-import React, { useState } from 'react'
 import WebPopup from '@/components/_common/popup/WebPopup'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
+import React, { useState } from 'react'
 
 export default function MyProjectApplicantPage(){
-  // 상세보기 팝업
-  const [openDetailPopup, setOpenDetailPopup] = useState(false);
-  const clickOpenDetailPopup = () => {setOpenDetailPopup(true);}
-
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. left area */}
       <MyInfoBox selectedKey='projects' />
       {/* 2. right area */}
       <Paper className='mypage-box flex-col flex-grow' elevation={4}>
-        {/* 2-1. project info */}
+        {/* 2-1. project info(header) */}
         <div className="project-box2 w-100 justify-between" style={{ padding: 0, border: 'none', cursor: 'default' }}>
           <div className="left-area flex-col">
             <div className="chip-box align-center">
@@ -68,812 +64,322 @@ export default function MyProjectApplicantPage(){
         </div>
          <Divider />        
         {/* 2-2. project applicants */}
-        <div className="applicant-box flex-col">
-          {/* 2-2-1. 포지션 및 인원 현황 */}
-          <div className="top align-center justify-between">
-            <div className="left-area align-center">
-              <strong>기획자</strong>
-              <Chip size='small' variant='filled' color='default' label='주니어' />
-            </div>
-            <div className="right-area align-center">
-              <div className="count-text align-center">
-                <strong className='title'>모집</strong> 
-                <p className='count'><em>0</em> / 1명</p>
-              </div>
-              <Divider orientation='vertical' flexItem />
-              <div className="count-text align-center">
-                <strong className='title'>지원자</strong> 
-                <p className='count'><em>25</em>명</p>
-              </div>
-            </div>
-          </div>
-          {/* 2-2-2. 신청자 리스트(슬라이드) */}
-          <div className="bottom">
-            <Swiper
-              observer
-              observeParents
-              spaceBetween={12}
-              centeredSlides={false}
-              slidesPerView={4}
-              navigation={{
-                nextEl: '.next1',
-                prevEl: '.prev1',
-              }}
-              className='applicant-swiper'
-              scrollbar={{ draggable: true }}
-              modules={[Navigation, Scrollbar]}
-            >
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary' onClick={clickOpenDetailPopup}>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary' onClick={clickOpenDetailPopup}>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary' onClick={clickOpenDetailPopup}>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-            </Swiper>
-            <div className='swiper-button-prev prev1'></div>
-            <div className='swiper-button-next next1'></div>
-          </div>
-        </div>
-        <div className="applicant-box flex-col">
-          {/* 2-2-1. 포지션 및 인원 현황 */}
-          <div className="top align-center justify-between">
-            <div className="left-area align-center">
-              <strong>퍼블리셔</strong>
-              <Chip size='small' variant='filled' color='default' label='주니어' />
-            </div>
-            <div className="right-area align-center">
-              <div className="count-text align-center">
-                <strong className='title'>모집</strong> 
-                <p className='count'><em>0</em> / 1명</p>
-              </div>
-              <Divider orientation='vertical' flexItem />
-              <div className="count-text align-center">
-                <strong className='title'>지원자</strong> 
-                <p className='count'><em>25</em>명</p>
-              </div>
-            </div>
-          </div>
-          {/* 2-2-2. 신청자 리스트(슬라이드) */}
-          <div className="bottom">
-            <Swiper
-              observer
-              observeParents
-              spaceBetween={12}
-              centeredSlides={false}
-              slidesPerView={4}
-              navigation={{
-                nextEl: '.next2',
-                prevEl: '.prev2',
-              }}
-              className='applicant-swiper'
-              scrollbar={{ draggable: true }}
-              modules={[Navigation, Scrollbar]}
-            >
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-            </Swiper>
-            <div className='swiper-button-prev prev2'></div>
-            <div className='swiper-button-next next2'></div>
-          </div>
-        </div>
-        <div className="applicant-box flex-col">
-          {/* 2-2-1. 포지션 및 인원 현황 */}
-          <div className="top align-center justify-between">
-            <div className="left-area align-center">
-              <strong>개발자</strong>
-              <Chip size='small' variant='filled' color='default' label='주니어' />
-            </div>
-            <div className="right-area align-center">
-              <div className="count-text align-center">
-                <strong className='title'>모집</strong> 
-                <p className='count'><em>0</em> / 1명</p>
-              </div>
-              <Divider orientation='vertical' flexItem />
-              <div className="count-text align-center">
-                <strong className='title'>지원자</strong> 
-                <p className='count'><em>25</em>명</p>
-              </div>
-            </div>
-          </div>
-          {/* 2-2-2. 신청자 리스트(슬라이드) */}
-          <div className="bottom">
-            <Swiper
-              observer
-              observeParents
-              spaceBetween={12}
-              centeredSlides={false}
-              slidesPerView={4}
-              navigation={{
-                nextEl: '.next3',
-                prevEl: '.prev3',
-              }}
-              className='applicant-swiper'
-              scrollbar={{ draggable: true }}
-              modules={[Navigation, Scrollbar]}
-            >
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-                  <div className="top">
-                    <p className="application-date">지원일자 <em>2025.05.01</em></p>
-                  </div>
-                  <div className="middle flex-col">
-                    <div className="user-info-box flex-col">
-                      <div className="top-area align-center">
-                        <div className="left-area">
-                          <CustomAvatar 
-                            size={32}
-                            sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                          />
-                        </div>
-                        <div className="right-area">
-                          <p className='user-nickname'>닉네임</p>
-                          <p className='user-email'>email@gmail.com</p>
-                        </div>
-                      </div>
-                      <div className="bottom-area align-center flex-wrap">
-                        <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                        <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                        <Chip size='small' variant='outlined' color='secondary' label='JS' />
-                      </div>
-                    </div>
-                    <div className="manner-box flex-col">
-                      <div className="manner-text justify-between">
-                        <p className='text'>매너온도</p>
-                        <p className='manner-temperature'>36.5°C</p>
-                      </div>
-                      <div className="manner-figure">
-                        <span className='current-figure h-100'></span>
-                      </div>
-                    </div>
-                    <Button fullWidth size='small' color='primary'>상세보기</Button>
-                  </div>
-                  <div className="bottom">
-                    <div className="button-box flex gap-4">
-                      <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-                      <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
-                    </div>
-                  </div>
-                </Paper>
-              </SwiperSlide>
-            </Swiper>
-            <div className='swiper-button-prev prev3'></div>
-            <div className='swiper-button-next next3'></div>
-          </div>
-        </div>
+        <ApplicantList 
+          position='기획자'
+          currentRecruitNumber='1'
+          totalRecruitNumber='10'
+          applicantNumber='5' 
+        >
+          <Swiper
+            observer
+            observeParents
+            spaceBetween={12}
+            centeredSlides={false}
+            slidesPerView={4}
+            navigation={{
+              nextEl: '.next1',
+              prevEl: '.prev1',
+            }}
+            className='applicant-swiper'
+            scrollbar={{ draggable: true }}
+            modules={[Navigation, Scrollbar]}
+          >
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='홍길동'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='김수빈'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='두쫀쿠'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='김파핑'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='데브헙'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+          </Swiper>
+          <div className='swiper-button-prev prev1'></div>
+          <div className='swiper-button-next next1'></div>
+        </ApplicantList>
+        <ApplicantList 
+          position='디자이너'
+          currentRecruitNumber='1'
+          totalRecruitNumber='10'
+          applicantNumber='5' 
+        >
+          <Swiper
+            observer
+            observeParents
+            spaceBetween={12}
+            centeredSlides={false}
+            slidesPerView={4}
+            navigation={{
+              nextEl: '.next2',
+              prevEl: '.prev2',
+            }}
+            className='applicant-swiper'
+            scrollbar={{ draggable: true }}
+            modules={[Navigation, Scrollbar]}
+          >
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='홍길동'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='김수빈'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='두쫀쿠'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='김파핑'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='데브헙'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+          </Swiper>
+          <div className='swiper-button-prev prev2'></div>
+          <div className='swiper-button-next next2'></div>
+        </ApplicantList>
+        <ApplicantList 
+          position='퍼블리셔'
+          currentRecruitNumber='1'
+          totalRecruitNumber='10'
+          applicantNumber='5' 
+        >
+          <Swiper
+            observer
+            observeParents
+            spaceBetween={12}
+            centeredSlides={false}
+            slidesPerView={4}
+            navigation={{
+              nextEl: '.next3',
+              prevEl: '.prev3',
+            }}
+            className='applicant-swiper'
+            scrollbar={{ draggable: true }}
+            modules={[Navigation, Scrollbar]}
+          >
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='홍길동'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='김수빈'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='두쫀쿠'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='김파핑'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ApplicantCard 
+                applicationDate='2025.12.03'
+                userName='데브헙'
+                userEmail='email@gmail.com'
+                mannerTemperature='36.5'
+              />
+            </SwiperSlide>
+          </Swiper>
+          <div className='swiper-button-prev prev3'></div>
+          <div className='swiper-button-next next3'></div>
+        </ApplicantList>
       </Paper>
+    </div>
+  )
+}
+
+/* used components */
+// 1. ApplicantList
+type ApplicantListProps = {
+  position?: string;
+  currentRecruitNumber?: string;
+  totalRecruitNumber?: string;
+  applicantNumber?: string;
+  children?: React.ReactNode;
+}
+
+function ApplicantList ({
+  position,
+  currentRecruitNumber,
+  totalRecruitNumber,
+  applicantNumber,
+  children
+}: ApplicantListProps){
+  return (
+    <div className="applicant-box flex-col">
+      {/* top */}
+      <div className="top align-center justify-between">
+        <div className="left-area align-center">
+          <strong>{position}</strong>
+          <Chip size='small' variant='filled' color='default' label='주니어' />
+        </div>
+        <div className="right-area align-center">
+          <div className="count-text align-center">
+            <strong className='title'>모집</strong> 
+            <p className='count'><em>{currentRecruitNumber}</em> / {totalRecruitNumber}명</p>
+          </div>
+          <Divider orientation='vertical' flexItem />
+          <div className="count-text align-center">
+            <strong className='title'>지원자</strong> 
+            <p className='count'><em>{applicantNumber}</em>명</p>
+          </div>
+        </div>
+      </div>
+      {/* bottom */}
+      <div className="bottom">
+        {children}
+      </div>
+    </div>
+  )
+}
+
+// 2. ApplicantCard
+type ApplicantCardProps = {
+  applicationDate?: string;
+  userName?: string;
+  userEmail?: string;
+  mannerTemperature?: string;
+}
+
+function ApplicantCard ({
+  applicationDate,
+  userName,
+  userEmail,
+  mannerTemperature,
+}: ApplicantCardProps){
+  // 상세보기 팝업
+  const [openDetailPopup, setOpenDetailPopup] = useState(false);
+  const clickOpenDetailPopup = () => {setOpenDetailPopup(true);}
+
+  return (
+    <>
+        <Paper className='applicant-swiper-slide flex-col' elevation={4}>
+          <div className="top">
+            <p className="application-date">지원일자 <em>{applicationDate}</em></p>
+          </div>
+          <div className="middle flex-col">
+            <div className="user-info-box flex-col">
+              <div className="top-area align-center">
+                <div className="left-area">
+                  <CustomAvatar 
+                    size={32}
+                    sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
+                    avatarIcon={<Person sx={{ fontSize: 24 }} />} 
+                  />
+                </div>
+                <div className="right-area">
+                  <p className='user-nickname'>{userName}</p>
+                  <p className='user-email'>{userEmail}</p>
+                </div>
+              </div>
+              <div className="bottom-area align-center flex-wrap">
+                <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
+                <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
+                <Chip size='small' variant='outlined' color='secondary' label='JS' />
+              </div>
+            </div>
+            <div className="manner-box flex-col">
+              <div className="manner-text justify-between">
+                <p className='text'>매너온도</p>
+                <p className='manner-temperature'>{mannerTemperature}°C</p>
+              </div>
+              <div className="manner-figure">
+                <span className='current-figure h-100'></span>
+              </div>
+            </div>
+            <Button fullWidth size='small' color='primary' onClick={clickOpenDetailPopup}>상세보기</Button>
+          </div>
+          <div className="bottom">
+            <div className="button-box flex gap-4">
+              <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
+              <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
+            </div>
+          </div>
+        </Paper>
+
       {/* 3. popup */}
       <WebPopup
         size='large'
         isOpen={openDetailPopup}
-        setOpen={setOpenDetailPopup}
+        onClose={()=>setOpenDetailPopup(false)}
         onSubmit={()=>{}}
         title='지원자 상세'
         submitText='확인'
       >
-        <div className="mypage-popup flex-col" style={{ gap: '1.6rem' }}>
+        <div className="mypage-popup flex-col gap-16">
           {/* 1. 기본 정보 */}
           <div className="form-wrap flex-col">
             <div className="form-box w-100 flex-col">   
@@ -992,7 +498,7 @@ export default function MyProjectApplicantPage(){
           </div>
         </div>
       </WebPopup>
-    </div>
+    </>
   )
 }
 

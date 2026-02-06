@@ -55,7 +55,7 @@ export default function MyInfoBox({
     <WebPopup
       size='medium'
       isOpen={openProfilePopup}
-      setOpen={setOpenProfilePopup}
+      onClose={() => setOpenProfilePopup(false)}
       onSubmit={()=>{}}
       title='사용자 이미지 변경'
       submitText='저장'
