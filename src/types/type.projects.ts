@@ -7,6 +7,8 @@ export interface ProjectBasic {
   category: string;
   title: string;
   content: string;
+  attachmentFileGuid?: string;
+  imageFileGuid?: string;
   recruitmentTypeCd: string;
   recruitmentStartDate: DateType;
   recruitmentEndDate: DateType;
@@ -47,9 +49,9 @@ export interface ApplicationFormBasic {
   typeCd: string;
   title: string;
   helpText?: string;
-  vertYn: string;
-  customYn: string;
-  useY: string;
+  vertYn?: string;
+  customYn?: string;
+  useYn?: string;
   registerId?: string;
   registeredDate?: DateType;
   modifiderId?: string;
@@ -57,7 +59,7 @@ export interface ApplicationFormBasic {
 }
 
 export interface ApplicationFormDetail extends ApplicationFormBasic {
-  itemList: string[];
+  itemList?: string[];
 }
 
 export interface ApplicationFormRequest {

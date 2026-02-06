@@ -2,7 +2,7 @@ import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import CustomRadioGroup from '@/components/_common/customMUI/CustomRadioGroup';
 import RegionPopup from '@/components/_common/popup/RegionPopup';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
-import WebPopup from '@/components/_common/popup/WebPopup';
+import AdditionalFormPopup from '@/components/projects/projectCreate/AdditionalFormPopup'
 import ApplicationFormGroup from '@/components/projects/projectCreate/ApplicationFormGroup';
 import PositionGroup from '@/components/projects/projectCreate/PositionGroup';
 import DragAndDropFormProps from '@/components/_common/DragAndDropForm'
@@ -11,9 +11,9 @@ import { useDisclosure } from '@/hooks/_common/useDisclosure';
 import { COMMON_CODE } from '@/types/const';
 import { type SelectComponentProps } from '@/types/type._common'
 import { type DateType } from '@/types/type.api';
-import type { Position, ProjectCreate } from '@/types/type.projects';
+import type { Position, ProjectCreate, ApplicationFormDetail } from '@/types/type.projects';
 import { getCodeName, getSelectOptions } from "@/utils/util._common";
-import { AddCircle, Search } from '@mui/icons-material';
+import { AddCircle, Search, Remove } from '@mui/icons-material';
 import { Button, Chip, Divider, FormControl, FormLabel, IconButton, Paper } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useEffect, useState } from 'react';
@@ -130,7 +130,7 @@ export default function ProjectCreate(){
               <div className="field-box flex-col">
                 <p className="field-title">진행지역</p>
                 <div className="align-stretch">
-                  <CustomTextfield value={getCodeName(COMMON_CODE.REGION_CODE, values.prgressRegionCd)} placeholder='지역 명을 입력해 주세요.' readonly/>    
+                  <CustomTextfield value={getCodeName(COMMON_CODE.REGION_CODE, values.progressRegionCd)} placeholder='지역 명을 입력해 주세요.' readonly/>    
                   <Button 
                     size='large' 
                     variant='contained' 
@@ -229,6 +229,14 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area">
               <div className="field-box">
+                {values.additionalFormList?.map((item, index1) => 
+                  <div key={index1} className="field-box flex-col mt-5">
+                      <div className="align-center">
+                        <CustomTextfield value={item.title} disabled/>
+                        <IconButton size='small' onClick={()=>onHandleEvent("additionalFormList", values.additionalFormList.filter((_, index2:number)=>index1!==index2))}><Remove sx={{ fontSize: 24, color: 'text.disabled' }} /></IconButton>
+                      </div>
+                  </div>
+                )}
                 <IconButton size='small' onClick={additionalPopup.toggle}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
               </div>
             </div>
@@ -243,8 +251,8 @@ export default function ProjectCreate(){
       </Paper>
 
       <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={values.skillList?values.skillList:[]} setValues={(values: string[])=>onHandleEvent("skillList",values)}/>
-      <RegionPopup isOpen={regionPopup.isOpen} onClose={regionPopup.close} values={values.prgressRegionCd?[values.prgressRegionCd]:['']} setValues={(values: string[])=>onHandleEvent("prgressRegionCd",values.toString())}/>
-      <WebPopup isOpen={additionalPopup.isOpen} onClose={additionalPopup.close} title='추가 양식'  children={<></>}/>
+      <RegionPopup isOpen={regionPopup.isOpen} onClose={regionPopup.close} values={values.progressRegionCd?[values.progressRegionCd]:['']} setValues={(values: string[])=>onHandleEvent("progressRegionCd",values.toString())}/>
+      <AdditionalFormPopup isOpen={additionalPopup.isOpen} onClose={additionalPopup.close} onSubmit={(newForm: ApplicationFormDetail)=>onHandleEvent("additionalFormList", values.additionalFormList.concat(newForm))}/>
       
     </div>
   )

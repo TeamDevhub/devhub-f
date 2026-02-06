@@ -13,7 +13,7 @@ export default function useCreateProject() {
     recruitmentStartDate: dayjs(),
     recruitmentEndDate: dayjs(),
     progressTypeCd: '3101',
-    prgressRegionCd: '',
+    progressRegionCd: '',
     progressPeriod: '',
     progressStartDate: dayjs(),
     progressEndDate: dayjs(),
@@ -30,7 +30,8 @@ export default function useCreateProject() {
     };
 
     const { state, setState, handleChange, ...rest } = useFormState(initData);
-    const { mutate, loading, error } =   useMutation<FormData, void>(createProject);
+    const { mutate:projectMutate, loading, error } =   useMutation<ProjectCreate, void>(createProject);
+    // const { fileMutate, loading, error } =   useMutation<File, void>(uploadFile);
 
     const onHandleDeleteSkillChip = (skillCode: string) => {
         if(skillCode){
@@ -40,19 +41,27 @@ export default function useCreateProject() {
     }
 
     const onSubmit = () => {
-        const formData = new FormData();
+        // const formData = new FormData();
         const {attachment, image, ...jsonData} = state
+        let attachmentGuid, imageGuid: string;
+        // attachmentGuid = fileMutate(attachment);
+        // imageGuid = fileMutate(image);
+        attachmentGuid = "FILE_TEST_GUID_1";
+        imageGuid = "FILE_TEST_GUID_2";
+        jsonData["attachmentFileGuid"] = attachmentGuid;
+        jsonData["imageFileGuid"] = imageGuid;
+        projectMutate(jsonData);
 
-        formData.append(
-            "request",
-            new Blob([JSON.stringify(jsonData)], {type: "application/json"})
-        );
-        if(attachment) {
-                formData.append("attachment", attachment);
-        }
-        if(image) {
-                formData.append("image", image);
-        }
+        // formData.append(
+        //     "request",
+        //     new Blob([JSON.stringify(jsonData)], {type: "application/json"})
+        // );
+        // if(attachment) {
+        //         formData.append("attachment", attachment);
+        // }
+        // if(image) {
+        //         formData.append("image", image);
+        // }
 
         mutate(formData);
     }
