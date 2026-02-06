@@ -5,9 +5,15 @@ import useLogin from '@/hooks/login/useLogin';
 import { GitHub } from '@mui/icons-material';
 import { Button, Divider, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export default function Login() {
   const { loginInfo, changeId, changePassword, applyLogin } = useLogin();
+
+  useEffect(() => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  }, []);
 
   return (
     <div className="auth-page flex-center">
@@ -20,7 +26,13 @@ export default function Login() {
             </Link>
           </div>
           <div className="input-box flex-col">
-            <CustomTextfield name="email" placeholder="아이디" value={loginInfo.email} onChange={(e) => changeId(e.target.value)} autoComplete="username" />
+            <CustomTextfield
+              name="email"
+              placeholder="아이디"
+              value={loginInfo.email}
+              onChange={(e) => changeId(e.target.value)}
+              autoComplete="username"
+            />
             <CustomTextfield
               name="password"
               type="password"

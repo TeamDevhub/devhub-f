@@ -5,6 +5,7 @@ import useConfirmVerificationCode from '@/hooks/signup/useConfirmVerificationCod
 import { ArrowForwardIos, MailOutline } from '@mui/icons-material';
 import { Button, Divider, FormControl, MenuItem, Paper, Select } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 interface Props {
   onVerified: (email: string) => void;
@@ -18,6 +19,11 @@ export default function VerificationPage({ onVerified }: Props) {
     `${emailAddress.emailId}@${emailAddress.emailHost}`,
     onVerified,
   );
+
+  useEffect(() => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  }, []);
 
   return (
     <div className="auth-page flex-center">

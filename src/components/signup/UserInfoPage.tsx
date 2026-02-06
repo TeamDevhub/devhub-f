@@ -6,8 +6,8 @@ import { useDisclosure } from '@/hooks/_common/useDisclosure';
 import useSignup from '@/hooks/signup/useSignup';
 import { COMMON_CODE } from '@/types/const';
 import { getCodesByGroup } from '@/utils/util._common';
-import { AddCircle, LockOutline, PersonOutlined } from '@mui/icons-material';
-import { Button, Divider, IconButton, Paper, TextField } from '@mui/material';
+import { LockOutline, PersonOutlined } from '@mui/icons-material';
+import { Button, Divider, Paper, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import SelectableGroup from '@/components/_common/SelectableGroup';
 import { FormSection } from './FormSection';
@@ -101,9 +101,6 @@ export default function UserInfoPage({ email }: Props) {
                   onAdd={() => skillPopup.toggle()}
                 />
               </div>
-              <IconButton size="small" onClick={skillPopup.toggle}>
-                <AddCircle sx={{ fontSize: 35, color: 'primary.main' }} />
-              </IconButton>
             </div>
           </FormSection>
 
