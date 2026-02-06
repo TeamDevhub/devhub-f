@@ -24,8 +24,6 @@ const initFilterData:FilterData = {
   progressStartDate: null,
 }
 
-export type ListFilterData = Omit<FilterData, 'recruitmentStartDate' | 'recruitmentEndDate' | 'progressStartDate'>;
-
 export default function useSelectProjects(
   initialFilter?: Partial<FilterData>,
   initialSearch?: Partial<SearchData>,
@@ -44,7 +42,7 @@ export default function useSelectProjects(
     createHandler: createFilterHandler,
     reset: resetFilters
   } = useFormState<FilterData>(baseFilter);
-  const [keyword, setkeyword] = useState<string>(baseKeyword);
+  const [keyword, setKeyword] = useState<string>(baseKeyword);
   const [request, setRequest] = useState<ProjectSearchRequest>({
     ...baseFilter,
     ...baseSearch,
@@ -68,7 +66,7 @@ export default function useSelectProjects(
 
   const resetAll = () => {
     resetFilters();
-    setkeyword(baseKeyword);
+    setKeyword(baseKeyword);
     setRequest({
       ...baseFilter,
       ...baseSearch,
@@ -93,13 +91,13 @@ export default function useSelectProjects(
       ...filterData,
       page: 1
     }));
-    filterData && setFilters(filterData);
+    if(filterData) setFilters(filterData);
   }
 
   return { 
     filters, setFilters, setFilter, createToggle, createFilterHandler, resetFilters,
     request, setRequest,
-    keyword, setkeyword,
+    keyword, setKeyword,
     setPage, setOrder,
     res, loading, 
     applySearch, applyFilter, resetAll 

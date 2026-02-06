@@ -42,7 +42,7 @@ export default function RegionPopup({
     return regionCode.find(item => item.code === tab)?.children ?? [];
   }, [regionCode, tab]);
 
-  const handleChangeTab = (e: React.SyntheticEvent, newValue: string) => {
+  const handleChangeTab = (_: React.SyntheticEvent, newValue: string) => {
     setTab(newValue);
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
   };

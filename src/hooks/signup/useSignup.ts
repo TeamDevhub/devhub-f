@@ -31,21 +31,7 @@ export default function useSignup(email: string) {
     positionList: [Validators.minArrayLength(1)],
   };
 
-  const { state: userInfo, setState: setUserInfo, checkError } = useFormState(initData, { validations });
-
-  const changeUserInfo = <K extends keyof SignupFormState>(key: K, value: SignupFormState[K]) => {
-    setUserInfo((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  const toggleArrayValue = (key: 'positionList' | 'skillList', value: string) => {
-    setUserInfo((prev) => ({
-      ...prev,
-      [key]: prev[key].includes(value) ? prev[key].filter((v) => v !== value) : [...prev[key], value],
-    }));
-  };
+  const { state: userInfo, handleChange, createHandler, createToggle, checkError } = useFormState(initData, { validations });
 
   const handleSuccessSignup = (res: ApiResponse<void>) => {
     alert(res.code);
@@ -80,8 +66,9 @@ export default function useSignup(email: string) {
 
   return {
     userInfo,
-    changeUserInfo,
-    toggleArrayValue,
+    handleChange,
+    createHandler,
+    createToggle,
     applySignup,
     loading,
   };
