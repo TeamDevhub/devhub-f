@@ -1,10 +1,10 @@
 import { People } from '@mui/icons-material'
 import { Box, Divider, Paper, Tab, Tabs } from '@mui/material'
-import { PieChart } from '@mui/x-charts';
+import { LineChart, PieChart, type MarkElementProps } from '@mui/x-charts';
 import { BarChart } from '@mui/x-charts/BarChart';
 import React, { useState } from 'react'
 
-// tabs
+/* tabs */
 function TabPanel({ value, index, children, className }: {
   value: number
   index: number
@@ -26,7 +26,7 @@ function TabPanel({ value, index, children, className }: {
 }
 
 export default function SkillTrendsPage(){
-  // tabs
+  /* tabs */
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -46,7 +46,7 @@ export default function SkillTrendsPage(){
     { tool: 'Premiere', value: 11 },
     { tool: 'Final Cut', value: 10 },
   ]
-
+  // 2. 포지션 인기 스킬
   const dataset2 = [
     { id: 0, value: 10, label: 'AfterEffect', color: '#7086FD' },
     { id: 1, value: 10, label: 'Illustrator', color: '#6FD195' },
@@ -55,6 +55,21 @@ export default function SkillTrendsPage(){
     { id: 4, value: 20, label: 'Sketch', color: '#988AFC' },
     { id: 5, value: 30, label: 'Figma', color: '#1F94FF' },
   ]
+  // 3. 월별 프로젝트 추이
+  const aData = [400, 300, 200, 278, 189, 239, 349, 200, 500, 700];
+  const bData = [240, 139, 980, 390, 480, 380, 430, 150, 300, 500];
+  const cData = [120, 200, 500, 150, 300, 150, 150, 200, 400, 150];
+  const xLabels = ['Figma', 'Sketch', 'XD', 'Photoshop', 'illustrator', 'AfterEffect', 'InDesign', 'Maya', 'Premiere', 'Final Cut'];
+  // 4. 라인 차트 커스텀마크
+  function CustomMark(props: MarkElementProps) {
+    const { x, y, color } = props;
+    return (
+      <g>
+        <circle cx={x} cy={y} r={8} fill={color} opacity={0.2} />
+        <circle cx={x} cy={y} r={4} fill={color || 'currentColor'} stroke='#fff' strokeWidth={1} />
+      </g>
+    );
+  }
 
   return (
     <div className='main-page skilltrends-page flex-col'>
@@ -94,7 +109,7 @@ export default function SkillTrendsPage(){
         </Paper>
       </div>
       {/* 2. 인기 포지션 */}
-      <div className="position-popular-skill-wra[ㄱ두p align-stretch">
+      <div className="position-popular-skill-wrap align-stretch">
         <Paper className='position-box flex-col flex-1' elevation={2}>
           <strong className='title'>인기 포지션 TOP 10</strong>
           <Divider />
@@ -134,11 +149,11 @@ export default function SkillTrendsPage(){
                 },
               },
             ]}
+            // 툴팁에 라벨이 안 뜨는 오류 있음(해결 필요)
             series={[
               {
-                // 수정 필요
                 dataKey: 'value',
-                // barLabel: 'value',
+                barLabel: 'value',
                 barLabelPlacement: 'center',
               },
             ]}
@@ -148,20 +163,19 @@ export default function SkillTrendsPage(){
                 style: {
                   fontSize: 16,
                   lineHeight: '100%',
-                  fill: 'rgba(0, 0, 0, 0.7)'
+                  fill: 'rgba(255, 255, 255, 0.95)'
                 },
               },
-              // tooltip은 추후에 스타일 조정 필요(현재 여백 오류 있음)
               tooltip: {
                 trigger: 'item',
                 sx: {
                   '& .MuiChartsTooltip-paper': {
                     padding: '8px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
                   },
                   '& .MuiChartsTooltip-table': {
                     display: 'flex',
-                    flexDirection: 'column',
+                    flexDirection: 'column'
                   },
                 }
               },
@@ -170,7 +184,6 @@ export default function SkillTrendsPage(){
             sx={{
               '& .MuiChartsGrid-horizontalLine': {
                 strokeDasharray: '2 2',
-                stroke: '#ccc',
               },
               '& .MuiChartsAxis-line': {
                 stroke: '#e0e0e0',
@@ -416,7 +429,68 @@ export default function SkillTrendsPage(){
             <p className='sub-text'>경쟁력을 높일 수 있는 스킬</p>
           </div>
           <Divider />
-
+          <LineChart 
+            height={285}
+            margin={{ left: 0, right: 30 }}
+            series={[
+              { data: aData, label: '모집글 게시', yAxisId: 'postRecruitment', color: '#FFAE4C', curve: 'linear' },
+              { data: bData, label: '프로젝트 시작', yAxisId: 'startProject', color: '#6FD195', curve: 'linear' },
+              { data: cData, label: '모집 완료', yAxisId: 'recruitmentCompleted', color: '#7086FD', curve: 'linear' },
+            ]}
+            xAxis={[{ scaleType: 'point', data: xLabels, disableTicks: true, tickLabelStyle: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.7)' } }]}
+            yAxis={[{ id: 'postRecruitment', disableTicks: true, tickLabelStyle: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.7)' } }, { id: 'startProject', disableTicks: true, tickLabelStyle: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.7)' }  }, { id: 'recruitmentCompleted', disableTicks: true, tickLabelStyle: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.7)' } }]}
+            grid={{ vertical: true, horizontal: true }}
+            sx={{
+              '& .MuiChartsGrid-line': {
+                strokeDasharray: '2 2',
+                strokeWidth: 1,
+                strokeColor: 'rgba(0, 0, 0, 0.25)'
+              },
+              '& .MuiChartsAxis-bottom .MuiChartsAxis-line': {
+                stroke: 'rgba(0, 0, 0, 0.5)',
+                strokeWidth: 1
+              },
+              '& .MuiChartsAxis-left .MuiChartsAxis-line': {
+                stroke: 'transparent',
+                strokeWidth: 1
+              },
+              '& .MuiChartsLegend-root': {
+                margin: 0,
+                gap: '0.8rem !important'
+              }
+            }}
+            slotProps={{
+              line: {
+                style: {
+                  strokeWidth: 1,
+                }
+              },
+              tooltip: {
+                sx: {
+                  '& .MuiChartsTooltip-paper': {
+                    padding: '8px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  },
+                  '& .MuiChartsTooltip-table': {
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }
+                }
+              },
+              legend: {
+                direction: 'horizontal',
+                position: { vertical: 'bottom' },
+                sx: {
+                  fontSize: 12,
+                  lineHeight: '100%',
+                  color: 'rgba(0, 0, 0, 0.7)'
+                }
+              }
+            }}
+            slots={{
+              mark: CustomMark
+            }}
+          />
         </Paper>
       </div>
     </div>

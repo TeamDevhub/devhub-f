@@ -3,7 +3,7 @@ import MyInfoBox from '@/pages/design/mypage/home/MyInfoBox'
 import { Box, Button, Chip, Pagination, Paper, Rating, Tab, Tabs } from '@mui/material'
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import { AccessTime, LocationOn, Person } from '@mui/icons-material'
-import HeartButton from '@/components/_common/HeartButton'
+import HeartButton from '@/components/_common/button/HeartButton'
 import WebPopup from '@/components/_common/popup/WebPopup'
 
 // tabs

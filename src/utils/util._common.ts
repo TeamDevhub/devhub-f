@@ -1,4 +1,5 @@
-import type { CommonCodeMap, CommonCode, CommonCodeItem } from "@/types/type._common";
+import type { CommonCodeMap, CommonCode, CommonCodeItem } from '@/types/type._common';
+import type {ValidationRule} from "@/hooks/_common/common.hook.ts";
 
 //공통 코드관련
 let commonCodeStore: CommonCodeMap = {};
@@ -19,32 +20,27 @@ export const getCodesByGroup = (group: CommonCode): CommonCodeItem[] => {
   return commonCodeStore[group] ?? [];
 };
 
-export const getCodeName = (
-  group: CommonCodeItem[] | CommonCode,
-  code: string
-): string => {
+export const getCodeName = (group: CommonCodeItem[] | CommonCode, code: string): string => {
+  if (typeof group == 'string') group = getCodesByGroup(group);
 
-  if(typeof group == 'string') group = getCodesByGroup(group);
-
-  for (const item of group){
-    if(item.code == code){
-      return item.name
+  for (const item of group) {
+    if (item.code == code) {
+      return item.name;
     }
-    if(item.children && item.children.length > 0){
+    if (item.children && item.children.length > 0) {
       const found = getCodeName(item.children, code);
-      if(found) return found;
+      if (found) return found;
     }
   }
   return '';
 };
 
 export const getSelectOptions = (group: CommonCode) => {
-  return (commonCodeStore[group] ?? []).map(item => ({
+  return (commonCodeStore[group] ?? []).map((item) => ({
     value: item.code,
-    label: item.name
+    label: item.name,
   }));
 };
-
 
 //로컬 저장소 관련
 /**
@@ -53,7 +49,7 @@ export const getSelectOptions = (group: CommonCode) => {
  * @param value - 저장할 데이터 (string으로 저장됨)
  */
 export const setLocalStorage = <T>(key: string, value: T): void => {
-  if (typeof window === "undefined") return;
+  if (typeof window === 'undefined') return;
   localStorage.setItem(key, JSON.stringify(value));
 };
 
@@ -63,7 +59,7 @@ export const setLocalStorage = <T>(key: string, value: T): void => {
  * @returns 가져온 데이터, 없으면 null
  */
 export const getLocalStorage = <T>(key: string): T | null => {
-  if (typeof window === "undefined") return null;
+  if (typeof window === 'undefined') return null;
 
   try {
     const value = localStorage.getItem(key);
@@ -79,16 +75,16 @@ export const getLocalStorage = <T>(key: string): T | null => {
  * @param key - 삭제할 데이터의 키
  */
 export const removeLocalStorage = (key: string): void => {
-  if (typeof window === "undefined") return;
+  if (typeof window === 'undefined') return;
   localStorage.removeItem(key);
 };
 
-
 //벨리데이션
+//prettier-ignore
 export const Validators = {
   // 필수값 체크
   required: (msg: string = "필수 입력 항목입니다.") => 
-    (v: any) => (v !== null && v !== undefined && v !== "" ? null : msg),
+    (v: unknown) => (v !== null && v !== undefined && v !== "" ? null : msg),
 
   // 최소 길이 체크
   minLength: (min: number, msg?: string) => 
@@ -97,6 +93,10 @@ export const Validators = {
   // 최대 길이 체크
   maxLength: (max: number, msg?: string) => 
     (v: string) => v.length <= max ? null : (msg || `최대 ${max}자까지 가능합니다.`),
+
+  // 배열 최소 길이 체크
+  minArrayLength: (min: number, msg?: string) =>
+    (v: string[]) => v.length >= min ? null : (msg || `최소 ${min}개 이상 선택해주세요.`),
 
   // 이메일 형식 체크
   email: (msg: string = "올바른 이메일 형식이 아닙니다.") => 
@@ -107,6 +107,6 @@ export const Validators = {
     (v: string) => /^\d+$/.test(v) ? null : msg,
     
   // 일치 여부 체크 (비밀번호 확인용)
-  match: (targetKey: string, msg: string) => 
-    (v: any, allState: any) => v === allState[targetKey] ? null : msg,
+  match: <T>(targetKey: keyof T, msg: string): ValidationRule<unknown, T> =>
+      (v, allState) => v === allState[targetKey] ? null : msg,
 };

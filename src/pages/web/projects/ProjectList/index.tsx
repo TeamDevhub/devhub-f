@@ -23,10 +23,12 @@ export default function ProjectList(){
     res,
     filters,
     resetFilters,
+    createToggle,
+    setFilter,
     createFilterHandler,
     applyFilter,
     request,
-    keyword, setkeyword,
+    keyword, setKeyword,
     setOrder,setPage
 
   } = useSelectProjects();
@@ -35,7 +37,7 @@ export default function ProjectList(){
     <main className='main-page flex-col h-fit'>
 
       <Paper className='search-box align-stretch' elevation={4}>
-        <CustomTextfield size='small' type='search' placeholder='프로젝트 명을 입력해 주세요.' value={keyword} onChange={(e)=>{setkeyword(e.target.value)}}/>
+        <CustomTextfield size='small' type='search' placeholder='프로젝트 명을 입력해 주세요.' value={keyword} onChange={(e)=>{setKeyword(e.target.value)}}/>
         <Button size='medium' variant='contained'>검색</Button>
       </Paper>
 
@@ -54,7 +56,8 @@ export default function ProjectList(){
             filterData={filters} 
             clickOpenSkillPopup={skillPopup.open} 
             handleResetFilter={resetFilters} 
-            createHandler={createFilterHandler}
+            setFilter={setFilter}
+            createToggle={createToggle}
           />
           <div className='filter-button-box w-100 align-center'>
               <Button className='flex-1' size='small' variant='outlined' startIcon={<FilterAlt />} onClick={filterPopup.open}>상세 필터</Button>

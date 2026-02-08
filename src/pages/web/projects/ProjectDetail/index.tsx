@@ -1,5 +1,4 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
-import HeartButton from '@/components/_common/HeartButton';
 import TopButton from '@/components/_common/TopButton';
 import { DDayChip, PositionChips, ProgressRegionChip, RecruitmentChip, RecruitStatusChip, SkillChips } from '@/components/projects/ProjectChips';
 import useSelectProjectDetail from '@/hooks/projects/useSelectProjectDetail';
@@ -34,7 +33,7 @@ export default function ProjectDetail() {
                 recruitmentStartDate={res?.data?.recruitmentStartDate}
                 recruitmentEndDate={res?.data?.recruitmentEndDate}
               />
-              <ProgressRegionChip regionCd={res?.data?.prgressRegionCd} />
+              <ProgressRegionChip regionCd={res?.data?.progressRegionCd} />
               <RecruitmentChip recruitTypeCd={res?.data?.recruitmentTypeCd} />
               <DDayChip recruitmentEndDate={res?.data?.recruitmentEndDate} />
             </div>
@@ -115,10 +114,10 @@ export default function ProjectDetail() {
                   <strong>지역</strong>
                 </div>
                 <p className="group-value align-center">
-                  {res?.data?.prgressRegionCd &&
+                  {res?.data?.progressRegionCd &&
                     getCodeName(
                       COMMON_CODE.REGION_CODE,
-                      res.data.prgressRegionCd
+                      res.data.progressRegionCd
                     )}
                 </p>
               </div>

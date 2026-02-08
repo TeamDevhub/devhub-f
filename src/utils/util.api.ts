@@ -13,7 +13,7 @@ interface CommonError {
   path: string;
 }
 
-const convertDayjsToString = (data: any): any => {
+const convertDayjsToString = (data: unknown): unknown => {
   
   if (data instanceof FormData) {
     return data;
@@ -29,12 +29,30 @@ const convertDayjsToString = (data: any): any => {
   
   if (data !== null && typeof data === 'object') {
     return Object.keys(data).reduce((acc, key) => {
-      acc[key] = convertDayjsToString(data[key]);
+      const value = (data as Record<string, unknown>)[key];
+      acc[key] = convertDayjsToString(value);
       return acc;
-    }, {} as any);
+    }, {} as Record<string, unknown>);
   }
-  
   return data;
+};
+
+const removeEmptyValues = (obj: Record<string, unknown>): unknown => {
+  const cleanObj = { ...obj };
+
+  Object.keys(cleanObj).forEach((key) => {
+    const value = cleanObj[key];
+
+    if (
+      value === null || 
+      value === undefined || 
+      (typeof value === 'string' && value.trim() === '')
+    ) {
+      delete cleanObj[key];
+    }
+  });
+
+  return cleanObj;
 };
 
 let activeRequests = 0;
@@ -69,10 +87,11 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
  * 요청 성공 처리
  */
 const requestSuccessInterceptor = async (
-  request: InternalAxiosRequestConfig<any>
+  request: InternalAxiosRequestConfig<unknown>
 ) => {
   const accessToken = getLocalStorage('accessToken');
-  request.headers['Authorization'] = `Bearer ${accessToken}`;
+  if(accessToken) request.headers['Authorization'] = `Bearer ${accessToken}`;
+  
   return request;
 };
 //bearer basic digest hoba ..
@@ -80,7 +99,7 @@ const requestSuccessInterceptor = async (
 /**
  * 응답 성공 처리
  */
-const responseSuccessInterceptor = async (response: AxiosResponse<any>) => {
+const responseSuccessInterceptor = async (response: AxiosResponse<unknown>) => {
   return response;
 };
 /**
@@ -97,9 +116,11 @@ const responseErrorInterceptor = async (err: unknown) => {
   //에러 인터페이스에 따라 처리 추후 추가
   if (status === 401) {
     if (errorCode === ERROR_CODE.EXPIRE_ACCESS_TOKEN) {
-        // 리프레쉬토큰 발급
+      // 리프레쉬토큰 발급
     } else if ( errorCode === ERROR_CODE.DUP_LOGIN ) {
+      //
     } else if (errorCode === ERROR_CODE.SIGNATURE_ERROR_ACCESS_TOKEN) {
+      //
     } else {
       try {
             // signOut();
@@ -147,7 +168,7 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export const fetcher = async <T = any, P = any>(
+export const fetcher = async <T = unknown, P = unknown>(
   url: string,
   data?: P,
   config?: AxiosRequestConfig
@@ -163,10 +184,13 @@ export const fetcher = async <T = any, P = any>(
   } = config || {};
 
   const isGetMethod = method.toLowerCase() === "get";
-  data = convertDayjsToString(data);
+  if(data) data = removeEmptyValues(data) as P;
+  data = convertDayjsToString(data) as P;
 
   const baseUrl = import.meta.env.VITE_API_URL;
   url = baseUrl + url;
+
+  console.log(url);
 
   const res = await instance.request<ApiResponse<T>>({
     url,

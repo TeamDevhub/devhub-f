@@ -6,6 +6,7 @@ import { useSelect } from "../_common/api.hook";
 
 const initData:SearchData = {
   page:1,
+  size:10,
   order:'',
 }
 
@@ -37,10 +38,11 @@ export default function useSelectProjects(
     state: filters, 
     setState: setFilters, 
     handleChange: setFilter,
+    createToggle,
     createHandler: createFilterHandler,
     reset: resetFilters
   } = useFormState<FilterData>(baseFilter);
-  const [keyword, setkeyword] = useState<string>(baseKeyword);
+  const [keyword, setKeyword] = useState<string>(baseKeyword);
   const [request, setRequest] = useState<ProjectSearchRequest>({
     ...baseFilter,
     ...baseSearch,
@@ -52,7 +54,7 @@ export default function useSelectProjects(
     req: request,
     cacheKey: `projects-${JSON.stringify(request)}`,
   }
-  const { res, loading } =   useSelect<ProjectListResponse, ProjectSearchRequest>(options);
+  const { res, loading } = useSelect<ProjectListResponse, ProjectSearchRequest>(options);
 
   const setPage = (page: number) => {
     setRequest((prev) => ({...prev, page: page}));
@@ -64,7 +66,7 @@ export default function useSelectProjects(
 
   const resetAll = () => {
     resetFilters();
-    setkeyword(baseKeyword);
+    setKeyword(baseKeyword);
     setRequest({
       ...baseFilter,
       ...baseSearch,
@@ -89,13 +91,13 @@ export default function useSelectProjects(
       ...filterData,
       page: 1
     }));
-    filterData && setFilters(filterData);
+    if(filterData) setFilters(filterData);
   }
 
   return { 
-    filters, setFilters, setFilter, createFilterHandler, resetFilters,
+    filters, setFilters, setFilter, createToggle, createFilterHandler, resetFilters,
     request, setRequest,
-    keyword, setkeyword,
+    keyword, setKeyword,
     setPage, setOrder,
     res, loading, 
     applySearch, applyFilter, resetAll 
