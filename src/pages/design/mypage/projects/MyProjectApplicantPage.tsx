@@ -326,49 +326,49 @@ function ApplicantCard ({
 
   return (
     <>
-        <Paper className='applicant-swiper-slide flex-col' elevation={4}>
-          <div className="top">
-            <p className="application-date">지원일자 <em>{applicationDate}</em></p>
-          </div>
-          <div className="middle flex-col">
-            <div className="user-info-box flex-col">
-              <div className="top-area align-center">
-                <div className="left-area">
-                  <CustomAvatar 
-                    size={32}
-                    sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                    avatarIcon={<Person sx={{ fontSize: 24 }} />} 
-                  />
-                </div>
-                <div className="right-area">
-                  <p className='user-nickname'>{userName}</p>
-                  <p className='user-email'>{userEmail}</p>
-                </div>
+      <Paper className='applicant-swiper-slide flex-col' elevation={4}>
+        <div className="top">
+          <p className="application-date">지원일자 <em>{applicationDate}</em></p>
+        </div>
+        <div className="middle flex-col">
+          <div className="user-info-box flex-col">
+            <div className="top-area align-center">
+              <div className="left-area">
+                <CustomAvatar 
+                  size={32}
+                  sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
+                  avatarIcon={<Person sx={{ fontSize: 24 }} />} 
+                />
               </div>
-              <div className="bottom-area align-center flex-wrap">
-                <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                <Chip size='small' variant='outlined' color='secondary' label='JS' />
+              <div className="right-area">
+                <p className='user-nickname'>{userName}</p>
+                <p className='user-email'>{userEmail}</p>
               </div>
             </div>
-            <div className="manner-box flex-col">
-              <div className="manner-text justify-between">
-                <p className='text'>매너온도</p>
-                <p className='manner-temperature'>{mannerTemperature}°C</p>
-              </div>
-              <div className="manner-figure">
-                <span className='current-figure h-100'></span>
-              </div>
-            </div>
-            <Button fullWidth size='small' color='primary' onClick={clickOpenDetailPopup}>상세보기</Button>
-          </div>
-          <div className="bottom">
-            <div className="button-box flex gap-4">
-              <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-              <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
+            <div className="bottom-area align-center flex-wrap">
+              <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
+              <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
+              <Chip size='small' variant='outlined' color='secondary' label='JS' />
             </div>
           </div>
-        </Paper>
+          <div className="manner-box flex-col">
+            <div className="manner-text justify-between">
+              <p className='text'>매너온도</p>
+              <p className='manner-temperature'>{mannerTemperature}°C</p>
+            </div>
+            <div className="manner-figure">
+              <span className='current-figure h-100'></span>
+            </div>
+          </div>
+          <Button fullWidth size='small' color='primary' onClick={clickOpenDetailPopup}>상세보기</Button>
+        </div>
+        <div className="bottom">
+          <div className="button-box flex gap-4">
+            <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
+            <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
+          </div>
+        </div>
+      </Paper>
 
       {/* 3. popup */}
       <WebPopup
