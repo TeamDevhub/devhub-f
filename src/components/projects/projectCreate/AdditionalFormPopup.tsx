@@ -1,5 +1,5 @@
-import WebPopup, { type WebPopupProps } from "@/components/_common/popup/WebPopup";
-import { type ApplicationFormBasic, type ApplicationFormDetail } from "@/types/type.projects"
+import WebPopup from "@/components/_common/popup/WebPopup";
+import { type ApplicationFormDetail } from "@/types/type.projects"
 import { useState, useEffect } from "react";
 import CustomTextfield from "@/components/_common/customMUI/CustomTextfield";
 import CustomRadioGroup from "@/components/_common/customMUI/CustomRadioGroup"
@@ -42,7 +42,7 @@ function PopupField({
 function Item({
     index,
     onChange,
-}: {index:number; onChange:(index1:number, e?:ChangeEvent) => void}){
+}: {index: number; onChange: (index1:number, e?:ChangeEvent) => void}){
     return <div className="field-box flex-col mt-5">
                 <div className="align-center">
                     <CustomTextfield placeholder="항목" onChange={(e)=>onChange(index, e)}/>

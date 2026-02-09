@@ -52,18 +52,6 @@ export default function useCreateProject() {
         jsonData["imageFileGuid"] = imageGuid;
         projectMutate(jsonData);
 
-        // formData.append(
-        //     "request",
-        //     new Blob([JSON.stringify(jsonData)], {type: "application/json"})
-        // );
-        // if(attachment) {
-        //         formData.append("attachment", attachment);
-        // }
-        // if(image) {
-        //         formData.append("image", image);
-        // }
-
-        mutate(formData);
     }
 
     return {
