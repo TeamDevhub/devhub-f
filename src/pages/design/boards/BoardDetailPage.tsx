@@ -3,7 +3,6 @@ import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import { Create, Person, Visibility } from '@mui/icons-material'
 import { Button, Chip, Divider, Paper } from '@mui/material'
-import React from 'react'
 
 export default function BoardDetailPage(){
   return (

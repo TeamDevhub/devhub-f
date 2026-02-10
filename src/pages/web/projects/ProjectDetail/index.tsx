@@ -1,18 +1,20 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
-import TopButton from '@/components/_common/TopButton';
-import { DDayChip, PositionChips, ProgressRegionChip, RecruitmentChip, RecruitStatusChip, SkillChips } from '@/components/projects/ProjectChips';
+import {DDayChip,  PositionChips,  ProgressRegionChip,  RecruitmentChip,  RecruitStatusChip,  SkillChips} from '@/components/projects/ProjectChips';
 import useSelectProjectDetail from '@/hooks/projects/useSelectProjectDetail';
-import { COMMON_CODE } from '@/types/const';
-import { getCodeName } from '@/utils/util._common';
-import { AccessTime, ContentPaste, LocationOn, OpenInNew, People, Person, Settings, Visibility } from '@mui/icons-material';
-import { Divider, Paper, Tooltip } from '@mui/material';
+import {COMMON_CODE} from '@/types/const';
+import {AccessTime,  ContentPaste,  LocationOn,  OpenInNew,  People,  Person,  Settings,  Visibility} from '@mui/icons-material';
+import {Divider, Paper, Tooltip} from '@mui/material';
 import dayjs from 'dayjs';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import TopButton from "@/components/_common/button/TopButton.tsx";
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
+import HeartButton from "@/components/_common/button/HeartButton.tsx";
 
 export default function ProjectDetail() {
   const navigate = useNavigate();
   const projectId = 'c1ba0f7821a54fc6a4561b4e06da4e76';
 
+  const { getCodeName } = useCodes();
   const { res } = useSelectProjectDetail(projectId);
 
   //[수정필요]
@@ -162,9 +164,7 @@ export default function ProjectDetail() {
             elevation={5}
             sx={{ cursor: 'pointer' }}
           >
-            <HeartButton
-              projectId={projectId}
-            />
+            <HeartButton />
           </Paper>
         </Tooltip>
         <Tooltip arrow placement='right' title='지원하기'>

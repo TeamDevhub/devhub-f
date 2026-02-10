@@ -2,7 +2,7 @@ import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { Button, FormControl, MenuItem, Paper, Select, type SelectChangeEvent } from '@mui/material'
 import FormField from '@/components/design/FormField';
 import FieldGroup from '@/components/design/FieldGroup';
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export default function BoardModifyPage(){
   // category select

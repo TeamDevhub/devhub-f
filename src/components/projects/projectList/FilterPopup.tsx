@@ -7,11 +7,11 @@ import {useFormState} from "@/hooks/_common/common.hook";
 import {useDisclosure} from "@/hooks/_common/useDisclosure";
 import {COMMON_CODE} from "@/types/const";
 import type {FilterData} from "@/types/type.projects";
-import {getCodesByGroup} from "@/utils/util._common";
 import {Divider} from "@mui/material";
 import {DatePicker} from "@mui/x-date-pickers";
 import FilterWarpper from "./FilterWarpper";
 import FilterList from "./FilterList";
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export default function FilterPopup({
   isOpen,
@@ -24,6 +24,8 @@ export default function FilterPopup({
   initialValue:FilterData,
   onClose?:()=>void;
 }){
+
+  const {getCodesByGroup} = useCodes();
 
   const { 
     state,
@@ -98,7 +100,7 @@ export default function FilterPopup({
         </FilterWarpper>
         <FilterWarpper title='진행지역' subText='진행지역'>
           <AddableChipGroup
-            items={getCodesByGroup(COMMON_CODE.REGION_CODE)} 
+            CodeName={COMMON_CODE.REGION_CODE}
             onAdd={regionPopup.open} 
             onDelete={(value) => {
               handleChange('regionCodeList', state.regionCodeList?.filter((item) => item !== value));

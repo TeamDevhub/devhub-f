@@ -1,8 +1,8 @@
-import type { CommonCodeItem } from '@/types/type._common';
-import { getCodeName, getCodesByGroup } from '@/utils/util._common';
-import { Checkbox, Chip, List, ListItemButton, ListItemIcon, ListItemText, Tab, Tabs } from '@mui/material';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import {Checkbox, Chip, List, ListItemButton, ListItemIcon, ListItemText, Tab, Tabs} from '@mui/material';
+import React, {useMemo, useRef, useState} from 'react';
 import WebPopup from './WebPopup';
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
+import {COMMON_CODE} from "@/types/const.ts";
 
 export interface RegionPopupProps{
   isOpen:boolean;
@@ -20,23 +20,11 @@ export default function RegionPopup({
   multiple = false,
 }:RegionPopupProps) {
 
-  const [regionCode, setRegionCode] = useState<CommonCodeItem[]>([]);
+  const {getCodesByGroup, getCodeName} = useCodes();
+  const regionCode = getCodesByGroup(COMMON_CODE.REGION_CODE);
   const [_values, _setValues] = useState(values??[]);
   const [tab, setTab] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const codeList = getCodesByGroup('REGION_CODE');
-    setRegionCode(codeList);
-    if (codeList.length > 0) setTab(codeList[0].code);
-  }, []);
-
-  useEffect(() => {
-    if (isOpen) {
-      _setValues(values ?? []);
-      if (regionCode.length > 0) setTab(regionCode[0].code);
-    }
-  }, [isOpen, values, regionCode]);
 
   const currentChildren = useMemo(() => {
     return regionCode.find(item => item.code === tab)?.children ?? [];
@@ -108,7 +96,7 @@ export default function RegionPopup({
                 size='small' 
                 variant='filled' 
                 color='primary' 
-                label={getCodeName(regionCode, v)} 
+                label={getCodeName(COMMON_CODE.REGION_CODE, v)}
                 onDelete={()=>{handleOnClick(v, false)}}
                 clickable 
               />

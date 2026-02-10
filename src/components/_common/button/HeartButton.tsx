@@ -1,35 +1,26 @@
-import useUpdateProjectLike from '@/hooks/projects/useUpdateProjectLike';
-import { Favorite, FavoriteBorder } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
-import { useState } from 'react';
+import {Favorite, FavoriteBorder} from '@mui/icons-material';
+import {IconButton} from '@mui/material';
+import {useState} from 'react';
 
 export interface HeartButtonProps {
-  projectId: string;
   likeCount?: string;
   className?: string;
   noCount?: boolean;
   defaultLiked?: boolean;
+  onClick?: (liked:boolean)=>void;
 }
 export default function HeartButton({
-  projectId,
   likeCount,
   className,
   noCount = false,
   defaultLiked = false,
   onClick
 }: HeartButtonProps){
-}: HeartButtonProps) {
   const [liked, setLiked] = useState(defaultLiked);
-  const { toggleLike } = useUpdateProjectLike();
 
-  const handleClick = async () => {
-    const res = await toggleLike(projectId, liked);
-    if (res.success) {
-      setLiked(prev => !prev);
-    }
   const handleClick = () => {
     setLiked(prev => !prev);
-    onClick?.();
+    onClick?.(!liked);
   };
 
   return (
@@ -43,7 +34,9 @@ export default function HeartButton({
       </IconButton>
       {!noCount &&
         <p className='heart-count'>
-          {liked ? Number(likeCount) + 1 : Number(likeCount)}
+          {(liked == defaultLiked) && Number(likeCount)}
+          {(liked && !defaultLiked) && Number(likeCount) + 1}
+          {(!liked && defaultLiked) && Number(likeCount) - 1}
         </p>
       }
     </div>

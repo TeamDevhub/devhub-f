@@ -2,12 +2,12 @@ import { ArrowUpward } from '@mui/icons-material';
 import { Paper } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 
-export default function TopButton({ onClick }: { onClick: () => void }){
+export default function TopButton({ onClick }: { onClick?: () => void }){
   const [showTopButton, setShowTopButton] = useState(false);
 
   const handleScrollTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    onClick();
+    onClick?.();
   }, [onClick]);
 
   useEffect(() => {

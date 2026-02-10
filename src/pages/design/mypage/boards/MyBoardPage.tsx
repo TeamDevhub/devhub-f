@@ -1,7 +1,6 @@
 import MyInfoBox from '@/components/design/MyInfoBox'
 import { Button, Chip, Pagination, Paper } from '@mui/material'
 import { Create, Favorite, Visibility } from '@mui/icons-material'
-import React from 'react'
 
 export default function MyBoardPage(){
   return (

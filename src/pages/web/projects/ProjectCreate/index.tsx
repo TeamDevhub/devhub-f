@@ -7,33 +7,23 @@ import ApplicationFormGroup from '@/components/projects/projectCreate/Applicatio
 import PositionGroup from '@/components/projects/projectCreate/PositionGroup';
 import DragAndDropFormProps from '@/components/_common/DragAndDropForm'
 import useCreateProject from '@/hooks/projects/useCreateProject'
-import { useDisclosure } from '@/hooks/_common/useDisclosure';
-import { COMMON_CODE } from '@/types/const';
-import { type SelectComponentProps } from '@/types/type._common'
-import { type DateType } from '@/types/type.api';
-import type { Position, ProjectCreate, ApplicationFormDetail } from '@/types/type.projects';
-import { getCodeName, getSelectOptions } from "@/utils/util._common";
-import { AddCircle, Search, Remove } from '@mui/icons-material';
-import { Button, Chip, Divider, FormControl, FormLabel, IconButton, Paper } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
-import { useEffect, useState } from 'react';
+import {useDisclosure} from '@/hooks/_common/useDisclosure';
+import {COMMON_CODE} from '@/types/const';
+import {type DateType} from '@/types/type.api';
+import type {ApplicationFormDetail, Position} from '@/types/type.projects';
+import {AddCircle, Remove, Search} from '@mui/icons-material';
+import {Button, Chip, Divider, FormControl, FormLabel, IconButton, Paper} from '@mui/material';
+import {DatePicker} from '@mui/x-date-pickers';
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export default function ProjectCreate(){
   const skillPopup = useDisclosure();
   const regionPopup = useDisclosure();
   const additionalPopup = useDisclosure();
 
-  const [recruitmentTypeCdOption, setRecruitmentTypeCdOption] = useState<SelectComponentProps[]>([]);
-  const [progressTypeCdOption, setProgressTypeCdOption] = useState<SelectComponentProps[]>([]);
-
-  const initialize = () => {
-    setRecruitmentTypeCdOption(getSelectOptions(COMMON_CODE.PROJECT_RECRUIT_TYPE));
-    setProgressTypeCdOption(getSelectOptions(COMMON_CODE.PROJECT_PROGRESS_TYPE));
-  }
-
-  useEffect(()=>{
-    initialize();
-  }, []);
+  const { getSelectOptions, getCodeName } = useCodes();
+  const recruitmentTypeCdOption = getSelectOptions(COMMON_CODE.PROJECT_RECRUIT_TYPE);
+  const progressTypeCdOption = getSelectOptions(COMMON_CODE.PROJECT_PROGRESS_TYPE);
 
   const {
       values,

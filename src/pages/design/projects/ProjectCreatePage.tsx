@@ -1,9 +1,9 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { Remove, Search } from '@mui/icons-material';
-import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, MenuItem, Paper, Radio, RadioGroup, Select, TextField, type SelectChangeEvent } from '@mui/material'
+import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, MenuItem, Paper, Radio, RadioGroup, Select, type SelectChangeEvent } from '@mui/material'
 import FieldGroup from '@/components/design/FieldGroup';
 import FormField from '@/components/design/FormField';
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export default function ProjectCreatePage(){
   const [filter, setFilter] = useState('');

@@ -1,23 +1,26 @@
-import type { CommonCodeItem } from "@/types/type._common";
-import { AddCircle } from "@mui/icons-material";
-import { Chip, IconButton } from "@mui/material";
-import {getCodeName} from "@/utils/util._common.ts";
+import type {CommonCode} from "@/types/type._common";
+import {AddCircle} from "@mui/icons-material";
+import {Chip, IconButton} from "@mui/material";
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export default function AddableChipGroup({ 
-  values, 
-  items, 
+  values,
+  CodeName,
   onDelete, 
   onAdd 
 }: { 
   values: string[] | undefined; 
-  items: CommonCodeItem[]; 
+  CodeName: CommonCode;
   onDelete: (v: string) => void; 
   onAdd?: () => void;
 }){
+
+  const {getCodeName} = useCodes();
+
   return (
   <>
     {values?.map((v) => {
-      const label = getCodeName(items, v);
+      const label = getCodeName(CodeName, v);
       return (
         <Chip key={v} size='small' variant='filled' label={label} color='primary' onDelete={() => onDelete(v)} />
       );

@@ -1,11 +1,11 @@
-import type { ProjectDetail } from "@/types/type.projects";
+import type {ProjectDetail} from "@/types/type.projects";
 import HeartButton from "@/components/_common/button/HeartButton";
-import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/projects/ProjectChips";
-import { getCodeName, getCodesByGroup } from "@/utils/util._common";
-import { AccessTime } from "@mui/icons-material";
-import { Chip, Divider, Paper } from "@mui/material";
-import { COMMON_CODE } from "@/types/const";
-import { convertString } from "@/utils/util.date";
+import {DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip} from "@/components/projects/ProjectChips";
+import {AccessTime} from "@mui/icons-material";
+import {Chip, Divider, Paper} from "@mui/material";
+import {COMMON_CODE} from "@/types/const";
+import {convertString} from "@/utils/util.date";
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export default function ProjectCard(projectData : ProjectDetail){
   const {
@@ -24,6 +24,8 @@ export default function ProjectCard(projectData : ProjectDetail){
     skillList,
     positionList,
   } = projectData;
+
+  const { getCodeName } = useCodes();
 
   return (
     <Paper className='project-box w-100 h-fit flex' elevation={4}>
@@ -63,12 +65,12 @@ export default function ProjectCard(projectData : ProjectDetail){
         <div className='chip-box flex-col'>
           <div className='recruit-chip-box align-center'>
             {positionList?.map((position, index)=> 
-              (<Chip key={index} variant='outlined' color='primary' size='small' label={getCodeName(getCodesByGroup(COMMON_CODE.POSITION_CODE), position.position)} />)
+              (<Chip key={index} variant='outlined' color='primary' size='small' label={getCodeName(COMMON_CODE.POSITION_CODE, position.position)} />)
             )}
           </div>
           <div className='tech-chip-box align-center flex-wrap'>
             {skillList?.map((skill, index)=> 
-              (<Chip key={index} variant='outlined' color='secondary' size='small' label={getCodeName(getCodesByGroup(COMMON_CODE.POSITION_CODE), skill)} />)
+              (<Chip key={index} variant='outlined' color='secondary' size='small' label={getCodeName(COMMON_CODE.POSITION_CODE, skill)} />)
             )}
           </div>
         </div>

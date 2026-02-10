@@ -1,46 +1,4 @@
-import type { CommonCodeMap, CommonCode, CommonCodeItem } from '@/types/type._common';
 import type {ValidationRule} from "@/hooks/_common/common.hook.ts";
-
-//공통 코드관련
-let commonCodeStore: CommonCodeMap = {};
-
-let initialized = false;
-
-export const setCommonCodes = (codes: CommonCodeMap) => {
-  if (initialized) return;
-  commonCodeStore = codes;
-  initialized = true;
-};
-
-export const getCommonCodes = (): CommonCodeMap => {
-  return commonCodeStore;
-};
-
-export const getCodesByGroup = (group: CommonCode): CommonCodeItem[] => {
-  return commonCodeStore[group] ?? [];
-};
-
-export const getCodeName = (group: CommonCodeItem[] | CommonCode, code: string): string => {
-  if (typeof group == 'string') group = getCodesByGroup(group);
-
-  for (const item of group) {
-    if (item.code == code) {
-      return item.name;
-    }
-    if (item.children && item.children.length > 0) {
-      const found = getCodeName(item.children, code);
-      if (found) return found;
-    }
-  }
-  return '';
-};
-
-export const getSelectOptions = (group: CommonCode) => {
-  return (commonCodeStore[group] ?? []).map((item) => ({
-    value: item.code,
-    label: item.name,
-  }));
-};
 
 //로컬 저장소 관련
 /**

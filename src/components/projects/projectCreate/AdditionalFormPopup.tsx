@@ -1,20 +1,19 @@
 import WebPopup from "@/components/_common/popup/WebPopup";
-import { type ApplicationFormDetail } from "@/types/type.projects"
-import { useState, useEffect } from "react";
+import {type ApplicationFormDetail} from "@/types/type.projects"
+import {type ChangeEvent, useState} from "react";
 import CustomTextfield from "@/components/_common/customMUI/CustomTextfield";
 import CustomRadioGroup from "@/components/_common/customMUI/CustomRadioGroup"
-import { useFormState } from '@/hooks/_common/common.hook';
-import { Select, MenuItem, Divider, IconButton, type SelectChangeEvent, type ChangeEvent } from "@mui/material";
-import { AddCircle, Remove } from '@mui/icons-material';
-import { COMMON_CODE } from '@/types/const';
-import { getSelectOptions } from "@/utils/util._common";
-import { type SelectComponentProps } from "@/types/type._common";
+import {useFormState} from '@/hooks/_common/common.hook';
+import {Divider, IconButton, MenuItem, Select, type SelectChangeEvent} from "@mui/material";
+import {AddCircle, Remove} from '@mui/icons-material';
+import {COMMON_CODE} from '@/types/const';
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 interface  AdditionnalFormPopupProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (newForm:ApplicationFormDetail) => void;
-};
+}
 
 const useYn = [
     {label: "사용", value: "Y"},
@@ -42,7 +41,7 @@ function PopupField({
 function Item({
     index,
     onChange,
-}: {index: number; onChange: (index1:number, e?:ChangeEvent) => void}){
+}: {index: number; onChange: (index1:number, e?:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void}){
     return <div className="field-box flex-col mt-5">
                 <div className="align-center">
                     <CustomTextfield placeholder="항목" onChange={(e)=>onChange(index, e)}/>
@@ -62,16 +61,11 @@ export default function AdditionalFormPopup ({
         helpText: '',
         itemList: [''],
     }
-    const [typeCdOption, setTypeCdOption] = useState<SelectComponentProps[]>([]);
+    const { getSelectOptions } = useCodes();
+    const typeCdOption = getSelectOptions(COMMON_CODE.APPLICATION_FORM_TYPE);
     const [useHelpText, setUseHelpText] = useState<boolean>(true);
     const [useItemList, setUseItemList] = useState<boolean>(false);
 
-    const initialize = () => {
-        setTypeCdOption(getSelectOptions(COMMON_CODE.APPLICATION_FORM_TYPE));
-    };
-    useEffect(()=>{
-        initialize();
-    }, []);
 
     const onChangeTypeCd = (event: SelectChangeEvent)=> {
         const value = event.target.value;
@@ -83,7 +77,7 @@ export default function AdditionalFormPopup ({
         handleChange("typeCd", value)
     }
 
-    const onChangeUseHelpText = (_,value:string) => {
+    const onChangeUseHelpText = (_:ChangeEvent<HTMLInputElement>, value:string) => {
         if(value==="Y") {
             setUseHelpText(true);
         } else {
@@ -92,8 +86,8 @@ export default function AdditionalFormPopup ({
         handleChange("helpText", '');
     }
 
-    const onChangeItem = (index1:number, e?:ChangeEvent ) => {
-        let newItemList: string[] = [];
+    const onChangeItem = (index1:number, e?:ChangeEvent<HTMLInputElement | HTMLTextAreaElement> ) => {
+        let newItemList: string[];
         if(e){
             const value = e.target.value;
             newItemList = (state.itemList ?? []).map((item, index2)=> index1===index2 ? value : item);
@@ -111,7 +105,7 @@ export default function AdditionalFormPopup ({
         onClose();
     }
 
-    const { state, setState, handleChange, ...rest } = useFormState(initData);
+    const { state, setState, handleChange } = useFormState(initData);
     return <WebPopup isOpen={isOpen} onClose={onClosePopup} title={"추가양식"} onSubmit={()=>onSubmit(state)}>
         <div className='left-filter-bar flex-col flex-grow' style={{width:'100%'}}>
             <PopupField title={"제목"}> 
