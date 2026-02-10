@@ -1,68 +1,52 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import BoardCard from '@/components/boards/boardList/BoardCard';
-import { useSelectBoards } from '@/hooks/boards/boards.json.hook';
-import type { BoardSearchRequest } from '@/types/type.boards';
+import useMutationBoards from '@/hooks/boards/useMutationBoards';
+import useSelecttBoards from '@/hooks/boards/useSelectBoards';
 import { Button, Pagination, Paper, Tab, Tabs } from '@mui/material';
-import React, { useState } from 'react';
-
+import type { CommonCodeItem } from '@/types/type._common';
+import {useState, useEffect} from 'react';
+import { getCodesByGroup } from '@/utils/util._common';
 
 export default function BoardList(){
-    const initData : BoardSearchRequest = {
-        page : 1,
-        categoryCd: '',
-        title: ''
-    }
-    // api (개발)
-    const [formData, setFormData] = useState<BoardSearchRequest>(initData);
-    const [searchData, setSearchData] = useState<BoardSearchRequest>(initData);
-    const {res} = useSelectBoards(searchData);
+    const {
+        res, request, 
+        setPage, 
+        setTab, 
+        title, setTitle,
+        handleSearchClick,
+    } = useSelecttBoards();
 
-    const handleSearchData = (value:string) => {
-        setFormData(prev => ({
-            ...prev,
-            title : value
-        }))
-    };
+    const {
+        handleLike
+    } = useMutationBoards();
 
-    const handleSearchClick = () => {
-        setSearchData({
-            ...formData,
-            page : 1
-        })
-    }
+    const [regionCode, setRegionCode] = useState<CommonCodeItem[]>([]);
+    useEffect(() => {
+        const codeList = getCodesByGroup('BOARD_CATEGORY');
+        setRegionCode(codeList);
+        if (codeList.length > 0) setTab(codeList[0].code);
+    }, []);
 
-    // category tabs
-    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-        setSearchData({
-            ...initData,
-            categoryCd : newValue,
-        })
-        setFormData({
-            ...initData,
-            categoryCd : newValue,
-        })
-    };
 
     return (
         <div className='main-page flex-col h-fit'>
         {/* 1. category tabs */}
         <Tabs
-            value={formData.categoryCd}
+            value={request.categoryCd}
             variant='standard'
-            onChange={handleChange}
+            onChange={(e, newValue)=>setTab(newValue)}
             textColor="primary"
             indicatorColor="primary"
             aria-label="category-tabs"
         >
-            <Tab value="" label="전체" />
-            <Tab value="4001" label="자유게시판" />
-            <Tab value="4002" label="질문게시판" />
-            <Tab value="4003" label="공지사항" />
+        {regionCode.map((item, index)=>(
+            <Tab key={index} value={item.code} label={item.name}/>
+        ))}
         </Tabs>
         {/* 2. search field */}
         <Paper className='search-box align-center' elevation={4}>
-            <CustomTextfield size='small' type='search' placeholder='제목을 입력해 주세요.' value={formData.title}
-                onChange={(e) => handleSearchData(e.target.value)}/>
+            <CustomTextfield size='small' type='search' placeholder='제목을 입력해 주세요.' value={title}
+                onChange={(e)=>setTitle(e.target.value)}/>
             <Button size='medium' variant='contained' onClick={handleSearchClick}>검색</Button>
         </Paper>
         {/* 3. board summary */}
@@ -72,11 +56,11 @@ export default function BoardList(){
         {/* 4. board list */}
         <div className="board-list flex-col" style={{ gap: '0.8rem' }}>
             {res?.dataList?.map((item, index) => {
-                return <BoardCard {...item} key={index}></BoardCard>
+                return <BoardCard key={index} boardData={item} handleLike={handleLike}></BoardCard>
             })}
             <div className='list-bottom-box w-100 align-center mt-14'>
-            <Pagination count={res?.pagination?.totalPages} page={searchData.page} onChange={(_, page) => {setSearchData(prev => ({...prev, page}));}} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
-            <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }}>글쓰기</Button>
+                <Pagination count={res?.pagination?.totalPages} page={request.page} onChange={(_, page) => {setPage(page);}} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
+                <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }}>글쓰기</Button>
             </div>
         </div>
         </div>

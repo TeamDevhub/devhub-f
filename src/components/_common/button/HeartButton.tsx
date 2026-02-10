@@ -15,7 +15,9 @@ export default function HeartButton({
   likeCount,
   className,
   noCount = false,
-  defaultLiked = false
+  defaultLiked = false,
+  onClick
+}: HeartButtonProps){
 }: HeartButtonProps) {
   const [liked, setLiked] = useState(defaultLiked);
   const { toggleLike } = useUpdateProjectLike();
@@ -25,6 +27,9 @@ export default function HeartButton({
     if (res.success) {
       setLiked(prev => !prev);
     }
+  const handleClick = () => {
+    setLiked(prev => !prev);
+    onClick?.();
   };
 
   return (
