@@ -69,7 +69,7 @@
     p { font-size: 2rem; font-weight: 600; line-height: 100%; color: rgba(0, 0, 0, 0.87); }
   }
   .field-content { gap: 0.8rem;
-    .content-box { gap: 0.8rem;
+    .content-box { gap: 0.8rem; font-size: 1.4rem; line-height: 120%; letter-spacing: 0.15px; color: var(--text-secondary);
       > * { flex: 1; }
       .required, p, .MuiButton-root { flex: 0 0 auto; }
       p { font-size: 1.6rem; line-height: 2.4rem; letter-spacing: 0.15px; color: #000; }
@@ -108,7 +108,7 @@
       .label-text { font-size: 2rem; font-weight: 500; letter-spacing: 0.15px; line-height: 160%; color: var(--text-primary); }
       &:not(:has(.required)) { padding-left: 1.6rem; }
     }
-    .field-area { gap: 2rem;
+    .field-area { gap: 1.2rem;
       .field-box { gap: 1.2rem;
         .field-title { font-size: 1.4rem; font-weight: 500; line-height: 100%; letter-spacing: 0.4px; color: #000; }
         > div { gap: 0.8rem; font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
