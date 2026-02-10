@@ -8,7 +8,7 @@ export interface BoardBasic {
     title: string;
     viewCount?:string;
     registrantGuid?: string;
-    registeredDate?: DateType;
+    registeredDate: DateType;
     modifierGuid?: string;
     modifiedDate?: DateType;
 }
