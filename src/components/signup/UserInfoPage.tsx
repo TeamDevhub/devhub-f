@@ -2,7 +2,7 @@ import logo from '@/assets/images/devHub-logo.png';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
 import FieldBox from './FieldBox';
-import {useDisclosure} from '@/hooks/_common/useDisclosure';
+import useDisclosure from '@/hooks/_common/useDisclosure';
 import useSignup from '@/hooks/signup/useSignup';
 import {COMMON_CODE} from '@/types/const';
 import {AddCircle, LockOutline, PersonOutlined} from '@mui/icons-material';

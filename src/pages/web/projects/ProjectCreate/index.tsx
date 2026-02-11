@@ -5,9 +5,9 @@ import SkillPopup from '@/components/_common/popup/SkillPopup';
 import AdditionalFormPopup from '@/components/projects/projectCreate/AdditionalFormPopup'
 import ApplicationFormGroup from '@/components/projects/projectCreate/ApplicationFormGroup';
 import PositionGroup from '@/components/projects/projectCreate/PositionGroup';
-import DragAndDropFormProps from '@/components/_common/DragAndDropForm'
+import DragAndDropForm from '@/components/_common/DragAndDropForm'
 import useCreateProject from '@/hooks/projects/useCreateProject'
-import {useDisclosure} from '@/hooks/_common/useDisclosure';
+import useDisclosure from '@/hooks/_common/useDisclosure';
 import {COMMON_CODE} from '@/types/const';
 import {type DateType} from '@/types/type.api';
 import type {ApplicationFormDetail, Position} from '@/types/type.projects';
@@ -178,7 +178,7 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropFormProps name={"attachment"} onHandleChange={(newFiles)=> onHandleEvent("attachment", newFiles[0])}/>
+                <DragAndDropForm name={"attachment"} onChange={(e)=> onHandleEvent("attachment", e.target.files?.[0])}/>
               </div>
             </div>
           </div>
@@ -190,7 +190,7 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropFormProps name={"image"} onHandleChange={(newFiles)=> onHandleEvent("image", newFiles[0])}/>
+                <DragAndDropForm name={"image"} onChange={(e)=> onHandleEvent("image", e.target.files?.[0])}/>
               </div>
             </div>
           </div>

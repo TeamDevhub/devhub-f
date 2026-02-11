@@ -3,7 +3,7 @@ import {type ApplicationFormDetail} from "@/types/type.projects"
 import {type ChangeEvent, useState} from "react";
 import CustomTextfield from "@/components/_common/customMUI/CustomTextfield";
 import CustomRadioGroup from "@/components/_common/customMUI/CustomRadioGroup"
-import {useFormState} from '@/hooks/_common/common.hook';
+import useFormState from '@/hooks/_common/useFormState.ts';
 import {Divider, IconButton, MenuItem, Select, type SelectChangeEvent} from "@mui/material";
 import {AddCircle, Remove} from '@mui/icons-material';
 import {COMMON_CODE} from '@/types/const';

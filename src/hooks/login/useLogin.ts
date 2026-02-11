@@ -1,11 +1,11 @@
-import { useMutation } from '../_common/api.hook';
-import { useFormState } from '../_common/common.hook';
+import { useMutation } from '@/hooks/_common/api.hook';
 import { Validators } from '@/utils/util._common';
 import { login } from '@/api/login/login.api';
 import { setLocalStorage } from '@/utils/util._common';
 import type { ApiResponse } from '@/types/type.api';
 import type { LoginRequest, LoginResponse } from '@/types/type.login';
 import { useNavigate } from 'react-router-dom';
+import useFormState from "@/hooks/_common/useFormState.ts";
 
 const initData: LoginRequest = {
   email: '',
