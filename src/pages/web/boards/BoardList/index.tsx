@@ -2,10 +2,9 @@ import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import BoardCard from '@/components/boards/boardList/BoardCard';
 import useMutationBoards from '@/hooks/boards/useMutationBoards';
 import useSelecttBoards from '@/hooks/boards/useSelectBoards';
-import { Button, Pagination, Paper, Tab, Tabs } from '@mui/material';
-import type { CommonCodeItem } from '@/types/type._common';
-import {useState, useEffect} from 'react';
-import { getCodesByGroup } from '@/utils/util._common';
+import {Button, Pagination, Paper, Tab, Tabs} from '@mui/material';
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
+import {COMMON_CODE} from "@/types/const.ts";
 
 export default function BoardList(){
     const {
@@ -16,17 +15,9 @@ export default function BoardList(){
         handleSearchClick,
     } = useSelecttBoards();
 
-    const {
-        handleLike
-    } = useMutationBoards();
-
-    const [regionCode, setRegionCode] = useState<CommonCodeItem[]>([]);
-    useEffect(() => {
-        const codeList = getCodesByGroup('BOARD_CATEGORY');
-        setRegionCode(codeList);
-        if (codeList.length > 0) setTab(codeList[0].code);
-    }, []);
-
+    const { handleLike } = useMutationBoards();
+    const { getCodesByGroup } = useCodes();
+    const regionCode = getCodesByGroup(COMMON_CODE.REGION_CODE);
 
     return (
         <div className='main-page flex-col h-fit'>
@@ -34,7 +25,7 @@ export default function BoardList(){
         <Tabs
             value={request.categoryCd}
             variant='standard'
-            onChange={(e, newValue)=>setTab(newValue)}
+            onChange={(_, newValue)=>setTab(newValue)}
             textColor="primary"
             indicatorColor="primary"
             aria-label="category-tabs"

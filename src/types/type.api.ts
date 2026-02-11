@@ -1,6 +1,7 @@
-import type { Dayjs } from "dayjs";
+import type {Dayjs} from "dayjs";
+import type {CommonCode, CommonCodeItem} from "@/types/type._common.ts";
 
-export type DateType = Dayjs | null;
+export type DateType = Dayjs | null | undefined;
 
 export interface Pagination {
   page: number;
@@ -22,4 +23,10 @@ export interface ApiResponse<T> {
     message: string;
   } | null;
 }
+
+export interface CommonCodeRequest {
+  used?:boolean
+}
+
+export type CommonCodeResponse = Record<CommonCode, CommonCodeItem>;
 

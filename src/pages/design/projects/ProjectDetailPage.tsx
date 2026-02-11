@@ -2,13 +2,14 @@ import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import TopButton from '@/components/_common/button/TopButton';
 import { AccessTime, ContentPaste, Favorite, LocationOn, OpenInNew, People, Person, Settings, Visibility } from '@mui/icons-material'
 import { Chip, Divider, Paper, Tooltip } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function ProjectDetailPage(){
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. project detail */}
       <Paper className='project-box project-detail-box w-100 flex-col' elevation={4}>
+        {/* 1-1. 프로젝트 헤더 */}
         <div className="project-header">
           <div className="top flex-col">
             <div className='chip-box align-center'>
@@ -63,64 +64,35 @@ export default function ProjectDetailPage(){
           </div>
         </div>
         <Divider />
+        {/* 1-2. 프로젝트 개요 */}
         <div className="project-summary flex-col">
           <strong className="summary-title">프로젝트 개요</strong>
           <div className='summary-content flex-col'>
-            <div className='summary-detail-box align-center'>
-              <div className="detail-group align-center">
-                <div className='group-label align-center'>
-                  <AccessTime sx={{ fontSize: 24, color: 'var(--primary-main)' }} />
-                  <strong>모집기간</strong>
-                </div>
-                <div className="group-value align-center">2025.12.03 ~ 2026.02.03</div>
-              </div>
-              <div className="detail-group align-center">
-                <div className='group-label align-center'>
-                  <AccessTime sx={{ fontSize: 24, color: 'var(--primary-main)' }} />
-                  <strong>프로젝트 기간</strong>
-                </div>
-                <div className="group-value align-center">2025.12.03 ~ 2026.02.03 (2개월)</div>
-              </div>
-            </div>
-            <div className='summary-detail-box align-center'>
-              <div className="detail-group align-center">
-                <div className='group-label align-center'>
-                  <LocationOn sx={{ fontSize: 24, color: 'var(--primary-main)' }} />
-                  <strong>진행방식</strong>
-                </div>
-                <div className="group-value align-center">온라인</div>
-              </div>
-              <div className="detail-group align-center">
-                <div className='group-label align-center'>
-                  <LocationOn sx={{ fontSize: 24, color: 'var(--primary-main)' }} />
-                  <strong>지역</strong>
-                </div>
-                <p className="group-value align-center">서울</p>
-              </div>
-            </div>
-            <div className='summary-detail-box align-center'>
-              <div className="detail-group align-center">
-                <div className='group-label align-center'>
-                  <Settings sx={{ fontSize: 24, color: 'var(--primary-main)' }} />
-                  <strong>사용기술</strong>
-                </div>
-                <div className="group-value align-center">
-                  <Chip size='small' variant='outlined' label='JAVA' color='secondary' />
-                  <Chip size='small' variant='outlined' label='ORACLE' color='secondary' />
-                  <Chip size='small' variant='outlined' label='JS' color='secondary' />
-                  <Chip size='small' variant='outlined' label='Phython' color='secondary' />
-                  <Chip size='small' variant='outlined' label='JAVA' color='secondary' />
-                  <Chip size='small' variant='outlined' label='ORACLE' color='secondary' />
-                </div>
-              </div>
-            </div>
-            <div className='summary-detail-box align-center'>
-              <div className="detail-group align-start">
-                <div className='group-label align-center'>
-                  <People sx={{ fontSize: 24, color: 'var(--primary-main)' }} />
-                  <strong>모집 포지션</strong>
-                </div>
-                <div className="group-value flex-col">
+            {/* 1) 모집기간&프로젝트 기간 */}
+            <SummaryDetailRow>
+              <SummaryDetailBox label='모집기간'>2025.12.03 ~ 2026.02.03</SummaryDetailBox>
+              <SummaryDetailBox label='프로젝트 기간'>2025.12.03 ~ 2026.02.03</SummaryDetailBox>
+            </SummaryDetailRow>
+            {/* 2) 진행방식&지역 */}
+            <SummaryDetailRow>
+              <SummaryDetailBox label='진행방식'>온라인</SummaryDetailBox>
+              <SummaryDetailBox label='지역'>서울</SummaryDetailBox>
+            </SummaryDetailRow>
+            {/* 3) 사용기술 */}
+            <SummaryDetailRow>
+              <SummaryDetailBox label='사용기술'>
+                <Chip size='small' variant='outlined' label='JAVA' color='secondary' />
+                <Chip size='small' variant='outlined' label='ORACLE' color='secondary' />
+                <Chip size='small' variant='outlined' label='JS' color='secondary' />
+                <Chip size='small' variant='outlined' label='Phython' color='secondary' />
+                <Chip size='small' variant='outlined' label='JAVA' color='secondary' />
+                <Chip size='small' variant='outlined' label='ORACLE' color='secondary' />
+              </SummaryDetailBox>
+            </SummaryDetailRow>
+            {/* 4) 모집 포지션 */}
+            <SummaryDetailRow>
+              <SummaryDetailBox label='모집 포지션'>
+                <div className='flex-col gap-4'>
                   <div className="position-box align-center">
                     <Chip size='small' variant='outlined' color='primary' label='기획자' />
                     <Chip size='small' variant='filled' label='하급' />
@@ -147,11 +119,12 @@ export default function ProjectDetailPage(){
                     <p>1명</p>
                   </div>
                 </div>
-              </div>
-            </div>
+              </SummaryDetailBox>
+            </SummaryDetailRow>
           </div>
         </div>
         <Divider />
+        {/* 1-3. 프로젝트 상세 */}
         <div className="project-detail flex-col">
           <strong className='detail-title'>프로젝트 상세</strong>
           <div className="detail-content">
@@ -171,24 +144,118 @@ export default function ProjectDetailPage(){
         </div>
       </Paper>
       {/* 2. floating action buttons */}
-      <div className='floating-button-box flex-col'>
-        <Tooltip arrow placement='right' title='좋아요'>
-          <Paper className='float-button favorite-button flex-center' elevation={5}>
-            <Favorite sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
-          </Paper>
-        </Tooltip>
-        <Tooltip arrow placement='right' title='지원하기'>
-          <Paper className='float-button apply-button flex-center active' elevation={5}>
-            <ContentPaste sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
-          </Paper>
-        </Tooltip>
-        <Tooltip arrow placement='right' title='공유하기'>
-          <Paper className='float-button share-button flex-center' elevation={5}>
-            <OpenInNew sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
-          </Paper>
-        </Tooltip>
-        <TopButton />
+      <FloatingButtons />
+    </div>
+  )
+}
+
+/** used components **/
+// 1. SummaryDetailRow
+type SummaryDetailRowProps = {
+  children?: React.ReactNode;
+}
+
+function SummaryDetailRow ({children}: SummaryDetailRowProps) {
+  return (
+    <div className="flex gap-12">
+      {children}
+    </div>
+  )
+}
+
+// 2. SummaryDetailBox
+type ItemLabel = '모집기간' | '프로젝트 기간' | '진행방식' | '지역' | '사용기술' | '모집 포지션';
+
+type SummaryDetailBoxProps = {
+  label: ItemLabel;
+  children?: React.ReactNode;
+}
+
+function SummaryDetailBox ({
+  label,
+  children
+}: SummaryDetailBoxProps){
+  // renderIcon
+  const renderIcon = (label: ItemLabel) => {
+    const iconProps = { sx: { fontSize: 24, color: 'var(--primary-main)' } };
+
+    switch (label) {
+      case '모집기간':
+      case '프로젝트 기간':
+        return <AccessTime {...iconProps} />;
+      case '진행방식':
+      case '지역':
+        return <LocationOn {...iconProps} />;
+      case '사용기술':
+        return <Settings {...iconProps} />;
+      case '모집 포지션':
+        return <People {...iconProps} />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className='summary-detail-box align-center'>
+      <div className={`detail-group ${label === '모집 포지션' ? 'align-start' : 'align-center'}`}>
+        <div className="group-label align-center">
+          {renderIcon(label)}
+          <strong>{label}</strong>
+        </div>
+        <div className="group-value align-center">{children}</div>
       </div>
+    </div>
+  )
+}
+
+// 3. FloatingButtons
+function FloatingButtons (){
+  const [activeButton, setActiveButton] = useState<string | null>(null);
+  type ButtonId = 'favorite' | 'apply' | 'share';
+  const handleClick = (id: ButtonId) => { setActiveButton(id) };
+  const [liked, setLiked] = useState<boolean>(() => {
+    return localStorage.getItem('liked') === 'true';
+  });
+  useEffect(() => {
+    localStorage.setItem('liked', String(liked));
+  }, [liked]);
+  const handleLikeClick = () => { setLiked(prev => !prev); setActiveButton(null); };
+  const handleTopClick = () => { setActiveButton(null) };
+
+  return (
+    <div className='floating-button-box flex-col'>
+      {/* 1) 좋아요 버튼 */}
+      <Tooltip arrow placement='right' title='좋아요'>
+        <Paper 
+          elevation={5} 
+          className={`float-button favorite-button flex-center ${activeButton === 'favorite' ? 'active' : ''}`} 
+          onClick={handleLikeClick}
+        >
+          <Favorite sx={{ fontSize: 24, color: liked ? 'var(--error-main) !important' : 'rgba(0, 0, 0, 0.56)' }} />
+        </Paper>
+      </Tooltip>
+      {/* 2) 지원하기 버튼 */}
+      <Tooltip arrow placement='right' title='지원하기'>
+        <Paper 
+          elevation={5}
+          className={`float-button apply-button flex-center ${activeButton === 'apply' ? 'active' : ''}`}
+          onClick={() => handleClick('apply')}
+        >
+          <ContentPaste sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
+        </Paper>
+      </Tooltip>
+      {/* 3) 공유하기 버튼 */}
+      <Tooltip arrow placement='right' title='공유하기'>
+        <Paper 
+          elevation={5}
+          className={`float-button share-button flex-center ${activeButton === 'share' ? 'active' : ''}`}
+          onClick={() => handleClick('share')}
+        >
+          <OpenInNew sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
+        </Paper>
+      </Tooltip>
+      {/* 4) 탑 버튼 */}
+      <TopButton onClick={handleTopClick} />
     </div>
   )
 }

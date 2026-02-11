@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { AccessTime, AddCircle, FilterAlt } from '@mui/icons-material'
 import { Button, Chip, Divider, FormControl, IconButton, MenuItem, Pagination, Paper, Select, type SelectChangeEvent } from '@mui/material'
-import { getCodeName } from '@/utils/util._common';
-import { useSelectProjects } from '@/hooks/projects/projects.json.hook';
 import type { ProjectListResponse, ProjectSearchRequest } from '@/types/type.projects';
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from '../../../components/projects/ProjectChips';
 import HeartButton from '@/components/_common/button/HeartButton';

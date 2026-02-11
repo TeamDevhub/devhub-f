@@ -1,10 +1,10 @@
-import { COMMON_CODE } from "@/types/const";
-import type { FilterData } from "@/types/type.projects";
-import { Button, Divider } from "@mui/material";
+import {COMMON_CODE} from "@/types/const";
+import type {FilterData} from "@/types/type.projects";
+import {Button, Divider} from "@mui/material";
 import SelectableGroup from '@/components/_common/SelectableGroup';
-import { getCodesByGroup } from "@/utils/util._common";
 import AddableChipGroup from '@/components/_common/AddableChipGroup';
 import FilterWarpper from "./FilterWarpper";
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export type ListFilterData = Omit<FilterData, 'recruitmentStartDate' | 'recruitmentEndDate' | 'progressStartDate'>;
 
@@ -21,6 +21,8 @@ export default function FilterList({
   handleResetFilter: () => void;
   clickOpenSkillPopup: () => void;
 }){
+
+    const {getCodesByGroup} = useCodes();
 
   return (
     <>
@@ -63,7 +65,7 @@ export default function FilterList({
       <Divider />
       <FilterWarpper title='기술 스텍' subText='기술 스텍'>
         <AddableChipGroup
-          items={getCodesByGroup(COMMON_CODE.SKILL_CODE)} 
+          CodeName={COMMON_CODE.SKILL_CODE}
           onAdd={clickOpenSkillPopup} 
           onDelete={(value) => {
             setFilter('skillCodeList', filterData.skillCodeList?.filter((item) => item !== value));

@@ -3,7 +3,7 @@ import { BoardCategoryChip } from '@/components/boards/BoardChips';
 import type { BoardSummary } from "@/types/type.boards";
 import { Create, Visibility } from '@mui/icons-material';
 import { Paper } from '@mui/material';
-import { convertString } from "@/utils/util.date";
+import {convertString} from "@/utils/util.date.ts";
 
 interface BoardCardProps {
   boardData : BoardSummary;
@@ -37,6 +37,7 @@ export default function BoardCard({
         </div>
         <div className="bottom w-100 align-center justify-between">
           <div className="left-area">
+            <p className='user-info'>{boardBasicResponseDto.userName}. {convertString(boardBasicResponseDto.registeredDate)}</p>
             <p className='user-info'>{boardBasicResponseDto.userName}. {convertString(boardBasicResponseDto.registeredDate)}</p>
           </div>
           <div className="right-area align-center">

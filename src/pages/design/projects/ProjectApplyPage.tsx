@@ -1,7 +1,9 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import { AccessTime, LocationOn, Person, Visibility } from '@mui/icons-material'
-import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, Paper, Radio, RadioGroup, Stack, TextField } from '@mui/material'
+import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, Paper, Radio, RadioGroup, Stack } from '@mui/material'
+import FieldGroup from '@/components/design/FieldGroup';
+import FormField from '@/components/design/FormField';
 
 export default function ProjectApplyPage(){
   return (
@@ -115,11 +117,8 @@ export default function ProjectApplyPage(){
             </div>
           </div>     
           {/* 3-2. 지원 포지션 */}
-          <div className="form-box w-100 align-start">
-            <div className="label-area">
-              <p className='label-text'>지원 포지션</p>
-            </div>
-            <div className="field-area flex-col" style={{ padding: '1.2rem', gap: '0.8rem' }}>
+          <FormField label='지원 포지션'>
+            <FieldGroup>
               <FormControl>
                 <RadioGroup aria-labelledby='recruitment-status-radio-group-label' defaultValue='001'>
                   <FormControlLabel 
@@ -174,78 +173,50 @@ export default function ProjectApplyPage(){
                   />
                 </RadioGroup>
               </FormControl>
-            </div>
-          </div>
+            </FieldGroup>
+          </FormField>
           {/* 3-3. 입력 정보 */}
           <div className="form-box w-100 flex-col" style={{ gap: '1.2rem' }}>
             <div className="label-area">
               <p className='label-text'>입력 정보</p>
             </div>
             <div className="field-area inform-field-box flex-col flex-1">
-              <div className="form-box w-100 align-start">
-                 <div className="label-area">
-                  <p className='label-text'>이름</p>
-                </div>
-                <div className="field-area flex-1">
-                  <CustomTextfield placeholder='이름을 입력해 주세요.' />              
-                </div>
-              </div>
-              <div className="form-box w-100 align-start">
-                 <div className="label-area">
-                  <p className='label-text'>나이</p>
-                </div>
-                <div className="field-area flex-1">
-                  <CustomTextfield placeholder='나이를 입력해 주세요.' />              
-                </div>
-              </div>
-              <div className="form-box w-100 align-start">
-                 <div className="label-area">
-                  <p className='label-text'>지원동기</p>
-                </div>
-                <div className="field-area flex-1">
-                  <CustomTextfield placeholder='지원동기를 입력해 주세요.' />                            
-                </div>
-              </div>
-              <div className="form-box w-100 align-start">
-                 <div className="label-area">
-                  <p className='label-text'>경력</p>
-                </div>
-                <div className="field-area flex-1">
-                  <CustomTextfield placeholder='경력을 입력해 주세요.' />              
-                </div>
-              </div>
-              <div className="form-box w-100 align-start">
-                 <div className="label-area">
-                  <div className="flex-col" style={{ gap: '0.4rem' }}>
-                  <p className='label-text'>첨부파일</p>
-                  <div className="help-text">
-                    <span></span>
-                    지원자가 작성해야 하는 항목을 선택하세요.<br/>
-                    기본 양식을 선택하거나, 원하면 새로운 양식을 만들 수 있어요.(최대 3개)
-                  </div>
-                </div>
-                </div>
-                <div className="field-area flex-1">
-                  {/* Drag and Drop 변경 필요 */}
-                  <TextField multiline placeholder='Link or drag and drop' />
-                </div>
-              </div>
-              <div className="form-box w-100 align-start">
-                 <div className="label-area">
-                  <p className='label-text'>참여가능 요일</p>
-                </div>
-                <div className="field-area flex-1">
-                  <FormGroup row>
-                    <FormControlLabel control={<Checkbox />} label='월요일' />
-                    <FormControlLabel control={<Checkbox />} label='화요일' />
-                    <FormControlLabel control={<Checkbox />} label='수요일' />
-                    <FormControlLabel control={<Checkbox />} label='목요일' />
-                    <FormControlLabel control={<Checkbox />} label='금요일' />
-                    <FormControlLabel control={<Checkbox />} label='토요일' />
-                    <FormControlLabel control={<Checkbox />} label='일요일' />
-                  </FormGroup>                 
-                </div>
-              </div>
+              <FormField label='이름'>
+                <FieldGroup>
+                  <CustomTextfield placeholder='이름을 입력해 주세요.' />
+                </FieldGroup>
+              </FormField>
+              <FormField label='나이'>
+                <FieldGroup>
+                  <CustomTextfield placeholder='나이를 입력해 주세요.' />
+                </FieldGroup>
+              </FormField>
+              <FormField label='지원동기'>
+                <FieldGroup>
+                  <CustomTextfield type='textarea' placeholder='지원동기를 입력해 주세요.' />
+                </FieldGroup>
+              </FormField>
+              <FormField label='경력'>
+                <FieldGroup>
+                  <CustomTextfield type='textarea' placeholder='경력을 입력해 주세요.' />
+                </FieldGroup>
+              </FormField>
+              <FormField label='첨부파일'>
+                <FieldGroup>
+                  <CustomTextfield type='textarea' noCountStr placeholder='Link or Drag and Drop' />
+                </FieldGroup>
+              </FormField>
+              <FormField label='참여가능 요일'>
+                <FormGroup row>
+                  <FormControlLabel control={<Checkbox />} label='월요일' />
+                  <FormControlLabel control={<Checkbox />} label='화요일' />
+                  <FormControlLabel control={<Checkbox />} label='수요일' />
+                  <FormControlLabel control={<Checkbox />} label='목요일' />
+                  <FormControlLabel control={<Checkbox />} label='금요일' />
+                  <FormControlLabel control={<Checkbox />} label='토요일' />
+                  <FormControlLabel control={<Checkbox />} label='일요일' />
+                </FormGroup>
+              </FormField>
             </div>
           </div>
         </div>

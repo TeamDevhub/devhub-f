@@ -49,7 +49,7 @@ export default function CustomTextfield({
   const valueLength = typeof rest.value === 'string' ? rest.value.length : 0;
   
   return (
-    <>
+    <div className='w-100'>
       <TextField 
         id={id ? id: name + '-input'}
         fullWidth
@@ -95,7 +95,7 @@ export default function CustomTextfield({
           <p>{valueLength}/{maxLength}</p>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

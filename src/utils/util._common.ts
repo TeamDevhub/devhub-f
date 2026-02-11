@@ -1,45 +1,4 @@
-import type { CommonCodeMap, CommonCode, CommonCodeItem } from '@/types/type._common';
-
-//공통 코드관련
-let commonCodeStore: CommonCodeMap = {};
-
-let initialized = false;
-
-export const setCommonCodes = (codes: CommonCodeMap) => {
-  if (initialized) return;
-  commonCodeStore = codes;
-  initialized = true;
-};
-
-export const getCommonCodes = (): CommonCodeMap => {
-  return commonCodeStore;
-};
-
-export const getCodesByGroup = (group: CommonCode): CommonCodeItem[] => {
-  return commonCodeStore[group] ?? [];
-};
-
-export const getCodeName = (group: CommonCodeItem[] | CommonCode, code: string): string => {
-  if (typeof group == 'string') group = getCodesByGroup(group);
-
-  for (const item of group) {
-    if (item.code == code) {
-      return item.name;
-    }
-    if (item.children && item.children.length > 0) {
-      const found = getCodeName(item.children, code);
-      if (found) return found;
-    }
-  }
-  return '';
-};
-
-export const getSelectOptions = (group: CommonCode) => {
-  return (commonCodeStore[group] ?? []).map((item) => ({
-    value: item.code,
-    label: item.name,
-  }));
-};
+import type {ValidationRule} from "@/hooks/_common/common.hook.ts";
 
 //로컬 저장소 관련
 /**
@@ -83,7 +42,7 @@ export const removeLocalStorage = (key: string): void => {
 export const Validators = {
   // 필수값 체크
   required: (msg: string = "필수 입력 항목입니다.") => 
-    (v: any) => (v !== null && v !== undefined && v !== "" ? null : msg),
+    (v: unknown) => (v !== null && v !== undefined && v !== "" ? null : msg),
 
   // 최소 길이 체크
   minLength: (min: number, msg?: string) => 
@@ -106,6 +65,6 @@ export const Validators = {
     (v: string) => /^\d+$/.test(v) ? null : msg,
     
   // 일치 여부 체크 (비밀번호 확인용)
-  match: (targetKey: string, msg: string) => 
-    (v: any, allState: any) => v === allState[targetKey] ? null : msg,
+  match: <T>(targetKey: keyof T, msg: string): ValidationRule<unknown, T> =>
+      (v, allState) => v === allState[targetKey] ? null : msg,
 };

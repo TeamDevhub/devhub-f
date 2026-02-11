@@ -1,8 +1,8 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import WebPopup from '@/components/_common/popup/WebPopup'
-import { Person } from '@mui/icons-material'
-import { Button, Divider, List, ListItemButton, Paper, TextField } from '@mui/material'
-import React, { useState } from 'react'
+import {Person} from '@mui/icons-material'
+import {Button, Divider, List, ListItemButton, Paper, TextField} from '@mui/material'
+import {useState} from 'react'
 
 type MyPageNavKey = 'home' | 'projects' | 'boards'
 
@@ -55,7 +55,7 @@ export default function MyInfoBox({
     <WebPopup
       size='medium'
       isOpen={openProfilePopup}
-      setOpen={setOpenProfilePopup}
+      onClose={() => setOpenProfilePopup(false)}
       onSubmit={()=>{}}
       title='사용자 이미지 변경'
       submitText='저장'

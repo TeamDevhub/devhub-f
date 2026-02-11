@@ -1,8 +1,8 @@
+import HeartButton from '@/components/_common/button/HeartButton'
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
-import { Create, Favorite, Person, Visibility } from '@mui/icons-material'
-import { Button, Chip, Divider, IconButton, Paper } from '@mui/material'
-import React from 'react'
+import { Create, Person, Visibility } from '@mui/icons-material'
+import { Button, Chip, Divider, Paper } from '@mui/material'
 
 export default function BoardDetailPage(){
   return (
@@ -18,10 +18,7 @@ export default function BoardDetailPage(){
               </strong>
             </div>
             <div className="right-area flex-col">
-              <div className='heart-box flex-col align-end'>
-                <IconButton size='small'><Favorite sx={{ fontSize: 24, color: '#D05B5B' }} /></IconButton>
-                <p className='heart-count'>206</p>
-              </div>
+              <HeartButton likeCount='5' /> 
             </div>
           </div>
           <div className="bottom w-100 align-end justify-between">
@@ -59,60 +56,46 @@ export default function BoardDetailPage(){
           <Button size='small' color='warning' className='ml-a'>신고하기</Button>
           <div className="write-reply flex-col">
             <strong>댓글</strong>
-            <div className="align-center">
+            <div className="align-stretch">
               <CustomTextfield size='small' placeholder='댓글을 입력하세요.' />
-              <Button size='medium' variant='contained' color='primary'>글쓰기</Button>
+              <Button size='small' variant='contained' color='primary'>글쓰기</Button>
             </div>
           </div>
         </div>
         {/* 3. board reply */}
         <div className="board-reply flex-col">
-          <div className="reply-box flex-col">
-            <div className="commenter-info align-center">
-              <p className='commenter-id'>김수빈</p>
-              <p className='comment-time'>12분전</p>
-            </div>
-            <div className="reply-content mt-4">
-              <p>댓글 작성 내용입니다.</p>
-            </div>
-            <Button size='small' color='warning' className='ml-a'>신고하기</Button>
-            <Divider />
-          </div>
-          <div className="reply-box flex-col">
-            <div className="commenter-info align-center">
-              <p className='commenter-id'>김수빈</p>
-              <p className='comment-time'>12분전</p>
-            </div>
-            <div className="reply-content mt-4">
-              <p>댓글 작성 내용입니다.</p>
-            </div>
-            <Button size='small' color='warning' className='ml-a'>신고하기</Button>
-            <Divider />
-          </div>
-          <div className="reply-box flex-col">
-            <div className="commenter-info align-center">
-              <p className='commenter-id'>김수빈</p>
-              <p className='comment-time'>12분전</p>
-            </div>
-            <div className="reply-content mt-4">
-              <p>댓글 작성 내용입니다.</p>
-            </div>
-            <Button size='small' color='warning' className='ml-a'>신고하기</Button>
-            <Divider />
-          </div>
-          <div className="reply-box flex-col">
-            <div className="commenter-info align-center">
-              <p className='commenter-id'>김수빈</p>
-              <p className='comment-time'>12분전</p>
-            </div>
-            <div className="reply-content mt-4">
-              <p>댓글 작성 내용입니다.</p>
-            </div>
-            <Button size='small' color='warning' className='ml-a'>신고하기</Button>
-            <Divider />
-          </div>
+          <ReplyBox userID='홍길동' replyTime='10분' replyContent='안녕하세요. 궁금한게 있어 댓글 남깁니다. 혹시 두쫀쿠 파시나요?' />
+          <ReplyBox userID='홍길동' replyTime='10분' replyContent='안녕하세요. 궁금한게 있어 댓글 남깁니다. 혹시 두쫀쿠 파시나요?' />
+          <ReplyBox userID='홍길동' replyTime='10분' replyContent='안녕하세요. 궁금한게 있어 댓글 남깁니다. 혹시 두쫀쿠 파시나요?' />
         </div>
       </Paper>
+    </div>
+  )
+}
+
+/** used components **/
+export interface ReplyBoxProps {
+  userID?: string;
+  replyTime?: string;
+  replyContent?: string;
+}
+
+function ReplyBox ({
+  userID,
+  replyTime,
+  replyContent = ''
+}: ReplyBoxProps){
+  return (
+    <div className="reply-box flex-col">
+      <div className="commenter-info align-center">
+        <p className='commenter-id'>{userID}</p>
+        <p className='comment-time'>{replyTime}전</p>
+      </div>
+      <div className="reply-content mt-4">
+        <p dangerouslySetInnerHTML={{ __html: replyContent }} />
+      </div>
+      <Button size='small' color='warning' className='ml-a'>신고하기</Button>
+      <Divider />
     </div>
   )
 }

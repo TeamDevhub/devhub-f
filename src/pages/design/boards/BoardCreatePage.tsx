@@ -1,6 +1,9 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { Button, FormControl, MenuItem, Paper, Select, type SelectChangeEvent } from '@mui/material'
-import React, { useState } from 'react'
+import FormField from '@/components/design/FormField';
+import FieldGroup from '@/components/design/FieldGroup';
+import { useState } from 'react'
+
 
 export default function BoardCreatePage(){
   // category select
@@ -16,12 +19,9 @@ export default function BoardCreatePage(){
         <strong className="page-title">게시글 생성</strong>
         {/* 2. board create form */}
         <div className="form-wrap flex-col">
-          <div className="form-box w-100 align-start">
-            <div className="label-area flex">
-              <span className='required'>*</span>
-              <p className='label-text'>카테고리</p>
-            </div>
-            <div className="field-area flex-col flex-1" style={{ gap: '1.2rem' }}>
+          {/* 2-1. 카테고리 */}
+          <FormField required label='카테고리'>
+            <FieldGroup>
               <FormControl variant='outlined' sx={{ minWidth: '27rem' }}>
                 <Select 
                   id='category' value={category} onChange={handleChange} size='medium' displayEmpty
@@ -30,28 +30,18 @@ export default function BoardCreatePage(){
                   <MenuItem value=''>None</MenuItem>
                 </Select>
               </FormControl>
-            </div>
-          </div>
-          <div className="form-box w-100 align-start">
-            <div className="label-area flex">
-              <span className='required'>*</span>
-              <p className='label-text'>제목</p>
-            </div>
-            <div className="field-area flex-col flex-1" style={{ gap: '1.2rem' }}>
-              <CustomTextfield placeholder='제목을 입력해 주세요.' />
-            </div>
-          </div>
-          <div className="form-box w-100 align-start">
-            <div className="label-area flex">
-              <span className='required'>*</span>
-              <p className='label-text'>내용</p>
-            </div>
-            <div className="field-area flex-1">
-              <div className="field-box">
-                <CustomTextfield type='textarea' placeholder='내용을 입력해 주세요.' />
-              </div>
-            </div>
-          </div>
+            </FieldGroup>
+          </FormField>
+          {/* 2-2. 제목 */}
+          <FormField required label='제목'>
+            <CustomTextfield placeholder='제목을 입력해 주세요.' />
+          </FormField>
+          {/* 2-3. 내용 */}
+          <FormField required label='내용'>
+            <FieldGroup>
+              <CustomTextfield type='textarea' placeholder='내용을 입력해 주세요.' />
+            </FieldGroup>
+          </FormField>
           <div className="action-button-box align-center justify-end">
             <Button size='large' variant='outlined'>취소</Button>
             <Button size='large' variant='contained'>등록</Button>

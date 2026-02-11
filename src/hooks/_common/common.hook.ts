@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 
-export type ValidationRule<V> = (value: V, allState: never) => string | null;
+export type ValidationRule<V, T = unknown> = (value: V, allState: T) => string | null;
 export type ValidationRules<T> = {
-  [K in keyof T]?: ValidationRule<T[K]>[];
+  [K in keyof T]?: ValidationRule<T[K], T>[];
 };
 
 type ArrayKeys<T> = {
-  [K in keyof T]: NonNullable<T[K]> extends never[] ? K : never;
+  [K in keyof T]: NonNullable<T[K]> extends unknown[] ? K : never;
 }[keyof T];
 
 type ElementOf<T> = NonNullable<T> extends (infer U)[] ? U : never;
@@ -72,18 +72,18 @@ export const useFormState = <T extends object>(
 
   const createToggle = useCallback(<K extends ArrayKeys<T>>(key: K) => {
     return (value: ElementOf<T[K]>) => {
-      const currentValues = (state[key] as unknown as never[]) || [];
+      const currentValues = (state[key] as unknown[]) || [];
 
       if (value === '') {
-        handleChange(key, [] as unknown as T[K]);
+        handleChange(key, [] as T[K]);
         return;
       }
-      const isIncluded = currentValues.includes(value as never);
+      const isIncluded = currentValues.includes(value);
       const nextValues = isIncluded
         ? currentValues.filter((item) => item !== value)
         : [...currentValues, value];
 
-      handleChange(key, nextValues as unknown as T[K]);
+      handleChange(key, nextValues as T[K]);
     };
   }, [state, handleChange]);
 

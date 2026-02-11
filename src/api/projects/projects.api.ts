@@ -25,10 +25,13 @@ export const updateProject = (req: {
     { method: "put" }
   );
 
-export const updateProjectLike = (projectId: string) =>
+export const updateProjectLike = (req: {
+  projectId: string;
+  liked: boolean;
+}) =>
   fetcher<void>(
-    `/projects/${projectId}/likes`,
-    undefined,
+    `/projects/${req.projectId}/likes`,
+    req.liked,
     { method: "post" }
   );
   
