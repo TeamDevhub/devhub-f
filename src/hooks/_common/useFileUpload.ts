@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import fetcher from "@/utils/util.api";
-import type {UploadResponse} from "@/types/type.api.ts";
+import type {ApiResponse, UploadResponse} from "@/types/type.api.ts";
 import {ERROR_MESSAGES} from "@/types/errorMessages.const.ts";
 
 interface FileState {
@@ -130,6 +130,11 @@ const useFileUpload = () => {
 
         const uploadUrl = '';
         console.log(uploadUrl, formData);
+        return {
+            success:true,
+            code: '',
+            data:{ 'image' : 'IMAGE_GUID_TEST', 'attachment' : 'ATTACH_GUID_TEST'},
+        } as ApiResponse<UploadResponse>
         // return await fetcher<UploadResponse>(uploadUrl, formData);
     };
 
