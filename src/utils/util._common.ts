@@ -1,4 +1,5 @@
-import type {ValidationRule} from "@/hooks/_common/common.hook.ts";
+import type {ValidationRule} from "@/hooks/_common/useFormState.ts";
+import {ERROR_MESSAGES} from "@/types/errorMessages.const.ts";
 
 //로컬 저장소 관련
 /**
@@ -38,30 +39,29 @@ export const removeLocalStorage = (key: string): void => {
 };
 
 //벨리데이션
-//prettier-ignore
 export const Validators = {
   // 필수값 체크
-  required: (msg: string = "필수 입력 항목입니다.") => 
+  required: (msg: string = ERROR_MESSAGES.VALIDATE_REQUIRED) =>
     (v: unknown) => (v !== null && v !== undefined && v !== "" ? null : msg),
 
   // 최소 길이 체크
   minLength: (min: number, msg?: string) => 
-    (v: string) => v.length >= min ? null : (msg || `최소 ${min}자 이상 입력해주세요.`),
+    (v: string) => v.length >= min ? null : (msg || ERROR_MESSAGES.VALIDATE_MIN_LENGTH(min)),
 
   // 최대 길이 체크
   maxLength: (max: number, msg?: string) => 
-    (v: string) => v.length <= max ? null : (msg || `최대 ${max}자까지 가능합니다.`),
+    (v: string) => v.length <= max ? null : (msg || ERROR_MESSAGES.VALIDATE_MAX_LENGTH(max)),
 
   // 배열 최소 길이 체크
   minArrayLength: (min: number, msg?: string) =>
-    (v: string[]) => v.length >= min ? null : (msg || `최소 ${min}개 이상 선택해주세요.`),
+    (v: string[]) => v.length >= min ? null : (msg || ERROR_MESSAGES.VALIDATE_MIN_ARRAY_LENGTH(min)),
 
   // 이메일 형식 체크
-  email: (msg: string = "올바른 이메일 형식이 아닙니다.") => 
+  email: (msg: string = ERROR_MESSAGES.VALIDATE_EMAIL) =>
     (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? null : msg,
 
   // 숫자만 입력 체크
-  onlyNumber: (msg: string = "숫자만 입력 가능합니다.") => 
+  onlyNumber: (msg: string = ERROR_MESSAGES.VALIDATE_ONLY_NUMBER) =>
     (v: string) => /^\d+$/.test(v) ? null : msg,
     
   // 일치 여부 체크 (비밀번호 확인용)
