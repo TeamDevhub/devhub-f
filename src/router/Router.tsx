@@ -19,6 +19,7 @@ import SignInPage2 from '@/pages/design/signup/SignInPage2';
 import SkillTrendsPage from '@/pages/design/skilltrends/SkillTrendsPage';
 import ErrorPage from '@/pages/ErrorPage';
 import BoardList from '@/pages/web/boards/BoardList';
+import BoardCreate from '@/pages/web/boards/BoardCreate';
 import Login from '@/pages/web/login/Login';
 import MainPage from '@/pages/web/MainPage';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <BoardList />
+          },
+          {
+            path: 'create',
+            element: <BoardCreate />
           },
         ]
       },

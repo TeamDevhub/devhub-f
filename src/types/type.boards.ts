@@ -1,14 +1,15 @@
 import type { DateType } from '@/types/type.api';
 
 export interface BoardBasic {
-    boardGuid: string;
-    userGuid: string;
-    userName: string;
+    boardGuid?: string;
+    userGuid?: string;
+    userName?: string;
     categoryCd: string;
     title: string;
+    content: string;
     viewCount?:string;
     registrantGuid?: string;
-    registeredDate: DateType;
+    registeredDate?: DateType;
     modifierGuid?: string;
     modifiedDate?: DateType;
 }
@@ -40,7 +41,3 @@ export interface BoardSearchRequest {
     title?: string;
 }
 export type SearchData = Pick<BoardSearchRequest, 'page' | 'categoryCd' | 'title'>;
-
-export interface BoardListResponse {
-    
-}
