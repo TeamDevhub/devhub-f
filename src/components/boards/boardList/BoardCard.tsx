@@ -38,7 +38,6 @@ export default function BoardCard({
         <div className="bottom w-100 align-center justify-between">
           <div className="left-area">
             <p className='user-info'>{boardBasicResponseDto.userName}. {convertString(boardBasicResponseDto.registeredDate)}</p>
-            <p className='user-info'>{boardBasicResponseDto.userName}. {convertString(boardBasicResponseDto.registeredDate)}</p>
           </div>
           <div className="right-area align-center">
             <div className='view-count align-center'>
