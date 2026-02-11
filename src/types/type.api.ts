@@ -30,3 +30,6 @@ export interface CommonCodeRequest {
 
 export type CommonCodeResponse = Record<CommonCode, CommonCodeItem>;
 
+export interface UploadResponse {
+
+}
