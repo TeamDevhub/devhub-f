@@ -65,7 +65,8 @@ export default function BoardCreate() {
                 helperText={errors.content ? errors.content : ''} 
                 onChange={(e) => onHandleEvent('content', e.target.value)} 
                 type='textarea' 
-                placeholder='내용을 입력해 주세요.' 
+                placeholder='내용을 입력해 주세요.'
+                value={values.content}
               />
             </FieldGroup>
           </FormField>

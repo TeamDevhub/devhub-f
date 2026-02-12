@@ -20,7 +20,7 @@ export default function useCreateBoard() {
 
     const {state, setState, handleChange, checkError, errors} = useFormState(initData, {validations, mode:'manual'}); 
     const {mutate:requestCreateBoard} = useMutation<BoardBasic, void>(createBoard); 
-    
+
     const onSubmit = async () => {
         if (checkError()) {return;}
         await requestCreateBoard(state);
