@@ -18,8 +18,16 @@ export default function useCreateBoard() {
         categoryCd : [Validators.required()],
     }
 
+    const handleSuccessCreate = () => {
+        alert('생성이 완료되었습니다.');
+    }
+
+    const handleFailCreate = () => {
+        alert('생성이 실패되었습니다.');
+    }
+
     const {state, setState, handleChange, checkError, errors} = useFormState(initData, {validations, mode:'manual'}); 
-    const {mutate:requestCreateBoard} = useMutation<BoardBasic, void>(createBoard); 
+    const {mutate:requestCreateBoard} = useMutation<BoardBasic, void>(createBoard, handleSuccessCreate, handleFailCreate); 
 
     const onSubmit = async () => {
         if (checkError()) {return;}
