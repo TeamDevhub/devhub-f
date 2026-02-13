@@ -25,29 +25,33 @@ function PopupField({
     subText,
     children
 }: {title?: string, subText?:string, children?: React.ReactNode}) {
-    return <div className='filter-box flex-col'>
-            <div className='filter-title align-start justify-between'>
-            <div className='text-box flex-col'>
-                {title && <strong>{title}</strong>}
-                {subText && <p>{subText}</p>}
-            </div>
-            </div>
-            <div className='filter-options align-center flex-wrap'>
-                {children ?? children}
-            </div>
+    return (
+    <div className='filter-box flex-col'>
+        <div className='filter-title align-start justify-between'>
+        <div className='text-box flex-col'>
+            {title && <strong>{title}</strong>}
+            {subText && <p>{subText}</p>}
         </div>
+        </div>
+        <div className='filter-options align-center flex-wrap'>
+            {children ?? children}
+        </div>
+    </div>
+    )
 }
 
 function Item({
     index,
     onChange,
 }: {index: number; onChange: (index1:number, e?:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void}){
-    return <div className="field-box flex-col mt-5">
-                <div className="align-center">
-                    <CustomTextfield placeholder="항목" onChange={(e)=>onChange(index, e)}/>
-                    <IconButton size='small' onClick={()=>onChange(index)}><Remove sx={{ fontSize: 24, color: 'text.disabled' }} /></IconButton>
-                </div>
+    return (
+        <div className="field-box flex-col mt-5">
+            <div className="align-center">
+                <CustomTextfield placeholder="항목" onChange={(e)=>onChange(index, e)}/>
+                <IconButton size='small' onClick={()=>onChange(index)}><Remove sx={{ fontSize: 24, color: 'text.disabled' }} /></IconButton>
             </div>
+        </div>
+    )
 }
 
 export default function AdditionalFormPopup ({
@@ -106,30 +110,32 @@ export default function AdditionalFormPopup ({
     }
 
     const { state, setState, handleChange } = useFormState(initData);
-    return <WebPopup isOpen={isOpen} onClose={onClosePopup} title={"추가양식"} onSubmit={()=>onSubmit(state)}>
-        <div className='left-filter-bar flex-col flex-grow' style={{width:'100%'}}>
-            <PopupField title={"제목"}> 
-                <CustomTextfield placeholder="제목" onChange={(e)=>handleChange("title", e.target.value)}/>
-            </PopupField>
-            <PopupField title={"타입"} subText={"텍스트: 주관식 / 선택박스, 라디오버튼: 객관식"}> 
-                <Select size="medium" className="w-100" defaultValue={initData.typeCd} 
-                onChange={onChangeTypeCd} > 
-                    {typeCdOption.map((item)=><MenuItem value={item.value}>{item.label}</MenuItem>)}
-                </Select>
-            </PopupField>
-            <Divider />
-            <PopupField title={"도움말"}> 
-                <CustomRadioGroup values={useYn} defaultValue={useYn[0].value} onChange={onChangeUseHelpText}/>
-                {useHelpText && <CustomTextfield placeholder="도움말" onChange={(e)=>handleChange("helpText", e.target.value)}/>}
-            </PopupField>
-            {useItemList && <PopupField title={"선택항목"} subText="최대 5개">
-                <div>
-                {state.itemList?.map((_, index)=> <Item key={index} index={index} onChange={onChangeItem}/>)}
-                <IconButton size='small' onClick={()=>{handleChange("itemList", state.itemList?.concat(''))}}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
-                </div>
-            </PopupField>}
-            
-        </div>
-    </WebPopup>
+    return (
+        <WebPopup isOpen={isOpen} onClose={onClosePopup} title={"추가양식"} onSubmit={()=>onSubmit(state)}>
+            <div className='left-filter-bar flex-col flex-grow' style={{width:'100%'}}>
+                <PopupField title={"제목"}> 
+                    <CustomTextfield placeholder="제목" onChange={(e)=>handleChange("title", e.target.value)}/>
+                </PopupField>
+                <PopupField title={"타입"} subText={"텍스트: 주관식 / 선택박스, 라디오버튼: 객관식"}> 
+                    <Select size="medium" className="w-100" defaultValue={initData.typeCd} 
+                    onChange={onChangeTypeCd} > 
+                        {typeCdOption.map((item)=><MenuItem value={item.value}>{item.label}</MenuItem>)}
+                    </Select>
+                </PopupField>
+                <Divider />
+                <PopupField title={"도움말"}> 
+                    <CustomRadioGroup values={useYn} defaultValue={useYn[0].value} onChange={onChangeUseHelpText}/>
+                    {useHelpText && <CustomTextfield placeholder="도움말" onChange={(e)=>handleChange("helpText", e.target.value)}/>}
+                </PopupField>
+                {useItemList && <PopupField title={"선택항목"} subText="최대 5개">
+                    <div>
+                    {state.itemList?.map((_, index)=> <Item key={index} index={index} onChange={onChangeItem}/>)}
+                    <IconButton size='small' onClick={()=>{handleChange("itemList", state.itemList?.concat(''))}}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
+                    </div>
+                </PopupField>}
+                
+            </div>
+        </WebPopup>
+    )
 
 }
