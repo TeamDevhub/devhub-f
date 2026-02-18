@@ -34,18 +34,18 @@ export const updateProjectLike = (req: {
     req.liked,
     { method: "post" }
   );
-  
-export const createProject = (req: ProjectCreate) => 
+
+export const createProject = (req: ProjectCreate) =>
   fetcher<void, ProjectCreate>(
     '/projects',
     req,
     { method: "post" }
   );
 
-export const getApplicationForms = (req: ApplicationFormRequest) => 
+export const getApplicationForms = (req: ApplicationFormRequest) =>
   fetcher<ApplicationFormBasic, ApplicationFormRequest>(
     '/applicationForms',
     req,
-    { method: "post" }
+    { method: "get" }
   );
 

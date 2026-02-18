@@ -45,7 +45,7 @@ export interface ProjectCreate extends ProjectDetail {
 }
 
 export interface ApplicationFormBasic {
-  applicationFormGuid?: string;
+  applicationFormGuid: string;
   typeCd: string;
   title: string;
   helpText?: string;
@@ -70,27 +70,27 @@ export interface ApplicationFormRequest {
 }
 
 export interface ProjectSearchRequest {
-  page:number;
-  size:number;
-  order?:string;
-  keyword?:string;
-  skillCodeList?:string[];
-  regionCodeList?:string[];
-  positionCodeList?:string[];
-  progressPeriodList?:string[];
-  positionLevelCodeList?:string[];
-  projectRecruitTypeList?:string[];
-  projectProgressTypeList?:string[];
-  projectRecruitStatusList?:string[];
-  recruitmentStartDate?:DateType;
-  recruitmentEndDate?:DateType;
-  progressStartDate?:DateType;
+  page: number;
+  size: number;
+  order?: string;
+  keyword?: string;
+  skillCodeList?: string[];
+  regionCodeList?: string[];
+  positionCodeList?: string[];
+  progressPeriodList?: string[];
+  positionLevelCodeList?: string[];
+  projectRecruitTypeList?: string[];
+  projectProgressTypeList?: string[];
+  projectRecruitStatusList?: string[];
+  recruitmentStartDate?: DateType;
+  recruitmentEndDate?: DateType;
+  progressStartDate?: DateType;
 };
 export type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword' | 'size'>;
 export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
 export interface UpdateProjectRequest {
-  
+
 };
 
 export interface ProjectListResponse extends ProjectDetail {
