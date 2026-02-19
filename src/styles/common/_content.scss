@@ -334,3 +334,23 @@
     }
   }
 }
+// 3. userInfo
+.notification-menu {
+  .MuiMenuItem-root { max-width: 30rem; gap: 0 !important; 
+    .main-text { width: 100%; min-width: 0; font-size: 1.6rem; font-weight: 500; line-height: 150%; letter-spacing: 0.15px; white-space: normal; }
+    .alert-date { font-size: 1rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-secondary); }
+    &:not(:last-child) { border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+    &:only-child { border-bottom: none; }
+  }
+  & .info { background-color: #E5F6FD;
+    .main-text { color: #014361; }
+  }
+  & .error { background-color: #FDEDED;
+    .main-text { color: #5F2120; }
+  }
+  .detail-button { min-width: 0 !important; padding: 0 !important; font-size: 1rem; line-height: 175%;
+    .MuiButton-icon { margin-left: 0.6rem;
+      .MuiSvgIcon-root { font-size: 0.8rem !important; }
+    }
+  }
+}
