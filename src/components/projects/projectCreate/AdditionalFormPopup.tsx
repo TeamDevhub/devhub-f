@@ -6,19 +6,13 @@ import CustomRadioGroup from "@/components/_common/customMUI/CustomRadioGroup"
 import useFormState from '@/hooks/_common/useFormState.ts';
 import {Divider, IconButton, MenuItem, Select, type SelectChangeEvent} from "@mui/material";
 import {AddCircle, Remove} from '@mui/icons-material';
-import {COMMON_CODE} from '@/types/const';
-import {useCodes} from "@/contexts/CommonCodeContext.ts";
+import {APPLICATION_FORM_TYPE, APPLICATION_FORM_TYPE_OPTIONS, USE_YN_OPTIONS, type ApplicationFormType}  from '@/components/projects/projectCreate/constants'
 
 interface  AdditionnalFormPopupProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (newForm:ApplicationFormDetail) => void;
 }
-
-const useYn = [
-    {label: "사용", value: "Y"},
-    {label: "미사용", value: "N"}
-]
 
 function PopupField({
     title,
@@ -60,24 +54,19 @@ export default function AdditionalFormPopup ({
     onSubmit,
 }: AdditionnalFormPopupProps) {
     const initData:ApplicationFormDetail =  {
-        typeCd: '7001',
+        typeCd: APPLICATION_FORM_TYPE.SHORTTEXT,
         title: '',
         helpText: '',
         itemList: [''],
     }
-    const { getSelectOptions } = useCodes();
-    const typeCdOption = getSelectOptions(COMMON_CODE.APPLICATION_FORM_TYPE);
     const [useHelpText, setUseHelpText] = useState<boolean>(true);
     const [useItemList, setUseItemList] = useState<boolean>(false);
 
 
     const onChangeTypeCd = (event: SelectChangeEvent)=> {
-        const value = event.target.value;
-        if(value==="7001") {
-            setUseItemList(false);
-        } else {
-            setUseItemList(true);
-        }
+        const value = event.target.value as ApplicationFormType;
+        const needItemList = value === APPLICATION_FORM_TYPE.SELECTBOX || value === APPLICATION_FORM_TYPE.CHECKBOX;
+        setUseItemList(needItemList);
         handleChange("typeCd", value)
     }
 
@@ -119,12 +108,12 @@ export default function AdditionalFormPopup ({
                 <PopupField title={"타입"} subText={"텍스트: 주관식 / 선택박스, 라디오버튼: 객관식"}> 
                     <Select size="medium" className="w-100" defaultValue={initData.typeCd} 
                     onChange={onChangeTypeCd} > 
-                        {typeCdOption.map((item)=><MenuItem value={item.value}>{item.label}</MenuItem>)}
+                        {APPLICATION_FORM_TYPE_OPTIONS.map((item)=><MenuItem value={item.value}>{item.label}</MenuItem>)}
                     </Select>
                 </PopupField>
                 <Divider />
                 <PopupField title={"도움말"}> 
-                    <CustomRadioGroup values={useYn} defaultValue={useYn[0].value} onChange={onChangeUseHelpText}/>
+                    <CustomRadioGroup values={USE_YN_OPTIONS} defaultValue={USE_YN_OPTIONS[0].value} onChange={onChangeUseHelpText}/>
                     {useHelpText && <CustomTextfield placeholder="도움말" onChange={(e)=>handleChange("helpText", e.target.value)}/>}
                 </PopupField>
                 {useItemList && <PopupField title={"선택항목"} subText="최대 5개">

@@ -4,7 +4,7 @@ import { type SelectComponentProps } from '@/types/type._common'
 export interface CustomRadioGroupProps extends Omit<RadioGroupProps, 'children'> {
     defaultValue?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>, value: string) => void;
-    values: SelectComponentProps[];
+    values: readonly SelectComponentProps[];
 }
 
 export default function CustomRadioGroup ({

@@ -1,4 +1,5 @@
 import type { DateType } from "@/types/type.api";
+import type { ApplicationFormType } from "@/components/projects/projectCreate/constants"
 
 export interface ProjectBasic {
   projectGuid?: string;
@@ -46,7 +47,7 @@ export interface ProjectCreate extends ProjectDetail {
 
 export interface ApplicationFormBasic {
   applicationFormGuid: string;
-  typeCd: string;
+  typeCd: ApplicationFormType;
   title: string;
   helpText?: string;
   vertYn?: string;
