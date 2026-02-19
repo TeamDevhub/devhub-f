@@ -1,62 +1,65 @@
-import {useState, useEffect} from "react"
+import { useState, useRef, forwardRef, useImperativeHandle, type ChangeEvent, type DragEvent } from "react";
 
-export interface DragAndDropFormProps{
-    onHandleChange?:(newFiles: File[]) => void;
+export interface DragAndDropFormProps {
     placeHolder?: string;
     name?: string;
-    multiple?: boolean;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-export default function DragAndDropForm({
-    onHandleChange,
-    placeHolder = '파일을 드래그하거나 클릭하세요',
-    name,
-    multiple=false
-}: DragAndDropFormProps) {
-    const [files, setFiles] = useState<File[]>([]);
-    const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        const droppedFiles = Array.from(e.dataTransfer.files);
-        setFiles(prev => [...prev, ...droppedFiles]);
-        
-    };
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const newFiles = Array.from(e.target.files);
-        if(multiple){
-            setFiles(prev => [
-                ...prev,
-                ...newFiles
-            ]);
-        } else{
-            setFiles(newFiles);
-        }
+const DragAndDropForm = forwardRef<HTMLInputElement, DragAndDropFormProps>(
+    ({ placeHolder = "파일을 드래그하거나 클릭하세요", name , onChange, ...res}, ref) => {
+        const internalRef = useRef<HTMLInputElement>(null);
+
+        useImperativeHandle(ref, () => internalRef.current!);
+        const [fileName, setFileName] = useState<string | null>(null);
+
+        const onDrop = (e: DragEvent<HTMLDivElement>) => {
+            e.preventDefault();
+            const files = e.dataTransfer.files;
+
+            if (files && files.length > 0 && internalRef.current) {
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(files[0]);
+                internalRef.current.files = dataTransfer.files;
+                internalRef.current.dispatchEvent(new Event("change", { bubbles: true }));
+            }
+        };
+
+        const _onChange = (e: ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files?.[0];
+            if (file) {
+                setFileName(file.name); // UI 업데이트는 여기서만!
+            }
+            onChange?.(e);
+        };
+
+        return (
+            <div
+                id={'file-drag-drop-' + name}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={onDrop}
+                onClick={() => internalRef.current?.click()}
+                style={{
+                    border: "2px dashed #aaa",
+                    padding: "40px",
+                    textAlign: "center",
+                    cursor: "pointer",
+                }}
+            >
+                <p>
+                    {fileName ? fileName : placeHolder}
+                </p>
+                <input
+                    {...res}
+                    type="file"
+                    ref={internalRef} // 내부 ref 연결
+                    name={name}
+                    hidden
+                    onChange={_onChange}
+                />
+            </div>
+        );
     }
+);
 
-    useEffect(()=>{
-        onHandleChange?.(files);
-    }, [files]);
-
-    return <div
-            id={name}
-            onDragOver={e => e.preventDefault()}
-            onDrop={onDrop}
-            onClick={() => document.getElementById('fileInput'+name)?.click()}
-            style={{
-            border: '2px dashed #aaa',
-            padding: '40px',
-            textAlign: 'center',
-            cursor: 'pointer'
-            }}
-        >
-            {files[0]?.name || placeHolder}
-            <input
-            id={"fileInput" + name}
-            type="file"
-            multiple={multiple}
-            hidden
-            onChange={onChange}
-            />
-            
-        </div>
-}
+export default DragAndDropForm;

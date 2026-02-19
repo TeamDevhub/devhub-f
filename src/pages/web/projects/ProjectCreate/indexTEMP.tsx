@@ -6,15 +6,16 @@ import AdditionalFormPopup from '@/components/projects/projectCreate/AdditionalF
 import ApplicationFormGroup from '@/components/projects/projectCreate/ApplicationFormGroup';
 import PositionGroup from '@/components/projects/projectCreate/PositionGroup';
 import DragAndDropForm from '@/components/_common/DragAndDropForm'
-import useCreateProject from '@/hooks/projects/useCreateProject'
+import useCreateProject from '@/hooks/projects/useCreateProjectTEMP.ts'
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import {COMMON_CODE} from '@/types/const';
 import {type DateType} from '@/types/type.api';
 import type {ApplicationFormDetail, Position} from '@/types/type.projects';
 import {AddCircle, Remove, Search} from '@mui/icons-material';
-import {Button, Chip, Divider, FormControl, FormLabel, IconButton, Paper} from '@mui/material';
+import {Button, Divider, FormControl, FormLabel, IconButton, Paper} from '@mui/material';
 import {DatePicker} from '@mui/x-date-pickers';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
+import AddableChipGroup from "@/components/_common/AddableChipGroup.tsx";
 
 export default function ProjectCreate(){
   const skillPopup = useDisclosure();
@@ -28,8 +29,10 @@ export default function ProjectCreate(){
   const {
       values,
       onHandleEvent,
-      onHandleDeleteSkillChip,
+      createToggle,
       onSubmit,
+      imageRef,
+      attachmentRef,
   } = useCreateProject()
 
   return (
@@ -95,11 +98,12 @@ export default function ProjectCreate(){
               </div>
               <div className="field-box flex-col align-start">
                 <p className="field-title">기술스택</p>
-                <div className="align-center">
-                  {values.skillList?.map((item) => {
-                    return <Chip size='medium' variant='filled' label={getCodeName(COMMON_CODE.SKILL_CODE, item)} color='primary' onDelete={() => onHandleDeleteSkillChip(item)} />})}
-                </div>
-                <IconButton size='small' onClick={skillPopup.toggle}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
+                <AddableChipGroup values={values.skillList} CodeName={COMMON_CODE.SKILL_CODE} onDelete={createToggle('skillList')} onAdd={skillPopup.toggle}/>
+                {/*<div className="align-center">*/}
+                {/*  {values.skillList?.map((item) => {*/}
+                {/*    return <Chip size='medium' variant='filled' label={getCodeName(COMMON_CODE.SKILL_CODE, item)} color='primary' onDelete={createToggle('skillList')} />})}*/}
+                {/*</div>*/}
+                {/*<IconButton size='small' onClick={skillPopup.toggle}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>*/}
               </div>
             </div>
           </div>
@@ -178,7 +182,7 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropForm name={"attachment"} onChange={(e)=> onHandleEvent("attachment", e.target.files?.[0])}/>
+                <DragAndDropForm name={"attachment"} ref={attachmentRef}/>
               </div>
             </div>
           </div>
@@ -190,7 +194,7 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropForm name={"image"} onChange={(e)=> onHandleEvent("image", e.target.files?.[0])}/>
+                <DragAndDropForm name={"image"} ref={imageRef}/>
               </div>
             </div>
           </div>

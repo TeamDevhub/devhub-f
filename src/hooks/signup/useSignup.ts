@@ -3,8 +3,8 @@ import type { ApiResponse } from '@/types/type.api';
 import type { SignupRequest } from '@/types/type.signup';
 import { Validators } from '@/utils/util._common';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '../_common/api.hook';
-import { useFormState } from '../_common/common.hook';
+import { useMutation } from '@/hooks/_common/api.hook';
+import useFormState from '@/hooks/_common/useFormState.ts';
 
 interface SignupFormState extends SignupRequest {
   passwordConfirm: string;

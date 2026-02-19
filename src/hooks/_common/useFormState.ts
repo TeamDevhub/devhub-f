@@ -11,7 +11,7 @@ type ArrayKeys<T> = {
 
 type ElementOf<T> = NonNullable<T> extends (infer U)[] ? U : never;
 
-export const useFormState = <T extends object>(
+const useFormState = <T extends object>(
   initialState: T,
   options?: {
     validations?: ValidationRules<T>;
@@ -103,3 +103,5 @@ export const useFormState = <T extends object>(
     reset 
   } as const;
 };
+
+export default useFormState;

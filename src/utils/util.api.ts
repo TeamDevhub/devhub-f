@@ -140,10 +140,7 @@ const responseErrorInterceptor = async (err: unknown) => {
 /////////////////////////////////////////////////////
 
 export const axiosInstance = axios.create({
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  method: 'post',
+
 });
 
 axiosInstance.interceptors.request.use(

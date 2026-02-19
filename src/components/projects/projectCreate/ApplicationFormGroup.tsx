@@ -21,6 +21,6 @@ export default function ApplicationFormGroup({ onChange }: CustomCheckboxGroupPr
     };
 
     return <FormGroup>
-        {res?.dataList?.map((item: ApplicationFormBasic, index: number) => <FormControlLabel key={index} control={<Checkbox onChange={(e) => handleOnChange(item.typeCd, e.target.checked)}/>} label={item.title} />)}
+        {/*{res?.dataList?.map((item: ApplicationFormBasic, index: number) => <FormControlLabel key={index} control={<Checkbox onChange={(e) => handleOnChange(item.typeCd, e.target.checked)}/>} label={item.title} />)}*/}
     </FormGroup>
 }
