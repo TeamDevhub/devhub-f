@@ -55,6 +55,7 @@ export default function BoardCreate() {
               helperText={errors.title ? errors.title : ''} 
               onChange={(e) => onHandleEvent('title', e.target.value)} 
               placeholder='제목을 입력해 주세요.' 
+              value={values.title}
             />
           </FormField>
           {/* 2-3. 내용 */}
