@@ -41,7 +41,7 @@ export default function useCreateProject() {
         progressStartDate: [Validators.required()],
         progressEndDate: [Validators.required()],
         skillList: [Validators.minArrayLength(1)],
-        positionList: (v:Position[]) => v.length >= 1 ? null : ERROR_MESSAGES.VALIDATE_MIN_ARRAY_LENGTH(1)
+        positionList: [(v:Position[]) => v.length >= 1 ? null : ERROR_MESSAGES.VALIDATE_MIN_ARRAY_LENGTH(1)]
     }
 
     const IMAGE_NAME = 'image' as const;
