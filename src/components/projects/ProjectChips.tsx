@@ -2,10 +2,10 @@ import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
 import { COMMON_CODE, PROJECT_RECRUIT_STATUS, PROJECT_RECRUIT_TYPE } from '@/types/const';
 import type { DateType } from '@/types/type.api';
 import type { Position } from '@/types/type.projects';
-import { getCodeName } from '@/utils/util._common';
 import { convertString, getDiffDays, getTodayStr, isBetween, isPast } from '@/utils/util.date';
 import { AccessTime, LocationOn } from '@mui/icons-material';
 import { Chip, type ChipProps } from '@mui/material';
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export const RecruitStatusChip = ({
 	recruitmentStartDate,
@@ -21,8 +21,8 @@ export const RecruitStatusChip = ({
 
 	const today = getTodayStr();
 
-	let color: ChipProps['color'] = "default";
-	let name = "";
+	let color: ChipProps['color'] = "success";
+	let name: string = PROJECT_RECRUIT_STATUS.COMPLETED.NAME;
 
 	if (isPast(today, recruitmentStartDate)) {
 		color = "default";
@@ -30,9 +30,6 @@ export const RecruitStatusChip = ({
 	} else if (isBetween(today, recruitmentStartDate, recruitmentEndDate)) {
 		color = "primary";
 		name = PROJECT_RECRUIT_STATUS.RECRUITING.NAME;
-	} else {
-		color = "success";
-		name = PROJECT_RECRUIT_STATUS.COMPLETED.NAME;
 	}
 
 	return (
@@ -42,6 +39,7 @@ export const RecruitStatusChip = ({
 
 // 모집유형(일반/추가)
 export const RecruitmentChip = ({ recruitTypeCd }: { recruitTypeCd?: string }) => {
+	const { getCodeName } = useCodes();
 	if (!recruitTypeCd) return null;
 	//PROJECT_RECRUIT_TYPE
 	if (recruitTypeCd == PROJECT_RECRUIT_TYPE.ADDITIONAL.CODE) return;
@@ -54,6 +52,7 @@ export const RecruitmentChip = ({ recruitTypeCd }: { recruitTypeCd?: string }) =
 
 // 지역
 export const ProgressRegionChip = ({ regionCd }: { regionCd?: string }) => {
+	const { getCodeName } = useCodes();
 	if (!regionCd) return null;
 	const regionCdName = getCodeName(COMMON_CODE.REGION_CODE, regionCd);
 	return (
@@ -101,6 +100,7 @@ export const DDayChip = ({
 export const SkillChips = (
 	skillList?: string[]
 ) => {
+	const { getCodeName } = useCodes();
 	if (!skillList || skillList.length === 0) return null;
 
 	return skillList.map((skillCd) => {
@@ -121,6 +121,7 @@ export const SkillChips = (
 export const PositionChips = (
 	positionList?: Position[]
 ) => {
+	const { getCodeName } = useCodes();
 	if (!positionList || positionList.length === 0) return null;
 	return positionList.map((item, index) => {
 		const positionLabel = getCodeName(COMMON_CODE.POSITION_CODE, item.position);

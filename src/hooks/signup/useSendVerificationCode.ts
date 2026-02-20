@@ -4,7 +4,7 @@ import type { ApiResponse } from '@/types/type.api';
 import type { SendVerificationCodeRequest } from '@/types/type.signup';
 import { Validators } from '@/utils/util._common';
 import { useState } from 'react';
-import { useFormState } from '../_common/common.hook';
+import useFormState from '@/hooks/_common/useFormState.ts';
 
 export default function useSendVerificationCode() {
   const [isVerificationCodeSent, setIsVerificationCodeSent] = useState(false);

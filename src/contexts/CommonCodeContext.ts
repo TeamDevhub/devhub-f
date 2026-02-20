@@ -1,12 +1,13 @@
 import {createContext, useContext} from "react";
 import type {CommonCodeResponse} from "@/types/type.api.ts";
-import type {CommonCode, CommonCodeItem} from "@/types/type._common.ts";
+import type {CommonCode, CommonCodeItem, SelectComponentProps} from "@/types/type._common.ts";
 
 interface CodeContextType {
     codes: CommonCodeResponse | undefined;
     loading: boolean;
     getCodesByGroup: (groupCode: CommonCode) => CommonCodeItem[];
     getCodeName: (groupCode: CommonCode, targetCode: string) => string;
+    getSelectOptions: (groupCode: CommonCode) => SelectComponentProps[];
 }
 
 export const CommonCodeContext = createContext<CodeContextType | undefined>(undefined);

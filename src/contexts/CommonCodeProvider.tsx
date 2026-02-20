@@ -3,22 +3,22 @@ import {getCommonCode} from "@/api/common/common.api.ts";
 import {useSelect} from "@/hooks/_common/api.hook.ts";
 import type {CommonCodeRequest, CommonCodeResponse} from "@/types/type.api.ts";
 import { CommonCodeContext } from "./CommonCodeContext";
-import type {CommonCode, CommonCodeItem} from "@/types/type._common.ts";
+import type {CommonCode, CommonCodeItem, SelectComponentProps} from "@/types/type._common.ts";
 
 export const CommonCodeProvider = ({ children } : { children: ReactNode}) => {
 
-    const options = {
+    const options = useMemo(() => ({
         apiFn: getCommonCode,
         req: {},
         cacheKey: `code-common`,
-    }
+    }), []);
     const { res, loading } = useSelect<CommonCodeResponse, CommonCodeRequest>(options);
     const codes = res?.data;
 
     const getCodesByGroup = useMemo(() =>
             (groupCode: CommonCode): CommonCodeItem[] => {
                 if (!codes) return [];
-                return codes[groupCode].children || [];
+                return codes[groupCode]?.children || [];
             },
         [codes]);
 
@@ -40,12 +40,22 @@ export const CommonCodeProvider = ({ children } : { children: ReactNode}) => {
             },
         [getCodesByGroup]);
 
+    const getSelectOptions = useMemo(() =>
+        (group: CommonCode)=> {
+            const codeList = getCodesByGroup(group);
+            return codeList.map((item):SelectComponentProps => ({
+                value: item.code,
+                label: item.name,
+            }));}
+        ,[getCodesByGroup]);
+
     const value = useMemo(() => ({
         codes,
         loading,
         getCodesByGroup,
         getCodeName,
-    }), [codes, loading, getCodesByGroup, getCodeName]);
+        getSelectOptions,
+    }), [codes, loading, getCodesByGroup, getCodeName, getSelectOptions]);
 
     return (
         <CommonCodeContext.Provider value={value}>

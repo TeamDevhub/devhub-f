@@ -1,9 +1,8 @@
 import HeartButton from '@/components/_common/button/HeartButton'
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
-import { Create, Favorite, Person, Visibility } from '@mui/icons-material'
-import { Button, Chip, Divider, IconButton, Paper } from '@mui/material'
-import React from 'react'
+import { Create, Person, Visibility } from '@mui/icons-material'
+import { Button, Chip, Divider, Paper } from '@mui/material'
 
 export default function BoardDetailPage(){
   return (

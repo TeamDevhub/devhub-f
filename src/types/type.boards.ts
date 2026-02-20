@@ -1,30 +1,33 @@
+import type { DateType } from '@/types/type.api';
+
 export interface BoardBasic {
     boardGuid: string;
     userGuid: string;
-    username: string;
+    userName: string;
     categoryCd: string;
     title: string;
-    viewCount:string;
-    registrantGuid: string;
-    registeredDate: string;
-    modifierGuid: string;
-    modifiedDate: string;
+    viewCount?:string;
+    registrantGuid?: string;
+    registeredDate?: DateType;
+    modifierGuid?: string;
+    modifiedDate?: DateType;
 }
 
 export interface comment {
     commentGuid: string;
     content: string;
     userGuid: string;
-    username: string;
-    registrantGuid: string;
-    registeredDate: string;
-    modifierGuid: string;
-    modifiedDate: string;
+    userName: string;
+    registrantGuid?: string;
+    registeredDate?: string;
+    modifierGuid?: string;
+    modifiedDate?: string;
 }
 
-export interface BoardSummary extends BoardBasic {
-    likeCount:string;
-    commentCount:string;
+export interface BoardSummary {
+    boardBasicResponseDto:BoardBasic;
+    likeCount?:string;
+    commentCount?:string;
 }
 
 export interface BoardDetail extends BoardSummary {
@@ -33,9 +36,10 @@ export interface BoardDetail extends BoardSummary {
 
 export interface BoardSearchRequest {
     page:number;
-    categoryCd: string;
-    title: string;
+    categoryCd?: string;
+    title?: string;
 }
+export type SearchData = Pick<BoardSearchRequest, 'page' | 'categoryCd' | 'title'>;
 
 export interface BoardListResponse {
     

@@ -5,6 +5,8 @@ import { login } from '@/api/login/login.api';
 import type { ApiResponse } from '@/types/type.api';
 import type { LoginRequest, LoginResponse } from '@/types/type.login';
 import { useNavigate } from 'react-router-dom';
+import useFormState from '@/hooks/_common/useFormState.ts';
+import { useAuth } from '@/contexts/AuthContext.ts';
 
 const initData: LoginRequest = {
   email: '',
@@ -13,6 +15,7 @@ const initData: LoginRequest = {
 
 export default function useLogin() {
   const navigate = useNavigate();
+  const { login: _login } = useAuth();
 
   const validations = {
     email: [Validators.required(), Validators.email()],

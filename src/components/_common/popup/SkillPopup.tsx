@@ -21,6 +21,8 @@ export default function SkillPopup({
 }:SkillPopupProps) {
   const allSkills = getCodesByGroup(COMMON_CODE.SKILL_CODE);
 
+  const { getCodesByGroup } = useCodes();
+  const allSkills = getCodesByGroup(COMMON_CODE.SKILL_CODE);
   const [_values, _setValues] = useState<string[]>(values ?? []);
   const [keyword, setKeyword] = useState('');
   const [searchTrigger, setSearchTrigger] = useState('');

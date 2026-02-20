@@ -4,7 +4,6 @@ import logo from '@/assets/images/devHub-logo.png'
 import { GitHub } from '@mui/icons-material';
 import googleIcon from '@/assets/images/google-icon.svg'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import React from 'react'
 
 export default function LoginPage(){
   return (

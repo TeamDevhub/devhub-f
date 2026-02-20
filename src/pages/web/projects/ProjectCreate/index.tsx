@@ -2,79 +2,35 @@ import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import CustomRadioGroup from '@/components/_common/customMUI/CustomRadioGroup';
 import RegionPopup from '@/components/_common/popup/RegionPopup';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
-import WebPopup from '@/components/_common/popup/WebPopup';
+import AdditionalFormPopup from '@/components/projects/projectCreate/AdditionalFormPopup'
 import ApplicationFormGroup from '@/components/projects/projectCreate/ApplicationFormGroup';
 import PositionGroup from '@/components/projects/projectCreate/PositionGroup';
-import { useSelectApplicationForms } from '@/hooks/projects/projects.json.hook';
-import { COMMON_CODE } from '@/types/const';
-import { type SelectComponentProps } from '@/types/type._common'
-import { type DateType } from '@/types/type.api';
-import type { ApplicationFormBasic, Position, ProjectCreate } from '@/types/type.projects';
-import { getCodeName, getSelectOptions } from "@/utils/util._common";
-import { AddCircle, Search } from '@mui/icons-material';
-import { Button, Chip, Divider, FormControl, FormLabel, IconButton, Paper, TextField } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import DragAndDropForm from '@/components/_common/DragAndDropForm'
+import useCreateProject from '@/hooks/projects/useCreateProject'
+import useDisclosure from '@/hooks/_common/useDisclosure';
+import {COMMON_CODE} from '@/types/const';
+import {type DateType} from '@/types/type.api';
+import type {ApplicationFormDetail, Position} from '@/types/type.projects';
+import {AddCircle, Remove, Search} from '@mui/icons-material';
+import {Button, Chip, Divider, FormControl, FormLabel, IconButton, Paper} from '@mui/material';
+import {DatePicker} from '@mui/x-date-pickers';
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export default function ProjectCreate(){
-  const [recruitmentTypeCdOption, setRecruitmentTypeCdOption] = useState<SelectComponentProps[]>([]);
-  const [progressTypeCdOption, setProgressTypeCdOption] = useState<SelectComponentProps[]>([]);
-  const { res, loading } = useSelectApplicationForms({customYn: 'N'});
+  const skillPopup = useDisclosure();
+  const regionPopup = useDisclosure();
+  const additionalPopup = useDisclosure();
 
-  const [openSkillPopup, setOpenSkillPopup] = useState(false);
-  const [openRegionPopup, setOpenRegionPopup] = useState(false);
-  const [openWebPopup, setOpenWebPopup] = useState(false);
+  const { getSelectOptions, getCodeName } = useCodes();
+  const recruitmentTypeCdOption = getSelectOptions(COMMON_CODE.PROJECT_RECRUIT_TYPE);
+  const progressTypeCdOption = getSelectOptions(COMMON_CODE.PROJECT_PROGRESS_TYPE);
 
-  const initData: ProjectCreate = {
-    category: '',
-    title: '',
-    content: '',
-    recruitmentTypeCd: '3001',
-    recruitmentStartDate: dayjs(),
-    recruitmentEndDate: dayjs(),
-    progressTypeCd: '3101',
-    prgressRegionCd: '',
-    progressPeriod: '',
-    progressStartDate: dayjs(),
-    progressEndDate: dayjs(),
-    skillList: [],
-    positionList: [{
-      position: '',
-      level: '',
-      capacity: 0,
-    }],
-    applicationFormList: [],
-    additionalFormList: []
-  };
-  const [values, setValues] = useState<ProjectCreate>(initData);
-
-  const initialize = () => {
-    setRecruitmentTypeCdOption(getSelectOptions(COMMON_CODE.PROJECT_RECRUIT_TYPE));
-    setProgressTypeCdOption(getSelectOptions(COMMON_CODE.PROJECT_PROGRESS_TYPE));
-  }
-
-  useEffect(()=>{
-    initialize();
-  }, []);
-
-  const onHandleEvent = (name: string, value: any) => {
-    setValues(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-  }
-
-  const onHandleDeleteSkillChip = (skillCode: string) => {
-    if(skillCode){
-      setValues(prev => ({
-        ...prev,
-        skillList: prev.skillList?.filter(
-          item => item !== skillCode
-        )
-      }));
-    }
-  }
+  const {
+      values,
+      onHandleEvent,
+      onHandleDeleteSkillChip,
+      onSubmit,
+  } = useCreateProject()
 
   return (
     <div className='main-page'>
@@ -140,10 +96,10 @@ export default function ProjectCreate(){
               <div className="field-box flex-col align-start">
                 <p className="field-title">기술스택</p>
                 <div className="align-center">
-                  {values.skillList?.map((item, index) => {
+                  {values.skillList?.map((item) => {
                     return <Chip size='medium' variant='filled' label={getCodeName(COMMON_CODE.SKILL_CODE, item)} color='primary' onDelete={() => onHandleDeleteSkillChip(item)} />})}
                 </div>
-                <IconButton size='small' onClick={()=>{setOpenSkillPopup(true)}}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
+                <IconButton size='small' onClick={skillPopup.toggle}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
               </div>
             </div>
           </div>
@@ -164,14 +120,14 @@ export default function ProjectCreate(){
               <div className="field-box flex-col">
                 <p className="field-title">진행지역</p>
                 <div className="align-stretch">
-                  <CustomTextfield value={getCodeName(COMMON_CODE.REGION_CODE, values.prgressRegionCd)} placeholder='지역 명을 입력해 주세요.' readonly/>    
+                  <CustomTextfield value={getCodeName(COMMON_CODE.REGION_CODE, values.progressRegionCd)} placeholder='지역 명을 입력해 주세요.' readonly/>    
                   <Button 
                     size='large' 
                     variant='contained' 
                     color='primary' 
                     startIcon={<Search sx={{ fontSize: 24 }}/>}
                     sx={{ minWidth: '9.9rem !important' }}
-                    onClick={()=>{setOpenRegionPopup(true);}}
+                    onClick={regionPopup.toggle}
                   >
                     찾기
                   </Button>
@@ -222,8 +178,7 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                {/* Drag and Drop 변경 필요 */}
-                <TextField multiline placeholder='Link or drag and drop' /> 
+                <DragAndDropForm name={"attachment"} onChange={(e)=> onHandleEvent("attachment", e.target.files?.[0])}/>
               </div>
             </div>
           </div>
@@ -235,8 +190,7 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                {/* Drag and Drop 변경 필요 */}
-                <TextField multiline placeholder='Link or drag and drop' /> 
+                <DragAndDropForm name={"image"} onChange={(e)=> onHandleEvent("image", e.target.files?.[0])}/>
               </div>
             </div>
           </div>
@@ -255,8 +209,7 @@ export default function ProjectCreate(){
               </div>
             </div>
             <div className="field-area flex flex-1" style={{ gap: '3.2rem' }}>
-              <ApplicationFormGroup values={res?.dataList?.map((item: ApplicationFormBasic) => item.title) || []} 
-              onChange={(newValues: string[])=>{onHandleEvent("applicationFormList", newValues.map(item1=> res?.dataList?.find(item2 => item2.title === item1)?.typeCd))}}/>
+              <ApplicationFormGroup onChange={(newValues: string[])=>{onHandleEvent("applicationFormList", newValues)}}/>
             </div>
           </div>
           {/* 9. 추가 양식 */}
@@ -266,7 +219,15 @@ export default function ProjectCreate(){
             </div>
             <div className="field-area">
               <div className="field-box">
-                <IconButton size='small' onClick={()=>{setOpenWebPopup(true)}}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
+                {values.additionalFormList?.map((item, index1) => 
+                  <div key={index1} className="field-box flex-col mt-5">
+                      <div className="align-center">
+                        <CustomTextfield value={item.title} disabled/>
+                        <IconButton size='small' onClick={()=>onHandleEvent("additionalFormList", values.additionalFormList.filter((_, index2:number)=>index1!==index2))}><Remove sx={{ fontSize: 24, color: 'text.disabled' }} /></IconButton>
+                      </div>
+                  </div>
+                )}
+                <IconButton size='small' onClick={additionalPopup.toggle}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
               </div>
             </div>
           </div>
@@ -275,13 +236,13 @@ export default function ProjectCreate(){
         <div className="action-button-box align-center justify-end">
           <Button size='large' variant='outlined'>취소</Button>
           <Button size='large' variant='outlined'>양식 미리보기</Button>
-          <Button size='large' variant='contained'>등록</Button>
+          <Button size='large' variant='contained' onClick={onSubmit}>등록</Button>
         </div>
       </Paper>
 
-      {openSkillPopup && <SkillPopup isOpen={openSkillPopup} setOpen={setOpenSkillPopup} values={values.skillList?values.skillList:[]} setValues={(values: string[])=>onHandleEvent("skillList",values)}/>}
-      {openRegionPopup && <RegionPopup isOpen={openRegionPopup} setOpen={setOpenRegionPopup} values={values.prgressRegionCd?[values.prgressRegionCd]:['']} setValues={(values: string[])=>onHandleEvent("prgressRegionCd",values.toString())}/>}
-      {openWebPopup && <WebPopup isOpen={openWebPopup} setOpen={setOpenWebPopup} title='추가 양식'  children={<></>}/> }
+      <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={values.skillList?values.skillList:[]} setValues={(values: string[])=>onHandleEvent("skillList",values)}/>
+      <RegionPopup isOpen={regionPopup.isOpen} onClose={regionPopup.close} values={values.progressRegionCd?[values.progressRegionCd]:['']} setValues={(values: string[])=>onHandleEvent("progressRegionCd",values.toString())}/>
+      <AdditionalFormPopup isOpen={additionalPopup.isOpen} onClose={additionalPopup.close} onSubmit={(newForm: ApplicationFormDetail)=>onHandleEvent("additionalFormList", values.additionalFormList.concat(newForm))}/>
       
     </div>
   )

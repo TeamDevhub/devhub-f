@@ -5,61 +5,6 @@ import { Chip, Divider, Paper, Tooltip } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 
 export default function ProjectDetailPage(){
-  // SummaryDetailBox Data
-  type SummaryDetailItems = SummaryDetailBoxProps['items']
-
-  const periodItems: SummaryDetailItems = [
-    { label: '모집기간', value: '2025.12.03 ~ 2026.02.03' },
-    { label: '프로젝트 기간', value: '2025.12.03 ~ 2026.02.03' }
-  ] 
-  const infoItems: SummaryDetailItems = [
-    { label: '진행방식', value: '온라인' },
-    { label: '지역', value: '서울' }
-  ] 
-  const usedTechItems: SummaryDetailItems = [
-    { label: '사용기술', value: (
-      <>
-        <Chip size='small' variant='outlined' label='JAVA' color='secondary' />
-        <Chip size='small' variant='outlined' label='ORACLE' color='secondary' />
-        <Chip size='small' variant='outlined' label='JS' color='secondary' />
-        <Chip size='small' variant='outlined' label='Phython' color='secondary' />
-        <Chip size='small' variant='outlined' label='JAVA' color='secondary' />
-        <Chip size='small' variant='outlined' label='ORACLE' color='secondary' />
-      </>
-    ) }
-  ] 
-  const positionItems: SummaryDetailItems = [
-    { label: '모집 포지션', value: (
-      <div className='flex-col gap-4'>
-        <div className="position-box align-center">
-          <Chip size='small' variant='outlined' color='primary' label='기획자' />
-          <Chip size='small' variant='filled' label='하급' />
-          <p>1명</p>
-        </div>
-        <div className="position-box align-center">
-          <Chip size='small' variant='outlined' color='primary' label='디자이너' />
-          <Chip size='small' variant='filled' label='하급' />
-          <p>1명</p>
-        </div>
-        <div className="position-box align-center">
-          <Chip size='small' variant='outlined' color='primary' label='퍼블리셔' />
-          <Chip size='small' variant='filled' label='하급' />
-          <p>1명</p>
-        </div>
-        <div className="position-box align-center">
-          <Chip size='small' variant='outlined' color='primary' label='프론트엔드개발자' />
-          <Chip size='small' variant='filled' label='하급' />
-          <p>1명</p>
-        </div>
-        <div className="position-box align-center">
-          <Chip size='small' variant='outlined' color='primary' label='백엔드개발자' />
-          <Chip size='small' variant='filled' label='하급' />
-          <p>1명</p>
-        </div>
-      </div>
-    ) }
-  ] 
-
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. project detail */}
@@ -123,10 +68,59 @@ export default function ProjectDetailPage(){
         <div className="project-summary flex-col">
           <strong className="summary-title">프로젝트 개요</strong>
           <div className='summary-content flex-col'>
-            <SummaryDetailBox items={periodItems} />
-            <SummaryDetailBox items={infoItems} />
-            <SummaryDetailBox items={usedTechItems} />
-            <SummaryDetailBox items={positionItems} />
+            {/* 1) 모집기간&프로젝트 기간 */}
+            <SummaryDetailRow>
+              <SummaryDetailBox label='모집기간'>2025.12.03 ~ 2026.02.03</SummaryDetailBox>
+              <SummaryDetailBox label='프로젝트 기간'>2025.12.03 ~ 2026.02.03</SummaryDetailBox>
+            </SummaryDetailRow>
+            {/* 2) 진행방식&지역 */}
+            <SummaryDetailRow>
+              <SummaryDetailBox label='진행방식'>온라인</SummaryDetailBox>
+              <SummaryDetailBox label='지역'>서울</SummaryDetailBox>
+            </SummaryDetailRow>
+            {/* 3) 사용기술 */}
+            <SummaryDetailRow>
+              <SummaryDetailBox label='사용기술'>
+                <Chip size='small' variant='outlined' label='JAVA' color='secondary' />
+                <Chip size='small' variant='outlined' label='ORACLE' color='secondary' />
+                <Chip size='small' variant='outlined' label='JS' color='secondary' />
+                <Chip size='small' variant='outlined' label='Phython' color='secondary' />
+                <Chip size='small' variant='outlined' label='JAVA' color='secondary' />
+                <Chip size='small' variant='outlined' label='ORACLE' color='secondary' />
+              </SummaryDetailBox>
+            </SummaryDetailRow>
+            {/* 4) 모집 포지션 */}
+            <SummaryDetailRow>
+              <SummaryDetailBox label='모집 포지션'>
+                <div className='flex-col gap-4'>
+                  <div className="position-box align-center">
+                    <Chip size='small' variant='outlined' color='primary' label='기획자' />
+                    <Chip size='small' variant='filled' label='하급' />
+                    <p>1명</p>
+                  </div>
+                  <div className="position-box align-center">
+                    <Chip size='small' variant='outlined' color='primary' label='디자이너' />
+                    <Chip size='small' variant='filled' label='하급' />
+                    <p>1명</p>
+                  </div>
+                  <div className="position-box align-center">
+                    <Chip size='small' variant='outlined' color='primary' label='퍼블리셔' />
+                    <Chip size='small' variant='filled' label='하급' />
+                    <p>1명</p>
+                  </div>
+                  <div className="position-box align-center">
+                    <Chip size='small' variant='outlined' color='primary' label='프론트엔드개발자' />
+                    <Chip size='small' variant='filled' label='하급' />
+                    <p>1명</p>
+                  </div>
+                  <div className="position-box align-center">
+                    <Chip size='small' variant='outlined' color='primary' label='백엔드개발자' />
+                    <Chip size='small' variant='filled' label='하급' />
+                    <p>1명</p>
+                  </div>
+                </div>
+              </SummaryDetailBox>
+            </SummaryDetailRow>
           </div>
         </div>
         <Divider />
@@ -156,52 +150,65 @@ export default function ProjectDetailPage(){
 }
 
 /** used components **/
-// 1. SummaryDetailBox
-type ItemLabel = '모집기간' | '프로젝트 기간' | '진행방식' | '지역' | '사용기술' | '모집 포지션';
-
-type SummaryDetailBoxProps = {
-  items: {
-    label: ItemLabel;
-    value: React.ReactNode;
-  }[]
+// 1. SummaryDetailRow
+type SummaryDetailRowProps = {
+  children?: React.ReactNode;
 }
 
-const renderIcon = (label: ItemLabel) => {
-  const iconProps = { sx: { fontSize: 24, color: 'var(--primary-main)' } };
-
-  switch (label) {
-    case '모집기간':
-    case '프로젝트 기간':
-      return <AccessTime {...iconProps} />;
-    case '진행방식':
-    case '지역':
-      return <LocationOn {...iconProps} />;
-    case '사용기술':
-      return <Settings {...iconProps} />;
-    case '모집 포지션':
-      return <People {...iconProps} />;
-    default:
-      return null;
-  }
-};
-
-function SummaryDetailBox ({items}: SummaryDetailBoxProps){
+function SummaryDetailRow ({children}: SummaryDetailRowProps) {
   return (
-    <div className='summary-detail-box align-center'>
-      {items.map((item, index) => (
-        <div key={index} className={`detail-group ${item.label === '모집 포지션' ? 'align-start' : 'align-center'}`}>
-          <div className="group-label align-center">
-            {renderIcon(item.label)}
-            <strong>{item.label}</strong>
-          </div>
-          <div className="group-value align-center">{item.value}</div>
-        </div>
-      ))}
+    <div className="flex gap-12">
+      {children}
     </div>
   )
 }
 
-// 2. FloatingButtons
+// 2. SummaryDetailBox
+type ItemLabel = '모집기간' | '프로젝트 기간' | '진행방식' | '지역' | '사용기술' | '모집 포지션';
+
+type SummaryDetailBoxProps = {
+  label: ItemLabel;
+  children?: React.ReactNode;
+}
+
+function SummaryDetailBox ({
+  label,
+  children
+}: SummaryDetailBoxProps){
+  // renderIcon
+  const renderIcon = (label: ItemLabel) => {
+    const iconProps = { sx: { fontSize: 24, color: 'var(--primary-main)' } };
+
+    switch (label) {
+      case '모집기간':
+      case '프로젝트 기간':
+        return <AccessTime {...iconProps} />;
+      case '진행방식':
+      case '지역':
+        return <LocationOn {...iconProps} />;
+      case '사용기술':
+        return <Settings {...iconProps} />;
+      case '모집 포지션':
+        return <People {...iconProps} />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className='summary-detail-box align-center'>
+      <div className={`detail-group ${label === '모집 포지션' ? 'align-start' : 'align-center'}`}>
+        <div className="group-label align-center">
+          {renderIcon(label)}
+          <strong>{label}</strong>
+        </div>
+        <div className="group-value align-center">{children}</div>
+      </div>
+    </div>
+  )
+}
+
+// 3. FloatingButtons
 function FloatingButtons (){
   const [activeButton, setActiveButton] = useState<string | null>(null);
   type ButtonId = 'favorite' | 'apply' | 'share';

@@ -55,6 +55,22 @@ export default function SkillTrendsPage(){
     { id: 4, value: 20, label: 'Sketch', color: '#988AFC' },
     { id: 5, value: 30, label: 'Figma', color: '#1F94FF' },
   ]
+  const dataset3 = [
+    { id: 0, value: 10, label: 'AfterEffect', color: '#7086FD' },
+    { id: 1, value: 10, label: 'Illustrator', color: '#6FD195' },
+    { id: 2, value: 20, label: 'Photoshop', color: '#FFAE4C' },
+    { id: 3, value: 10, label: 'XD', color: '#07DBFA' },
+    { id: 4, value: 20, label: 'Sketch', color: '#988AFC' },
+    { id: 5, value: 30, label: 'Figma', color: '#1F94FF' },
+  ]
+  const dataset4 = [
+    { id: 0, value: 10, label: 'AfterEffect', color: '#7086FD' },
+    { id: 1, value: 10, label: 'Illustrator', color: '#6FD195' },
+    { id: 2, value: 20, label: 'Photoshop', color: '#FFAE4C' },
+    { id: 3, value: 10, label: 'XD', color: '#07DBFA' },
+    { id: 4, value: 20, label: 'Sketch', color: '#988AFC' },
+    { id: 5, value: 30, label: 'Figma', color: '#1F94FF' },
+  ]
   // 3. 월별 프로젝트 추이
   const aData = [400, 300, 200, 278, 189, 239, 349, 200, 500, 700];
   const bData = [240, 139, 980, 390, 480, 380, 430, 150, 300, 500];
@@ -75,44 +91,34 @@ export default function SkillTrendsPage(){
     <div className='main-page skilltrends-page flex-col'>
       {/* 1. 프로젝트 정보 */}
       <div className="project-info-wrap align-stretch">
-        <Paper className='info-box wh-fit flex-col flex-1' elevation={2}>
-          <strong className='title'>총 프로젝트</strong>
-          <Divider />
+        <SkillTrendsWrap title='총 프로젝트'>
           <div className="count-area align-center">
             <People sx={{ fontSize: 35, color: 'primary.main' }} />
             <p>1,234</p>
           </div>
-        </Paper>
-        <Paper className='info-box wh-fit flex-col flex-1' elevation={2}>
-          <strong className='title'>총 프로젝트</strong>
-          <Divider />
+        </SkillTrendsWrap>
+        <SkillTrendsWrap title='총 프로젝트'>
           <div className="count-area align-center">
             <People sx={{ fontSize: 35, color: 'primary.main' }} />
             <p>1,234</p>
           </div>
-        </Paper>
-        <Paper className='info-box wh-fit flex-col flex-1' elevation={2}>
-          <strong className='title'>총 프로젝트</strong>
-          <Divider />
+        </SkillTrendsWrap>
+        <SkillTrendsWrap title='총 프로젝트'>
           <div className="count-area align-center">
             <People sx={{ fontSize: 35, color: 'primary.main' }} />
             <p>1,234</p>
           </div>
-        </Paper>
-        <Paper className='info-box wh-fit flex-col flex-1' elevation={2}>
-          <strong className='title'>총 프로젝트</strong>
-          <Divider />
+        </SkillTrendsWrap>
+        <SkillTrendsWrap title='총 프로젝트'>
           <div className="count-area align-center">
             <People sx={{ fontSize: 35, color: 'primary.main' }} />
             <p>1,234</p>
           </div>
-        </Paper>
+        </SkillTrendsWrap>
       </div>
       {/* 2. 인기 포지션 */}
       <div className="position-popular-skill-wrap align-stretch">
-        <Paper className='position-box flex-col flex-1' elevation={2}>
-          <strong className='title'>인기 포지션 TOP 10</strong>
-          <Divider />
+        <SkillTrendsWrap title='인기 포지션 TOP 10'>
           <BarChart
             dataset={dataset}
             layout="horizontal"
@@ -190,10 +196,8 @@ export default function SkillTrendsPage(){
               },
             }}
           />
-        </Paper>
-        <Paper className='position-box flex-col flex-1' elevation={2}>
-          <strong className='title'>1등 포지션 인기 스킬</strong>
-          <Divider />
+        </SkillTrendsWrap>
+        <SkillTrendsWrap title='1등 포지션 인기 스킬'>
           <PieChart
             height={190}
             series={[
@@ -235,15 +239,13 @@ export default function SkillTrendsPage(){
               },
             }}
           />
-        </Paper>
-        <Paper className='position-box flex-col flex-1' elevation={2}>
-          <strong className='title'>2등 포지션 인기 스킬</strong>
-          <Divider />
+        </SkillTrendsWrap>
+        <SkillTrendsWrap title='2등 포지션 인기 스킬'>
           <PieChart
             height={190}
             series={[
               {
-                data: dataset2,
+                data: dataset3,
                 arcLabel: 'value', 
               },
             ]}
@@ -280,15 +282,13 @@ export default function SkillTrendsPage(){
               },
             }}
           />
-        </Paper>
-        <Paper className='position-box flex-col flex-1' elevation={2}>
-          <strong className='title'>3등 포지션 인기 스킬</strong>
-          <Divider />
+        </SkillTrendsWrap>
+        <SkillTrendsWrap title='3등 포지션 인기 스킬'>
           <PieChart
             height={190}
             series={[
               {
-                data: dataset2,
+                data: dataset4,
                 arcLabel: 'value', 
               },
             ]}
@@ -325,18 +325,11 @@ export default function SkillTrendsPage(){
               },
             }}
           />
-        </Paper>
+        </SkillTrendsWrap>      
       </div>
       {/* 3. 인기 스킬 */}
       <div className="popular-skill-wrap">
-        <Paper className='popular-skill-container flex-col' elevation={2}>
-          {/* 3-1. 타이틀 */}
-          <div className="flex-col gap-4">
-            <strong className='title'>경쟁력을 높일 수 있는 스킬</strong>
-            <p className='sub-text'>내 관심 포지션 별 인기 기술</p>
-          </div>
-          <Divider />
-          {/* 3-2. 탭메뉴 */}
+        <SkillTrendsWrap title='경쟁력을 높일 수 있는 스킬' subText='내 관심 포지션별 인기 기술'>
           <Tabs
             value={value} 
             onChange={handleChange}
@@ -352,83 +345,17 @@ export default function SkillTrendsPage(){
           </Tabs>
           {/* 3-3. 탭 콘텐츠 */}
           <TabPanel className='skill-container w-100 align-center' value={value} index={0}>
-            <div className="skill-box first-skill-box flex-col flex-1 wh-fit">
-              <strong className='ranking'>#1</strong>
-              <p className='skill-name'>TypeScript</p>
-              <div className="popularity-box flex-col">
-                <div className="popularity-text justify-between">
-                  <p className='text'>인기도</p>
-                  <p className='popularity-percent'>95%</p>
-                </div>
-                <div className="popularity-figure">
-                  <span className='current-figure h-100'></span>
-                </div>
-              </div>
-              <div className="decoration-shape"></div>
-            </div>
-            <div className="skill-box flex-col flex-1 wh-fit">
-              <strong className='ranking'>#2</strong>
-              <p className='skill-name'>Next.js</p>
-              <div className="popularity-box flex-col">
-                <div className="popularity-text justify-between">
-                  <p className='text'>인기도</p>
-                  <p className='popularity-percent'>88%</p>
-                </div>
-                <div className="popularity-figure">
-                  <span className='current-figure h-100'></span>
-                </div>
-              </div>
-            </div>
-            <div className="skill-box flex-col flex-1 wh-fit">
-              <strong className='ranking'>#3</strong>
-              <p className='skill-name'>React</p>
-              <div className="popularity-box flex-col">
-                <div className="popularity-text justify-between">
-                  <p className='text'>인기도</p>
-                  <p className='popularity-percent'>82%</p>
-                </div>
-                <div className="popularity-figure">
-                  <span className='current-figure h-100'></span>
-                </div>
-              </div>
-            </div>
-            <div className="skill-box flex-col flex-1 wh-fit">
-              <strong className='ranking'>#4</strong>
-              <p className='skill-name'>Next.js</p>
-              <div className="popularity-box flex-col">
-                <div className="popularity-text justify-between">
-                  <p className='text'>인기도</p>
-                  <p className='popularity-percent'>88%</p>
-                </div>
-                <div className="popularity-figure">
-                  <span className='current-figure h-100'></span>
-                </div>
-              </div>
-            </div>
-            <div className="skill-box flex-col flex-1 wh-fit">
-              <strong className='ranking'>#5</strong>
-              <p className='skill-name'>Next.js</p>
-              <div className="popularity-box flex-col">
-                <div className="popularity-text justify-between">
-                  <p className='text'>인기도</p>
-                  <p className='popularity-percent'>88%</p>
-                </div>
-                <div className="popularity-figure">
-                  <span className='current-figure h-100'></span>
-                </div>
-              </div>
-            </div>
+            <SkillBox ranking='1' skillName='TypeScript' popularityPercent='95' />
+            <SkillBox ranking='2' skillName='React' popularityPercent='90' />
+            <SkillBox ranking='3' skillName='JAVA' popularityPercent='85' />
+            <SkillBox ranking='4' skillName='Docker' popularityPercent='80' />
+            <SkillBox ranking='5' skillName='CSS' popularityPercent='75' />
           </TabPanel>
-        </Paper>
+        </SkillTrendsWrap>
       </div>
       {/* 4. 월별 프로젝트 추이 */}
       <div className="monthly-project-trends">
-        <Paper className='flex-col' elevation={2}>
-          <div className="flex-col gap-4">
-            <strong className='title'>월별 프로젝트 추이</strong>
-            <p className='sub-text'>경쟁력을 높일 수 있는 스킬</p>
-          </div>
-          <Divider />
+        <SkillTrendsWrap title='월별 프로젝트 추이' subText='경쟁력을 높일 수 있는 스킬'>
           <LineChart 
             height={285}
             margin={{ left: 0, right: 30 }}
@@ -491,8 +418,63 @@ export default function SkillTrendsPage(){
               mark: CustomMark
             }}
           />
-        </Paper>
+        </SkillTrendsWrap>
       </div>
+    </div>
+  )
+}
+
+/* used components */
+// 1. SkillTrendsWrap
+type SkillTrendsWrapProps = {
+  title?: string;
+  subText?: string;
+  children?: React.ReactNode;
+}
+
+function SkillTrendsWrap ({
+  title,
+  subText,
+  children
+}: SkillTrendsWrapProps){
+  return (
+    <Paper className='flex-col flex-1' elevation={2}>
+      <div className="flex-col gap-4">
+        <strong className='title'>{title}</strong>
+        { subText && <p className='sub-text'>{subText}</p> }
+      </div>
+      <Divider />
+      {children}
+    </Paper>
+  )
+}
+
+// 2. SkillBox
+type SkillBoxProps = {
+  ranking?: string;
+  skillName?: string;
+  popularityPercent?: string;
+}
+
+function SkillBox ({
+  ranking,
+  skillName,
+  popularityPercent
+}: SkillBoxProps){
+  return (
+    <div className="skill-box flex-col flex-1 wh-fit">
+      <strong className='ranking'>#{ranking}</strong>
+      <p className='skill-name'>{skillName}</p>
+      <div className="popularity-box flex-col">
+        <div className="popularity-text justify-between">
+          <p className='text'>인기도</p>
+          <p className='popularity-percent'>{popularityPercent}%</p>
+        </div>
+        <div className="popularity-figure">
+          <span className='current-figure h-100'></span>
+        </div>
+      </div>
+      <div className="decoration-shape"></div>
     </div>
   )
 }
