@@ -1,10 +1,13 @@
 import logo from '@/assets/images/devHub-logo.png'
-import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
-import { Notifications, Person } from '@mui/icons-material'
 import { Button, Paper } from '@mui/material'
 import { Link } from 'react-router-dom'
+import {useAuth} from "@/contexts/AuthContext.ts";
+import UserInfo from "@/components/_common/layout/UserInfo.tsx";
 
 export default function Header(){
+
+  const { isLoggedIn, logout } = useAuth();
+
   return (
     <header>
       <Paper className='header w-100 align-center justify-between' elevation={1}>
@@ -30,8 +33,19 @@ export default function Header(){
           </nav>
         </div>
         <div className="header-right-box align-center">
-          <CustomAvatar useBadge avatarIcon={<Notifications sx={{ fontSize: 35, color: 'primary.main' }} />} />
-          <CustomAvatar bgColor='text.disabled' avatarIcon={<Person sx={{ fontSize: 24 }} />} />
+          {!isLoggedIn &&
+            <>
+              <Link to={"/auth/signup"}>
+                <Button size='large' variant='text'>JOIN</Button>
+              </Link>
+              <Link to={"/auth/login"}>
+                <Button size='large' variant='text'>LOGIN</Button>
+              </Link>
+            </>
+          }
+          {isLoggedIn &&
+            <UserInfo logout={logout}/>
+          }
         </div> 
       </Paper>
     </header>
