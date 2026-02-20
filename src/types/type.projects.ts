@@ -15,7 +15,6 @@ export interface ProjectBasic {
   recruitmentEndDate: DateType;
   progressTypeCd: string;
   progressRegionCd: string;
-  progressPeriod: string;
   progressStartDate: DateType;
   progressEndDate: DateType;
   viewCount?: string;
@@ -41,8 +40,6 @@ export interface ProjectDetail extends ProjectBasic {
 export interface ProjectCreate extends ProjectDetail {
   applicationFormList: string[];
   additionalFormList: ApplicationFormDetail[];
-  attachment?: File;
-  image?: File;
 }
 
 export interface ApplicationFormBasic {
