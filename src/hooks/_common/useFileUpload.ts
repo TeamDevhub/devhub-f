@@ -127,14 +127,14 @@ const useFileUpload = () => {
             });
         }
 
-        const uploadUrl = '';
+        const uploadUrl = '/files';
         console.log(uploadUrl, formData);
+        return await fetcher<UploadResponse>(uploadUrl, formData);
         return {
             success:true,
             code: '',
             data:{ 'image' : 'IMAGE_GUID_TEST', 'attachment' : 'ATTACH_GUID_TEST'},
         } as ApiResponse<UploadResponse>
-        // return await fetcher<UploadResponse>(uploadUrl, formData);
     };
 
     return {
