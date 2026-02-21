@@ -1,5 +1,4 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
-import fetcher from "@/utils/util.api";
 import type {ApiResponse, UploadResponse} from "@/types/type.api.ts";
 import {ERROR_MESSAGES} from "@/types/errorMessages.const.ts";
 
@@ -28,7 +27,7 @@ const useFileUpload = () => {
                     URL.revokeObjectURL(state.previewUrl);
                 }
             });
-        };
+        };// eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const register = (name: string, options?: RegisterOptions) => (el: HTMLInputElement | null) => {

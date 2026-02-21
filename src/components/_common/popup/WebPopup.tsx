@@ -7,7 +7,7 @@ export interface WebPopupProps{
   onClose?:()=>void;
   onSubmit?:()=>void;
   children:React.ReactNode;
-  isOpen:boolean;
+  isOpen?:boolean;
   submitText?:string;
   size?: 'small' | 'medium' | 'large' | 'auto';
   closeOnSubmit?: boolean;
@@ -17,8 +17,8 @@ export default function WebPopup({
   onClose,
   onSubmit,
   children,
-  isOpen,
-  submitText='확인',
+  isOpen = false,
+  submitText= '확인',
   size = 'small',
   closeOnSubmit = true
 }:WebPopupProps) {
