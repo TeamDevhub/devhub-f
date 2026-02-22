@@ -1,11 +1,11 @@
 import { useMutation } from '@/hooks/_common/api.hook';
 import { Validators } from '@/utils/util._common';
 import { login } from '@/api/login/login.api';
-import { setLocalStorage } from '@/utils/util._common';
 import type { ApiResponse } from '@/types/type.api';
 import type { LoginRequest, LoginResponse } from '@/types/type.login';
 import { useNavigate } from 'react-router-dom';
 import useFormState from "@/hooks/_common/useFormState.ts";
+import {useAuth} from "@/contexts/AuthContext.ts";
 
 const initData: LoginRequest = {
   email: '',
@@ -14,6 +14,7 @@ const initData: LoginRequest = {
 
 export default function useLogin() {
   const navigate = useNavigate();
+  const { login: _login } = useAuth();
 
   const validations = {
     email: [Validators.required(), Validators.email()],
@@ -31,7 +32,7 @@ export default function useLogin() {
   };
 
   const handleSuccessLogin = (res: ApiResponse<LoginResponse>) => {
-    setLocalStorage('accessToken', res.data?.accessToken);
+    _login?.(res.data?.accessToken);
     navigate('/');
   };
 
