@@ -1,7 +1,7 @@
 import type { ApiResponse } from '@/types/type.api';
 import { ERROR_CODE } from '@/types/const';
-import { getSessionStorage } from '@/utils/util._common';
-import axios, { AxiosError, HttpStatusCode, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig, type Method, } from 'axios';
+import { getLocalStorage } from '@/utils/util._common';
+import axios, { AxiosError, HttpStatusCode, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig, type Method } from 'axios';
 import dayjs from 'dayjs';
 
 interface CommonError {
@@ -14,7 +14,6 @@ interface CommonError {
 }
 
 const convertDayjsToString = (data: unknown): unknown => {
-  
   if (data instanceof FormData) {
     return data;
   }
@@ -22,23 +21,25 @@ const convertDayjsToString = (data: unknown): unknown => {
   if (dayjs.isDayjs(data)) {
     return data.format('YYYY-MM-DD');
   }
-  
+
   if (Array.isArray(data)) {
     return data.map(convertDayjsToString);
   }
-  
+
   if (data !== null && typeof data === 'object') {
-    return Object.keys(data).reduce((acc, key) => {
-      const value = (data as Record<string, unknown>)[key];
-      acc[key] = convertDayjsToString(value);
-      return acc;
-    }, {} as Record<string, unknown>);
+    return Object.keys(data).reduce(
+      (acc, key) => {
+        const value = (data as Record<string, unknown>)[key];
+        acc[key] = convertDayjsToString(value);
+        return acc;
+      },
+      {} as Record<string, unknown>,
+    );
   }
   return data;
 };
 
 const removeEmptyValues = (obj: Record<string, unknown>): unknown => {
-
   if (obj instanceof FormData) {
     return obj;
   }
@@ -48,11 +49,7 @@ const removeEmptyValues = (obj: Record<string, unknown>): unknown => {
   Object.keys(cleanObj).forEach((key) => {
     const value = cleanObj[key];
 
-    if (
-      value === null || 
-      value === undefined || 
-      (typeof value === 'string' && value.trim() === '')
-    ) {
+    if (value === null || value === undefined || (typeof value === 'string' && value.trim() === '')) {
       delete cleanObj[key];
     }
   });
@@ -91,12 +88,11 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 /**
  * 요청 성공 처리
  */
-const requestSuccessInterceptor = async (
-  request: InternalAxiosRequestConfig<unknown>
-) => {
-  const accessToken = getSessionStorage('accessToken');
-  if(accessToken) request.headers['Authorization'] = `Bearer ${accessToken}`;
-  
+const requestSuccessInterceptor = async (request: InternalAxiosRequestConfig<unknown>) => {
+  const accessToken = sessionStorage.getItem('accessToken');
+  console.log('토큰', accessToken);
+  if (accessToken) request.headers['Authorization'] = `Bearer ${accessToken}`;
+
   return request;
 };
 //bearer basic digest hoba ..
@@ -114,27 +110,27 @@ const responseErrorInterceptor = async (err: unknown) => {
   const error = err as AxiosError<CommonError>;
 
   console.log('responseErrorInterceptor', error.response?.data?.errCode);
-  
+
   const errorCode = error.response?.data?.errCode ?? '';
   const status = error.response?.status;
-  
+
   //에러 인터페이스에 따라 처리 추후 추가
   if (status === 401) {
     if (errorCode === ERROR_CODE.EXPIRE_ACCESS_TOKEN) {
       // 리프레쉬토큰 발급
-    } else if ( errorCode === ERROR_CODE.DUP_LOGIN ) {
+    } else if (errorCode === ERROR_CODE.DUP_LOGIN) {
       //
     } else if (errorCode === ERROR_CODE.SIGNATURE_ERROR_ACCESS_TOKEN) {
       //
     } else {
       try {
-            // signOut();
-            return;
+        // signOut();
+        return;
       } catch (error) {
         console.error(error);
       }
     }
-  } 
+  }
 
   if (!(error?.config as CustomAxiosRequestConfig)?.skipErrorHandling) {
     return Promise.reject(error);
@@ -144,9 +140,7 @@ const responseErrorInterceptor = async (err: unknown) => {
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
 
-export const axiosInstance = axios.create({
-
-});
+export const axiosInstance = axios.create({});
 
 axiosInstance.interceptors.request.use(
   async (config) => {
@@ -156,7 +150,7 @@ axiosInstance.interceptors.request.use(
   (error) => {
     handleRequestEnd();
     return Promise.reject(error);
-  }
+  },
 );
 
 axiosInstance.interceptors.response.use(
@@ -167,26 +161,16 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     handleRequestEnd();
     return responseErrorInterceptor(error);
-  }
+  },
 );
 
-export const fetcher = async <T = unknown, P = unknown>(
-  url: string,
-  data?: P,
-  config?: AxiosRequestConfig
-): Promise<ApiResponse<T>> => {
-  
+export const fetcher = async <T = unknown, P = unknown>(url: string, data?: P, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
   const instance = axiosInstance;
 
-  const {
-    method = "post",
-    headers,
-    responseType = "json",
-    ...restConfig
-  } = config || {};
+  const { method = 'post', headers, responseType = 'json', ...restConfig } = config || {};
 
-  const isGetMethod = method.toLowerCase() === "get";
-  if(data) data = removeEmptyValues(data) as P;
+  const isGetMethod = method.toLowerCase() === 'get';
+  if (data) data = removeEmptyValues(data) as P;
   data = convertDayjsToString(data) as P;
 
   const baseUrl = import.meta.env.VITE_API_URL;
@@ -197,14 +181,10 @@ export const fetcher = async <T = unknown, P = unknown>(
   const res = await instance.request<ApiResponse<T>>({
     url,
     method: method as Method,
-    ...(isGetMethod
-      ? { params: data }
-      : { data }),
+    ...(isGetMethod ? { params: data } : { data }),
     responseType,
     headers: {
-      ...(data instanceof FormData
-        ? {}
-        : { "Content-Type": "application/json" }),
+      ...(data instanceof FormData ? {} : { 'Content-Type': 'application/json' }),
       ...headers,
     },
     ...restConfig,
