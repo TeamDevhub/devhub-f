@@ -1,5 +1,5 @@
 import { injectLoadingHandler } from "@/utils/util.api";
-import React, {createContext, useContext, useEffect} from 'react';
+import {createContext, useContext, useEffect} from 'react';
 import {useNavigation} from "react-router-dom";
 
 interface LoadingContextType {
@@ -9,12 +9,6 @@ interface LoadingContextType {
 }
 
 export const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
-
-export const spinnerOverlayStyle: React.CSSProperties = {
-  position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
-  backgroundColor: 'rgba(0,0,0,0.3)', display: 'flex', justifyContent: 'center', 
-  alignItems: 'center', zIndex: 9999
-};
 
 export const UseLoading = () => {
   const context = useContext(LoadingContext);
