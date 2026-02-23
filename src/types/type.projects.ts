@@ -1,4 +1,5 @@
 import type { DateType } from "@/types/type.api";
+import type { ApplicationFormType } from "@/components/projects/projectCreate/constants"
 
 export interface ProjectBasic {
   projectGuid?: string;
@@ -14,7 +15,6 @@ export interface ProjectBasic {
   recruitmentEndDate: DateType;
   progressTypeCd: string;
   progressRegionCd: string;
-  progressPeriod: string;
   progressStartDate: DateType;
   progressEndDate: DateType;
   viewCount?: string;
@@ -40,13 +40,11 @@ export interface ProjectDetail extends ProjectBasic {
 export interface ProjectCreate extends ProjectDetail {
   applicationFormList: string[];
   additionalFormList: ApplicationFormDetail[];
-  attachment?: File;
-  image?: File;
 }
 
 export interface ApplicationFormBasic {
-  applicationFormGuid?: string;
-  typeCd: string;
+  applicationFormGuid: string;
+  typeCd: ApplicationFormType;
   title: string;
   helpText?: string;
   vertYn?: string;
@@ -70,27 +68,27 @@ export interface ApplicationFormRequest {
 }
 
 export interface ProjectSearchRequest {
-  page:number;
-  size:number;
-  order?:string;
-  keyword?:string;
-  skillCodeList?:string[];
-  regionCodeList?:string[];
-  positionCodeList?:string[];
-  progressPeriodList?:string[];
-  positionLevelCodeList?:string[];
-  projectRecruitTypeList?:string[];
-  projectProgressTypeList?:string[];
-  projectRecruitStatusList?:string[];
-  recruitmentStartDate?:DateType;
-  recruitmentEndDate?:DateType;
-  progressStartDate?:DateType;
+  page: number;
+  size: number;
+  order?: string;
+  keyword?: string;
+  skillCodeList?: string[];
+  regionCodeList?: string[];
+  positionCodeList?: string[];
+  progressPeriodList?: string[];
+  positionLevelCodeList?: string[];
+  projectRecruitTypeList?: string[];
+  projectProgressTypeList?: string[];
+  projectRecruitStatusList?: string[];
+  recruitmentStartDate?: DateType;
+  recruitmentEndDate?: DateType;
+  progressStartDate?: DateType;
 };
 export type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword' | 'size'>;
 export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
 export interface UpdateProjectRequest {
-  
+
 };
 
 export interface ProjectListResponse extends ProjectDetail {

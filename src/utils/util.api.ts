@@ -38,6 +38,11 @@ const convertDayjsToString = (data: unknown): unknown => {
 };
 
 const removeEmptyValues = (obj: Record<string, unknown>): unknown => {
+
+  if (obj instanceof FormData) {
+    return obj;
+  }
+
   const cleanObj = { ...obj };
 
   Object.keys(cleanObj).forEach((key) => {
@@ -188,6 +193,7 @@ export const fetcher = async <T = unknown, P = unknown>(
   url = baseUrl + url;
 
   console.log(url);
+  console.log(data instanceof FormData);
 
   const res = await instance.request<ApiResponse<T>>({
     url,

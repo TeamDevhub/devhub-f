@@ -1,8 +1,11 @@
 import { createProject } from "@/api/projects/projects.api"
 import useFormState from '@/hooks/_common/useFormState.ts';
-import type { ProjectCreate } from "@/types/type.projects";
+import type { ProjectCreate, Position } from "@/types/type.projects";
 import { useMutation } from "../_common/api.hook";
 import dayjs from "dayjs";
+import useFileUpload from "@/hooks/_common/useFileUpload.ts";
+import { Validators } from "@/utils/util._common"
+import {ERROR_MESSAGES} from "@/types/errorMessages.const.ts";
 
 export default function useCreateProject() {
     const initData: ProjectCreate = {
@@ -14,7 +17,6 @@ export default function useCreateProject() {
     recruitmentEndDate: dayjs(),
     progressTypeCd: '3101',
     progressRegionCd: '',
-    progressPeriod: '',
     progressStartDate: dayjs(),
     progressEndDate: dayjs(),
     skillList: [],
@@ -25,43 +27,64 @@ export default function useCreateProject() {
     }],
     applicationFormList: [],
     additionalFormList: [],
-    attachment: undefined,
-    image: undefined,
     };
 
-    const { state, setState, handleChange, ...rest } = useFormState(initData);
-    const { mutate:projectMutate, loading, error } =   useMutation<ProjectCreate, void>(createProject);
-    // const { fileMutate, loading, error } =   useMutation<File, void>(uploadFile);
-
-    const onHandleDeleteSkillChip = (skillCode: string) => {
-        if(skillCode){
-            const newSkillList = state.skillList?.filter(item => item !== skillCode);
-            handleChange("skillList", newSkillList);
-        }
+    const validations = {
+        title: [Validators.required()],
+        category: [Validators.required()],
+        content: [Validators.required()],
+        recruitmentTypeCd: [Validators.required()],
+        recruitmentStartDate: [Validators.required()],
+        recruitmentEndDate: [Validators.required()],
+        progressTypeCd: [Validators.required()],
+        progressRegionCd: [Validators.required()],
+        progressStartDate: [Validators.required()],
+        progressEndDate: [Validators.required()],
+        skillList: [Validators.minArrayLength(1)],
+        positionList: [(v:Position[]) => v.length >= 1 ? null : ERROR_MESSAGES.VALIDATE_MIN_ARRAY_LENGTH(1)]
     }
 
-    const onSubmit = () => {
-        // const formData = new FormData();
-        const {attachment, image, ...jsonData} = state
-        let attachmentGuid, imageGuid: string;
-        // attachmentGuid = fileMutate(attachment);
-        // imageGuid = fileMutate(image);
-        attachmentGuid = "FILE_TEST_GUID_1";
-        imageGuid = "FILE_TEST_GUID_2";
-        jsonData["attachmentFileGuid"] = attachmentGuid;
-        jsonData["imageFileGuid"] = imageGuid;
-        projectMutate(jsonData);
+    const IMAGE_NAME = 'image' as const;
+    const ATTACHMENT_NAME = 'attachment' as const;
+    const { state, setState, handleChange, createToggle, errors: validateErrors } = useFormState(initData, {validations});
+    const { fileStates, errors: fileErrors, upload, register } = useFileUpload();
+    const { mutate:projectMutate, loading, error } =   useMutation<ProjectCreate, void>(createProject,
+        ()=>{ //onSuccess
+            //페이지 이동처리
+        },
+        ()=>{ //onFail
+            //실패 처리 새로고침 등
+            //기존데이터 삭제 필요할 경우 아래
+            //혹은 업로드는 되어서 fileGUID가 있으면 업로드를 스킵한다거나 이런코드가 추가될 수 있겠네요.. 근데그러면 파일 변화를 감지해야합니다
+            //setState(initData)
+            //clearAll() //useFileUpload 제공
+        }
+    );
 
+    const onSubmit = async () => {
+        const returnData = await upload();
+
+        if(!returnData.success) return; //실패처리 코드 필요
+        if(!returnData.data) return; //실패처리 코드 필요
+
+        const jsonData = {...state};
+        jsonData.imageFileGuid = returnData.data?.[IMAGE_NAME];
+        jsonData.attachmentFileGuid = returnData.data?.[ATTACHMENT_NAME];
+        await projectMutate(jsonData);
     }
 
     return {
         values: state,
         setValues: setState,
         onHandleEvent: handleChange,
-        onHandleDeleteSkillChip,
         onSubmit: onSubmit,
         loading,
         error,
-        ...rest
+        fileStates,
+        imageRef:register(IMAGE_NAME),
+        attachmentRef:register(ATTACHMENT_NAME),
+        validateErrors,
+        fileErrors,
+        createToggle,
     }
 }

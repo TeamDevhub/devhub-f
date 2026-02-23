@@ -36,7 +36,8 @@ export default function PositionGroup ({
         });
         onChange?.(newPositionList);
     }
-    return <>
+    return (
+    <>
         <div className="field-box flex-col">
             {positionList.map((position, index) => (
                 <PositionField
@@ -49,6 +50,7 @@ export default function PositionGroup ({
         </div>
         <IconButton size='small' onClick={onHandleAddPositionField}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
     </>
+    )
 }
 
 function PositionField ({
@@ -72,7 +74,8 @@ function PositionField ({
         onChange?.(index);
     }
 
-    return <div className="field-box flex-col">
+    return (
+    <div className="field-box flex-col">
                 <div className="align-center">
                     <FormControl variant='outlined' sx={{ minWidth: '27rem' }}>
                     <Select 
@@ -115,4 +118,5 @@ function PositionField ({
                     <IconButton size='small' onClick={handleOnDelete}><Remove sx={{ fontSize: 24, color: 'text.disabled' }} /></IconButton>
                 </div>
             </div>
+    )
 }

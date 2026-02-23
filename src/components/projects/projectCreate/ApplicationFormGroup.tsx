@@ -1,26 +1,29 @@
-import {Checkbox, FormControlLabel, FormGroup} from "@mui/material"
-import {useState} from "react"
-import {type ApplicationFormBasic} from '@/types/type.projects';
+import { Checkbox, FormControlLabel, FormGroup } from "@mui/material"
+import { useState } from "react"
+import { type ApplicationFormBasic } from '@/types/type.projects';
+import useSelectApplicationForms from "@/hooks/projects/useSelectApplicationForms"
 
 interface CustomCheckboxGroupProps {
     onChange?: (newValues: string[]) => void;
 }
 
 export default function ApplicationFormGroup({ onChange }: CustomCheckboxGroupProps) {
-    // const { res, loading } = useSelectApplicationForms({customYn: 'N'});
+    const { res } = useSelectApplicationForms({ customYn: 'N' });
     const [checkedValues, setCheckedValues] = useState<string[]>([]);
-    const handleOnChange = (typeCd: string, value: boolean) => {
+    const handleOnChange = (applicationFormGuid: string, value: boolean) => {
         let newValues: string[];
-        if(value) {
-            newValues = checkedValues.concat(typeCd);
+        if (value) {
+            newValues = checkedValues.concat(applicationFormGuid);
         } else {
-            newValues = checkedValues.filter(item => item !== typeCd);
+            newValues = checkedValues.filter(item => item !== applicationFormGuid);
         }
         setCheckedValues(newValues);
         onChange?.(newValues);
     };
 
-    return <FormGroup>
-        {/*{res?.dataList?.map((item: ApplicationFormBasic, index: number) => <FormControlLabel key={index} control={<Checkbox onChange={(e) => handleOnChange(item.typeCd, e.target.checked)}/>} label={item.title} />)}*/}
-    </FormGroup>
+    return (
+        <FormGroup>
+            {res?.dataList?.map((item: ApplicationFormBasic, index: number) => <FormControlLabel key={index} control={<Checkbox onChange={(e) => handleOnChange(item.applicationFormGuid, e.target.checked)} />} label={item.title} />)}
+        </FormGroup>
+    )
 }
