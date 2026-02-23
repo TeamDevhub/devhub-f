@@ -47,6 +47,7 @@ export default function SkillPopup({
   const handleClick = () => setSearchTrigger(keyword.trim());
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setKeyword(e.target.value);
 
+
   return (
     <WebPopup
       isOpen={isOpen}

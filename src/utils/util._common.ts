@@ -1,5 +1,5 @@
 import type {ValidationRule} from "@/hooks/_common/useFormState.ts";
-import {ERROR_MESSAGES} from "@/types/errorMessages.const.ts";
+import {ERROR_MESSAGES} from "@/types/const.errorMessages.ts";
 
 //로컬 저장소 관련
 /**
@@ -22,6 +22,33 @@ export const getLocalStorage = <T>(key: string): T | null => {
 
   try {
     const value = localStorage.getItem(key);
+    return value ? (JSON.parse(value) as T) : null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+/**
+ * 세션 저장소에 데이터 저장
+ * @param key - 저장할 데이터의 키
+ * @param value - 저장할 데이터 (string으로 저장됨)
+ */
+export const setSessionStorage = <T>(key: string, value: T): void => {
+  if (typeof window === 'undefined') return;
+  sessionStorage.setItem(key, JSON.stringify(value));
+};
+
+/**
+ * 세션 저장소에서 데이터 가져오기
+ * @param key - 가져올 데이터의 키
+ * @returns 가져온 데이터, 없으면 null
+ */
+export const getSessionStorage = <T>(key: string): T | null => {
+  if (typeof window === 'undefined') return null;
+
+  try {
+    const value = sessionStorage.getItem(key);
     return value ? (JSON.parse(value) as T) : null;
   } catch (error) {
     console.error(error);

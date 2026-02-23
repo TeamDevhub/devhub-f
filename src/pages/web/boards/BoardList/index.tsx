@@ -17,7 +17,8 @@ export default function BoardList(){
 
     const { handleLike } = useMutationBoards();
     const { getCodesByGroup } = useCodes();
-    const regionCode = getCodesByGroup(COMMON_CODE.REGION_CODE);
+    const categoryCode = getCodesByGroup(COMMON_CODE.BOARD_CATEGORY);
+    const boardCategoryCode = [{code:'', name:'전체'}, ...categoryCode];
 
     return (
         <div className='main-page flex-col h-fit'>
@@ -30,7 +31,7 @@ export default function BoardList(){
             indicatorColor="primary"
             aria-label="category-tabs"
         >
-        {regionCode.map((item, index)=>(
+        {boardCategoryCode.map((item, index)=>(
             <Tab key={index} value={item.code} label={item.name}/>
         ))}
         </Tabs>

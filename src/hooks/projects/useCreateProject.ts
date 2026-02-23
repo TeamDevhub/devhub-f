@@ -5,7 +5,7 @@ import { useMutation } from "../_common/api.hook";
 import dayjs from "dayjs";
 import useFileUpload from "@/hooks/_common/useFileUpload.ts";
 import { Validators } from "@/utils/util._common"
-import {ERROR_MESSAGES} from "@/types/errorMessages.const.ts";
+import {ERROR_MESSAGES} from "@/types/const.errorMessages.ts";
 
 export default function useCreateProject() {
     const initData: ProjectCreate = {
