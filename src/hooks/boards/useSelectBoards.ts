@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { getBoards } from "@/api/boards/boards.api";
 import { useSelect } from "@/hooks/_common/api.hook";
-// import {useSelectBoards} from './boards.json.hook'
 import type { BoardSearchRequest, SearchData } from "@/types/type.boards";
 
-//완전
 const initData : SearchData = {
     page : 1,
     categoryCd: '',
 }
-export default function useSelecttBoards(
+export default function useSelectBoards(
     initialSearch?:Partial<SearchData>,
     initialTitle?:string
 ) {
