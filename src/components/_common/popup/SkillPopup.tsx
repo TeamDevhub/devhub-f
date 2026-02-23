@@ -1,10 +1,10 @@
 import {COMMON_CODE} from '@/types/const';
+import {getCodesByGroup} from '@/utils/util._common';
 import {Button} from '@mui/material';
 import React, {useState} from 'react';
 import CustomTextfield from '../customMUI/CustomTextfield';
 import WebPopup from './WebPopup';
 import SelectableGroup from "@/components/_common/SelectableGroup.tsx";
-import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export interface SkillPopupProps{
   isOpen:boolean;
@@ -19,6 +19,7 @@ export default function SkillPopup({
   setValues,
   onClose,
 }:SkillPopupProps) {
+  const allSkills = getCodesByGroup(COMMON_CODE.SKILL_CODE);
 
   const { getCodesByGroup } = useCodes();
   const allSkills = getCodesByGroup(COMMON_CODE.SKILL_CODE);
@@ -46,6 +47,7 @@ export default function SkillPopup({
 
   const handleClick = () => setSearchTrigger(keyword.trim());
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setKeyword(e.target.value);
+
 
   return (
     <WebPopup

@@ -4,14 +4,15 @@ import SkillPopup from '@/components/_common/popup/SkillPopup';
 import FieldBox from './FieldBox';
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import useSignup from '@/hooks/signup/useSignup';
-import {COMMON_CODE} from '@/types/const';
-import {AddCircle, LockOutline, PersonOutlined} from '@mui/icons-material';
-import {Button, Divider, IconButton, Paper, TextField} from '@mui/material';
-import {Link} from 'react-router-dom';
+import { COMMON_CODE } from '@/types/const';
+import { getCodesByGroup } from '@/utils/util._common';
+import { LockOutline, PersonOutlined } from '@mui/icons-material';
+import { Button, Divider, Paper, TextField } from '@mui/material';
+import { Link } from 'react-router-dom';
 import SelectableGroup from '@/components/_common/SelectableGroup';
-import {FormSection} from './FormSection';
+import { FormSection } from './FormSection';
 import AddableChipGroup from '../_common/AddableChipGroup';
-import {useCodes} from "@/contexts/CommonCodeContext.ts";
+import { useCodes } from '@/contexts/CommonCodeContext.ts';
 
 interface Props {
   email: string;
@@ -19,7 +20,7 @@ interface Props {
 
 export default function UserInfoPage({ email }: Props) {
   const skillPopup = useDisclosure();
-  const {getCodesByGroup} = useCodes();
+  const { getCodesByGroup } = useCodes();
   const { userInfo, handleChange, createToggle, createHandler, applySignup, loading } = useSignup(email);
 
   return (
@@ -102,13 +103,10 @@ export default function UserInfoPage({ email }: Props) {
                   onAdd={() => skillPopup.toggle()}
                 />
               </div>
-              <IconButton size="small" onClick={skillPopup.toggle}>
-                <AddCircle sx={{ fontSize: 35, color: 'primary.main' }} />
-              </IconButton>
             </div>
           </FormSection>
 
-          <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={userInfo.skillList} setValues={createHandler('skillList')} />
+          <SkillPopup key={skillPopup.isOpen ? 'open' : 'close'} isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={userInfo.skillList} setValues={createHandler('skillList')} />
 
           <Divider sx={{ marginY: '0.5rem' }} />
 
