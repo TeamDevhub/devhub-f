@@ -13,7 +13,7 @@ export interface CustomTextfieldProps extends Omit<TextFieldProps, 'type'> {
   readonly?: boolean;
   maxLength?: number;
   noCountStr?: boolean;
-  value?:string;
+  value?:string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;}
 
 export default function CustomTextfield({

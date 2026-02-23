@@ -193,7 +193,6 @@ export const fetcher = async <T = unknown, P = unknown>(
   url = baseUrl + url;
 
   console.log(url);
-  console.log(data instanceof FormData);
 
   const res = await instance.request<ApiResponse<T>>({
     url,

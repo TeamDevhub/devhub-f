@@ -5,7 +5,6 @@ import FieldBox from './FieldBox';
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import useSignup from '@/hooks/signup/useSignup';
 import { COMMON_CODE } from '@/types/const';
-import { getCodesByGroup } from '@/utils/util._common';
 import { LockOutline, PersonOutlined } from '@mui/icons-material';
 import { Button, Divider, Paper, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';

@@ -1,17 +1,17 @@
 import WebPopup from "@/components/_common/popup/WebPopup";
-import {type ApplicationFormDetail} from "@/types/type.projects"
+import {type ApplicationsFormCreate} from "@/types/type.projects"
 import {type ChangeEvent, useState} from "react";
 import CustomTextfield from "@/components/_common/customMUI/CustomTextfield";
 import CustomRadioGroup from "@/components/_common/customMUI/CustomRadioGroup"
 import useFormState from '@/hooks/_common/useFormState.ts';
 import {Divider, IconButton, MenuItem, Select, type SelectChangeEvent} from "@mui/material";
 import {AddCircle, Remove} from '@mui/icons-material';
-import {APPLICATION_FORM_TYPE, APPLICATION_FORM_TYPE_OPTIONS, USE_YN_OPTIONS, type ApplicationFormType}  from '@/components/projects/projectCreate/constants'
+import {APPLICATION_FORM_TYPE, APPLICATION_FORM_TYPE_OPTIONS, USE_YN_OPTIONS, type ApplicationFormType}  from '@/types/const.projectCreate.ts'
 
 interface  AdditionnalFormPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (newForm:ApplicationFormDetail) => void;
+  onSubmit: (newForm:ApplicationsFormCreate) => void;
 }
 
 function PopupField({
@@ -53,7 +53,7 @@ export default function AdditionalFormPopup ({
     onClose,
     onSubmit,
 }: AdditionnalFormPopupProps) {
-    const initData:ApplicationFormDetail =  {
+    const initData:ApplicationsFormCreate =  {
         typeCd: APPLICATION_FORM_TYPE.SHORTTEXT,
         title: '',
         helpText: '',

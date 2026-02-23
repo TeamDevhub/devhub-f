@@ -1,10 +1,10 @@
-import { useFormState } from '@/hooks/_common/common.hook';
-import type { BoardBasic } from "@/types/type.boards";
+import type { BoardCreate } from "@/types/type.boards";
 import {createBoard} from '@/api/boards/boards.api';
 import { useMutation } from '@/hooks/_common/api.hook';
 import { Validators } from '@/utils/util._common';
+import useFormState from "@/hooks/_common/useFormState.ts";
 
-const initData : BoardBasic = {
+const initData : BoardCreate = {
     title:'',
     content:'',
     categoryCd:''
@@ -27,7 +27,7 @@ export default function useCreateBoard() {
     }
 
     const {state, setState, handleChange, checkError, errors} = useFormState(initData, {validations, mode:'manual'}); 
-    const {mutate:requestCreateBoard} = useMutation<BoardBasic, void>(createBoard, handleSuccessCreate, handleFailCreate); 
+    const {mutate:requestCreateBoard} = useMutation<BoardCreate, void>(createBoard, handleSuccessCreate, handleFailCreate);
 
     const onSubmit = async () => {
         if (checkError()) {return;}

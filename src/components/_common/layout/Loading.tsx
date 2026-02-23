@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Loading(){
   return (
     <div className="loading-wrap w-100 h-100 flex-center">

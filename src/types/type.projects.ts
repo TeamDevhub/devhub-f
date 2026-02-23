@@ -1,5 +1,5 @@
 import type { DateType } from "@/types/type.api";
-import type { ApplicationFormType } from "@/components/projects/projectCreate/constants"
+import type { ApplicationFormType } from "@/types/const.projectCreate.ts"
 
 export interface ProjectBasic {
   projectGuid?: string;
@@ -39,7 +39,7 @@ export interface ProjectDetail extends ProjectBasic {
 
 export interface ProjectCreate extends ProjectDetail {
   applicationFormList: string[];
-  additionalFormList: ApplicationFormDetail[];
+  additionalFormList: ApplicationsFormCreate[];
 }
 
 export interface ApplicationFormBasic {
@@ -59,6 +59,8 @@ export interface ApplicationFormBasic {
 export interface ApplicationFormDetail extends ApplicationFormBasic {
   itemList?: string[];
 }
+
+export type ApplicationsFormCreate = Omit<ApplicationFormDetail, 'applicationFormGuid'>;
 
 export interface ApplicationFormRequest {
   title?: string;
@@ -83,17 +85,18 @@ export interface ProjectSearchRequest {
   recruitmentStartDate?: DateType;
   recruitmentEndDate?: DateType;
   progressStartDate?: DateType;
-};
+}
+
 export type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword' | 'size'>;
 export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
 export interface UpdateProjectRequest {
 
-};
+}
 
 export interface ProjectListResponse extends ProjectDetail {
   //필요시 추가
-};
+}
 
 export interface ProjectDetailResponse extends ProjectDetail {
   email: string;

@@ -1,7 +1,7 @@
 import type { DateType } from '@/types/type.api';
 
 export interface BoardBasic {
-    boardGuid?: string;
+    boardGuid: string;
     userGuid?: string;
     userName?: string;
     categoryCd: string;
@@ -13,6 +13,8 @@ export interface BoardBasic {
     modifierGuid?: string;
     modifiedDate?: DateType;
 }
+
+export type BoardCreate = Omit<BoardBasic, 'boardGuid'>;
 
 export interface comment {
     commentGuid: string;
