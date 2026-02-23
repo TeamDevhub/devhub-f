@@ -101,3 +101,27 @@ export interface ProjectListResponse extends ProjectDetail {
 export interface ProjectDetailResponse extends ProjectDetail {
   email: string;
 }
+
+export interface ProjectApplicationRequest {
+  projectGuid: string;
+  applicationGuid: string;
+}
+
+export interface ProjectApplicationResponse {
+  applicationGuid?: string;
+  projectGuid?: string;
+  userGuid?: string;
+  userName?: string;
+  userEmail?: string;
+  mannerTemperature?: string;
+  position?: string;
+  applicationDate?: string;
+  skillList?: string[];
+  introduce?: string;
+  applicationPurpose?: string;
+  career?: string;
+  projectHistory?: string[];
+  applicationMotivation?: string;
+  attachmentFileGuid?: string;
+  statusCd?: string;
+}

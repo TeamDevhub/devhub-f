@@ -27,6 +27,7 @@ import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import Signup from '@/pages/web/signup/Signup';
 import { createBrowserRouter } from 'react-router-dom';
+import ProjectApplyList from '@/pages/web/projects/ProjectApplyList';
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
           {
             path: 'create',
             element: <ProjectCreate />
+          },
+          {
+            path: 'applyList',
+            element: <ProjectApplyList />
           },
         ]
       },
