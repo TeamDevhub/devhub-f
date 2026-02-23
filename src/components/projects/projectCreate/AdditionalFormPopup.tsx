@@ -98,9 +98,21 @@ export default function AdditionalFormPopup ({
         onClose();
     }
 
+    const onHandleSubmit = () => {
+        const {helpText, itemList, ...restState } = state;
+        const cleanState = {...restState} as ApplicationsFormCreate;
+        if(helpText) {
+            cleanState.helpText = helpText;
+        } 
+        if(itemList && itemList.filter(item=>item).length > 0) {
+            cleanState.itemList = itemList
+        }
+        onSubmit(cleanState);
+    }
+
     const { state, setState, handleChange } = useFormState(initData);
     return (
-        <WebPopup isOpen={isOpen} onClose={onClosePopup} title={"추가양식"} onSubmit={()=>onSubmit(state)}>
+        <WebPopup isOpen={isOpen} onClose={onClosePopup} title={"추가양식"} onSubmit={onHandleSubmit}>
             <div className='left-filter-bar flex-col flex-grow' style={{width:'100%'}}>
                 <PopupField title={"제목"}> 
                     <CustomTextfield placeholder="제목" onChange={(e)=>handleChange("title", e.target.value)}/>
