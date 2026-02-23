@@ -1,4 +1,4 @@
-import type { BoardSummary, BoardSearchRequest } from "@/types/type.boards";
+import type { BoardSummary, BoardSearchRequest, BoardBasic } from "@/types/type.boards";
 import fetcher from "@/utils/util.api";
 
 export const getBoards = (req : BoardSearchRequest) => {
@@ -7,7 +7,6 @@ export const getBoards = (req : BoardSearchRequest) => {
     if(req.categoryCd) {searchParams.set('categoryCd', String(req.categoryCd));}
     searchParams.set('page', String(req.page));
 
-    // console.log(searchParams.toString())
     return fetcher<BoardSummary>(
         `/boards?${searchParams.toString()}`,
         undefined,
@@ -18,6 +17,13 @@ export const getBoards = (req : BoardSearchRequest) => {
 export const likeBoard = (req : string) => 
     fetcher<void, string>(
         `/boards/${req}/likes`,
+        req,
+        { method : "post"}
+    );
+
+export const createBoard = (req : BoardBasic) => 
+    fetcher<void, BoardBasic>(
+        `/boards`,
         req,
         { method : "post"}
     );

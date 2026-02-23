@@ -13,7 +13,8 @@ export interface CustomTextfieldProps extends Omit<TextFieldProps, 'type'> {
   readonly?: boolean;
   maxLength?: number;
   noCountStr?: boolean;
-}
+  value?:string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;}
 
 export default function CustomTextfield({
   id,
@@ -26,6 +27,8 @@ export default function CustomTextfield({
   readonly = false,
   maxLength = 100,
   noCountStr = false,
+  value = '',
+  onChange,
   ...rest
   }: CustomTextfieldProps
 ){
@@ -46,8 +49,23 @@ export default function CustomTextfield({
     event.preventDefault();
   };
 
-  const valueLength = typeof rest.value === 'string' ? rest.value.length : 0;
+  const valueLength = typeof value === 'string' ? value.length : 0;
+
+  const getByteSize = (str:string) => {
+    return new TextEncoder().encode(str).length;
+  };
+  const [byteSize, setByteSize] = useState(0);
   
+  const handleRealChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    const inputByteSize = getByteSize(value);
+
+    if (inputByteSize <= maxLength) {
+      setByteSize(inputByteSize);
+      onChange?.(e);
+    } 
+  };
+
   return (
     <div className='w-100'>
       <TextField 
@@ -60,6 +78,8 @@ export default function CustomTextfield({
         className={className}
         placeholder={placeholder}
         type={TextfieldType}
+        onChange={handleRealChange} 
+        value={value || ''}
         slotProps={{
           input: {
             readOnly: readonly,
@@ -92,7 +112,7 @@ export default function CustomTextfield({
       />
       {isTextarea && maxLength && !noCountStr && (
         <div className="count-str">
-          <p>{valueLength}/{maxLength}</p>
+          <p>{byteSize ? byteSize : valueLength}/{maxLength}</p>
         </div>
       )}
     </div>
