@@ -8,9 +8,24 @@ export default function useNotificationList(){
         req: undefined,
         cacheKey: `notification-${sessionStorage.getItem('accessToken')}`
     }
-    const { res } = useSelect(options);
+    const { res, setRes } = useSelect(options);
+
+    const removeNotification = (guid: string) => {
+        const newDataList = res?.dataList?.filter(item => item.notificationGuid !== guid);
+        setRes((prev) => {
+            if (!prev) return prev;
+            return {
+                ...prev,
+                dataList: newDataList
+            };
+        });
+    }
+
+    const hasList = !!res?.dataList && res?.dataList.length > 0;
 
     return {
-        res
+        res,
+        removeNotification,
+        hasList
     }
 }

@@ -6,7 +6,6 @@ import {Link} from "react-router-dom";
 import useNotificationList from "@/hooks/header/useNotificationList.ts";
 import NotificationItem from "@/components/_common/layout/NotificationItem.tsx";
 import useCheckedNotification from "@/hooks/header/useCheckedNotification.ts";
-import type {MouseEvent} from "react";
 
 export default function UserInfo({ logout }:{
     logout?:()=>void;
@@ -14,9 +13,9 @@ export default function UserInfo({ logout }:{
 
     const iconStyle = { fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }
 
-    const {res: notifications} = useNotificationList();
+    const { res: notifications, removeNotification, hasList } = useNotificationList();
     const { checkedNotification } = useCheckedNotification();
-    //기본 info error
+
     const {
         anchorEl: notificationsEl,
         open: notificationsOpen,
@@ -30,20 +29,30 @@ export default function UserInfo({ logout }:{
         handleClose: userClose
     } = useMenu();
 
-    const handleNotificationClick = (e: MouseEvent<HTMLButtonElement>) => {
-        notificationsClick?.(e);
-        checkedNotification?.();
+    const handleClickNotification = (guid: string) => {
+        checkedNotification(guid).then();
+        removeNotification(guid);
     }
 
     return (
         <>
             <div>
-                <IconButton onClick={handleNotificationClick}>
-                    <CustomAvatar useBadge avatarIcon={<Notifications sx={{ fontSize: 35, color: 'primary.main' }}/>}  />
+                <IconButton onClick={notificationsClick}>
+                    <CustomAvatar useBadge={hasList} avatarIcon={<Notifications sx={{ fontSize: 35, color: 'primary.main' }}/>}  />
                 </IconButton>
                 <Menu className="notification-menu" anchorEl={notificationsEl} open={notificationsOpen} onClose={notificationsClose}>
                     {notifications?.dataList?.map((item, index)=>{
-                        return <NotificationItem key={index} content={item.content} registerDate={item.registrationDate} type={item.typeCd}/>
+                        return(
+                            //기본 info error
+                            <NotificationItem
+                                key={index}
+                                guid={item.notificationGuid}
+                                content={item.content}
+                                registerDate={item.registrationDate}
+                                type={item.typeCd}
+                                onClick={handleClickNotification}
+                            />
+                        )
                     })}
                 </Menu>
             </div>

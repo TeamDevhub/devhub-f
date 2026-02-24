@@ -6,6 +6,6 @@ export default function useCheckedNotification(){
     const { mutate } = useMutation(checkedNotification)
 
     return {
-        checkedNotification : () => { mutate(undefined).then() }
+        checkedNotification : mutate
     }
 }
