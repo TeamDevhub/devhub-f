@@ -13,8 +13,57 @@ export default function MyProfile() {
   const { res } = useSelectUserProfile();
   const profile = res?.data;
 
-  const registerProjects: ListCardProps[] = [];
-  const applyProjects: ListCardProps[] = [];
+  const registerProjects: ListCardProps[] = [
+    {
+      title: '[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
+      recruitmentStartDate: '2025.12.03',
+      recruitmentEndDate: '2026.02.03',
+      progressStartDate: '2025.12.03',
+      progressEndDate: '2026.02.03',
+      currentRecriutNumber: '1',
+      totalRecriutNumber: '25',
+      applicantNumber: '10',
+      approvalNumber: '10',
+    },
+    {
+      title: '[데이터 분석2] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
+      recruitmentStartDate: '2025.12.03',
+      recruitmentEndDate: '2026.02.03',
+      progressStartDate: '2025.12.03',
+      progressEndDate: '2026.02.03',
+      currentRecriutNumber: '1',
+      totalRecriutNumber: '25',
+      applicantNumber: '10',
+      approvalNumber: '10',
+    },
+  ];
+
+  const applyProjects: ListCardProps[] = [
+    {
+      title: '[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
+      recruitmentStartDate: '2025.12.03',
+      recruitmentEndDate: '2026.02.03',
+      progressStartDate: '2025.12.03',
+      progressEndDate: '2026.02.03',
+      approvalState: '승인 대기중',
+    },
+    {
+      title: '[데이터 분석2] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
+      recruitmentStartDate: '2025.12.03',
+      recruitmentEndDate: '2026.02.03',
+      progressStartDate: '2025.12.03',
+      progressEndDate: '2026.02.03',
+      approvalState: '참가 승인',
+    },
+    {
+      title: '[데이터 분석3] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
+      recruitmentStartDate: '2025.12.03',
+      recruitmentEndDate: '2026.02.03',
+      progressStartDate: '2025.12.03',
+      progressEndDate: '2026.02.03',
+      approvalState: '참가 거절',
+    },
+  ];
 
   return (
     <div className="main-page align-stretch" style={{ minHeight: 'calc(100vh - 7rem)' }}>
