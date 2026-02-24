@@ -5,6 +5,7 @@ import FilterPopup from '@/components/projects/projectList/FilterPopup';
 import ProjectCard from '@/components/projects/projectList/ProjectCard';
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import useSelectProjects from '@/hooks/projects/useSelectProjects';
+import { useNavigate } from 'react-router-dom';
 import type { FilterData } from '@/types/type.projects';
 import { FilterAlt } from '@mui/icons-material';
 import { Button, FormControl, MenuItem, Pagination, Paper, Select } from '@mui/material';
@@ -13,6 +14,7 @@ export default function ProjectList(){
 
   const skillPopup = useDisclosure();
   const filterPopup = useDisclosure();
+  const navigate = useNavigate();
 
   const handleApplyFilterPopup = (data:FilterData) => {
     filterPopup.close();
@@ -71,7 +73,7 @@ export default function ProjectList(){
           })}
           <div className='list-bottom-box w-100 align-center mt-a'>
             <Pagination page={request.page} count={res?.pagination?.totalPages} onChange={(_, v)=>{setPage(v)}} color='primary' className='w-100 flex-center' showFirstButton showLastButton/>
-            <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }}>글쓰기</Button>
+            <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }} onClick={()=>{navigate('/projects/create')}}>글쓰기</Button>
           </div>
         </div>
       </div>

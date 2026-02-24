@@ -7,8 +7,10 @@ import dayjs from 'dayjs';
 interface CommonError {
   status: HttpStatusCode;
   timestamp: string;
-  errCode: string;
-  errMessage: string;
+  error: {
+    code: string;
+    message: string;
+  }
   requestId: string;
   path: string;
 }
@@ -94,7 +96,7 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 const requestSuccessInterceptor = async (
   request: InternalAxiosRequestConfig<unknown>
 ) => {
-  const accessToken = getSessionStorage('accessToken');
+  const accessToken = sessionStorage.getItem('accessToken');
   if(accessToken) request.headers['Authorization'] = `Bearer ${accessToken}`;
   
   return request;
@@ -113,9 +115,9 @@ const responseSuccessInterceptor = async (response: AxiosResponse<unknown>) => {
 const responseErrorInterceptor = async (err: unknown) => {
   const error = err as AxiosError<CommonError>;
 
-  console.log('responseErrorInterceptor', error.response?.data?.errCode);
+  console.log('responseErrorInterceptor', error.response?.data?.error?.code);
   
-  const errorCode = error.response?.data?.errCode ?? '';
+  const errorCode = error.response?.data?.error?.code ?? '';
   const status = error.response?.status;
   
   //에러 인터페이스에 따라 처리 추후 추가
@@ -209,7 +211,7 @@ export const fetcher = async <T = unknown, P = unknown>(
     },
     ...restConfig,
   });
-
+  
   return res.data;
 };
 

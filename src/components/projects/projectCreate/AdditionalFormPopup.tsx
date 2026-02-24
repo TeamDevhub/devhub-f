@@ -38,10 +38,15 @@ function Item({
     index,
     onChange,
 }: {index: number; onChange: (index1:number, e?:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void}){
+    const [value, setValue] = useState<string>('');
+    const onHandleChange = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setValue(e.target.value);
+        onChange?.(index, e);
+    }
     return (
         <div className="field-box flex-col mt-5">
             <div className="align-center">
-                <CustomTextfield placeholder="항목" onChange={(e)=>onChange(index, e)}/>
+                <CustomTextfield placeholder="항목" onChange={onHandleChange} value={value}/>
                 <IconButton size='small' onClick={()=>onChange(index)}><Remove sx={{ fontSize: 24, color: 'text.disabled' }} /></IconButton>
             </div>
         </div>
@@ -115,7 +120,7 @@ export default function AdditionalFormPopup ({
         <WebPopup isOpen={isOpen} onClose={onClosePopup} title={"추가양식"} onSubmit={onHandleSubmit}>
             <div className='left-filter-bar flex-col flex-grow' style={{width:'100%'}}>
                 <PopupField title={"제목"}> 
-                    <CustomTextfield placeholder="제목" onChange={(e)=>handleChange("title", e.target.value)}/>
+                    <CustomTextfield placeholder="제목" onChange={(e)=>handleChange("title", e.target.value)} value={state.title}/>
                 </PopupField>
                 <PopupField title={"타입"} subText={"텍스트: 주관식 / 선택박스, 라디오버튼: 객관식"}> 
                     <Select size="medium" className="w-100" defaultValue={initData.typeCd} 
@@ -126,7 +131,7 @@ export default function AdditionalFormPopup ({
                 <Divider />
                 <PopupField title={"도움말"}> 
                     <CustomRadioGroup values={USE_YN_OPTIONS} defaultValue={USE_YN_OPTIONS[0].value} onChange={onChangeUseHelpText}/>
-                    {useHelpText && <CustomTextfield placeholder="도움말" onChange={(e)=>handleChange("helpText", e.target.value)}/>}
+                    {useHelpText && <CustomTextfield placeholder="도움말" onChange={(e)=>handleChange("helpText", e.target.value)} value={state.helpText}/>}
                 </PopupField>
                 {useItemList && <PopupField title={"선택항목"} subText="최대 5개">
                     <div>

@@ -172,7 +172,6 @@ export default function ProjectCreate() {
           {/* 6. 첨부파일 */}
           <div className="form-box w-100 align-start">
             <div className="label-area flex">
-              <span className='required'>*</span>
               <p className='label-text'>첨부파일</p>
             </div>
             <div className="field-area flex-1">
@@ -184,7 +183,6 @@ export default function ProjectCreate() {
           {/* 7. 이미지 파일 */}
           <div className="form-box w-100 align-start">
             <div className="label-area flex">
-              <span className='required'>*</span>
               <p className='label-text'>이미지 파일</p>
             </div>
             <div className="field-area flex-1">
