@@ -1,6 +1,6 @@
 import type { ApiResponse } from '@/types/type.api';
 import { ERROR_CODE } from '@/types/const';
-import { getLocalStorage } from '@/utils/util._common';
+import { getSessionStorage } from '@/utils/util._common';
 import axios, { AxiosError, HttpStatusCode, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig, type Method } from 'axios';
 import dayjs from 'dayjs';
 
@@ -89,7 +89,7 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
  * 요청 성공 처리
  */
 const requestSuccessInterceptor = async (request: InternalAxiosRequestConfig<unknown>) => {
-  const accessToken = sessionStorage.getItem('accessToken');
+  const accessToken = getSessionStorage('accessToken');
   if (accessToken) request.headers['Authorization'] = `Bearer ${accessToken}`;
 
   return request;
