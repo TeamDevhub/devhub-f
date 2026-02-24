@@ -5,6 +5,7 @@ import { useSelect } from "../_common/api.hook";
 export default function useSelectProjectApplication(
   projectGuid?: string,
   applicationGuid?: string,
+  enabled = true,
 ) {
   const req: ProjectApplicationRequest = {
     projectGuid: projectGuid!,
@@ -17,11 +18,12 @@ export default function useSelectProjectApplication(
     cacheKey: (projectGuid && applicationGuid)
       ? `project-application-${projectGuid}-${applicationGuid}`
       : undefined,
-    enabled: !!projectGuid && !!applicationGuid,
+    enabled: enabled && !!projectGuid && !!applicationGuid,
   };
 
   const { res, loading } = useSelect<ProjectApplicationResponse, ProjectApplicationRequest>(options);
-
+   //eslint-disable-next-line no-debugger
+debugger;
   return {
     res,
     loading,
