@@ -21,7 +21,7 @@ import ErrorPage from '@/pages/ErrorPage';
 import BoardList from '@/pages/web/boards/BoardList';
 import BoardCreate from '@/pages/web/boards/BoardCreate';
 import Login from '@/pages/web/login/Login';
-import MyProfile from '@/pages/web/profile/home/Profile';
+import MyProfile from '@/pages/web/profile/home';
 import MainPage from '@/pages/web/MainPage';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
