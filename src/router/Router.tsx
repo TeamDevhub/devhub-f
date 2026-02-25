@@ -27,6 +27,17 @@ import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import Signup from '@/pages/web/signup/Signup';
 import { createBrowserRouter } from 'react-router-dom';
+import UserListPage from '@/pages/design/admin/users/UserListPage';
+import UserReportPage from '@/pages/design/admin/users/UserReportPage';
+import UserDetailPage from '@/pages/design/admin/users/UserDetailPage';
+import ProjectListPage2 from '@/pages/design/admin/projects/ProjectListPage';
+import ProjectDetailPage2 from '@/pages/design/admin/projects/ProjectDetailPage';
+import AdminLayout from '@/layout/AdminLayout';
+import CodeManagementPage from '@/pages/design/admin/codes/CodeManagementPage';
+import FormManagementPage from '@/pages/design/admin/forms/FormManagementPage';
+import BoardManagementPage from '@/pages/design/admin/boards/BoardManagementPage';
+import BannerManagementPage from '@/pages/design/admin/banner/BannerManagementPage';
+
 
 const router = createBrowserRouter([
   {
@@ -97,124 +108,181 @@ const router = createBrowserRouter([
   },
   {
     path: '/design',
-    element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        element: <MainPage />,
-      },
-      {
-        path: 'projects',
-        children: [
-          // {
-          //   index: true,
-          //   element: <ProjectListPage />
-          // },
-          {
-            path: 'detail',
-            element: <ProjectDetailPage />
-          },
-          {
-            path: 'create',
-            element: <ProjectCreatePage />
-          },
-          {
-            path: 'apply',
-            element: <ProjectApplyPage />
-          },
-        ]
-      },
-      {
-        path: 'boards',
+        path: 'auth',
+        element: <AuthLayout />,
         children: [
           {
-            index: true,
-            element: <BoardListPage />
-          },
-          {
-            path: 'detail',
-            element: <BoardDetailPage />
-          },
-          {
-            path: 'create',
-            element: <BoardCreatePage />
-          },
-          {
-            path: 'modify',
-            element: <BoardModifyPage />
-          },
-        ]
-      },
-      {
-        path: 'mypage',
-        children: [
-          {
-            path: 'home',
-            element: <MyHomePage />
-          },
-          {
-            path: 'home/modify',
-            element: <MyHomeModifyPage />
-          },
-          {
-            path: 'projects/list',
-            element: <MyProjectListPage />
-          },
-          {
-            path: 'projects/list/applicants',
-            element: <MyProjectApplicantPage />
-          },
-          {
-            path: 'boards',
-            element: <MyBoardPage />
-          }
-        ]
-      },
-      {
-        path: 'skilltrends',
-        children: [
-          {
-            index: true,
-            element: <SkillTrendsPage />
-          },
-        ]
-      },
-    ],
-  },
-  {
-    path: '/design/auth',
-    element: <AuthLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: 'login',
-        children: [
-          {
-            index: true,
+            path: 'login',
             element: <LoginPage />
-          }
-        ]
-      },
-      {
-        path: 'signup',
-        children: [
+          },
           {
-            index: true,
+            path: 'signup',
             element: <SignupPage />
-          }
-        ]
-      },
-      {
-        path: 'signin2',
-        children: [
+          },
           {
-            index: true,
+            path: 'signin2',
             element: <SignInPage2 />
           }
         ]
+      },
+      {
+        path: 'web',
+        element: <MainLayout />,
+        children: [
+          {
+            index: true,
+            element: <MainPage />,
+          },
+          {
+            path: 'projects',
+            children: [
+              {
+                path: 'detail',
+                element: <ProjectDetailPage />
+              },
+              {
+                path: 'create',
+                element: <ProjectCreatePage />
+              },
+              {
+                path: 'apply',
+                element: <ProjectApplyPage />
+              },
+            ]
+          },
+          {
+            path: 'boards',
+            children: [
+              {
+                index: true,
+                element: <BoardListPage />
+              },
+              {
+                path: 'detail',
+                element: <BoardDetailPage />
+              },
+              {
+                path: 'create',
+                element: <BoardCreatePage />
+              },
+              {
+                path: 'modify',
+                element: <BoardModifyPage />
+              },
+            ]
+          },
+          {
+            path: 'mypage',
+            children: [
+              {
+                path: 'home',
+                element: <MyHomePage />
+              },
+              {
+                path: 'home/modify',
+                element: <MyHomeModifyPage />
+              },
+              {
+                path: 'projects/list',
+                element: <MyProjectListPage />
+              },
+              {
+                path: 'projects/list/applicants',
+                element: <MyProjectApplicantPage />
+              },
+              {
+                path: 'boards',
+                element: <MyBoardPage />
+              }
+            ]
+          },
+          {
+            path: 'skilltrends',
+            children: [
+              {
+                index: true,
+                element: <SkillTrendsPage />
+              },
+            ]
+          },
+        ]
+      },
+      {
+        path: 'admin',
+        element: <AdminLayout />,
+        children: [
+          {
+            path: 'users',
+            children: [
+              {
+                path: 'list',
+                element: <UserListPage />
+              },
+              {
+                path: 'detail',
+                element: <UserDetailPage />
+              },
+              {
+                path: 'reports',
+                element: <UserReportPage />
+              }
+            ]
+          },
+          {
+            path: 'projects',
+            children: [
+              {
+                path: 'list',
+                element: <ProjectListPage2 />
+              },
+              {
+                path: 'detail',
+                element: <ProjectDetailPage2 />
+              }
+            ]
+          },
+          {
+            path: 'codes',
+            children: [
+              {
+                index: true,
+                element: <CodeManagementPage />
+              }
+            ]
+          },
+          {
+            path: 'forms',
+            children: [
+              {
+                index: true,
+                element: <FormManagementPage />
+              }
+            ]
+          },
+          {
+            path: 'boadrs',
+            children: [
+              {
+                index: true,
+                element: <BoardManagementPage />
+              }
+            ]
+          },
+          {
+            path: 'banner',
+            children: [
+              {
+                index: true,
+                element: <BannerManagementPage />
+              }
+            ]
+          },
+        ]
       }
-    ]
+    ],
   }
 ]);
 
