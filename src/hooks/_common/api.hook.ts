@@ -51,6 +51,7 @@ export const useSelect = <TRes, TReq>({
 
   return {
     res: data,
+    setRes: setData,
     loading,
     error,
     refetch: fetchData,

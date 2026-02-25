@@ -47,12 +47,12 @@ export const setSessionStorage = <T>(key: string, value: T): void => {
 export const getSessionStorage = <T>(key: string): T | null => {
   if (typeof window === 'undefined') return null;
 
+  const value = sessionStorage.getItem(key);
   try {
-    const value = sessionStorage.getItem(key);
     return value ? (JSON.parse(value) as T) : null;
   } catch (error) {
     console.error(error);
-    return null;
+    return value as unknown as T;
   }
 };
 
