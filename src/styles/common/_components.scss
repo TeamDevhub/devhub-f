@@ -9,11 +9,6 @@
   }
   &.MuiButton-sizeMedium { font-size: 1.4rem; }
   &.MuiButton-sizeLarge { padding: 0.8rem 1.1rem; font-size: 1.5rem; line-height: 2.6rem; letter-spacing: 0.46px; }
-
-  // variant
-  &.MuiButton-text { }
-  &.MuiButton-contained { }
-  &.MuiButton-outlined { }
 }
 
 /* 2. chip */
@@ -84,7 +79,20 @@
 
 /* 8. list */
 .MuiList-root { padding: 0 !important;
-  .MuiListItemButton-root { padding: 1.2rem 1.6rem; font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
+  .MuiListItemButton-root { padding: 1.2rem 1.6rem; font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); 
+    &.MuiListItemButton-dense { padding: 0.4rem 1.6rem 0.4rem 7.2rem;  
+      .MuiListItemText-root { 
+        .MuiTypography-root { font-size: 1.4rem; line-height: 143%; letter-spacing: 0.17px; }
+      }
+    }
+    .MuiSvgIcon-root { width: 2.4rem; height: 2.4rem; }
+    .MuiListItemText-root {
+      .MuiTypography-root { font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
+    }
+  }
+  .MuiListItemButton-root:has(.MuiTypography-root) { margin: 0 0.8rem; border-radius: 0.4rem; 
+    &.Mui-selected { background-color: rgba(0, 0, 0, 0.04); }
+  }
 }
 
 /* 9. rating */

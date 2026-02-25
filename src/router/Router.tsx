@@ -263,7 +263,7 @@ const router = createBrowserRouter([
             ]
           },
           {
-            path: 'boadrs',
+            path: 'boards',
             children: [
               {
                 index: true,

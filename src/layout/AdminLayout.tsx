@@ -14,9 +14,12 @@ export default function AdminLayout() {
             <CommonCodeProvider>
                 <AuthProvider>
                     <ModalProvider>
-                        <div id='devHub' className='wh-100'>
-                          {/* 어드민 헤더 현재 미정 -> 추후 변경 필요 */}
-                            <Header></Header>
+                        <div id='devHubAdmin' className='wh-100'>
+                          {/* 어드민 헤더 현재 미정 -> 임시 헤더 적용 */}
+                            {/* <Header></Header> */}
+                            <div className='align-center' style={{ width: '100%', height: '6.4rem', padding: '0 2.4rem', backgroundColor: 'var(--primary-main)' }}>
+                                <h1 style={{ color: '#fff' }}>DevHub</h1>
+                            </div>
                             <main>
                               <Outlet></Outlet>
                             </main>

@@ -1,9 +1,12 @@
+import LeftMenuBar from '@/components/design/LeftMenuBar'
 import React from 'react'
 
-export default function UserList(){
+export default function UserListPage(){
   return (
-    <div>
-      회원 목록 페이지입니다.
+    <div className='admin-page flex'>
+      {/* 1. left area */}
+      <LeftMenuBar selectedKey='user-list' />
+      {/* 2. right area */}
     </div>
   )
 }
