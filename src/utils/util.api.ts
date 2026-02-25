@@ -96,7 +96,7 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 const requestSuccessInterceptor = async (
   request: InternalAxiosRequestConfig<unknown>
 ) => {
-  const accessToken = sessionStorage.getItem('accessToken');
+  const accessToken = getSessionStorage('accessToken');
   if(accessToken) request.headers['Authorization'] = `Bearer ${accessToken}`;
   
   return request;
