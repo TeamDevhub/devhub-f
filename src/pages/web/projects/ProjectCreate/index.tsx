@@ -78,6 +78,10 @@ export default function ProjectCreate(){
                         size: 'medium',
                       },
                     }}
+                    sx={{
+                      '& legend': { display: 'none' },
+                      '& fieldset': { top: 0 },
+                    }}
                   />
                   ~
                   <DatePicker
@@ -86,6 +90,10 @@ export default function ProjectCreate(){
                       textField: {
                         size: 'medium'
                       },
+                    }}
+                    sx={{
+                      '& legend': { display: 'none' },
+                      '& fieldset': { top: 0 },
                     }}
                   />
                 </div>
@@ -142,6 +150,10 @@ export default function ProjectCreate(){
                         size: 'medium',
                       },
                     }}
+                    sx={{
+                      '& legend': { display: 'none' },
+                      '& fieldset': { top: 0 },
+                    }}
                   />
                   ~
                   <DatePicker
@@ -150,6 +162,10 @@ export default function ProjectCreate(){
                       textField: {
                         size: 'medium'
                       },
+                    }}
+                    sx={{
+                      '& legend': { display: 'none' },
+                      '& fieldset': { top: 0 },
                     }}
                   />
                 </div>
