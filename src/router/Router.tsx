@@ -28,7 +28,7 @@ import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import Signup from '@/pages/web/signup/Signup';
 import { createBrowserRouter } from 'react-router-dom';
-import MyProfileUpdate from '@/pages/web/profile/update';
+import ProfileUpdatePage from '@/pages/web/profile/update';
 
 const router = createBrowserRouter([
   {
@@ -100,21 +100,13 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'home',
-        children: [
-          {
-            index: true,
-            element: <MyProfile />,
-          },
-        ],
+        index: true,
+        element: <MyProfile />,
       },
       {
         path: 'update',
-        children: [
-          {
-            index: true,
-            element: <MyProfileUpdate />,
-          },
-        ],
+        index: true,
+        element: <ProfileUpdatePage />,
       },
     ],
   },

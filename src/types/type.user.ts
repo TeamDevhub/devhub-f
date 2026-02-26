@@ -19,3 +19,10 @@ export interface UserDetailResponse {
   positionList: string[];
   skillList: string[];
 }
+
+export interface UpdateProfileRequest {
+  username: string;
+  introduction: string;
+  positionList: string[];
+  skillList: string[];
+}

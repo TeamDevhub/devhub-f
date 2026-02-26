@@ -2,7 +2,7 @@ import { Chip, Divider, Paper } from '@mui/material';
 import MyInfoBox from '@/components/design/MyInfoBox';
 import InfoFieldBox from '@/components/profile/InfoFiledBox';
 import ListBox from '@/components/profile/ListBox';
-import useSelectUserProfile from '@/hooks/profile/useSelectUserProfile';
+import useSelectUserProfile from '@/hooks/profile/useSelectProfile';
 import { COMMON_CODE } from '@/types/const';
 import { useCodes } from '@/contexts/CommonCodeContext.ts';
 
