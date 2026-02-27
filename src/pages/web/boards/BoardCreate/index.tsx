@@ -6,7 +6,7 @@ import useCreateBoard from '@/hooks/boards/useCreateBoard';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 import {COMMON_CODE} from "@/types/const.ts";
 import { FormHelperText} from '@mui/material';
-
+import { Link } from 'react-router-dom';
 
 export default function BoardCreate() {
 
@@ -72,7 +72,9 @@ export default function BoardCreate() {
             </FieldGroup>
           </FormField>
           <div className="action-button-box align-center justify-end">
-            <Button size='large' variant='outlined'>취소</Button>
+            <Link to={'/boards'}>
+              <Button size='large' variant='outlined'>취소</Button>
+            </Link>
             <Button size='large' variant='contained' onClick={onSubmit}>등록</Button>
           </div>
         </div>

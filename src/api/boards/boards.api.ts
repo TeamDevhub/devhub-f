@@ -1,4 +1,4 @@
-import type {BoardSummary, BoardSearchRequest, BoardCreate} from "@/types/type.boards";
+import type {BoardSummary, BoardSearchRequest, BoardCreate, BoardDetail} from "@/types/type.boards";
 import fetcher from "@/utils/util.api";
 
 export const getBoards = (req : BoardSearchRequest) => {
@@ -13,6 +13,13 @@ export const getBoards = (req : BoardSearchRequest) => {
         { method : "get"}
     );
 }
+
+export const getBoardDetail = (req:string) => 
+    fetcher<BoardDetail>(
+        `/boards/${req}`,
+        req,
+        { method : "get"}
+    );
 
 export const likeBoard = (req : string) => 
     fetcher<void, string>(

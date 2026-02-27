@@ -20,6 +20,7 @@ import SkillTrendsPage from '@/pages/design/skilltrends/SkillTrendsPage';
 import ErrorPage from '@/pages/ErrorPage';
 import BoardList from '@/pages/web/boards/BoardList';
 import BoardCreate from '@/pages/web/boards/BoardCreate';
+import BoardDetail from '@/pages/web/boards/BoardDetail';
 import Login from '@/pages/web/login/Login';
 import MainPage from '@/pages/web/MainPage';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
           {
             path: 'create',
             element: <BoardCreate />
+          },
+          {
+            path: 'detail',
+            element: <BoardDetail />
           },
         ]
       },

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { getBoards } from "@/api/boards/boards.api";
 import { useSelect } from "@/hooks/_common/api.hook";
 import type { BoardSearchRequest, SearchData } from "@/types/type.boards";
+import { useNavigate } from 'react-router-dom';
 
 const initData : SearchData = {
     page : 1,
@@ -23,6 +24,14 @@ export default function useSelectBoards(
         cacheKey: `boards-${JSON.stringify(request)}`
     }
     const {res} = useSelect(options);
+
+    const navigate = useNavigate();
+
+    const handleDetail = (boardGuid:string) => {
+        console.log(boardGuid)
+        if(!boardGuid) return;
+        navigate(`/boards/${boardGuid}`);
+    }
 
     //페이지
     const setPage = (page:number) => {
@@ -55,5 +64,6 @@ export default function useSelectBoards(
         setTab, 
         title, setTitle,
         handleSearchClick,
+        handleDetail
     };
 }
