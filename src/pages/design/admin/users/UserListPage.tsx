@@ -6,9 +6,9 @@ import React, { useState } from 'react'
 
 export default function UserListPage(){
   // 계정 상태 select
-  const [category, setCategory] = useState('');
+  const [state, setState] = useState('');
   const handleChange = (event: SelectChangeEvent) => {
-    setCategory(event.target.value);
+    setState(event.target.value);
   };
 
   // table data
@@ -56,8 +56,8 @@ export default function UserListPage(){
         <div className="search-section flex-col gap-8">
           <div className="align-center gap-16">
             <Select 
-              label='계정상태'
-              id='category' value={category} onChange={handleChange} size='small' displayEmpty
+              label='계정 상태'
+              id='category' value={state} onChange={handleChange} size='small' displayEmpty
               renderValue={(selected) => selected === '' ? '정지' : selected }
               sx={{ width: '20rem' }}
             >
