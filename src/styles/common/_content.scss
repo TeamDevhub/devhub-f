@@ -280,11 +280,28 @@
 
 /** ADMIN **/
 #devHubAdmin { min-height: 100vh; background-color: #fff;
-  .admin-page { min-height: calc(100vh - 6.4rem); 
-    // 1. user list
-    .content-box { padding: 2.8rem 2.4rem;
+  .admin-page { min-height: 100vh;
+    // 1. user list/detail
+    .content-box { margin-left: 25.6rem; margin-top: 6.4rem; padding: 2.8rem 2.4rem;
       .title { font-size: 3.2rem; font-weight: bold; line-height: 120%; letter-spacing: 0.15px; color: #000; }
-      .search-section {
+      .search-section, .data-section {
+        .title-area {
+          strong { font-size: 2.4rem; font-weight: 600; line-height: 100%; letter-spacing: 0.15px; color: #000; }
+        }
+        .information-area {
+          dl { font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: #000; 
+            dt { min-width: 15rem; padding: 1.6rem; background-color: #F3F3F3; }
+            dd { padding: 0 1.6rem; 
+              .chip-box { padding: 0.8rem 1.2rem; border-radius: 0.4rem; border: 1px solid rgba(0, 0, 0, 0.23); }
+            }
+          }
+        }
+        .grid-area {
+          .table-summary {
+            .summary-title { font-size: 1.4rem; font-weight: 600; line-height: 2.6rem; letter-spacing: 0.17px; color: #494948; }
+            .total-count { font-size: 1.2rem; line-height: 2.6rem; letter-spacing: 0.17px; color: #2768FF; }
+          }
+        }
         .seperator { font-size: 1.4rem; line-height: 2.4rem; letter-spacing: 0.15px; color: #000; }
       }
       .grid-section {

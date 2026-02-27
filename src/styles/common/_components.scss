@@ -66,7 +66,12 @@
 }
 
 /* 4. pagination */ 
-.MuiPaginationItem-root { font-size: 1.4rem !important; }
+.MuiPaginationItem-root { font-size: 1.4rem !important; 
+  &.MuiPaginationItem-sizeSmall {
+    .MuiPaginationItem-icon { font-size: 1.8rem; }
+  }
+  .MuiPaginationItem-icon { font-size: 2rem; }
+}
 
 /* 5. tooltip */
 .MuiTooltip-tooltip { font-size: 1.2rem !important; font-weight: 400 !important; }
@@ -121,7 +126,9 @@
     .MuiTableCell-root { font-size: 1.4rem; font-weight: 500; line-height: 2.4rem; letter-spacing: 0.17px; color: var(--text-primary); }
   }
   .MuiTableBody-root {
-    .MuiTableCell-root { font-size: 1.4rem; letter-spacing: 0.17px; color: var(--text-primary); }
+    .MuiTableCell-root { font-size: 1.4rem; letter-spacing: 0.17px; color: var(--text-primary); 
+      .MuiTypography-root { font-size: 1.4rem; letter-spacing: 0.17px; color: var(--text-primary); }
+    }
   }
   .MuiTableCell-root { border-bottom: 1px solid #E5E7EB !important; }
 }

@@ -178,3 +178,6 @@
   100% { transform: translateY(0); }
 }
 
+/* left menu bar */
+.left-menu-bar { position: fixed; top: 6.4rem; border-radius: 0 !important; align-self: flex-start; min-height: calc(100vh - 6.4rem); }
+
