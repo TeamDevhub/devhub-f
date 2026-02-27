@@ -28,7 +28,7 @@ import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import Signup from '@/pages/web/signup/Signup';
 import { createBrowserRouter } from 'react-router-dom';
-import ProfileUpdatePage from '@/pages/web/profile/update';
+import MyProfileUpdatePage from '@/pages/web/profile/update';
 
 const router = createBrowserRouter([
   {
@@ -106,7 +106,7 @@ const router = createBrowserRouter([
       {
         path: 'update',
         index: true,
-        element: <ProfileUpdatePage />,
+        element: <MyProfileUpdatePage />,
       },
     ],
   },

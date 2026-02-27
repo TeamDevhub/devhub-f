@@ -1,7 +1,7 @@
 import useSelectUserProfile from '@/hooks/profile/useSelectProfile';
 import MyProfileUpdate from '@/components/profile/MyProfileUpdate';
 
-export default function ProfileUpdatePage() {
+export default function MyProfileUpdatePage() {
   const { res, loading, error } = useSelectUserProfile();
 
   if (loading) return null;
