@@ -31,7 +31,8 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
       <MyInfoBox selectedKey="home" />
       <Paper className="mypage-box flex-col flex-grow" elevation={4}>
         <FormField2 label="이메일">
-          <FieldGroup2 style={{ padding: '0.8rem 0 0.8rem 1.6rem' }}>email@gmail.com</FieldGroup2>
+          <FieldGroup2 style={{ padding: '0.8rem 0 0.8rem 1.6rem' }}></FieldGroup2>
+          {profile.user.email}
         </FormField2>
         <FormField2 label="비밀번호">
           <FieldGroup2>
