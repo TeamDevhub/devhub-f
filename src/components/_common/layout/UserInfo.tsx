@@ -1,12 +1,20 @@
 import CustomAvatar from "@/components/_common/customMUI/CustomAvatar.tsx";
-import {ArrowForwardIos, CheckCircle, Create, Inbox, Logout, Notifications, Person} from "@mui/icons-material";
+import {CheckCircle, Create, Inbox, Logout, Notifications, Person} from "@mui/icons-material";
 import useMenu from "@/hooks/_common/useMenu.ts";
-import {Button, IconButton, Menu, MenuItem} from "@mui/material";
+import {IconButton, Menu, MenuItem} from "@mui/material";
 import {Link} from "react-router-dom";
+import useNotificationList from "@/hooks/header/useNotificationList.ts";
+import NotificationItem from "@/components/_common/layout/NotificationItem.tsx";
+import useCheckedNotification from "@/hooks/header/useCheckedNotification.ts";
 
 export default function UserInfo({ logout }:{
     logout?:()=>void;
 }){
+
+    const iconStyle = { fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }
+
+    const { res: notifications, removeNotification, hasList } = useNotificationList();
+    const { checkedNotification } = useCheckedNotification();
 
     const {
         anchorEl: notificationsEl,
@@ -14,7 +22,6 @@ export default function UserInfo({ logout }:{
         handleClick: notificationsClick,
         handleClose: notificationsClose
     } = useMenu();
-
     const {
         anchorEl: userEl,
         open: userOpen,
@@ -22,41 +29,31 @@ export default function UserInfo({ logout }:{
         handleClose: userClose
     } = useMenu();
 
+    const handleClickNotification = (guid: string) => {
+        checkedNotification(guid).then();
+        removeNotification(guid);
+    }
+
     return (
         <>
             <div>
                 <IconButton onClick={notificationsClick}>
-                    <CustomAvatar useBadge avatarIcon={<Notifications sx={{ fontSize: 35, color: 'primary.main' }}/>}  />
+                    <CustomAvatar useBadge={hasList} avatarIcon={<Notifications sx={{ fontSize: 35, color: 'primary.main' }}/>}  />
                 </IconButton>
                 <Menu className="notification-menu" anchorEl={notificationsEl} open={notificationsOpen} onClose={notificationsClose}>
-                    {/* 임시 데이터 */}
-                    {/* MenuItem에 info, error 클래스 붙이면 색상 변경되도록 scss 작성해둠 */}
-                    <MenuItem className="flex-col info">
-                        <strong className="main-text">
-                            모집하는 프로젝트에 새로운 지원자가 지원하였습니다.
-                        </strong>
-                        <div className="bottom w-100 align-center justify-between">
-                            <p className="alert-date">2025.01.01</p>
-                            <Button size="small" className="detail-button" endIcon={<ArrowForwardIos />}>상세보기</Button>
-                        </div>
-                    </MenuItem>
-                    <MenuItem className="flex-col">
-                        <strong className="main-text">
-                            기본 알림입니다.
-                        </strong>
-                        <div className="bottom w-100 align-center justify-between">
-                            <p className="alert-date">2025.01.01</p>
-                        </div>
-                    </MenuItem>
-                    <MenuItem className="flex-col error">
-                        <strong className="main-text">
-                            신고 알림입니다.
-                        </strong>
-                        <div className="bottom w-100 align-center justify-between">
-                            <p className="alert-date">2025.01.01</p>
-                            <Button size="small" className="detail-button" endIcon={<ArrowForwardIos />}>상세보기</Button>
-                        </div>
-                    </MenuItem>
+                    {notifications?.dataList?.map((item, index)=>{
+                        return(
+                            //기본 info error
+                            <NotificationItem
+                                key={index}
+                                guid={item.notificationGuid}
+                                content={item.content}
+                                registerDate={item.registrationDate}
+                                type={item.typeCd}
+                                onClick={handleClickNotification}
+                            />
+                        )
+                    })}
                 </Menu>
             </div>
             <div>
@@ -72,23 +69,23 @@ export default function UserInfo({ logout }:{
                         </div>
                     </MenuItem>
                     <MenuItem onClick={userClose} component={Link} to="/" sx={{ marginTop: '0.8rem' }}>
-                        <Person sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
+                        <Person sx={iconStyle} />
                         <p>내 정보</p>
                     </MenuItem>
                     <MenuItem onClick={userClose} component={Link} to="/">
-                        <Inbox sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
+                        <Inbox sx={iconStyle} />
                         <p>모집 현황</p>
                     </MenuItem>
                     <MenuItem onClick={userClose} component={Link} to="/">
-                        <CheckCircle sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
+                        <CheckCircle sx={iconStyle} />
                         <p>신청 결과 확인</p>
                     </MenuItem>
                     <MenuItem onClick={userClose} component={Link} to="/">
-                        <Create sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
+                        <Create sx={iconStyle} />
                         <p>프로젝트 모집하기</p>
                     </MenuItem>
                     <MenuItem onClick={logout} sx={{ marginBottom: '0.8rem' }}>
-                        <Logout sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
+                        <Logout sx={iconStyle} />
                         <p>Sign out</p>
                     </MenuItem>
                 </Menu>
