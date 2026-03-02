@@ -4,6 +4,7 @@ import { Person } from '@mui/icons-material';
 import { Button, Divider, List, ListItemButton, Paper, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 type MyPageNavKey = 'home' | 'projects' | 'boards';
 
@@ -15,10 +16,31 @@ interface MyPageNavProps {
 export default function MyInfoBox({ selectedKey, onChange }: MyPageNavProps) {
   // 1. 사용자 이미지 변경 팝업
   const { user } = useAuth();
-  console.log('user', user);
+  const navigate = useNavigate();
+
   const [openProfilePopup, setOpenProfilePopup] = useState(false);
+
   const clickOpenProfilePopup = () => {
     setOpenProfilePopup(true);
+  };
+
+  const goMyProfileHome = () => {
+    navigate('/profile/home');
+    onChange?.('home');
+  };
+
+  const goMyProfileUpdate = () => {
+    navigate('/profile/update');
+  };
+
+  const goProjects = () => {
+    navigate('/profile/projects');
+    onChange?.('projects');
+  };
+
+  const goBoards = () => {
+    navigate('/profile/boards');
+    onChange?.('boards');
   };
 
   return (
@@ -50,18 +72,18 @@ export default function MyInfoBox({ selectedKey, onChange }: MyPageNavProps) {
             />
           </div>
         </div>
-        <Button size="small" variant="outlined" className="mt-16">
+        <Button size="small" variant="outlined" className="mt-16" onClick={goMyProfileUpdate}>
           내 정보 수정
         </Button>
         <Divider />
         <List component="nav" aria-label="mypage list">
-          <ListItemButton selected={selectedKey === 'home'} onClick={() => onChange?.('home')}>
+          <ListItemButton selected={selectedKey === 'home'} onClick={goMyProfileHome}>
             내 정보 홈
           </ListItemButton>
-          <ListItemButton selected={selectedKey === 'projects'} onClick={() => onChange?.('projects')}>
+          <ListItemButton selected={selectedKey === 'projects'} onClick={goProjects}>
             내 프로젝트 관리
           </ListItemButton>
-          <ListItemButton selected={selectedKey === 'boards'} onClick={() => onChange?.('boards')}>
+          <ListItemButton selected={selectedKey === 'boards'} onClick={goBoards}>
             내 게시글 관리
           </ListItemButton>
         </List>

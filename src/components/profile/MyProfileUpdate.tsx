@@ -1,11 +1,11 @@
 import { Button, Divider, Paper } from '@mui/material';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import PasswordChangePopup from '@/components/_common/popup/PasswordChangePopup';
-import InfoFieldBox from '@/components/profile/InfoFiledBox';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
-import MyInfoBox from '@/components/design/MyInfoBox';
-import FormField2 from '@/components/design/FormField2';
-import FieldGroup2 from '@/components/design/FieldGroup2';
+import MyInfoBox from '@/components/profile/MyInfoBox';
+import FormField2 from '@/components/profile/FormField2';
+import FieldGroup2 from '@/components/profile/FieldGroup2';
+import FormFieldExtra from './FormFiledExtra';
 import SelectableGroup from '@/components/_common/SelectableGroup';
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import { useCodes } from '@/contexts/CommonCodeContext.ts';
@@ -23,7 +23,6 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
   const { getCodesByGroup } = useCodes();
   const passwordChangePopup = useDisclosure();
   const skillPopup = useDisclosure();
-
   const { userInfo, handleChange, createToggle, createHandler, applyUpdateProfile, loading } = useUpdateProfile(profile);
 
   return (
@@ -31,22 +30,16 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
       <MyInfoBox selectedKey="home" />
       <Paper className="mypage-box flex-col flex-grow" elevation={4}>
         <FormField2 label="이메일">
-          <FieldGroup2 style={{ padding: '0.8rem 0 0.8rem 1.6rem' }}></FieldGroup2>
-          {profile.user.email}
-        </FormField2>
-        <FormField2 label="비밀번호">
           <FieldGroup2>
-            <Button size="small" variant="outlined" color="primary" onClick={passwordChangePopup.open}>
-              비밀번호 변경
-            </Button>
+            <div className="flex-col">
+              <CustomTextfield value={profile.user.email} readonly={true} />
+            </div>
           </FieldGroup2>
         </FormField2>
-        <FormField2 label="프로필">
+        <FormField2 label="내 정보">
           <FieldGroup2>
-            <span className="required">*</span>
             <div className="flex-col">
               <CustomTextfield value={userInfo.username} onChange={(e) => handleChange('username', e.target.value)} placeholder="닉네임" />
-              <span className="help-text">다른 사용자에게 표시되는 이름입니다</span>
             </div>
           </FieldGroup2>
           <FieldGroup2>
@@ -58,12 +51,11 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
                 onChange={(e) => handleChange('introduction', e.target.value)}
                 placeholder="자기소개"
               />
-              <span className="help-text">간단한 자기소개를 작성해 주세요</span>
             </div>
           </FieldGroup2>
         </FormField2>
 
-        <InfoFieldBox label="관심 포지션">
+        <FormFieldExtra label="관심 포지션">
           <div className="chip-box w-100 align-center flex-wrap">
             <SelectableGroup
               type="chip"
@@ -72,9 +64,9 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
               onToggle={createToggle('positionList')}
             />
           </div>
-        </InfoFieldBox>
+        </FormFieldExtra>
 
-        <InfoFieldBox label="보유 기술">
+        <FormFieldExtra label="보유 기술">
           <div className="content-box align-stretch">
             <div className="chip-box align-center flex-wrap" style={{ flex: 1, minHeight: '56px' }}>
               <AddableChipGroup
@@ -85,7 +77,7 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
               />
             </div>
           </div>
-        </InfoFieldBox>
+        </FormFieldExtra>
 
         <SkillPopup
           key={skillPopup.isOpen ? 'open' : 'close'}
@@ -96,11 +88,12 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
         />
 
         <Divider />
-        <div className="button-box w-100 align-center gap-12">
-          <Button size="medium" variant="outlined" className="flex-1">
-            취소
+
+        <div className="button-box w-100 flex justify-end gap-12">
+          <Button size="small" variant="outlined" color="primary" onClick={passwordChangePopup.open}>
+            비밀번호 변경
           </Button>
-          <Button variant="contained" onClick={applyUpdateProfile} disabled={loading}>
+          <Button size="medium" variant="contained" sx={{ minWidth: 120 }} onClick={applyUpdateProfile} disabled={loading}>
             저장
           </Button>
         </div>

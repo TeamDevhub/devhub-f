@@ -98,16 +98,10 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: 'home',
-        index: true,
-        element: <MyProfile />,
-      },
-      {
-        path: 'update',
-        index: true,
-        element: <MyProfileUpdatePage />,
-      },
+      { path: 'home', element: <MyProfile /> },
+      { path: 'update', element: <MyProfileUpdatePage /> },
+      { path: 'projects', element: <MyProjectListPage /> },
+      { path: 'boards', element: <MyBoardPage /> },
     ],
   },
   {
