@@ -1,6 +1,6 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import LeftMenuBar from '@/components/design/LeftMenuBar'
-import { Button, Chip, Divider, MenuItem, Pagination, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, type SelectChangeEvent } from '@mui/material'
+import { Button, Checkbox, Chip, Divider, MenuItem, Pagination, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, type SelectChangeEvent } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import React, { useState } from 'react'
 
@@ -55,6 +55,31 @@ export default function BoardManagementPage(){
       default:
         return 'success';
     }
+  };
+
+  // table checkbox
+  const [selected, setSelected] = React.useState<number[]>([]);
+
+  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      const newSelected = rows.map((row) => row.num); // 너는 id 대신 num 사용 중
+      setSelected(newSelected);
+      return;
+    }
+    setSelected([]);
+  };
+
+  const handleClick = (num: number) => {
+    const selectedIndex = selected.indexOf(num);
+    let newSelected: number[] = [];
+
+    if (selectedIndex === -1) {
+      newSelected = [...selected, num];
+    } else {
+      newSelected = selected.filter((id) => id !== num);
+    }
+
+    setSelected(newSelected);
   };
 
   return (
@@ -136,6 +161,19 @@ export default function BoardManagementPage(){
             <Table aria-label="user list table" sx={{ tableLayout: 'fixed', width: '100%', borderCollapse: 'separate' }}>
               <TableHead>
                 <TableRow>
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      size='large'
+                      color="primary"
+                      indeterminate={
+                        selected.length > 0 && selected.length < rows.length
+                      }
+                      checked={
+                        rows.length > 0 && selected.length === rows.length
+                      }
+                      onChange={handleSelectAllClick}
+                    />
+                  </TableCell>
                   <TableCell align="center" width={120}>번호</TableCell>
                   <TableCell align="center" width={120}>카테고리</TableCell>
                   <TableCell align="center">제목</TableCell>
@@ -148,6 +186,14 @@ export default function BoardManagementPage(){
               <TableBody>
                 {rows.map((row) => (
                   <TableRow>
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        size='large'
+                        color="primary"
+                        checked={selected.includes(row.num)}
+                        onChange={() => handleClick(row.num)}
+                      />
+                    </TableCell>
                     <TableCell align="center">{row.num}</TableCell>
                     <TableCell align="center">{row.category}</TableCell>
                     <TableCell align="left"><Typography noWrap>{row.title}</Typography></TableCell>

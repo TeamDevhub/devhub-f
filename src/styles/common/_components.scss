@@ -126,6 +126,8 @@
 .MuiTableContainer-root { border-radius: 0 !important; box-shadow: none !important;
   .MuiTableHead-root {
     .MuiTableCell-root { font-size: 1.4rem; font-weight: 500; line-height: 2.4rem; letter-spacing: 0.17px; color: var(--text-primary); }
+    .MuiTableCell-head:has(.MuiCheckbox-root) { padding: 0 !important; }
+    .MuiCheckbox-root { padding: 1.6rem !important; }
   }
   .MuiTableBody-root {
     .MuiTableCell-root { padding: 1.6rem; font-size: 1.4rem; letter-spacing: 0.17px; color: var(--text-primary); 
@@ -133,7 +135,9 @@
       .MuiTypography-root { font-size: 1.4rem; letter-spacing: 0.17px; color: var(--text-primary); }
     }
   }
-  .MuiTableCell-root { border-bottom: 1px solid #E5E7EB !important; }
+  .MuiTableCell-root { border-bottom: 1px solid #E5E7EB !important; 
+    .MuiCheckbox-root { padding: 0; }
+  }
 }
 
 /*** CUSTOM ***/
