@@ -327,8 +327,8 @@ export default function BannerManagementPage(){
           <div className="description-list flex-col gap-4">
             <dl className='align-stretch gap-4'>
               <dt style={{ height: 'auto' }}>배너 이미지</dt>
-              <dd className='w-100 flex-col gap-4'>
-                <div className="align-stretch gap-4">
+              <dd className='w-100 flex-col gap-4' style={{ padding: '1.3rem 0.8rem' }}>
+                <div className="align-stretch gap-8">
                   <CustomTextfield size='small' placeholder='이미지를 업로드해 주세요.' />
                   <Button size='medium' variant='contained' color='primary'>업로드</Button>
                 </div>
