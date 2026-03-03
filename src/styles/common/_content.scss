@@ -417,3 +417,7 @@
     }
   }
 }
+// 6. select
+.MuiMenu-paper {
+  .MuiMenuItem-root { font-size: 1.5rem; min-height: none; }
+}
