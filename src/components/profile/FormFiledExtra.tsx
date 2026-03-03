@@ -9,23 +9,23 @@ interface FormFieldExtraProps {
 }
 
 export default function FormFieldExtra({ label, children }: FormFieldExtraProps) {
-  const renderIcon = (label: FormFieldExtraLabel) => {
-    const iconProps = { sx: { fontSize: 20, color: 'primary.main' } };
+  // const renderIcon = (label: FormFieldExtraLabel) => {
+  //   const iconProps = { sx: { fontSize: 20, color: 'primary.main' } };
 
-    switch (label) {
-      case '관심 포지션':
-        return <Favorite {...iconProps} />;
-      case '보유 기술':
-        return <Settings {...iconProps} />;
-      default:
-        return null;
-    }
-  };
+  //   switch (label) {
+  //     case '관심 포지션':
+  //       return <Favorite {...iconProps} />;
+  //     case '보유 기술':
+  //       return <Settings {...iconProps} />;
+  //     default:
+  //       return null;
+  //   }
+  // };
 
   return (
-    <div className="field-box flex-col">
+    <div className="field-box2 flex-col">
       <div className="field-title align-center">
-        {renderIcon(label)}
+        {/* {renderIcon(label)} */}
         <p>{label}</p>
       </div>
       <div className="field-content">{children}</div>

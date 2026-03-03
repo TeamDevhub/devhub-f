@@ -83,6 +83,9 @@
   .field-title { font-size: 1.6rem; font-weight: 500; line-height: 100%; color: rgba(0, 0, 0, 0.87); }
   .content-box { gap: 0.8rem; }
   .chip-box { padding: 1.2rem; gap: 0.4rem; border-radius: 0.4rem; border: 1px solid rgba(0, 0, 0, 0.23); }
+  // .field-content {
+  //   &:not(:has(.required)) { padding-left: 1.6rem; }
+  // }
 }
 
 /* user&view info */
