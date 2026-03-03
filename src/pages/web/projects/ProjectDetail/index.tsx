@@ -1,26 +1,27 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
-import {DDayChip,  PositionChips,  ProgressRegionChip,  RecruitmentChip,  RecruitStatusChip,  SkillChips} from '@/components/projects/ProjectChips';
+import { DDayChip, PositionChips, ProgressRegionChip, RecruitmentChip, RecruitStatusChip, SkillChips } from '@/components/projects/ProjectChips';
 import useSelectProjectDetail from '@/hooks/projects/useSelectProjectDetail';
-import {COMMON_CODE} from '@/types/const';
-import {AccessTime,  ContentPaste,  LocationOn,  OpenInNew,  People,  Person,  Settings,  Visibility} from '@mui/icons-material';
-import {Divider, Paper, Tooltip} from '@mui/material';
+import { COMMON_CODE } from '@/types/const';
+import { AccessTime, ContentPaste, LocationOn, OpenInNew, People, Person, Settings, Visibility } from '@mui/icons-material';
+import { Divider, Paper, Tooltip } from '@mui/material';
 import dayjs from 'dayjs';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import TopButton from "@/components/_common/button/TopButton.tsx";
-import {useCodes} from "@/contexts/CommonCodeContext.ts";
+import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import HeartButton from "@/components/_common/button/HeartButton.tsx";
+import { useParams } from "react-router-dom";
 
 export default function ProjectDetail() {
   const navigate = useNavigate();
-  const projectId = 'c1ba0f7821a54fc6a4561b4e06da4e76';
+  const { projectGuid } = useParams();
 
   const { getCodeName } = useCodes();
-  const { res } = useSelectProjectDetail(projectId);
+  const { res } = useSelectProjectDetail(projectGuid);
 
   //[수정필요]
   const handleApplyClick = () => {
     navigate('/projects/apply', {
-      state: { projectId }
+      state: { projectGuid }
     });
   }
 
