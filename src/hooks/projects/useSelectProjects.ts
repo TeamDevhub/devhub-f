@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useSelect } from "../_common/api.hook";
 
 const initData:SearchData = {
-  page:1,
+  page:0,
   size:10,
   order:'',
 }
@@ -80,7 +80,7 @@ export default function useSelectProjects(
       ...baseFilter,
       ...baseSearch,
       keyword: keyword,
-      page: 1,
+      page: 0,
     });
   }
 
@@ -89,7 +89,7 @@ export default function useSelectProjects(
       ...prev,
       ...filters,
       ...filterData,
-      page: 1
+      page: 0
     }));
     if(filterData) setFilters(filterData);
   }
