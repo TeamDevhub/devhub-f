@@ -37,6 +37,7 @@ import CodeManagementPage from '@/pages/design/admin/codes/CodeManagementPage';
 import FormManagementPage from '@/pages/design/admin/forms/FormManagementPage';
 import BoardManagementPage from '@/pages/design/admin/boards/BoardManagementPage';
 import BannerManagementPage from '@/pages/design/admin/banner/BannerManagementPage';
+import TermsManagementPage from '@/pages/design/admin/terms/TermsManagementPage';
 
 
 const router = createBrowserRouter([
@@ -285,7 +286,7 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <BannerManagementPage />
+                element: <TermsManagementPage />
               }
             ]
           }
