@@ -1,14 +1,14 @@
+// MyProfileHome.tsx
 import { Chip, Divider, Paper } from '@mui/material';
-import MyInfoBox from '@/components/design/MyInfoBox';
 import InfoFieldBox from '@/components/profile/InfoFiledBox';
 import ListBox from '@/components/profile/ListBox';
 import useSelectUserProfile from '@/hooks/profile/useSelectProfile';
 import { COMMON_CODE } from '@/types/const';
-import { useCodes } from '@/contexts/CommonCodeContext.ts';
+import { useCodes } from '@/contexts/CommonCodeContext';
 
 import type { ListCardProps } from '@/components/profile/ListCard';
 
-export default function MyProfile() {
+export default function MyProfileHome() {
   const { getCodeName } = useCodes();
   const { res } = useSelectUserProfile();
   const profile = res?.data;
@@ -66,50 +66,37 @@ export default function MyProfile() {
   ];
 
   return (
-    <div className="main-page align-stretch" style={{ minHeight: 'calc(100vh - 7rem)' }}>
-      <MyInfoBox selectedKey="home" />
+    <Paper className="mypage-box flex-col flex-1" elevation={4}>
+      {/* 내 정보 */}
+      <div className="top flex-col">
+        <InfoFieldBox label="닉네임">{profile?.user.username}</InfoFieldBox>
+        <InfoFieldBox label="이메일">{profile?.user.email}</InfoFieldBox>
+        <InfoFieldBox label="내 소개">{profile?.user.introduction || '-'}</InfoFieldBox>
+        <InfoFieldBox label="관심 포지션">
+          <div className="recruit-chip-box align-center">
+            {profile?.positionList?.map((position, index) => (
+              <Chip key={index} size="small" variant="outlined" color="primary" label={getCodeName(COMMON_CODE.POSITION_CODE, position)} />
+            ))}
+          </div>
+        </InfoFieldBox>
 
-      <Paper className="mypage-box flex-col flex-grow flex-1" elevation={4}>
-        {/* 내 정보 */}
-        <div className="top flex-col">
-          <InfoFieldBox label="닉네임">{profile?.user.username}</InfoFieldBox>
-          <InfoFieldBox label="이메일">{profile?.user.email}</InfoFieldBox>
-          <InfoFieldBox label="내 소개">{profile?.user.introduction || '-'}</InfoFieldBox>
+        <InfoFieldBox label="보유 기술">
+          <div className="tech-chip-box align-center flex-wrap">
+            {profile?.skillList?.map((skill, index) => (
+              <Chip key={index} size="small" variant="outlined" color="secondary" label={getCodeName(COMMON_CODE.SKILL_CODE, skill)} />
+            ))}
+          </div>
+        </InfoFieldBox>
+      </div>
 
-          <InfoFieldBox label="관심 포지션">
-            <div className="recruit-chip-box align-center">
-              {profile?.positionList?.map((position, index) => (
-                <Chip key={index} variant="outlined" color="primary" size="small" label={getCodeName(COMMON_CODE.POSITION_CODE, position)} />
-              ))}
-            </div>
-          </InfoFieldBox>
+      {(registerProjects.length > 0 || applyProjects.length > 0) && <Divider />}
 
-          <InfoFieldBox label="보유 기술">
-            <div className="tech-chip-box align-center flex-wrap">
-              {profile?.skillList?.map((skill, index) => (
-                <Chip key={index} variant="outlined" color="secondary" size="small" label={getCodeName(COMMON_CODE.SKILL_CODE, skill)} />
-              ))}
-            </div>
-          </InfoFieldBox>
-        </div>
+      {/* 프로젝트 목록 */}
+      <div className="bottom flex-col">
+        {registerProjects.length > 0 && <ListBox variant="register" listTitle="내가 등록한 프로젝트" items={registerProjects} />}
 
-        {/* 내 프로젝트 */}
-        <div className="bottom flex-col">
-          {registerProjects.length > 0 && (
-            <>
-              <Divider />
-              <ListBox variant="register" listTitle="내가 등록한 프로젝트" items={registerProjects} />
-            </>
-          )}
-
-          {applyProjects.length > 0 && (
-            <>
-              <Divider />
-              <ListBox variant="apply" listTitle="내가 신청한 프로젝트" items={applyProjects} />
-            </>
-          )}
-        </div>
-      </Paper>
-    </div>
+        {applyProjects.length > 0 && <ListBox variant="apply" listTitle="내가 신청한 프로젝트" items={applyProjects} />}
+      </div>
+    </Paper>
   );
 }

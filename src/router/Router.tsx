@@ -19,16 +19,16 @@ import SignInPage2 from '@/pages/design/signup/SignInPage2';
 import SkillTrendsPage from '@/pages/design/skilltrends/SkillTrendsPage';
 import ErrorPage from '@/pages/ErrorPage';
 import BoardList from '@/pages/web/boards/BoardList';
-import BoardCreate from '@/pages/web/boards/BoardCreate';
 import Login from '@/pages/web/login/Login';
-import MyProfile from '@/pages/web/profile/home';
+import MyProfileLayout from '@/layout/MyProfileLayout';
+import MyProfileHome from '@/pages/web/profile/home';
+import MyProfileUpdateWrapper from '@/pages/web/profile/update';
 import MainPage from '@/pages/web/MainPage';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import Signup from '@/pages/web/signup/Signup';
 import { createBrowserRouter } from 'react-router-dom';
-import MyProfileUpdatePage from '@/pages/web/profile/update';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +39,28 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
+      },
+      {
+        path: 'profile',
+        element: <MyProfileLayout />,
+        children: [
+          {
+            index: true,
+            element: <MyProfileHome />,
+          },
+          {
+            path: 'update',
+            element: <MyProfileUpdateWrapper />,
+          },
+          // {
+          //   path: 'projects',
+          //   element: <MyProfileProjectList />,
+          // },
+          // {
+          //   path: 'boards',
+          //   element: <MyProfileBoardList />,
+          // },
+        ],
       },
       {
         path: 'projects',
@@ -91,17 +113,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-    ],
-  },
-  {
-    path: '/profile',
-    element: <MainLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      { path: 'home', element: <MyProfile /> },
-      { path: 'update', element: <MyProfileUpdatePage /> },
-      { path: 'projects', element: <MyProjectListPage /> },
-      { path: 'boards', element: <MyBoardPage /> },
     ],
   },
   {
