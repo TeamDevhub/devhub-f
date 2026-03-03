@@ -21,12 +21,14 @@ import ErrorPage from '@/pages/ErrorPage';
 import BoardList from '@/pages/web/boards/BoardList';
 import BoardCreate from '@/pages/web/boards/BoardCreate';
 import Login from '@/pages/web/login/Login';
+import MyProfile from '@/pages/web/profile/home';
 import MainPage from '@/pages/web/MainPage';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import Signup from '@/pages/web/signup/Signup';
 import { createBrowserRouter } from 'react-router-dom';
+import MyProfileUpdatePage from '@/pages/web/profile/update';
 
 const router = createBrowserRouter([
   {
@@ -43,30 +45,26 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <ProjectList />
+            element: <ProjectList />,
           },
           {
             path: 'detail',
-            element: <ProjectDetail />
+            element: <ProjectDetail />,
           },
           {
             path: 'create',
-            element: <ProjectCreate />
+            element: <ProjectCreate />,
           },
-        ]
+        ],
       },
       {
         path: 'boards',
         children: [
           {
             index: true,
-            element: <BoardList />
+            element: <BoardList />,
           },
-          {
-            path: 'create',
-            element: <BoardCreate />
-          },
-        ]
+        ],
       },
     ],
   },
@@ -80,20 +78,31 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Login />
-          }
-        ]
+            element: <Login />,
+          },
+        ],
       },
       {
         path: 'signup',
         children: [
           {
             index: true,
-            element: <Signup />
-          }
-        ]
+            element: <Signup />,
+          },
+        ],
       },
-    ]
+    ],
+  },
+  {
+    path: '/profile',
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: 'home', element: <MyProfile /> },
+      { path: 'update', element: <MyProfileUpdatePage /> },
+      { path: 'projects', element: <MyProjectListPage /> },
+      { path: 'boards', element: <MyBoardPage /> },
+    ],
   },
   {
     path: '/design',
@@ -109,76 +118,76 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <ProjectListPage />
+            element: <ProjectListPage />,
           },
           {
             path: 'detail',
-            element: <ProjectDetailPage />
+            element: <ProjectDetailPage />,
           },
           {
             path: 'create',
-            element: <ProjectCreatePage />
+            element: <ProjectCreatePage />,
           },
           {
             path: 'apply',
-            element: <ProjectApplyPage />
+            element: <ProjectApplyPage />,
           },
-        ]
+        ],
       },
       {
         path: 'boards',
         children: [
           {
             index: true,
-            element: <BoardListPage />
+            element: <BoardListPage />,
           },
           {
             path: 'detail',
-            element: <BoardDetailPage />
+            element: <BoardDetailPage />,
           },
           {
             path: 'create',
-            element: <BoardCreatePage />
+            element: <BoardCreatePage />,
           },
           {
             path: 'modify',
-            element: <BoardModifyPage />
+            element: <BoardModifyPage />,
           },
-        ]
+        ],
       },
       {
         path: 'mypage',
         children: [
           {
             path: 'home',
-            element: <MyHomePage />
+            element: <MyHomePage />,
           },
           {
             path: 'home/modify',
-            element: <MyHomeModifyPage />
+            element: <MyHomeModifyPage />,
           },
           {
             path: 'projects/list',
-            element: <MyProjectListPage />
+            element: <MyProjectListPage />,
           },
           {
             path: 'projects/list/applicants',
-            element: <MyProjectApplicantPage />
+            element: <MyProjectApplicantPage />,
           },
           {
             path: 'boards',
-            element: <MyBoardPage />
-          }
-        ]
+            element: <MyBoardPage />,
+          },
+        ],
       },
       {
         path: 'skilltrends',
         children: [
           {
             index: true,
-            element: <SkillTrendsPage />
+            element: <SkillTrendsPage />,
           },
-        ]
+        ],
       },
     ],
   },
@@ -192,30 +201,30 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <LoginPage />
-          }
-        ]
+            element: <LoginPage />,
+          },
+        ],
       },
       {
         path: 'signup',
         children: [
           {
             index: true,
-            element: <SignupPage />
-          }
-        ]
+            element: <SignupPage />,
+          },
+        ],
       },
       {
         path: 'signin2',
         children: [
           {
             index: true,
-            element: <SignInPage2 />
-          }
-        ]
-      }
-    ]
-  }
+            element: <SignInPage2 />,
+          },
+        ],
+      },
+    ],
+  },
 ]);
 
 export default router;
