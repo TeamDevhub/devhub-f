@@ -2,7 +2,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { Collapse, List, ListItemButton, ListItemText, Paper } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 
-type AdminNavKey = 'user-list' | 'user-reports' | 'projects' | 'codes' | 'forms' | 'boards' | 'banner';
+type AdminNavKey = 'user-list' | 'user-reports' | 'projects' | 'codes' | 'forms' | 'boards' | 'banner' | 'terms';
 
 interface LeftMenuBarProps {
   selectedKey: AdminNavKey;
@@ -56,6 +56,10 @@ export default function LeftMenuBar({selectedKey}: LeftMenuBarProps){
         {/* 1-6. 배너 관리 */}
         <ListItemButton selected={selectedKey === 'banner'}>
           <ListItemText primary='배너 관리' />
+        </ListItemButton>
+        {/* 1-7. 약관 관리 */}
+        <ListItemButton selected={selectedKey === 'terms'}>
+          <ListItemText primary='약관 관리' />
         </ListItemButton>
       </List>
     </Paper>

@@ -280,6 +280,15 @@ const router = createBrowserRouter([
               }
             ]
           },
+          {
+            path: 'terms',
+            children: [
+              {
+                index: true,
+                element: <BannerManagementPage />
+              }
+            ]
+          }
         ]
       }
     ],
