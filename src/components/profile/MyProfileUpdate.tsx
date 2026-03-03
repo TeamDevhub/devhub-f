@@ -4,8 +4,8 @@ import PasswordChangePopup from '@/components/_common/popup/PasswordChangePopup'
 import SkillPopup from '@/components/_common/popup/SkillPopup';
 import MyInfoBox from '@/components/profile/MyInfoBox';
 import FormField2 from '@/components/profile/FormField2';
-import FieldGroup2 from '@/components/profile/FieldGroup2';
 import FormFieldExtra from './FormFiledExtra';
+import FieldGroup2 from '@/components/profile/FieldGroup2';
 import SelectableGroup from '@/components/_common/SelectableGroup';
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import { useCodes } from '@/contexts/CommonCodeContext.ts';
@@ -66,7 +66,7 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
           </div>
         </FormFieldExtra>
 
-        <FormFieldExtra label="보유 기술">
+        <FormFieldExtra label="보유 스킬">
           <div className="content-box align-stretch">
             <div className="chip-box align-center flex-wrap" style={{ flex: 1, minHeight: '56px' }}>
               <AddableChipGroup
