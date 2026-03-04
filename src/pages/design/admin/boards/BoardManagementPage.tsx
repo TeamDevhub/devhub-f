@@ -62,7 +62,7 @@ export default function BoardManagementPage(){
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map((row) => row.num); // 너는 id 대신 num 사용 중
+      const newSelected = rows.map((row) => row.num);
       setSelected(newSelected);
       return;
     }
