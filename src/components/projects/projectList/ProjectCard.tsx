@@ -22,6 +22,7 @@ export default function ProjectCard(projectData: ProjectDetail) {
     progressEndDate, // 진행기간 마감일
     viewCount,
     likeCount,
+    recruitStatus,
     registeredDate, // 작성일
     skillList,
     positionList,
@@ -35,8 +36,7 @@ export default function ProjectCard(projectData: ProjectDetail) {
       <div className='left-area flex-col flex-1'>
         <div className='chip-box align-center'>
           <RecruitStatusChip
-            recruitmentStartDate={recruitmentStartDate}
-            recruitmentEndDate={recruitmentEndDate}
+            recruitStatusCode={recruitStatus}
           />
           <ProgressRegionChip regionCd={progressRegionCd} />
           <RecruitmentChip recruitTypeCd={recruitmentTypeCd} />

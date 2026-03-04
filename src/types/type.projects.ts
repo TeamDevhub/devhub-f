@@ -1,5 +1,6 @@
 import type { DateType } from "@/types/type.api";
 import type { ApplicationFormType } from "@/types/const.projectCreate.ts"
+import type { ProjectRecruitStatusCode } from '@/types/type._common';
 
 export interface ProjectBasic {
   projectGuid?: string;
@@ -18,6 +19,7 @@ export interface ProjectBasic {
   progressStartDate: DateType;
   progressEndDate: DateType;
   viewCount?: string;
+  capacityClosed?: boolean;
   registrantGuid?: string;
   registeredDate?: string;
   modifierGuid?: string;
@@ -35,6 +37,7 @@ export interface ProjectDetail extends ProjectBasic {
   skillList: string[];
   positionList: Position[];
   likeCount?: string;
+  recruitStatus: ProjectRecruitStatusCode;
 }
 
 export interface ProjectCreate extends ProjectDetail {

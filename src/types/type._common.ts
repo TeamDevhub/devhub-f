@@ -1,4 +1,4 @@
-import type { COMMON_CODE } from "./const";
+import type { COMMON_CODE, PROJECT_RECRUIT_STATUS } from "./const";
 
 export interface CommonCodeItem {
   code: string;
@@ -23,3 +23,5 @@ export interface SelectComponentProps {
   value: string;
   label : string; 
 }
+
+export type ProjectRecruitStatusCode = typeof PROJECT_RECRUIT_STATUS[keyof typeof PROJECT_RECRUIT_STATUS]["CODE"];
