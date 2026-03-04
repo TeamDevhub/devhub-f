@@ -230,7 +230,7 @@ export default function ProjectDetailPage(){
               <dl className='align-stretch flex-1 gap-4'>
                 <dt>모집 인원</dt>
                 <dd>
-                  <div className='flex-col gap-4' style={{ padding: '0.8rem 1.2rem' }}>
+                  <div className='flex-col gap-4' style={{ padding: '0.8rem 0' }}>
                   <div className="align-center gap-4">
                     <Chip size='small' variant='outlined' color='primary' label='기획자' />
                     <Chip size='small' variant='filled' label='하급' />

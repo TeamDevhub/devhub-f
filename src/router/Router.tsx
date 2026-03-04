@@ -110,7 +110,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: 'home', element: <MyProfile /> },
-      // { path: 'update', element: <MyProfileUpdatePage /> },
+      { path: 'update', element: <MyProfileUpdatePage /> },
       { path: 'projects', element: <MyProjectListPage /> },
       { path: 'boards', element: <MyBoardPage /> },
     ],
