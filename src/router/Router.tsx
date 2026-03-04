@@ -19,8 +19,9 @@ import SignInPage2 from '@/pages/design/web/signup/SignInPage2';
 import SkillTrendsPage from '@/pages/design/web/skilltrends/SkillTrendsPage';
 import ErrorPage from '@/pages/ErrorPage';
 import BoardList from '@/pages/web/boards/BoardList';
-import BoardCreate from '@/pages/web/boards/BoardCreate';
+// import BoardCreate from '@/pages/web/boards/BoardCreate';
 import Login from '@/pages/web/login/Login';
+import MyProfile from '@/pages/web/profile/home';
 import MainPage from '@/pages/web/MainPage';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
@@ -55,30 +56,26 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <ProjectList />
+            element: <ProjectList />,
           },
           {
             path: 'detail',
-            element: <ProjectDetail />
+            element: <ProjectDetail />,
           },
           {
             path: 'create',
-            element: <ProjectCreate />
+            element: <ProjectCreate />,
           },
-        ]
+        ],
       },
       {
         path: 'boards',
         children: [
           {
             index: true,
-            element: <BoardList />
+            element: <BoardList />,
           },
-          {
-            path: 'create',
-            element: <BoardCreate />
-          },
-        ]
+        ],
       },
     ],
   },
@@ -92,20 +89,31 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Login />
-          }
-        ]
+            element: <Login />,
+          },
+        ],
       },
       {
         path: 'signup',
         children: [
           {
             index: true,
-            element: <Signup />
-          }
-        ]
+            element: <Signup />,
+          },
+        ],
       },
-    ]
+    ],
+  },
+  {
+    path: '/profile',
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: 'home', element: <MyProfile /> },
+      // { path: 'update', element: <MyProfileUpdatePage /> },
+      { path: 'projects', element: <MyProjectListPage /> },
+      { path: 'boards', element: <MyBoardPage /> },
+    ],
   },
   {
     path: '/design',

@@ -2,7 +2,7 @@ interface FieldBoxProps {
   title: string;
   children: React.ReactNode;
   helpText?: string;
-  type?: 'normal' | 'wide'; // field-box / field-box2
+  type?: 'normal' | 'wide';
 }
 
 export default function FieldBox({ title, children, helpText, type = 'normal' }: FieldBoxProps) {
