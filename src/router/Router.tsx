@@ -19,7 +19,7 @@ import SignInPage2 from '@/pages/design/web/signup/SignInPage2';
 import SkillTrendsPage from '@/pages/design/web/skilltrends/SkillTrendsPage';
 import ErrorPage from '@/pages/ErrorPage';
 import BoardList from '@/pages/web/boards/BoardList';
-// import BoardCreate from '@/pages/web/boards/BoardCreate';
+import BoardCreate from '@/pages/web/boards/BoardCreate';
 import Login from '@/pages/web/login/Login';
 import MyProfile from '@/pages/web/profile/home';
 import MainPage from '@/pages/web/MainPage';
@@ -110,7 +110,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: 'home', element: <MyProfile /> },
-      // { path: 'update', element: <MyProfileUpdatePage /> },
+      { path: 'update', element: <MyProfileUpdatePage /> },
       { path: 'projects', element: <MyProjectListPage /> },
       { path: 'boards', element: <MyBoardPage /> },
     ],
