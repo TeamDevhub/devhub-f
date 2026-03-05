@@ -35,7 +35,7 @@ export default function useUpdatePassword(onClose?: () => void) {
     alert(res.code);
   };
 
-  const { mutate: requestUpdatePassword, loading } = useMutation<UpdatePasswordRequest, void>(
+  const { mutate: requestUpdatePassword } = useMutation<UpdatePasswordRequest, void>(
     updatePassword,
     handleSuccessUpdatePassword,
     handleFailUpdatePassword,
@@ -66,7 +66,6 @@ export default function useUpdatePassword(onClose?: () => void) {
     passwordInfo,
     handleChange,
     applyUpdatePassword,
-    loading,
     resetPasswordState,
   };
 }
