@@ -29,6 +29,7 @@ export default function ProjectList(){
     setFilter,
     createFilterHandler,
     applyFilter,
+    applySearch,
     request,
     keyword, setKeyword,
     setOrder,setPage
@@ -40,7 +41,7 @@ export default function ProjectList(){
 
       <Paper className='search-box align-stretch' elevation={4}>
         <CustomTextfield size='small' type='search' placeholder='프로젝트 명을 입력해 주세요.' value={keyword} onChange={(e)=>{setKeyword(e.target.value)}}/>
-        <Button size='medium' variant='contained'>검색</Button>
+        <Button size='medium' variant='contained' onClick={applySearch}>검색</Button>
       </Paper>
 
       <div className='page-summary w-100 align-center justify-between'>
