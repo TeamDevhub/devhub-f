@@ -20,7 +20,7 @@ import SkillTrendsPage from '@/pages/design/skilltrends/SkillTrendsPage';
 import ErrorPage from '@/pages/ErrorPage';
 import BoardList from '@/pages/web/boards/BoardList';
 import Login from '@/pages/web/login/Login';
-import MyProfileLayout from '@/layout/MyProfileLayout';
+import ProfileLayout from '@/layout/ProfileLayout';
 import MyProfileHome from '@/pages/web/profile/home';
 import MyProfileUpdateWrapper from '@/pages/web/profile/update';
 import MainPage from '@/pages/web/MainPage';
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'profile',
-        element: <MyProfileLayout />,
+        element: <ProfileLayout />,
         children: [
           {
             index: true,
