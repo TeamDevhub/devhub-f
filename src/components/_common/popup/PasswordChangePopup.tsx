@@ -9,13 +9,11 @@ export interface PasswordPopupProps {
 }
 
 export default function PasswordPopup({ isOpen, onClose, onSubmit }: PasswordPopupProps) {
-  const [isVerified, setIsVerified] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const resetState = () => {
-    setIsVerified(false);
     setCurrentPassword('');
     setNewPassword('');
     setConfirmPassword('');
@@ -27,13 +25,8 @@ export default function PasswordPopup({ isOpen, onClose, onSubmit }: PasswordPop
   };
 
   const handleSubmit = () => {
-    if (!isVerified) {
-      if (!currentPassword.trim()) {
-        alert('현재 비밀번호를 입력해주세요.');
-        return;
-      }
-
-      setIsVerified(true);
+    if (!currentPassword.trim()) {
+      alert('현재 비밀번호를 입력해주세요.');
       return;
     }
 
@@ -56,47 +49,26 @@ export default function PasswordPopup({ isOpen, onClose, onSubmit }: PasswordPop
   };
 
   return (
-    <WebPopup
-      isOpen={isOpen}
-      onClose={handleClose}
-      onSubmit={handleSubmit}
-      title="비밀번호 변경"
-      submitText={!isVerified ? '확인' : '저장'}
-      closeOnSubmit={isVerified}
-      size="small"
-    >
+    <WebPopup isOpen={isOpen} onClose={handleClose} onSubmit={handleSubmit} title="비밀번호 변경" submitText="저장" closeOnSubmit size="small">
       <div className="flex-col gap-8" style={{ padding: '0 20px' }}>
-        {!isVerified && (
-          <>
-            <p className="label mt-24">현재 비밀번호 재입력</p>
-            <CustomTextfield
-              type="password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="특수문자, 숫자 포함 10자 이상"
-            />
-          </>
-        )}
+        <p className="label mt-24">기존 비밀번호</p>
+        <CustomTextfield
+          type="password"
+          value={currentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
+          placeholder="현재 비밀번호 입력"
+        />
 
-        {isVerified && (
-          <>
-            <p className="label mt-24">새 비밀번호</p>
-            <CustomTextfield
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="특수문자, 숫자 포함 10자 이상"
-            />
+        <p className="label mt-16">새 비밀번호</p>
+        <CustomTextfield
+          type="password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+          placeholder="특수문자, 숫자 포함 10자 이상"
+        />
 
-            <p className="label mt-16">비밀번호 확인</p>
-            <CustomTextfield
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="비밀번호 확인"
-            />
-          </>
-        )}
+        <p className="label mt-16">새 비밀번호 확인</p>
+        <CustomTextfield type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="비밀번호 확인" />
       </div>
     </WebPopup>
   );
