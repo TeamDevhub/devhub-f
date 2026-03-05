@@ -26,3 +26,8 @@ export interface UpdateProfileRequest {
   positionList: string[];
   skillList: string[];
 }
+
+export interface UpdatePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
