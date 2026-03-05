@@ -21,10 +21,12 @@ export interface comment {
     content: string;
     userGuid: string;
     userName: string;
-    registrantGuid?: string;
-    registeredDate?: string;
-    modifierGuid?: string;
-    modifiedDate?: string;
+    auditInfo:{
+        registrantGuid?: string;
+        registeredDate: DateType;
+        modifierGuid?: string;
+        modifiedDate?: DateType;
+    }
 }
 
 export interface BoardSummary {
@@ -33,8 +35,10 @@ export interface BoardSummary {
     commentCount?:string;
 }
 
-export interface BoardDetail extends BoardSummary {
+export interface BoardDetail {
+    boardSummaryResponseDto:BoardSummary;
     commentList: comment[];
+    userEmail:string;
 }
 
 export interface BoardSearchRequest {
@@ -42,4 +46,10 @@ export interface BoardSearchRequest {
     categoryCd?: string;
     title?: string;
 }
+
+export interface CommentCreate {
+    boardGuid: string;
+    content: string;
+}
+
 export type SearchData = Pick<BoardSearchRequest, 'page' | 'categoryCd' | 'title'>;

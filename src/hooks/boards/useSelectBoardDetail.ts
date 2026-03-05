@@ -1,16 +1,16 @@
 import { getBoardDetail } from "@/api/boards/boards.api";
 import { useSelect } from "@/hooks/_common/api.hook";
+import type {BoardDetail} from "@/types/type.boards";
 
-export default function useSelectBoards(boardGuid:string) {
-
+export default function useSelectBoardDetail(
+    boardGuid:string,
+) {
     const options = {
         apiFn: getBoardDetail,
         req : boardGuid,
-        cacheKey: `boards-${JSON.stringify(boardGuid)}`
+        cacheKey: `boards-detail-${boardGuid}`
     }
-    const {res} = useSelect(options);
+    const {res} = useSelect<BoardDetail, string>(options);
 
-    return{
-        res
-    };
+    return { res };
 } 

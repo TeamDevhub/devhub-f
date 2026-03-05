@@ -1,4 +1,4 @@
-import type {BoardSummary, BoardSearchRequest, BoardCreate, BoardDetail} from "@/types/type.boards";
+import type {BoardSummary, BoardSearchRequest, BoardCreate, BoardDetail, CommentCreate} from "@/types/type.boards";
 import fetcher from "@/utils/util.api";
 
 export const getBoards = (req : BoardSearchRequest) => {
@@ -17,7 +17,7 @@ export const getBoards = (req : BoardSearchRequest) => {
 export const getBoardDetail = (req:string) => 
     fetcher<BoardDetail>(
         `/boards/${req}`,
-        req,
+        undefined,
         { method : "get"}
     );
 
@@ -31,6 +31,13 @@ export const likeBoard = (req : string) =>
 export const createBoard = (req : BoardCreate) =>
     fetcher<void, BoardCreate>(
         `/boards`,
+        req,
+        { method : "post"}
+    );
+
+export const createComment = (req : CommentCreate) =>
+    fetcher<void, CommentCreate>(
+        `/boards/${req.boardGuid}/comments`,
         req,
         { method : "post"}
     );

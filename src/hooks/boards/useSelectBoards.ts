@@ -26,11 +26,9 @@ export default function useSelectBoards(
     const {res} = useSelect(options);
 
     const navigate = useNavigate();
-
     const handleDetail = (boardGuid:string) => {
-        console.log(boardGuid)
         if(!boardGuid) return;
-        navigate(`/boards/${boardGuid}`);
+        navigate(`/boards/detail`, {state : {boardGuid}});
     }
 
     //페이지
