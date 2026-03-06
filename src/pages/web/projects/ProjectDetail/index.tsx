@@ -33,8 +33,7 @@ export default function ProjectDetail() {
           <div className="top flex-col">
             <div className='chip-box align-center'>
               <RecruitStatusChip
-                recruitmentStartDate={res?.data?.recruitmentStartDate}
-                recruitmentEndDate={res?.data?.recruitmentEndDate}
+                recruitStatusCode={res?.data?.recruitStatus}
               />
               <ProgressRegionChip regionCd={res?.data?.progressRegionCd} />
               <RecruitmentChip recruitTypeCd={res?.data?.recruitmentTypeCd} />
