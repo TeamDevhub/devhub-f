@@ -52,6 +52,10 @@ export default function SignInPage1(){
                   renderValue={(selected) =>
                     selected === '' ? 'gmail.com' : selected
                   }
+                  sx={{
+                      '& legend': { display: 'none' },
+                      '& fieldset': { top: 0 },
+                    }}
                 >
                   <MenuItem value=''>None</MenuItem>
                 </Select>
