@@ -125,3 +125,16 @@ export interface ProjectApplicationResponse {
   attachmentFileGuid?: string;
   statusCd?: string;
 }
+
+export interface CreateApplicationAnswerRequest {
+  projectApplicationFormGuid: string;
+  applicationFormGuid: string;
+  content: string;
+  fileGuid?: string;
+}
+
+export interface CreateApplicationRequest {
+  projectGuid: string;
+  requirementGuid: string;
+  answers: CreateApplicationAnswerRequest[];
+}
