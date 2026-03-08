@@ -107,14 +107,7 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
       </Paper>
 
       {/* 비밀번호 변경 팝업 */}
-      <PasswordChangePopup
-        isOpen={passwordChangePopup.isOpen}
-        onClose={passwordChangePopup.close}
-        onSubmit={({ currentPassword, newPassword }) => {
-          console.log(currentPassword, newPassword);
-          passwordChangePopup.close();
-        }}
-      />
+      <PasswordChangePopup isOpen={passwordChangePopup.isOpen} onClose={passwordChangePopup.close} />
     </>
   );
 }
