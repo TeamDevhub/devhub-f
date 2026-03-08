@@ -72,12 +72,20 @@ export default function FilterPopup({
               slotProps={{textField: {size: 'small'},}}
               value={state.recruitmentStartDate}
               onChange={(newValue) => handleChange('recruitmentStartDate', newValue)}
+              sx={{
+                '& legend': { display: 'none' },
+                '& fieldset': { top: 0 },
+              }}
             />
             <p>~</p>
             <DatePicker
               slotProps={{textField: {size: 'small'},}}
               value={state.recruitmentEndDate}
               onChange={(newValue) => handleChange('recruitmentEndDate', newValue)}
+              sx={{
+                '& legend': { display: 'none' },
+                '& fieldset': { top: 0 },
+              }}
             />
           </div>
         </FilterWarpper>
@@ -87,6 +95,10 @@ export default function FilterPopup({
             slotProps={{textField: {size: 'small'},}}
             value={state.progressStartDate}
             onChange={(newValue) => handleChange('progressStartDate', newValue)}
+            sx={{
+              '& legend': { display: 'none' },
+              '& fieldset': { top: 0 },
+            }}
           />
         </FilterWarpper>
         <Divider />
