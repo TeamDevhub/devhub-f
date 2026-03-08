@@ -1,7 +1,7 @@
 import { createProject } from "@/api/projects/projects.api"
 import { deleteFile } from "@/api/file/file.api"
 import useFormState from '@/hooks/_common/useFormState.ts';
-import type { ProjectCreate, Position } from "@/types/type.projects";
+import type { ProjectUpdate, Position } from "@/types/type.projects";
 import { useMutation } from "@/hooks/_common/api.hook";
 import { useModal } from "@/hooks/_common/useModal"
 import dayjs from "dayjs";
@@ -9,28 +9,47 @@ import useFileUpload from "@/hooks/_common/useFileUpload.ts";
 import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
 import { ERROR_MESSAGES } from "@/types/const.errorMessages.ts";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import type { ProjectDetailResponse } from "@/types/type.projects";
+import { useSelect } from "../_common/api.hook";
+import { getProjectDetail } from "@/api/projects/projects.api";
 
-export default function useCreateProject() {
-    const initData: ProjectCreate = {
-        category: '',
-        title: '',
-        content: '',
-        recruitmentTypeCd: '3001',
-        recruitmentStartDate: dayjs(),
-        recruitmentEndDate: dayjs(),
-        progressTypeCd: '3101',
-        progressRegionCd: '',
-        progressStartDate: dayjs(),
-        progressEndDate: dayjs(),
-        skillList: [],
-        positionList: [{
+export default function useCreateProject(
+    projectId?: string
+) {
+    const options = {
+        apiFn: getProjectDetail,
+        req: projectId!,
+        cacheKey: projectId ? `project-detail-${projectId}` : undefined,
+        enabled: !!projectId,
+    }
+
+    const { res, error } = useSelect<ProjectDetailResponse, string>(options);
+
+    useEffect(() => {
+        console.log(error);
+
+    }, [error]);
+
+    const initData: ProjectUpdate = {
+        category: res?.data?.category || "",
+        title: res?.data?.title || "",
+        content: res?.data?.content || "",
+        recruitmentTypeCd: res?.data?.recruitmentTypeCd || "3001",
+        recruitmentStartDate: res?.data?.recruitmentStartDate || dayjs(),
+        recruitmentEndDate: res?.data?.recruitmentEndDate || dayjs(),
+        progressTypeCd: res?.data?.progressTypeCd || "3103",
+        progressRegionCd: res?.data?.progressRegionCd || "",
+        progressStartDate: res?.data?.progressStartDate || dayjs(),
+        progressEndDate: res?.data?.progressEndDate || dayjs(),
+        skillList: res?.data?.skillList || [],
+        positionList: res?.data?.positionList || [{
             position: '',
             level: '',
             capacity: 0,
         }],
-        applicationFormList: [],
-        additionalFormList: [],
+        applicationFormList: res?.data?.applicationFormList || [],
+        additionalFormList: res?.data?.additionalFormList || [],
     };
 
     const validations = {
@@ -72,7 +91,7 @@ export default function useCreateProject() {
             console.log("file delete error");
         }
     }
-    const { mutate: projectMutate, loading, error } = useMutation<ProjectCreate, void>(createProject, handleSuccessCreateProject, handleFailCreateProject);
+    const { mutate: projectMutate, loading, error } = useMutation<ProjectUpdate, void>(createProject, handleSuccessCreateProject, handleFailCreateProject);
 
     const onSubmit = async () => {
         let returnData;

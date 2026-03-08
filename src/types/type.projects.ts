@@ -37,7 +37,7 @@ export interface ProjectDetail extends ProjectBasic {
   skillList: string[];
   positionList: Position[];
   likeCount?: string;
-  recruitStatus: ProjectRecruitStatusCode;
+  recruitStatus?: ProjectRecruitStatusCode;
 }
 
 export interface ProjectCreate extends ProjectDetail {
@@ -93,8 +93,9 @@ export interface ProjectSearchRequest {
 export type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword' | 'size'>;
 export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
-export interface UpdateProjectRequest {
-
+export interface ProjectUpdate extends ProjectDetail {
+  applicationFormList: string[];
+  additionalFormList: ApplicationsFormCreate[];
 }
 
 export interface ProjectListResponse extends ProjectDetail {
