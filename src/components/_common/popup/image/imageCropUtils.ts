@@ -28,7 +28,6 @@ export const getCroppedImg = async (imageSrc: string, crop: Area, rotation = 0):
 
   const rotRad = getRadianAngle(rotation);
 
-  // 회전 후 bounding box 계산
   const { width: bBoxWidth, height: bBoxHeight } = rotateSize(image.width, image.height, rotation);
 
   canvas.width = bBoxWidth;
@@ -38,7 +37,6 @@ export const getCroppedImg = async (imageSrc: string, crop: Area, rotation = 0):
   ctx.rotate(rotRad);
   ctx.drawImage(image, -image.width / 2, -image.height / 2);
 
-  // crop용 canvas
   const croppedCanvas = document.createElement('canvas');
   const croppedCtx = croppedCanvas.getContext('2d')!;
 

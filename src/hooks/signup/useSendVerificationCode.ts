@@ -5,8 +5,10 @@ import type { SendVerificationCodeRequest } from '@/types/type.signup';
 import { Validators } from '@/utils/util._common';
 import { useState } from 'react';
 import useFormState from '@/hooks/_common/useFormState.ts';
+import { useModal } from '@/hooks/_common/useModal';
 
 export default function useSendVerificationCode() {
+  const { alert } = useModal();
   const [isVerificationCodeSent, setIsVerificationCodeSent] = useState(false);
 
   const validations = { emailId: [Validators.required()], emailHost: [Validators.required()] };
@@ -29,7 +31,11 @@ export default function useSendVerificationCode() {
     alert(res.code);
   };
 
-  const { mutate: sendVerification } = useMutation<SendVerificationCodeRequest, void>(sendEmailVerificationCode, handleSuccessSendVerificationCode, handleFailSendVerificationCode);
+  const { mutate: sendVerification } = useMutation<SendVerificationCodeRequest, void>(
+    sendEmailVerificationCode,
+    handleSuccessSendVerificationCode,
+    handleFailSendVerificationCode,
+  );
 
   const applySendMail = async () => {
     if (checkError()) return;

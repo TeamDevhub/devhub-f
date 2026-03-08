@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import type { Area } from 'react-easy-crop';
 import { Button, Box } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { useModal } from '@/hooks/_common/useModal';
 
 import WebPopup from '@/components/_common/popup/WebPopup';
 import ImageCropper from './ImageCropper';
@@ -15,6 +16,8 @@ interface ImageCropPopupProps {
 }
 
 export default function ImageCropPopup({ isOpen, onClose, onSubmit }: ImageCropPopupProps) {
+  const { alert } = useModal();
+
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -112,7 +115,6 @@ export default function ImageCropPopup({ isOpen, onClose, onSubmit }: ImageCropP
             onCropComplete={onCropComplete}
           />
 
-          {/* Preview */}
           {preview && (
             <Box
               sx={{
@@ -134,7 +136,6 @@ export default function ImageCropPopup({ isOpen, onClose, onSubmit }: ImageCropP
             </Box>
           )}
 
-          {/* 다시 선택 */}
           <Box
             sx={{
               display: 'flex',

@@ -2,6 +2,7 @@ import type { ApiResponse } from '@/types/type.api';
 import { Validators } from '@/utils/util._common';
 import { useMutation } from '@/hooks/_common/api.hook';
 import useFormState from '@/hooks/_common/useFormState';
+import { useModal } from '@/hooks/_common/useModal';
 
 import type { UpdatePasswordRequest } from '@/types/type.user';
 import { updatePassword } from '@/api/profile/profile.api';
@@ -11,6 +12,7 @@ interface PasswordForm extends UpdatePasswordRequest {
 }
 
 export default function useUpdatePassword(onClose?: () => void) {
+  const { alert } = useModal();
   const initData: PasswordForm = {
     currentPassword: '',
     newPassword: '',

@@ -28,7 +28,6 @@ export default function ImageCropper({ imageSrc, crop, zoom, rotation, setCrop, 
 
   return (
     <Box>
-      {/* Crop 영역 */}
       <Box
         sx={{
           position: 'relative',
@@ -54,7 +53,6 @@ export default function ImageCropper({ imageSrc, crop, zoom, rotation, setCrop, 
         />
       </Box>
 
-      {/* Zoom 컨트롤 */}
       <Box sx={{ mt: 3, px: 2 }}>
         <Box
           sx={{
@@ -108,7 +106,6 @@ export default function ImageCropper({ imageSrc, crop, zoom, rotation, setCrop, 
           </IconButton>
         </Box>
 
-        {/* 배율 */}
         <Box
           sx={{
             display: 'flex',
@@ -132,7 +129,6 @@ export default function ImageCropper({ imageSrc, crop, zoom, rotation, setCrop, 
         </Box>
       </Box>
 
-      {/* 회전 컨트롤 */}
       <Box
         sx={{
           display: 'flex',
