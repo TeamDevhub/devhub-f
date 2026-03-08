@@ -1,21 +1,31 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
-import { ImageCropPopup } from '@/components/_common/popup/image';
+import { ImageCropPopup } from '../_common/popup/image';
 import { Person } from '@mui/icons-material';
 import { Button, Divider, List, ListItemButton, Paper } from '@mui/material';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import useFileUpload from '@/hooks/_common/useFileUpload.ts';
+import useUpdateProfileImage from '@/hooks/profile/useUpdateProfileImage';
 import { Link } from 'react-router-dom';
 
 type MyPageNavKey = 'home' | 'projects' | 'boards';
 
 interface MyPageNavProps {
   selectedKey: MyPageNavKey;
+  onChange?: (key: MyPageNavKey) => void;
 }
 
 export default function MyInfoBox({ selectedKey }: MyPageNavProps) {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
+  const { upload } = useFileUpload();
+  const { applyUpdateProfileImage } = useUpdateProfileImage(async () => {
+    await refreshUser();
+  });
+
+  const API_URL = 'http://localhost:8080';
 
   const [openProfilePopup, setOpenProfilePopup] = useState(false);
+  console.log('사용자', user);
 
   const clickOpenProfilePopup = () => {
     setOpenProfilePopup(true);
@@ -27,11 +37,14 @@ export default function MyInfoBox({ selectedKey }: MyPageNavProps) {
 
   const handleUploadProfileImage = async (file: File) => {
     try {
-      const formData = new FormData();
-      formData.append('image', file);
+      const res = await upload(undefined, file);
 
-      // TODO API 연결
-      console.log('업로드 파일', file);
+      if (!res?.data?.fileGuids.file) {
+        throw new Error('파일 업로드 응답이 올바르지 않습니다.');
+      }
+      const fileGuid = res?.data?.fileGuids?.file;
+
+      await applyUpdateProfileImage(fileGuid);
 
       setOpenProfilePopup(false);
     } catch (error) {
@@ -45,6 +58,7 @@ export default function MyInfoBox({ selectedKey }: MyPageNavProps) {
         <div className="profile-area flex-col align-center">
           <CustomAvatar
             size={80}
+            src={user?.profileImageUrl ? `${API_URL}${user.profileImageUrl}` : undefined}
             sx={{
               background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%)',
               cursor: 'pointer',
