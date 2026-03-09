@@ -6,6 +6,7 @@ import type { LoginRequest, LoginResponse } from '@/types/type.login';
 import { useNavigate } from 'react-router-dom';
 import useFormState from '@/hooks/_common/useFormState.ts';
 import { useAuth } from '@/contexts/AuthContext.ts';
+import { useModal } from '@/hooks/_common/useModal';
 
 const initData: LoginRequest = {
   email: '',
@@ -13,6 +14,7 @@ const initData: LoginRequest = {
 };
 
 export default function useLogin() {
+  const { alert } = useModal();
   const navigate = useNavigate();
   const { login: _login } = useAuth();
 

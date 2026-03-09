@@ -1,5 +1,5 @@
-import type {Dayjs} from "dayjs";
-import type {CommonCode, CommonCodeItem} from "@/types/type._common.ts";
+import type { Dayjs } from 'dayjs';
+import type { CommonCode, CommonCodeItem } from '@/types/type._common.ts';
 
 export type DateType = Dayjs | null | undefined;
 
@@ -14,7 +14,7 @@ export interface Pagination {
 
 export interface ApiResponse<T> {
   success: boolean;
-  code : string;
+  code: string;
   data?: T;
   dataList?: T[];
   pagination?: Pagination | null;
@@ -25,11 +25,13 @@ export interface ApiResponse<T> {
 }
 
 export interface CommonCodeRequest {
-  used?:boolean
+  used?: boolean;
 }
 
 export type CommonCodeResponse = Record<CommonCode, CommonCodeItem>;
 
 export interface UploadResponse {
-  [key: string]: string; // [name]: guid
+  fileGuids: {
+    [key: string]: string; // name: guid
+  };
 }
