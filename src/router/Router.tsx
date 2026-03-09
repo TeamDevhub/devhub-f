@@ -19,13 +19,13 @@ import SignInPage2 from '@/pages/design/signup/SignInPage2';
 import SkillTrendsPage from '@/pages/design/skilltrends/SkillTrendsPage';
 import ErrorPage from '@/pages/ErrorPage';
 import BoardList from '@/pages/web/boards/BoardList';
-import BoardCreate from '@/pages/web/boards/BoardCreate';
 import Login from '@/pages/web/login/Login';
 import MyProfile from '@/pages/web/profile/home';
 import MainPage from '@/pages/web/MainPage';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
+import ProjectUpdate from '@/pages/web/projects/ProjectUpdate';
 import Signup from '@/pages/web/signup/Signup';
 import { createBrowserRouter } from 'react-router-dom';
 import MyProfileUpdatePage from '@/pages/web/profile/update';
@@ -54,6 +54,10 @@ const router = createBrowserRouter([
           {
             path: 'create',
             element: <ProjectCreate />,
+          },
+          {
+            path: 'update/:projectGuid',
+            element: <ProjectUpdate />,
           },
         ],
       },

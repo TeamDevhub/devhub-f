@@ -10,21 +10,21 @@ import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
 import { ERROR_MESSAGES } from "@/types/const.errorMessages.ts";
 import { useState, useEffect } from "react";
-import type { ProjectDetailResponse } from "@/types/type.projects";
+import type { ProjectFormDetailResponse } from "@/types/type.projects";
 import { useSelect } from "../_common/api.hook";
-import { getProjectDetail } from "@/api/projects/projects.api";
+import { getProjectFormDetail } from "@/api/projects/projects.api";
 
-export default function useCreateProject(
+export default function useUpdateProject(
     projectId?: string
 ) {
     const options = {
-        apiFn: getProjectDetail,
+        apiFn: getProjectFormDetail,
         req: projectId!,
         cacheKey: projectId ? `project-detail-${projectId}` : undefined,
         enabled: !!projectId,
     }
 
-    const { res, error } = useSelect<ProjectDetailResponse, string>(options);
+    const { res, error } = useSelect<ProjectFormDetailResponse, string>(options);
 
     useEffect(() => {
         console.log(error);
@@ -91,7 +91,7 @@ export default function useCreateProject(
             console.log("file delete error");
         }
     }
-    const { mutate: projectMutate, loading, error } = useMutation<ProjectUpdate, void>(createProject, handleSuccessCreateProject, handleFailCreateProject);
+    const { mutate: projectMutate, loading } = useMutation<ProjectUpdate, void>(createProject, handleSuccessCreateProject, handleFailCreateProject);
 
     const onSubmit = async () => {
         let returnData;

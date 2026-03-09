@@ -36,8 +36,6 @@ export interface Position {
 export interface ProjectDetail extends ProjectBasic {
   skillList: string[];
   positionList: Position[];
-  likeCount?: string;
-  recruitStatus?: ProjectRecruitStatusCode;
 }
 
 export interface ProjectCreate extends ProjectDetail {
@@ -45,12 +43,16 @@ export interface ProjectCreate extends ProjectDetail {
   additionalFormList: ApplicationsFormCreate[];
 }
 
+export interface ProjectExtra extends ProjectDetail {
+  likeCount: string;
+  recruitStatus: ProjectRecruitStatusCode;
+}
+
 export interface ApplicationFormBasic {
   applicationFormGuid: string;
   typeCd: ApplicationFormType;
   title: string;
   helpText?: string;
-  vertYn?: string;
   customYn?: string;
   useYn?: string;
   registerId?: string;
@@ -102,6 +104,11 @@ export interface ProjectListResponse extends ProjectDetail {
   //필요시 추가
 }
 
-export interface ProjectDetailResponse extends ProjectDetail {
+export interface ProjectDetailResponse extends ProjectExtra {
   email: string;
+}
+
+export interface ProjectFormDetailResponse extends ProjectExtra {
+  applicationFormList: string[];
+  additionalFormList: ApplicationFormDetail[];
 }

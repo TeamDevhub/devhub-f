@@ -1,4 +1,4 @@
-import type { ProjectDetail } from "@/types/type.projects";
+import type { ProjectExtra } from "@/types/type.projects";
 import HeartButton from "@/components/_common/button/HeartButton";
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/projects/ProjectChips";
 import { AccessTime } from "@mui/icons-material";
@@ -8,7 +8,7 @@ import { convertString } from "@/utils/util.date";
 import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import { useNavigate } from 'react-router-dom';
 
-export default function ProjectCard(projectData: ProjectDetail) {
+export default function ProjectCard(projectData: ProjectExtra) {
   const {
     projectGuid,
     title,

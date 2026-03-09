@@ -3,7 +3,7 @@ import { DDayChip, PositionChips, ProgressRegionChip, RecruitmentChip, RecruitSt
 import useSelectProjectDetail from '@/hooks/projects/useSelectProjectDetail';
 import { COMMON_CODE } from '@/types/const';
 import { AccessTime, ContentPaste, LocationOn, OpenInNew, People, Person, Settings, Visibility } from '@mui/icons-material';
-import { Divider, Paper, Tooltip } from '@mui/material';
+import { Divider, Paper, Tooltip, Button } from '@mui/material';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import TopButton from "@/components/_common/button/TopButton.tsx";
@@ -179,6 +179,7 @@ export default function ProjectDetail() {
         </Tooltip>
         <TopButton />
       </div>
+      <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }} onClick={()=>{navigate(`/projects/update/${res?.data?.projectGuid}`)}}>수정</Button>
     </div>
   )
 }
