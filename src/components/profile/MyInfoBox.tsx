@@ -15,18 +15,21 @@ interface MyPageNavProps {
   onChange?: (key: MyPageNavKey) => void;
 }
 
+const API_URL = 'http://localhost:8080';
+
 export default function MyInfoBox({ selectedKey }: MyPageNavProps) {
   const { user, refreshUser } = useAuth();
   const { upload } = useFileUpload();
   const { applyUpdateProfileImage } = useUpdateProfileImage(async () => {
     await refreshUser();
   });
-
-  const API_URL = 'http://localhost:8080';
-
   const [openProfilePopup, setOpenProfilePopup] = useState(false);
-  console.log('사용자', user);
 
+  /*
+  1. 팝업 함수 별도 분리 필요?
+  2. 이미지 조회 시 현재 방식 -> src={user?.profileImageUrl ? `${API_URL}${user.profileImageUrl}` : undefined}
+  3. 이미지 업로드 관련 함수 위치 및 방식 검토
+  */
   const clickOpenProfilePopup = () => {
     setOpenProfilePopup(true);
   };

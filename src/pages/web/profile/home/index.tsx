@@ -1,12 +1,11 @@
-// MyProfileHome.tsx
 import { Chip, Divider, Paper } from '@mui/material';
-import InfoFieldBox from '@/components/profile/InfoFiledBox';
-import ListBox from '@/components/profile/ListBox';
+import InfoFieldBox from '@/components/profile/home/MyProfileBaseForm';
+import ListBox from '@/components/profile/home/ListBox';
 import useSelectUserProfile from '@/hooks/profile/useSelectProfile';
 import { COMMON_CODE } from '@/types/const';
 import { useCodes } from '@/contexts/CommonCodeContext';
 
-import type { ListCardProps } from '@/components/profile/ListCard';
+import type { ListCardProps } from '@/components/profile/home/MyProfileListCard';
 
 export default function MyProfileHome() {
   const { getCodeName } = useCodes();
