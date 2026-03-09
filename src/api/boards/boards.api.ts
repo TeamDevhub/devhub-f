@@ -18,7 +18,7 @@ export const getBoardDetail = (req:string) =>
     fetcher<BoardDetail>(
         `/boards/${req}`,
         undefined,
-        { method : "get"}
+        { method : "get", withCredentials: true}
     );
 
 export const likeBoard = (req : string) => 
