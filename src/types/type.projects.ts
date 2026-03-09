@@ -108,7 +108,7 @@ export interface ProjectDetailResponse extends ProjectExtra {
   email: string;
 }
 
-export interface ProjectFormDetailResponse extends ProjectExtra {
+export interface ProjectFormDetailResponse extends ProjectDetail {
   applicationFormList: string[];
   additionalFormList: ApplicationFormDetail[];
 }
