@@ -1,15 +1,15 @@
 import React from 'react';
 import { Favorite, Settings } from '@mui/icons-material';
 
-type formFieldExtraLabel = '관심 포지션' | '보유 스킬';
+type MyProfileUpdateExtraLabel = '관심 포지션' | '보유 스킬';
 
-interface FormFieldExtraProps {
-  label: formFieldExtraLabel;
+interface MyProfileUpdateExtraFormProps {
+  label: MyProfileUpdateExtraLabel;
   children: React.ReactNode;
 }
 
-export default function FormFieldExtra({ label, children }: FormFieldExtraProps) {
-  const renderIcon = (formFieldExtraLabel: formFieldExtraLabel) => {
+export default function MyProfileUpdateExtraForm({ label, children }: MyProfileUpdateExtraFormProps) {
+  const renderIcon = (formFieldExtraLabel: MyProfileUpdateExtraLabel) => {
     const iconProps = { sx: { fontSize: 20, color: 'primary.main' } };
 
     switch (formFieldExtraLabel) {

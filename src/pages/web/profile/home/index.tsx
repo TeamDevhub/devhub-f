@@ -1,18 +1,18 @@
 import { Chip, Divider, Paper } from '@mui/material';
-import InfoFieldBox from '@/components/profile/home/MyProfileBaseForm';
-import ListBox from '@/components/profile/home/ListBox';
+import MyProfileBaseForm from '@/components/profile/home/MyProfileBaseForm';
+import MyProfileListBox from '@/components/profile/home/MyProfileListBox';
 import useSelectUserProfile from '@/hooks/profile/useSelectProfile';
 import { COMMON_CODE } from '@/types/const';
 import { useCodes } from '@/contexts/CommonCodeContext';
 
-import type { ListCardProps } from '@/components/profile/home/MyProfileListCard';
+import type { MyProfileListCardProps } from '@/components/profile/home/MyProfileListCard';
 
 export default function MyProfileHome() {
   const { getCodeName } = useCodes();
   const { res } = useSelectUserProfile();
   const profile = res?.data;
 
-  const registerProjects: ListCardProps[] = [
+  const registerProjects: MyProfileListCardProps[] = [
     {
       title: '[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
       recruitmentStartDate: '2025.12.03',
@@ -37,7 +37,7 @@ export default function MyProfileHome() {
     },
   ];
 
-  const applyProjects: ListCardProps[] = [
+  const applyProjects: MyProfileListCardProps[] = [
     {
       title: '[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
       recruitmentStartDate: '2025.12.03',
@@ -68,33 +68,33 @@ export default function MyProfileHome() {
     <Paper className="mypage-box flex-col flex-1" elevation={4}>
       {/* 내 정보 */}
       <div className="top flex-col">
-        <InfoFieldBox label="닉네임">{profile?.user.username}</InfoFieldBox>
-        <InfoFieldBox label="이메일">{profile?.user.email}</InfoFieldBox>
-        <InfoFieldBox label="내 소개">{profile?.user.introduction || '-'}</InfoFieldBox>
-        <InfoFieldBox label="관심 포지션">
+        <MyProfileBaseForm label="닉네임">{profile?.user.username}</MyProfileBaseForm>
+        <MyProfileBaseForm label="이메일">{profile?.user.email}</MyProfileBaseForm>
+        <MyProfileBaseForm label="내 소개">{profile?.user.introduction || '-'}</MyProfileBaseForm>
+        <MyProfileBaseForm label="관심 포지션">
           <div className="recruit-chip-box align-center">
             {profile?.positionList?.map((position, index) => (
               <Chip key={index} size="small" variant="outlined" color="primary" label={getCodeName(COMMON_CODE.POSITION_CODE, position)} />
             ))}
           </div>
-        </InfoFieldBox>
+        </MyProfileBaseForm>
 
-        <InfoFieldBox label="보유 기술">
+        <MyProfileBaseForm label="보유 기술">
           <div className="tech-chip-box align-center flex-wrap">
             {profile?.skillList?.map((skill, index) => (
               <Chip key={index} size="small" variant="outlined" color="secondary" label={getCodeName(COMMON_CODE.SKILL_CODE, skill)} />
             ))}
           </div>
-        </InfoFieldBox>
+        </MyProfileBaseForm>
       </div>
 
       {(registerProjects.length > 0 || applyProjects.length > 0) && <Divider />}
 
       {/* 프로젝트 목록 */}
       <div className="bottom flex-col">
-        {registerProjects.length > 0 && <ListBox variant="register" listTitle="내가 등록한 프로젝트" items={registerProjects} />}
+        {registerProjects.length > 0 && <MyProfileListBox variant="register" listTitle="내가 등록한 프로젝트" items={registerProjects} />}
 
-        {applyProjects.length > 0 && <ListBox variant="apply" listTitle="내가 신청한 프로젝트" items={applyProjects} />}
+        {applyProjects.length > 0 && <MyProfileListBox variant="apply" listTitle="내가 신청한 프로젝트" items={applyProjects} />}
       </div>
     </Paper>
   );
