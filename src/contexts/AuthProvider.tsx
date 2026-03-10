@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { AuthContext } from './AuthContext';
 import { getUserProfile } from '@/api/profile/profile.api';
 
@@ -8,18 +8,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserBasicResponse | undefined>(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('accessToken'));
 
+  const refreshUser = useCallback(async () => {
+    try {
+      const res = await getUserProfile();
+      setUser(res.data?.user ?? undefined);
+    } catch {
+      setUser(undefined);
+      setIsLoggedIn(false);
+      sessionStorage.removeItem('accessToken');
+    }
+  }, []);
+
   useEffect(() => {
     if (!isLoggedIn) return;
 
-    getUserProfile()
-      .then((res) => {
-        setUser(res.data?.user);
-      })
-      .catch(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await getUserProfile();
+        setUser(res.data?.user ?? undefined);
+      } catch {
         setUser(undefined);
         setIsLoggedIn(false);
         sessionStorage.removeItem('accessToken');
-      });
+      }
+    };
+
+    fetchUser();
   }, [isLoggedIn]);
 
   const login = async (token?: string) => {
@@ -28,8 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     sessionStorage.setItem('accessToken', token);
     setIsLoggedIn(true);
 
-    const res = await getUserProfile();
-    setUser(res.data?.user);
+    await refreshUser();
   };
 
   const logout = () => {
@@ -46,30 +59,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser,
         login,
         logout,
+        refreshUser,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
-
-// export const AuthProvider = ({ children } : { children: ReactNode }) => {
-//     const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('accessToken'));
-
-//     const login = (token?: string) => {
-//         if(!token) return;
-//         setSessionStorage('accessToken', token);
-//         setIsLoggedIn(true);
-//     };
-
-//     const logout = () => {
-//         sessionStorage.removeItem('accessToken');
-//         setIsLoggedIn(false);
-//     };
-
-//     return (
-//         <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
-//             {children}
-//         </AuthContext.Provider>
-//     );
-// };

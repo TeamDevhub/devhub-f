@@ -68,6 +68,10 @@ export default function ProjectCreatePage(){
                   <Select 
                     id='filter' value={filter} onChange={handleChange} size='medium' displayEmpty
                     renderValue={(selected) => selected === '' ? '모집인원' : selected }
+                    sx={{
+                      '& legend': { display: 'none' },
+                      '& fieldset': { top: 0 },
+                    }}
                   >
                     <MenuItem value=''>None</MenuItem>
                   </Select>
@@ -76,6 +80,10 @@ export default function ProjectCreatePage(){
                   <Select 
                     id='filter' value={filter} onChange={handleChange} size='medium' displayEmpty
                     renderValue={(selected) => selected === '' ? '모집인원' : selected }
+                    sx={{
+                      '& legend': { display: 'none' },
+                      '& fieldset': { top: 0 },
+                    }}
                   >
                     <MenuItem value=''>None</MenuItem>
                   </Select>

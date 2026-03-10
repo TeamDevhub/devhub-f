@@ -5,12 +5,14 @@ import { Validators } from '@/utils/util._common';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@/hooks/_common/api.hook';
 import useFormState from '@/hooks/_common/useFormState.ts';
+import { useModal } from '@/hooks/_common/useModal';
 
 interface SignupFormState extends SignupRequest {
   passwordConfirm: string;
 }
 
 export default function useSignup(email: string) {
+  const { alert } = useModal();
   const navigate = useNavigate();
 
   const initData: SignupFormState = {

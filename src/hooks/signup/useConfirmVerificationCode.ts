@@ -4,8 +4,10 @@ import type { ApiResponse } from '@/types/type.api';
 import type { ConfrimVerificationCodeRequest } from '@/types/type.signup';
 import { Validators } from '@/utils/util._common';
 import useFormState from '@/hooks/_common/useFormState.ts';
+import { useModal } from '@/hooks/_common/useModal';
 
 export default function useConfirmVerificationCode(emailAddress: string, onVerified?: (email: string) => void) {
+  const { alert } = useModal();
   const validations = { verificationCode: [Validators.required()] };
   const { state: verificationCode, setState: setVerificationCode, checkError } = useFormState({ verificationCode: '' }, { validations });
 

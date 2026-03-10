@@ -26,6 +26,10 @@ export default function BoardCreatePage(){
                 <Select 
                   id='category' value={category} onChange={handleChange} size='medium' displayEmpty
                   renderValue={(selected) => selected === '' ? '카테고리' : selected }
+                  sx={{
+                    '& legend': { display: 'none' },
+                    '& fieldset': { top: 0 },
+                  }}
                 >
                   <MenuItem value=''>None</MenuItem>
                 </Select>
