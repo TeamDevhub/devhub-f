@@ -1,4 +1,4 @@
-import { createProject } from "@/api/projects/projects.api"
+import { updateProject } from "@/api/projects/projects.api"
 import { deleteFile } from "@/api/file/file.api"
 import useFormState from '@/hooks/_common/useFormState.ts';
 import type { ProjectUpdate, Position } from "@/types/type.projects";
@@ -9,7 +9,7 @@ import useFileUpload from "@/hooks/_common/useFileUpload.ts";
 import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
 import { ERROR_MESSAGES } from "@/types/const.errorMessages.ts";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import type { ProjectFormDetailResponse } from "@/types/type.projects";
 import { useSelect } from "../_common/api.hook";
 import { getProjectFormDetail } from "@/api/projects/projects.api";
@@ -24,33 +24,47 @@ export default function useUpdateProject(
         enabled: !!projectId,
     }
 
-    const { res, error } = useSelect<ProjectFormDetailResponse, string>(options);
+    const { res, error } = useSelect<ProjectUpdate, string>(options);
 
-    useEffect(() => {
-        console.log(error);
-
-    }, [error]);
-
-    const initData: ProjectUpdate = {
-        category: res?.data?.category || "",
-        title: res?.data?.title || "",
-        content: res?.data?.content || "",
-        recruitmentTypeCd: res?.data?.recruitmentTypeCd || "3001",
-        recruitmentStartDate: res?.data?.recruitmentStartDate || dayjs(),
-        recruitmentEndDate: res?.data?.recruitmentEndDate || dayjs(),
-        progressTypeCd: res?.data?.progressTypeCd || "3103",
-        progressRegionCd: res?.data?.progressRegionCd || "",
-        progressStartDate: res?.data?.progressStartDate || dayjs(),
-        progressEndDate: res?.data?.progressEndDate || dayjs(),
-        skillList: res?.data?.skillList || [],
-        positionList: res?.data?.positionList || [{
-            position: '',
-            level: '',
-            capacity: 0,
-        }],
-        applicationFormList: res?.data?.applicationFormList || [],
-        additionalFormList: res?.data?.additionalFormList || [],
-    };
+    // const [initData, setInitData] = useState<ProjectUpdate>({
+    //     category: '',
+    //     title: '',
+    //     content: '',
+    //     recruitmentTypeCd: '3001',
+    //     recruitmentStartDate: dayjs(),
+    //     recruitmentEndDate: dayjs(),
+    //     progressTypeCd: '3101',
+    //     progressRegionCd: '',
+    //     progressStartDate: dayjs(),
+    //     progressEndDate: dayjs(),
+    //     skillList: [],
+    //     positionList: [{
+    //         position: '',
+    //         level: '',
+    //         capacity: 0,
+    //     }],
+    //     applicationFormList: [],
+    //     additionalFormList: [],
+    // });
+    // useEffect(() => {
+    //     if (!res?.data) return;
+    //     setInitData({
+    //         category: res.data.category,
+    //         title: res.data.title,
+    //         content: res.data.content,
+    //         recruitmentTypeCd: res.data.recruitmentTypeCd,
+    //         recruitmentStartDate: res.data.recruitmentStartDate,
+    //         recruitmentEndDate: res.data.recruitmentEndDate,
+    //         progressTypeCd: res.data.progressTypeCd,
+    //         progressRegionCd: res.data.progressRegionCd,
+    //         progressStartDate: res.data.progressStartDate,
+    //         progressEndDate: res.data.progressEndDate,
+    //         skillList: res.data.skillList,
+    //         positionList: res.data.positionList,
+    //         applicationFormList: res.data.applicationFormList,
+    //         additionalFormList: res.data.additionalFormList,
+    //     })
+    // }, [res]);
 
     const validations = {
         title: [Validators.required()],
@@ -70,17 +84,17 @@ export default function useUpdateProject(
     const IMAGE_NAME = 'image' as const;
     const ATTACHMENT_NAME = 'attachment' as const;
     const navigate = useNavigate();
-    const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(initData, { validations, mode: 'manual' });
+    const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(res.data, { validations, mode: 'manual' });
     const { fileStates, errors: fileErrors, upload, register } = useFileUpload();
     const { alert } = useModal();
     const [fileGuids, setFileGuids] = useState<string[]>([]);
     const { mutate: fileDeleteMutate } = useMutation<string, void>(deleteFile);
-    const handleSuccessCreateProject = () => {
-        alert('프로젝트가 생성되었습니다.');
+    const handleSuccessUpdateProject = () => {
+        alert('프로젝트가 수정되었습니다.');
         navigate('/projects');
     }
-    const handleFailCreateProject = async () => {
-        alert('프로젝트 생성에 실패했습니다.');
+    const handleFailUpdateProject = async () => {
+        alert('프로젝트 수정에 실패했습니다.');
         try {
             await Promise.all(
                 fileGuids.map(fileGuid =>
@@ -91,7 +105,10 @@ export default function useUpdateProject(
             console.log("file delete error");
         }
     }
-    const { mutate: projectMutate, loading } = useMutation<ProjectUpdate, void>(createProject, handleSuccessCreateProject, handleFailCreateProject);
+    const { mutate: projectMutate, loading } = useMutation<{
+        projectId: string;
+        data: ProjectUpdate;
+    }, void>(updateProject, handleSuccessUpdateProject, handleFailUpdateProject);
 
     const onSubmit = async () => {
         let returnData;
@@ -120,7 +137,10 @@ export default function useUpdateProject(
         const jsonData = { ...state };
         jsonData.imageFileGuid = imageFileGuid;
         jsonData.attachmentFileGuid = attachmentFileGuid;
-        await projectMutate(jsonData);
+        await projectMutate({
+            projectId: initData?.data?.projectGuid as string,
+            data: jsonData
+        });
     }
 
     return {
