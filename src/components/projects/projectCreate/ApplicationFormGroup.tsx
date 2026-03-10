@@ -5,11 +5,12 @@ import useSelectApplicationForms from "@/hooks/projects/useSelectApplicationForm
 
 interface CustomCheckboxGroupProps {
     onChange?: (newValues: string[]) => void;
+    defaultCheckedValues?: string[];
 }
 
-export default function ApplicationFormGroup({ onChange }: CustomCheckboxGroupProps) {
+export default function ApplicationFormGroup({ onChange, defaultCheckedValues = [] }: CustomCheckboxGroupProps) {
     const { res } = useSelectApplicationForms({ customYn: 'N' });
-    const [checkedValues, setCheckedValues] = useState<string[]>([]);
+    const [checkedValues, setCheckedValues] = useState<string[]>(defaultCheckedValues);
     const handleOnChange = (applicationFormGuid: string, value: boolean) => {
         let newValues: string[];
         if (value) {
@@ -23,7 +24,7 @@ export default function ApplicationFormGroup({ onChange }: CustomCheckboxGroupPr
 
     return (
         <FormGroup>
-            {res?.dataList?.map((item: ApplicationFormBasic, index: number) => <FormControlLabel key={index} control={<Checkbox onChange={(e) => handleOnChange(item.applicationFormGuid, e.target.checked)} />} label={item.title} />)}
+            {res?.dataList?.map((item: ApplicationFormBasic, index: number) => <FormControlLabel key={index} control={<Checkbox checked={checkedValues.includes(item.applicationFormGuid)} onChange={(e) => handleOnChange(item.applicationFormGuid, e.target.checked)} />} label={item.title} />)}
         </FormGroup>
     )
 }

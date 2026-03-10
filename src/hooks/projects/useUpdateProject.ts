@@ -4,67 +4,15 @@ import useFormState from '@/hooks/_common/useFormState.ts';
 import type { ProjectUpdate, Position } from "@/types/type.projects";
 import { useMutation } from "@/hooks/_common/api.hook";
 import { useModal } from "@/hooks/_common/useModal"
-import dayjs from "dayjs";
 import useFileUpload from "@/hooks/_common/useFileUpload.ts";
 import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
 import { ERROR_MESSAGES } from "@/types/const.errorMessages.ts";
-import { useState, useEffect, useMemo } from "react";
-import type { ProjectFormDetailResponse } from "@/types/type.projects";
-import { useSelect } from "../_common/api.hook";
-import { getProjectFormDetail } from "@/api/projects/projects.api";
+import { useState } from "react";
 
 export default function useUpdateProject(
-    projectId?: string
+    data: ProjectUpdate
 ) {
-    const options = {
-        apiFn: getProjectFormDetail,
-        req: projectId!,
-        cacheKey: projectId ? `project-detail-${projectId}` : undefined,
-        enabled: !!projectId,
-    }
-
-    const { res, error } = useSelect<ProjectUpdate, string>(options);
-
-    // const [initData, setInitData] = useState<ProjectUpdate>({
-    //     category: '',
-    //     title: '',
-    //     content: '',
-    //     recruitmentTypeCd: '3001',
-    //     recruitmentStartDate: dayjs(),
-    //     recruitmentEndDate: dayjs(),
-    //     progressTypeCd: '3101',
-    //     progressRegionCd: '',
-    //     progressStartDate: dayjs(),
-    //     progressEndDate: dayjs(),
-    //     skillList: [],
-    //     positionList: [{
-    //         position: '',
-    //         level: '',
-    //         capacity: 0,
-    //     }],
-    //     applicationFormList: [],
-    //     additionalFormList: [],
-    // });
-    // useEffect(() => {
-    //     if (!res?.data) return;
-    //     setInitData({
-    //         category: res.data.category,
-    //         title: res.data.title,
-    //         content: res.data.content,
-    //         recruitmentTypeCd: res.data.recruitmentTypeCd,
-    //         recruitmentStartDate: res.data.recruitmentStartDate,
-    //         recruitmentEndDate: res.data.recruitmentEndDate,
-    //         progressTypeCd: res.data.progressTypeCd,
-    //         progressRegionCd: res.data.progressRegionCd,
-    //         progressStartDate: res.data.progressStartDate,
-    //         progressEndDate: res.data.progressEndDate,
-    //         skillList: res.data.skillList,
-    //         positionList: res.data.positionList,
-    //         applicationFormList: res.data.applicationFormList,
-    //         additionalFormList: res.data.additionalFormList,
-    //     })
-    // }, [res]);
 
     const validations = {
         title: [Validators.required()],
@@ -84,7 +32,7 @@ export default function useUpdateProject(
     const IMAGE_NAME = 'image' as const;
     const ATTACHMENT_NAME = 'attachment' as const;
     const navigate = useNavigate();
-    const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(res.data, { validations, mode: 'manual' });
+    const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(data, { validations, mode: 'manual' });
     const { fileStates, errors: fileErrors, upload, register } = useFileUpload();
     const { alert } = useModal();
     const [fileGuids, setFileGuids] = useState<string[]>([]);
@@ -119,26 +67,26 @@ export default function useUpdateProject(
                 return;
             }
         }
-        const imageFileGuid = returnData?.data?.[IMAGE_NAME];
-        const attachmentFileGuid = returnData?.data?.[ATTACHMENT_NAME];
-        setFileGuids(
-            [imageFileGuid, attachmentFileGuid].filter(
-                (guid): guid is string => !!guid
-            )
-        );
+        // const imageFileGuid = returnData?.data?.[IMAGE_NAME];
+        // const attachmentFileGuid = returnData?.data?.[ATTACHMENT_NAME];
+        // setFileGuids(
+        //     [imageFileGuid, attachmentFileGuid].filter(
+        //         (guid): guid is string => !!guid
+        //     )
+        // );
 
-        checkError();
-        const error = Object.entries(validateErrors).find(([, value]) => !!value);
-        if (error) {
-            alert(`${error[0]}은/는 ${error[1]}`);
-            return;
-        }
+        // checkError();
+        // const error = Object.entries(validateErrors).find(([, value]) => !!value);
+        // if (error) {
+        //     alert(`${error[0]}은/는 ${error[1]}`);
+        //     return;
+        // }
 
         const jsonData = { ...state };
-        jsonData.imageFileGuid = imageFileGuid;
-        jsonData.attachmentFileGuid = attachmentFileGuid;
+        // jsonData.imageFileGuid = imageFileGuid;
+        // jsonData.attachmentFileGuid = attachmentFileGuid;
         await projectMutate({
-            projectId: initData?.data?.projectGuid as string,
+            projectId: data.projectGuid as string,
             data: jsonData
         });
     }
@@ -149,7 +97,7 @@ export default function useUpdateProject(
         onHandleEvent: handleChange,
         onSubmit: onSubmit,
         loading,
-        error,
+        error: checkError,
         fileStates,
         imageRef: register(IMAGE_NAME),
         attachmentRef: register(ATTACHMENT_NAME),

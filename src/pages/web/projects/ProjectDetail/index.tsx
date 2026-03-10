@@ -25,6 +25,10 @@ export default function ProjectDetail() {
     });
   }
 
+  if (!res?.data) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. project detail */}
@@ -33,7 +37,7 @@ export default function ProjectDetail() {
           <div className="top flex-col">
             <div className='chip-box align-center'>
               <RecruitStatusChip
-                recruitStatusCode={res?.data?.recruitStatus}
+                recruitStatusCode={res.data.recruitStatus}
               />
               <ProgressRegionChip regionCd={res?.data?.progressRegionCd} />
               <RecruitmentChip recruitTypeCd={res?.data?.recruitmentTypeCd} />

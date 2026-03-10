@@ -95,10 +95,10 @@ export interface ProjectSearchRequest {
 export type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword' | 'size'>;
 export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
-export interface ProjectUpdate extends ProjectDetail {
-  applicationFormList: string[];
-  additionalFormList: ApplicationsFormCreate[];
-}
+// export interface ProjectUpdate extends ProjectDetail {
+//   applicationFormList: string[];
+//   additionalFormList: ApplicationsFormCreate[];
+// }
 
 export interface ProjectListResponse extends ProjectDetail {
   //필요시 추가
@@ -112,3 +112,5 @@ export interface ProjectFormDetailResponse extends ProjectDetail {
   applicationFormList: string[];
   additionalFormList: ApplicationFormDetail[];
 }
+
+export type ProjectUpdate = ProjectFormDetailResponse
