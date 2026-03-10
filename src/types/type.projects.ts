@@ -100,7 +100,7 @@ export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 //   additionalFormList: ApplicationsFormCreate[];
 // }
 
-export interface ProjectListResponse extends ProjectDetail {
+export interface ProjectListResponse extends ProjectExtra {
   //필요시 추가
 }
 
@@ -108,7 +108,7 @@ export interface ProjectDetailResponse extends ProjectExtra {
   email: string;
 }
 
-export interface ProjectFormDetailResponse extends ProjectDetail {
+export interface ProjectFormDetailResponse extends ProjectExtra {
   applicationFormList: string[];
   additionalFormList: ApplicationFormDetail[];
 }
