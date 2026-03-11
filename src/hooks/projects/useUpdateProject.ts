@@ -1,37 +1,18 @@
-import { createProject } from "@/api/projects/projects.api"
+import { updateProject } from "@/api/projects/projects.api"
 import { deleteFile } from "@/api/file/file.api"
 import useFormState from '@/hooks/_common/useFormState.ts';
-import type { ProjectCreate, Position } from "@/types/type.projects";
+import type { ProjectUpdate, Position } from "@/types/type.projects";
 import { useMutation } from "@/hooks/_common/api.hook";
 import { useModal } from "@/hooks/_common/useModal"
-import dayjs from "dayjs";
 import useFileUpload from "@/hooks/_common/useFileUpload.ts";
 import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
 import { ERROR_MESSAGES } from "@/types/const.errorMessages.ts";
 import { useState } from "react";
 
-export default function useCreateProject() {
-    const initData: ProjectCreate = {
-        category: '',
-        title: '',
-        content: '',
-        recruitmentTypeCd: '3001',
-        recruitmentStartDate: dayjs(),
-        recruitmentEndDate: dayjs(),
-        progressTypeCd: '3101',
-        progressRegionCd: '',
-        progressStartDate: dayjs(),
-        progressEndDate: dayjs(),
-        skillList: [],
-        positionList: [{
-            position: '',
-            level: '',
-            capacity: 0,
-        }],
-        applicationFormList: [],
-        additionalFormList: [],
-    };
+export default function useUpdateProject(
+    data: ProjectUpdate
+) {
 
     const validations = {
         title: [Validators.required()],
@@ -51,17 +32,17 @@ export default function useCreateProject() {
     const IMAGE_NAME = 'image' as const;
     const ATTACHMENT_NAME = 'attachment' as const;
     const navigate = useNavigate();
-    const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(initData, { validations, mode: 'manual' });
+    const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(data, { validations, mode: 'manual' });
     const { fileStates, errors: fileErrors, upload, register } = useFileUpload();
     const { alert } = useModal();
     const [fileGuids, setFileGuids] = useState<string[]>([]);
     const { mutate: fileDeleteMutate } = useMutation<string, void>(deleteFile);
-    const handleSuccessCreateProject = () => {
-        alert('프로젝트가 생성되었습니다.');
+    const handleSuccessUpdateProject = () => {
+        alert('프로젝트가 수정되었습니다.');
         navigate('/projects');
     }
-    const handleFailCreateProject = async () => {
-        alert('프로젝트 생성에 실패했습니다.');
+    const handleFailUpdateProject = async () => {
+        alert('프로젝트 수정에 실패했습니다.');
         try {
             await Promise.all(
                 fileGuids.map(fileGuid =>
@@ -72,7 +53,10 @@ export default function useCreateProject() {
             console.log("file delete error");
         }
     }
-    const { mutate: projectMutate, loading, error } = useMutation<ProjectCreate, void>(createProject, handleSuccessCreateProject, handleFailCreateProject);
+    const { mutate: projectMutate, loading } = useMutation<{
+        projectId: string;
+        data: ProjectUpdate;
+    }, void>(updateProject, handleSuccessUpdateProject, handleFailUpdateProject);
 
     const onSubmit = async () => {
         let returnData;
@@ -83,8 +67,8 @@ export default function useCreateProject() {
                 return;
             }
         }
-        const imageFileGuid = returnData?.data?.[IMAGE_NAME];
-        const attachmentFileGuid = returnData?.data?.[ATTACHMENT_NAME];
+        const imageFileGuid = returnData?.data?.fileGuids?.[IMAGE_NAME];
+        const attachmentFileGuid = returnData?.data?.fileGuids?.[ATTACHMENT_NAME];
         setFileGuids(
             [imageFileGuid, attachmentFileGuid].filter(
                 (guid): guid is string => !!guid
@@ -101,7 +85,10 @@ export default function useCreateProject() {
         const jsonData = { ...state };
         jsonData.imageFileGuid = imageFileGuid;
         jsonData.attachmentFileGuid = attachmentFileGuid;
-        await projectMutate(jsonData);
+        await projectMutate({
+            projectId: data.projectGuid as string,
+            data: jsonData
+        });
     }
 
     return {
@@ -110,7 +97,7 @@ export default function useCreateProject() {
         onHandleEvent: handleChange,
         onSubmit: onSubmit,
         loading,
-        error,
+        error: checkError,
         fileStates,
         imageRef: register(IMAGE_NAME),
         attachmentRef: register(ATTACHMENT_NAME),

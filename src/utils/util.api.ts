@@ -7,8 +7,10 @@ import dayjs from 'dayjs';
 interface CommonError {
   status: HttpStatusCode;
   timestamp: string;
-  errCode: string;
-  errMessage: string;
+  error: {
+    code: string;
+    message: string;
+  }
   requestId: string;
   path: string;
 }
@@ -58,7 +60,7 @@ const removeEmptyValues = (obj: Record<string, unknown>): unknown => {
 };
 
 let activeRequests = 0;
-let loadingHandler = { show: () => {}, hide: () => {} };
+let loadingHandler = { show: () => { }, hide: () => { } };
 
 export const injectLoadingHandler = (handler: { show: () => void; hide: () => void }) => {
   loadingHandler = handler;
@@ -108,9 +110,9 @@ const responseSuccessInterceptor = async (response: AxiosResponse<unknown>) => {
 const responseErrorInterceptor = async (err: unknown) => {
   const error = err as AxiosError<CommonError>;
 
-  console.log('responseErrorInterceptor', error.response?.data?.errCode);
+  console.log('responseErrorInterceptor', error.response?.data?.error?.code);
 
-  const errorCode = error.response?.data?.errCode ?? '';
+  const errorCode = error.response?.data?.error?.code ?? '';
   const status = error.response?.status;
 
   //에러 인터페이스에 따라 처리 추후 추가

@@ -31,7 +31,7 @@ export const isPast = (targetDate: string, baseDate: string = getTodayStr()): bo
 export const getDiffDays = (date1: string, date2: string): number => {
     const d1 = new Date(date1).getTime();
     const d2 = new Date(date2).getTime();
-    const diff = Math.abs(d2 - d1);
+    const diff = Math.max(0, d2 - d1);
   return Math.floor(diff / (1000 * 60 * 60 * 24));
 };
 

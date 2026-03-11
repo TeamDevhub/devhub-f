@@ -27,6 +27,7 @@ import MainPage from '@/pages/web/MainPage';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
+import ProjectUpdate from '@/pages/web/projects/ProjectUpdate';
 import Signup from '@/pages/web/signup/Signup';
 import { createBrowserRouter } from 'react-router-dom';
 import UserListPage from '@/pages/design/admin/users/UserListPage';
@@ -82,12 +83,16 @@ const router = createBrowserRouter([
             element: <ProjectList />,
           },
           {
-            path: 'detail',
+            path: 'detail/:projectGuid',
             element: <ProjectDetail />,
           },
           {
             path: 'create',
             element: <ProjectCreate />,
+          },
+          {
+            path: 'update/:projectGuid',
+            element: <ProjectUpdate />,
           },
         ],
       },

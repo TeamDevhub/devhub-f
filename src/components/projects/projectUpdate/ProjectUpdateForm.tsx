@@ -6,18 +6,19 @@ import AdditionalFormPopup from '@/components/projects/projectCreate/AdditionalF
 import ApplicationFormGroup from '@/components/projects/projectCreate/ApplicationFormGroup';
 import PositionGroup from '@/components/projects/projectCreate/PositionGroup';
 import DragAndDropForm from '@/components/_common/DragAndDropForm'
-import useCreateProject from '@/hooks/projects/useCreateProject.ts'
+import useUpdateProject from '@/hooks/projects/useUpdateProject.ts'
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import { COMMON_CODE } from '@/types/const';
 import { type DateType } from '@/types/type.api';
-import type { ApplicationsFormCreate, Position } from '@/types/type.projects';
+import type { Position, ProjectUpdate } from '@/types/type.projects';
 import { AddCircle, Remove, Search } from '@mui/icons-material';
 import { Button, Divider, FormControl, FormLabel, IconButton, Paper } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import AddableChipGroup from "@/components/_common/AddableChipGroup.tsx";
+import dayjs from 'dayjs';
 
-export default function ProjectCreate() {
+export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
   const skillPopup = useDisclosure();
   const regionPopup = useDisclosure();
   const additionalPopup = useDisclosure();
@@ -33,13 +34,13 @@ export default function ProjectCreate() {
     onSubmit,
     imageRef,
     attachmentRef,
-  } = useCreateProject()
+  } = useUpdateProject(data);
 
   return (
     <div className='main-page'>
       <Paper className='project-create-box flex-col' elevation={4}>
         {/* 1. page title */}
-        <strong className="page-title">프로젝트 생성</strong>
+        <strong className="page-title">프로젝트 수정</strong>
         {/* 2. project create form */}
         <div className="form-wrap flex-col">
           {/* 1. 모집 유형 */}
@@ -72,28 +73,22 @@ export default function ProjectCreate() {
                 <p className="field-title">모집기간</p>
                 <div className='align-center'>
                   <DatePicker
+                    value={dayjs(values.recruitmentStartDate)}
                     onChange={(value: DateType) => onHandleEvent("recruitmentStartDate", value)}
                     slotProps={{
                       textField: {
                         size: 'medium',
                       },
                     }}
-                    sx={{
-                      '& legend': { display: 'none' },
-                      '& fieldset': { top: 0 },
-                    }}
                   />
                   ~
                   <DatePicker
+                    value={dayjs(values.recruitmentEndDate)}
                     onChange={(value: DateType) => onHandleEvent("recruitmentEndDate", value)}
                     slotProps={{
                       textField: {
                         size: 'medium'
                       },
-                    }}
-                    sx={{
-                      '& legend': { display: 'none' },
-                      '& fieldset': { top: 0 },
                     }}
                   />
                 </div>
@@ -144,28 +139,22 @@ export default function ProjectCreate() {
                 <p className="field-title">진행기간</p>
                 <div className='align-center'>
                   <DatePicker
+                    value={dayjs(values.progressStartDate)}
                     onChange={(value: DateType) => onHandleEvent("progressStartDate", value)}
                     slotProps={{
                       textField: {
                         size: 'medium',
                       },
                     }}
-                    sx={{
-                      '& legend': { display: 'none' },
-                      '& fieldset': { top: 0 },
-                    }}
                   />
                   ~
                   <DatePicker
+                    value={dayjs(values.progressEndDate)}
                     onChange={(value: DateType) => onHandleEvent("progressEndDate", value)}
                     slotProps={{
                       textField: {
                         size: 'medium'
                       },
-                    }}
-                    sx={{
-                      '& legend': { display: 'none' },
-                      '& fieldset': { top: 0 },
                     }}
                   />
                 </div>
@@ -222,7 +211,7 @@ export default function ProjectCreate() {
               </div>
             </div>
             <div className="field-area flex flex-1" style={{ gap: '3.2rem' }}>
-              <ApplicationFormGroup onChange={(newValues: string[]) => { onHandleEvent("applicationFormList", newValues) }} />
+              <ApplicationFormGroup onChange={(newValues: string[]) => { onHandleEvent("applicationFormList", newValues) }} defaultCheckedValues={values.applicationFormList}/>
             </div>
           </div>
           {/* 9. 추가 양식 */}
