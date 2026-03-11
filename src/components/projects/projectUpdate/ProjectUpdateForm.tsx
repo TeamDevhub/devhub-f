@@ -10,12 +10,13 @@ import useUpdateProject from '@/hooks/projects/useUpdateProject.ts'
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import { COMMON_CODE } from '@/types/const';
 import { type DateType } from '@/types/type.api';
-import type { ApplicationsFormCreate, Position, ProjectUpdate } from '@/types/type.projects';
+import type { Position, ProjectUpdate } from '@/types/type.projects';
 import { AddCircle, Remove, Search } from '@mui/icons-material';
 import { Button, Divider, FormControl, FormLabel, IconButton, Paper } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import AddableChipGroup from "@/components/_common/AddableChipGroup.tsx";
+import dayjs from 'dayjs';
 
 export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
   const skillPopup = useDisclosure();
@@ -72,6 +73,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
                 <p className="field-title">모집기간</p>
                 <div className='align-center'>
                   <DatePicker
+                    value={dayjs(values.recruitmentStartDate)}
                     onChange={(value: DateType) => onHandleEvent("recruitmentStartDate", value)}
                     slotProps={{
                       textField: {
@@ -81,6 +83,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
                   />
                   ~
                   <DatePicker
+                    value={dayjs(values.recruitmentEndDate)}
                     onChange={(value: DateType) => onHandleEvent("recruitmentEndDate", value)}
                     slotProps={{
                       textField: {
@@ -136,6 +139,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
                 <p className="field-title">진행기간</p>
                 <div className='align-center'>
                   <DatePicker
+                    value={dayjs(values.progressStartDate)}
                     onChange={(value: DateType) => onHandleEvent("progressStartDate", value)}
                     slotProps={{
                       textField: {
@@ -145,6 +149,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
                   />
                   ~
                   <DatePicker
+                    value={dayjs(values.progressEndDate)}
                     onChange={(value: DateType) => onHandleEvent("progressEndDate", value)}
                     slotProps={{
                       textField: {

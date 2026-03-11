@@ -67,24 +67,24 @@ export default function useUpdateProject(
                 return;
             }
         }
-        // const imageFileGuid = returnData?.data?.[IMAGE_NAME];
-        // const attachmentFileGuid = returnData?.data?.[ATTACHMENT_NAME];
-        // setFileGuids(
-        //     [imageFileGuid, attachmentFileGuid].filter(
-        //         (guid): guid is string => !!guid
-        //     )
-        // );
+        const imageFileGuid = returnData?.data?.fileGuids?.[IMAGE_NAME];
+        const attachmentFileGuid = returnData?.data?.fileGuids?.[ATTACHMENT_NAME];
+        setFileGuids(
+            [imageFileGuid, attachmentFileGuid].filter(
+                (guid): guid is string => !!guid
+            )
+        );
 
-        // checkError();
-        // const error = Object.entries(validateErrors).find(([, value]) => !!value);
-        // if (error) {
-        //     alert(`${error[0]}은/는 ${error[1]}`);
-        //     return;
-        // }
+        checkError();
+        const error = Object.entries(validateErrors).find(([, value]) => !!value);
+        if (error) {
+            alert(`${error[0]}은/는 ${error[1]}`);
+            return;
+        }
 
         const jsonData = { ...state };
-        // jsonData.imageFileGuid = imageFileGuid;
-        // jsonData.attachmentFileGuid = attachmentFileGuid;
+        jsonData.imageFileGuid = imageFileGuid;
+        jsonData.attachmentFileGuid = attachmentFileGuid;
         await projectMutate({
             projectId: data.projectGuid as string,
             data: jsonData

@@ -40,7 +40,7 @@ export interface ProjectDetail extends ProjectBasic {
 
 export interface ProjectCreate extends ProjectDetail {
   applicationFormList: string[];
-  additionalFormList: ApplicationsFormCreate[];
+  additionalFormList: ApplicationFormCreate[];
 }
 
 export interface ProjectExtra extends ProjectDetail {
@@ -65,7 +65,7 @@ export interface ApplicationFormDetail extends ApplicationFormBasic {
   itemList?: string[];
 }
 
-export type ApplicationsFormCreate = Omit<ApplicationFormDetail, 'applicationFormGuid'>;
+export type ApplicationFormCreate = Omit<ApplicationFormDetail, 'applicationFormGuid'>;
 
 export interface ApplicationFormRequest {
   title?: string;
@@ -97,12 +97,12 @@ export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
 // export interface ProjectUpdate extends ProjectDetail {
 //   applicationFormList: string[];
-//   additionalFormList: ApplicationsFormCreate[];
+//   additionalFormList: ApplicationFormCreate[];
 // }
 
-export interface ProjectListResponse extends ProjectExtra {
-  //필요시 추가
-}
+// export interface ProjectListResponse extends ProjectExtra {
+//   //필요시 추가
+// }
 
 export interface ProjectDetailResponse extends ProjectExtra {
   email: string;
@@ -110,7 +110,7 @@ export interface ProjectDetailResponse extends ProjectExtra {
 
 export interface ProjectFormDetailResponse extends ProjectExtra {
   applicationFormList: string[];
-  additionalFormList: ApplicationFormDetail[];
+  additionalFormList: ApplicationFormCreate[];
 }
 
 export type ProjectUpdate = ProjectFormDetailResponse
