@@ -52,7 +52,6 @@ export default function useSelectProjects(
   const options = {
     apiFn: getProjects,
     req: request,
-    cacheKey: `projects-${JSON.stringify(request)}`,
   }
   const { res, loading } = useSelect<ProjectListResponse, ProjectSearchRequest>(options);
 

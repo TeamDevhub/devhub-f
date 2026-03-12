@@ -33,7 +33,7 @@ export default function useUpdateProject(
     const ATTACHMENT_NAME = 'attachment' as const;
     const navigate = useNavigate();
     const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(data, { validations, mode: 'manual' });
-    const { fileStates, errors: fileErrors, upload, register } = useFileUpload();
+    const { fileStates, errors: fileErrors, upload, register, handleFileUpdate } = useFileUpload();
     const { alert } = useModal();
     const [fileGuids, setFileGuids] = useState<string[]>([]);
     const { mutate: fileDeleteMutate } = useMutation<string, void>(deleteFile);

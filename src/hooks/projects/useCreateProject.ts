@@ -83,8 +83,8 @@ export default function useCreateProject() {
                 return;
             }
         }
-        const imageFileGuid = returnData?.data?.[IMAGE_NAME];
-        const attachmentFileGuid = returnData?.data?.[ATTACHMENT_NAME];
+        const imageFileGuid = returnData?.data?.fileGuids?.[IMAGE_NAME];
+        const attachmentFileGuid = returnData?.data?.fileGuids?.[ATTACHMENT_NAME];
         setFileGuids(
             [imageFileGuid, attachmentFileGuid].filter(
                 (guid): guid is string => !!guid

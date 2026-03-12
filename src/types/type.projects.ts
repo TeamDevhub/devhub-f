@@ -106,6 +106,7 @@ export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
 export interface ProjectDetailResponse extends ProjectExtra {
   email: string;
+  imageFileUrl: string;
 }
 
 export interface ProjectFormDetailResponse extends ProjectExtra {

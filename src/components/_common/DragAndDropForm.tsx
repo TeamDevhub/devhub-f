@@ -28,7 +28,7 @@ const DragAndDropForm = forwardRef<HTMLInputElement, DragAndDropFormProps>(
         const _onChange = (e: ChangeEvent<HTMLInputElement>) => {
             const file = e.target.files?.[0];
             if (file) {
-                setFileName(file.name); // UI 업데이트는 여기서만!
+                setFileName(file.name);
             }
             onChange?.(e);
         };
