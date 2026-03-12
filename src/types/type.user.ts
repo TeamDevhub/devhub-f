@@ -3,6 +3,8 @@ export interface UserBasicResponse {
   email: string;
   username: string;
   introduction: string;
+  fileGuid: string;
+  profileImageUrl: string;
   mannerDegree: number;
   blocked: boolean;
   blockEndDate: string | null;
@@ -25,4 +27,13 @@ export interface UpdateProfileRequest {
   introduction: string;
   positionList: string[];
   skillList: string[];
+}
+
+export interface UpdatePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface UpdateProfileImageRequest {
+  fileGuid: string;
 }

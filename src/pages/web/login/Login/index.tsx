@@ -47,7 +47,7 @@ export default function Login() {
                   비밀번호 찾기
                 </Button>
               </Link>
-              <Link to={'/signin'} className="flex-1 flex-center">
+              <Link to={'/auth/signup'} className="flex-1 flex-center">
                 <Button size="small" color="primary" className="flex-1">
                   회원가입
                 </Button>

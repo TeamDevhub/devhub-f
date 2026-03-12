@@ -1,5 +1,6 @@
 import type { DateType } from "@/types/type.api";
 import type { ApplicationFormType } from "@/types/const.projectCreate.ts"
+import type { ProjectRecruitStatusCode } from '@/types/type._common';
 
 export interface ProjectBasic {
   projectGuid?: string;
@@ -18,6 +19,7 @@ export interface ProjectBasic {
   progressStartDate: DateType;
   progressEndDate: DateType;
   viewCount?: string;
+  capacityClosed?: boolean;
   registrantGuid?: string;
   registeredDate?: string;
   modifierGuid?: string;
@@ -34,12 +36,16 @@ export interface Position {
 export interface ProjectDetail extends ProjectBasic {
   skillList: string[];
   positionList: Position[];
-  likeCount?: string;
 }
 
 export interface ProjectCreate extends ProjectDetail {
   applicationFormList: string[];
-  additionalFormList: ApplicationsFormCreate[];
+  additionalFormList: ApplicationFormCreate[];
+}
+
+export interface ProjectExtra extends ProjectDetail {
+  likeCount: string;
+  recruitStatus: ProjectRecruitStatusCode;
 }
 
 export interface ApplicationFormBasic {
@@ -47,7 +53,6 @@ export interface ApplicationFormBasic {
   typeCd: ApplicationFormType;
   title: string;
   helpText?: string;
-  vertYn?: string;
   customYn?: string;
   useYn?: string;
   registerId?: string;
@@ -60,7 +65,7 @@ export interface ApplicationFormDetail extends ApplicationFormBasic {
   itemList?: string[];
 }
 
-export type ApplicationsFormCreate = Omit<ApplicationFormDetail, 'applicationFormGuid'>;
+export type ApplicationFormCreate = Omit<ApplicationFormDetail, 'applicationFormGuid'>;
 
 export interface ApplicationFormRequest {
   title?: string;
@@ -90,14 +95,22 @@ export interface ProjectSearchRequest {
 export type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword' | 'size'>;
 export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
-export interface UpdateProjectRequest {
+// export interface ProjectUpdate extends ProjectDetail {
+//   applicationFormList: string[];
+//   additionalFormList: ApplicationFormCreate[];
+// }
 
-}
+// export interface ProjectListResponse extends ProjectExtra {
+//   //필요시 추가
+// }
 
-export interface ProjectListResponse extends ProjectDetail {
-  //필요시 추가
-}
-
-export interface ProjectDetailResponse extends ProjectDetail {
+export interface ProjectDetailResponse extends ProjectExtra {
   email: string;
 }
+
+export interface ProjectFormDetailResponse extends ProjectExtra {
+  applicationFormList: string[];
+  additionalFormList: ApplicationFormCreate[];
+}
+
+export type ProjectUpdate = ProjectFormDetailResponse

@@ -8,6 +8,7 @@ interface AuthContextType {
   setUser: (user?: UserBasicResponse) => void;
   login?: (token?: string) => void;
   logout?: () => void;
+  refreshUser: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);

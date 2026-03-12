@@ -1,36 +1,19 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
 import { COMMON_CODE, PROJECT_RECRUIT_STATUS, PROJECT_RECRUIT_TYPE } from '@/types/const';
+import type { ProjectRecruitStatusCode } from '@/types/type._common';
 import type { DateType } from '@/types/type.api';
 import type { Position } from '@/types/type.projects';
-import { convertString, getDiffDays, getTodayStr, isBetween, isPast } from '@/utils/util.date';
+import { convertString, getDiffDays, getTodayStr } from '@/utils/util.date';
 import { AccessTime, LocationOn } from '@mui/icons-material';
 import { Chip, type ChipProps } from '@mui/material';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
-export const RecruitStatusChip = ({
-	recruitmentStartDate,
-	recruitmentEndDate
-}: {
-	recruitmentStartDate?: string | DateType,
-	recruitmentEndDate?: string | DateType
-}) => {
-	if (!recruitmentStartDate || !recruitmentEndDate) return null;
-
-	if(typeof recruitmentStartDate != 'string') recruitmentStartDate = convertString(recruitmentStartDate);
-	if(typeof recruitmentEndDate != 'string') recruitmentEndDate = convertString(recruitmentEndDate);
-
-	const today = getTodayStr();
-
-	let color: ChipProps['color'] = "success";
-	let name: string = PROJECT_RECRUIT_STATUS.COMPLETED.NAME;
-
-	if (isPast(today, recruitmentStartDate)) {
-		color = "default";
-		name = PROJECT_RECRUIT_STATUS.WAITING.NAME;
-	} else if (isBetween(today, recruitmentStartDate, recruitmentEndDate)) {
-		color = "primary";
-		name = PROJECT_RECRUIT_STATUS.RECRUITING.NAME;
-	}
+export const RecruitStatusChip = ({ recruitStatusCode }: { recruitStatusCode: ProjectRecruitStatusCode }) => {
+	const { getCodeName } = useCodes();
+	const color: ChipProps['color'] = recruitStatusCode === PROJECT_RECRUIT_STATUS.WAITING["CODE"] ? "default" 
+									: recruitStatusCode === PROJECT_RECRUIT_STATUS.RECRUITING["CODE"] ? "primary"
+								    : "success";
+	const name: string = getCodeName(COMMON_CODE.PROJECT_RECRUIT_STATUS, recruitStatusCode);
 
 	return (
 		<Chip size="small" color={color} label={name} />

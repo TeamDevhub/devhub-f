@@ -2,11 +2,15 @@ import type { ApiResponse } from '@/types/type.api';
 import { Validators } from '@/utils/util._common';
 import { useMutation } from '@/hooks/_common/api.hook';
 import useFormState from '@/hooks/_common/useFormState.ts';
+import { useModal } from '@/hooks/_common/useModal';
+import { useAuth } from '@/contexts/AuthContext';
 
 import type { UpdateProfileRequest, UserDetailResponse } from '@/types/type.user';
 import { updateProfile } from '@/api/profile/profile.api';
 
 export default function useUpdateProfile(profile: UserDetailResponse) {
+  const { alert } = useModal();
+  const { refreshUser } = useAuth();
   const initData: UpdateProfileRequest = {
     username: profile.user.username,
     introduction: profile.user.introduction,
@@ -22,7 +26,8 @@ export default function useUpdateProfile(profile: UserDetailResponse) {
 
   const { state: userInfo, handleChange, createHandler, createToggle, checkError } = useFormState(initData, { validations });
 
-  const handleSuccessUpdateProfile = (res: ApiResponse<void>) => {
+  const handleSuccessUpdateProfile = async (res: ApiResponse<void>) => {
+    await refreshUser();
     alert(res.code);
   };
 
