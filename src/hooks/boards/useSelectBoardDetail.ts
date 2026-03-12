@@ -8,7 +8,6 @@ export default function useSelectBoardDetail(
     const options = {
         apiFn: getBoardDetail,
         req : boardGuid,
-        cacheKey: `boards-detail-${boardGuid}`
     }
     const {res} = useSelect<BoardDetail, string>(options);
 

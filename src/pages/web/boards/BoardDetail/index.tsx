@@ -8,6 +8,7 @@ import useSelectBoardDetail from '@/hooks/boards/useSelectBoardDetail';
 import useCreateComment from '@/hooks/boards/useCreateComment';
 import { BoardCategoryChip } from '@/components/boards/BoardChips';
 import CommentCard from '@/components/boards/boardDetail/CommentCard';
+import useMutationBoards from '@/hooks/boards/useMutationBoards';
 
 export default function BoardDetail(){
 
@@ -21,6 +22,7 @@ export default function BoardDetail(){
     onSubmit
   } = useCreateComment(state?.boardGuid)
 
+  const { handleLike } = useMutationBoards();
 
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
@@ -35,7 +37,7 @@ export default function BoardDetail(){
               </strong>
             </div>
             <div className="right-area flex-col">
-              <HeartButton likeCount={res?.data?.boardSummaryResponseDto.likeCount} /> 
+              <HeartButton onClick={(e) => handleLike(res?.data?.boardSummaryResponseDto.boardBasicResponseDto.boardGuid)} likeCount={res?.data?.boardSummaryResponseDto.likeCount} /> 
             </div>
           </div>
           <div className="bottom w-100 align-end justify-between">

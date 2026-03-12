@@ -21,7 +21,6 @@ export default function useSelectBoards(
     const options = {
         apiFn: getBoards,
         req : request,
-        cacheKey: `boards-${JSON.stringify(request)}`
     }
     const {res} = useSelect(options);
 

@@ -4,19 +4,17 @@ import { likeBoard } from "@/api/boards/boards.api";
 
 export default function useMutationBoards(
 ) {
-    const handleSuccess= (res) => ("회원가입 성공");
-    const handleFail = (res) => {
-        //리다이렉트 코드
-    }
+    // const handleSuccess= (res) => ("회원가입 성공");
+    // const handleFail = (res) => {
+    //     //리다이렉트 코드
+    // }
     
     const {mutate : likeBoardMu} = useMutation(
-        likeBoard,
-	    handleSuccess,
-		handleFail,
+        likeBoard
     );
 
-    const handleLike = async (boardGuid:string) => {
-        console.log(boardGuid)
+    const handleLike = async (boardGuid:string|undefined) => {
+        if(!boardGuid) return;
         await likeBoardMu(boardGuid);
     }
 
