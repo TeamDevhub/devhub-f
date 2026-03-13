@@ -7,7 +7,7 @@ export interface HeartButtonProps {
   className?: string;
   noCount?: boolean;
   defaultLiked?: boolean;
-  onClick?: (liked:boolean)=>void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>, liked:boolean)=>void;
 }
 export default function HeartButton({
   likeCount,
@@ -18,9 +18,11 @@ export default function HeartButton({
 }: HeartButtonProps){
   const [liked, setLiked] = useState(defaultLiked);
 
-  const handleClick = () => {
-    setLiked(prev => !prev);
-    onClick?.(!liked);
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation(); 
+    const nextLiked = !liked;
+    setLiked(nextLiked);
+    onClick?.(e, nextLiked);
   };
 
   return (
