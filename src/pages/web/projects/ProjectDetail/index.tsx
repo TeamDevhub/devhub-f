@@ -157,7 +157,9 @@ export default function ProjectDetail() {
           <strong className='detail-title'>프로젝트 상세</strong>
           <div className="detail-content">
             {res?.data?.content}
-            {res?.data?.imageFileGuid && <img src={`${import.meta.env.VITE_API_URL}/${res.data.imageFileUrl}`}/>}
+            <div>
+            {res?.data?.imageFileGuid && <img src={`${import.meta.env.VITE_API_URL}/files/${res.data.imageFileGuid}`}/>}
+            </div>
           </div>
         </div>
       </Paper>

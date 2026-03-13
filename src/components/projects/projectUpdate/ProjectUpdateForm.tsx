@@ -181,7 +181,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropForm name={"attachment"} ref={attachmentRef} />
+                <DragAndDropForm name={"attachment"} initialFileName={values.attachmentFileName} ref={attachmentRef} />
               </div>
             </div>
           </div>
@@ -192,7 +192,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropForm name={"image"} ref={imageRef} />
+                <DragAndDropForm name={"image"} initialFileName={values.imageFileName} ref={imageRef} />
               </div>
             </div>
           </div>
