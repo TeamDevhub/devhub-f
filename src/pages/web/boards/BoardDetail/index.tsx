@@ -5,7 +5,7 @@ import { Create, Person, Visibility } from '@mui/icons-material'
 import { Button, Divider, Paper } from '@mui/material'
 import { useLocation } from 'react-router-dom'
 import useSelectBoardDetail from '@/hooks/boards/useSelectBoardDetail';
-import useCreateComment from '@/hooks/boards/useCreateComment';
+import useCreateComment from '@/hooks/comments/useCreateComment';
 import { BoardCategoryChip } from '@/components/boards/BoardChips';
 import CommentCard from '@/components/boards/boardDetail/CommentCard';
 import useMutationBoards from '@/hooks/boards/useMutationBoards';
