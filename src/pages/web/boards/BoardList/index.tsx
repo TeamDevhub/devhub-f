@@ -5,6 +5,7 @@ import useSelecttBoards from '@/hooks/boards/useSelectBoards';
 import {Button, Pagination, Paper, Tab, Tabs} from '@mui/material';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 import {COMMON_CODE} from "@/types/const.ts";
+import { Link } from 'react-router-dom';
 
 export default function BoardList(){
     const {
@@ -13,6 +14,7 @@ export default function BoardList(){
         setTab, 
         title, setTitle,
         handleSearchClick,
+        handleDetail
     } = useSelecttBoards();
 
     const { handleLike } = useMutationBoards();
@@ -48,11 +50,13 @@ export default function BoardList(){
         {/* 4. board list */}
         <div className="board-list flex-col" style={{ gap: '0.8rem' }}>
             {res?.dataList?.map((item, index) => {
-                return <BoardCard key={index} boardData={item} handleLike={handleLike}></BoardCard>
+                return <BoardCard key={index} boardData={item} handleLike={handleLike} handleDetail={()=>handleDetail(item.boardBasicResponseDto.boardGuid)}></BoardCard>
             })}
             <div className='list-bottom-box w-100 align-center mt-14'>
                 <Pagination count={res?.pagination?.totalPages} page={request.page} onChange={(_, page) => {setPage(page);}} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
-                <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }}>글쓰기</Button>
+                <Link to={'/boards/create'} className="flex-1 flex-center">
+                    <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }}>글쓰기</Button>
+                </Link>
             </div>
         </div>
         </div>
