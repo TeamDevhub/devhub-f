@@ -31,6 +31,8 @@ export default function FormManagementPage(){
     return { classify, fieldName, type, usedYn, defaultFieldYn };
   }
 
+  const [selectedRow, setSelectedRow] = useState<number | null>(null);
+
   const rows = [
     createData(1, '이름', 'Textfield', '사용', '미해당' ),
     createData(2, '이메일', 'Textfield', '사용', '해당' ),
@@ -87,7 +89,7 @@ export default function FormManagementPage(){
             </div>
             <div className="grid-area flex-col flex-grow gap-8">
               <Paper sx={{ width: '100%', overflow: 'hidden', border: '1px solid rgba(0, 0, 0, 0.2)' }} elevation={0}>
-                <TableContainer sx={{ maxHeight: '65vh' }}>
+                <TableContainer sx={{ maxHeight: '65vh', minHeight: '65vh' }}>
                   <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                       <TableRow>
@@ -99,8 +101,13 @@ export default function FormManagementPage(){
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows.map((row) => (
-                        <TableRow>
+                      {rows.map((row, index) => (
+                        <TableRow
+                          key={index}
+                          selected={selectedRow === index}
+                          onClick={() => setSelectedRow(index)}
+                          sx={{ cursor: 'pointer' }} 
+                        >
                           <TableCell align="center">{row.classify}</TableCell>
                           <TableCell align="center">{row.fieldName}</TableCell>
                           <TableCell align="center">{row.type}</TableCell>

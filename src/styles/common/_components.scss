@@ -131,8 +131,16 @@
   }
   .MuiTableBody-root {
     .MuiTableCell-root { padding: 1.6rem; font-size: 1.4rem; letter-spacing: 0.17px; color: var(--text-primary); 
-      &:has(.MuiButton-root, .MuiChip-root) { padding: 0; }
+      &:has(.MuiButtonBase-root, .MuiChip-root ) { padding: 0; }
       .MuiTypography-root { font-size: 1.4rem; letter-spacing: 0.17px; color: var(--text-primary); }
+    }
+  }
+  .MuiTableRow-root {
+    &:hover {
+      .MuiTableCell-root { background-color: rgba(25, 118, 210, 0.06); }
+    }
+    &.Mui-selected {
+      .MuiTableCell-root { background-color: rgba(25, 118, 210, 0.06); }
     }
   }
   .MuiTableCell-root { border-bottom: 1px solid #E5E7EB !important; 
