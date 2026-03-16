@@ -124,15 +124,23 @@
 
 /* 12. table */
 .MuiTableContainer-root { border-radius: 0 !important; box-shadow: none !important;
-  .MuiTableHead-root {
-    .MuiTableCell-root { font-size: 1.4rem; font-weight: 500; line-height: 2.4rem; letter-spacing: 0.17px; color: var(--text-primary); }
+  .MuiTableHead-root, .MuiTable-stickyHeader {
+    .MuiTableCell-root { font-size: 1.4rem; font-weight: 500; line-height: 2.4rem; letter-spacing: 0.17px; background-color: #fff; color: var(--text-primary); }
     .MuiTableCell-head:has(.MuiCheckbox-root) { padding: 0 !important; }
     .MuiCheckbox-root { padding: 1.6rem !important; }
   }
   .MuiTableBody-root {
     .MuiTableCell-root { padding: 1.6rem; font-size: 1.4rem; letter-spacing: 0.17px; color: var(--text-primary); 
-      &:has(.MuiButton-root, .MuiChip-root) { padding: 0; }
+      &:has(.MuiButtonBase-root, .MuiChip-root ) { padding: 0; }
       .MuiTypography-root { font-size: 1.4rem; letter-spacing: 0.17px; color: var(--text-primary); }
+    }
+  }
+  .MuiTableRow-root {
+    &:hover {
+      .MuiTableCell-root { background-color: rgba(25, 118, 210, 0.06); }
+    }
+    &.Mui-selected {
+      .MuiTableCell-root { background-color: rgba(25, 118, 210, 0.06); }
     }
   }
   .MuiTableCell-root { border-bottom: 1px solid #E5E7EB !important; 

@@ -309,6 +309,20 @@
           .total-count { font-size: 1.2rem; font-weight: 500; line-height: 2.6rem; letter-spacing: 0.17px; color: #2768FF; white-space: nowrap; }
         }
       }
+      .left-section { gap: 1rem; padding: 1rem; }
+      .right-section { gap: 1rem;
+        .title-area { gap: 1rem; 
+          strong { font-size: 2rem; font-weight: 560; line-height: 120%; letter-spacing: 0.15px; color: '#000'; }
+        }
+        .form-wrap { padding: 2.4rem 1.2rem;
+          .label-area { width: 25rem; gap: 4.8rem; 
+            &:not(:has(.required)) { padding-left: 0; }
+          }
+        }
+      }
+      .bottom-section {
+        .left-area { width: 58rem; max-width: 58rem; }
+      }
     }
   }
 }
@@ -401,7 +415,7 @@
   .description-list {
     dt { min-width: 15rem; padding: 1.3rem 1.6rem; font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: #000; background-color: #F3F3F3; }
     dd { padding: 1.3rem 0.8rem; font-size: 1.6rem; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-secondary); 
-      &:has(.MuiCheckbox-root, .MuiRadioGroup-root, .MuiPickersTextField-root, .MuiTextField-root, .MuiInputBase-inputMultiline) { padding: 0 0.8rem; }
+      &:has(.MuiCheckbox-root, .MuiSelect-root, .MuiRadioGroup-root, .MuiPickersTextField-root, .MuiTextField-root, .MuiInputBase-inputMultiline) { padding: 0 0.8rem; }
       &:has(.MuiInputBase-inputMultiline) { padding: 1.3rem 0.8rem; }
     }
   }
