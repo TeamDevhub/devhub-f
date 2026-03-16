@@ -6,6 +6,7 @@ export interface WebPopupProps{
   title:string;
   onClose?:()=>void;
   onSubmit?:()=>void;
+  onDelete?:()=>void;
   children:React.ReactNode;
   isOpen?:boolean;
   submitText?:string;
@@ -16,6 +17,7 @@ export default function WebPopup({
   title,
   onClose,
   onSubmit,
+  onDelete,
   children,
   isOpen = false,
   submitText= '확인',
@@ -29,6 +31,11 @@ export default function WebPopup({
   const handleSubmit = () => {
     onSubmit?.();
     if(closeOnSubmit) onClose?.();
+  }
+
+  const handleDelete = () => {
+    onDelete?.();
+    onClose?.();
   }
 
   let _size : string;
@@ -52,6 +59,9 @@ export default function WebPopup({
           {children}
         </div>
         <div className='popup-button-box align-center'>
+          {onDelete &&
+            <Button className='w-100' variant='text' onClick={handleDelete}>삭제</Button>
+          }
           <Button className='w-100' variant='outlined' onClick={handleClose}>취소</Button>
           <Button className='w-100' variant='contained' onClick={handleSubmit}>{submitText}</Button>
         </div>

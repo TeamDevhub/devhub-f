@@ -1,32 +1,36 @@
 import { createProject } from "@/api/projects/projects.api"
+import { deleteFile } from "@/api/file/file.api"
 import useFormState from '@/hooks/_common/useFormState.ts';
 import type { ProjectCreate, Position } from "@/types/type.projects";
-import { useMutation } from "../_common/api.hook";
+import { useMutation } from "@/hooks/_common/api.hook";
+import { useModal } from "@/hooks/_common/useModal"
 import dayjs from "dayjs";
 import useFileUpload from "@/hooks/_common/useFileUpload.ts";
+import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
-import {ERROR_MESSAGES} from "@/types/const.errorMessages.ts";
+import { ERROR_MESSAGES } from "@/types/const.errorMessages.ts";
+import { useState } from "react";
 
 export default function useCreateProject() {
     const initData: ProjectCreate = {
-    category: '',
-    title: '',
-    content: '',
-    recruitmentTypeCd: '3001',
-    recruitmentStartDate: dayjs(),
-    recruitmentEndDate: dayjs(),
-    progressTypeCd: '3101',
-    progressRegionCd: '',
-    progressStartDate: dayjs(),
-    progressEndDate: dayjs(),
-    skillList: [],
-    positionList: [{
-        position: '',
-        level: '',
-        capacity: 0,
-    }],
-    applicationFormList: [],
-    additionalFormList: [],
+        category: '',
+        title: '',
+        content: '',
+        recruitmentTypeCd: '3001',
+        recruitmentStartDate: dayjs(),
+        recruitmentEndDate: dayjs(),
+        progressTypeCd: '3101',
+        progressRegionCd: '',
+        progressStartDate: dayjs(),
+        progressEndDate: dayjs(),
+        skillList: [],
+        positionList: [{
+            position: '',
+            level: '',
+            capacity: 0,
+        }],
+        applicationFormList: [],
+        additionalFormList: [],
     };
 
     const validations = {
@@ -41,35 +45,62 @@ export default function useCreateProject() {
         progressStartDate: [Validators.required()],
         progressEndDate: [Validators.required()],
         skillList: [Validators.minArrayLength(1)],
-        positionList: [(v:Position[]) => v.length >= 1 ? null : ERROR_MESSAGES.VALIDATE_MIN_ARRAY_LENGTH(1)]
+        positionList: [(v: Position[]) => v.length >= 1 ? null : ERROR_MESSAGES.VALIDATE_MIN_ARRAY_LENGTH(1)]
     }
 
     const IMAGE_NAME = 'image' as const;
     const ATTACHMENT_NAME = 'attachment' as const;
-    const { state, setState, handleChange, createToggle, errors: validateErrors } = useFormState(initData, {validations});
+    const navigate = useNavigate();
+    const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(initData, { validations, mode: 'manual' });
     const { fileStates, errors: fileErrors, upload, register } = useFileUpload();
-    const { mutate:projectMutate, loading, error } =   useMutation<ProjectCreate, void>(createProject,
-        ()=>{ //onSuccess
-            //페이지 이동처리
-        },
-        ()=>{ //onFail
-            //실패 처리 새로고침 등
-            //기존데이터 삭제 필요할 경우 아래
-            //혹은 업로드는 되어서 fileGUID가 있으면 업로드를 스킵한다거나 이런코드가 추가될 수 있겠네요.. 근데그러면 파일 변화를 감지해야합니다
-            //setState(initData)
-            //clearAll() //useFileUpload 제공
+    const { alert } = useModal();
+    const [fileGuids, setFileGuids] = useState<string[]>([]);
+    const { mutate: fileDeleteMutate } = useMutation<string, void>(deleteFile);
+    const handleSuccessCreateProject = () => {
+        alert('프로젝트가 생성되었습니다.');
+        navigate('/projects');
+    }
+    const handleFailCreateProject = async () => {
+        alert('프로젝트 생성에 실패했습니다.');
+        try {
+            await Promise.all(
+                fileGuids.map(fileGuid =>
+                    fileDeleteMutate(fileGuid)
+                )
+            )
+        } catch {
+            console.log("file delete error");
         }
-    );
+    }
+    const { mutate: projectMutate, loading, error } = useMutation<ProjectCreate, void>(createProject, handleSuccessCreateProject, handleFailCreateProject);
 
     const onSubmit = async () => {
-        const returnData = await upload();
+        let returnData;
+        if (fileStates && Object.keys(fileStates).length > 0) {
+            returnData = await upload();
+            if (!returnData.success) {
+                alert('파일 업로드에 실패했습니다.');
+                return;
+            }
+        }
+        const imageFileGuid = returnData?.data?.[IMAGE_NAME];
+        const attachmentFileGuid = returnData?.data?.[ATTACHMENT_NAME];
+        setFileGuids(
+            [imageFileGuid, attachmentFileGuid].filter(
+                (guid): guid is string => !!guid
+            )
+        );
 
-        if(!returnData.success) return; //실패처리 코드 필요
-        if(!returnData.data) return; //실패처리 코드 필요
+        checkError();
+        const error = Object.entries(validateErrors).find(([, value]) => !!value);
+        if (error) {
+            alert(`${error[0]}은/는 ${error[1]}`);
+            return;
+        }
 
-        const jsonData = {...state};
-        jsonData.imageFileGuid = returnData.data?.[IMAGE_NAME];
-        jsonData.attachmentFileGuid = returnData.data?.[ATTACHMENT_NAME];
+        const jsonData = { ...state };
+        jsonData.imageFileGuid = imageFileGuid;
+        jsonData.attachmentFileGuid = attachmentFileGuid;
         await projectMutate(jsonData);
     }
 
@@ -81,8 +112,8 @@ export default function useCreateProject() {
         loading,
         error,
         fileStates,
-        imageRef:register(IMAGE_NAME),
-        attachmentRef:register(ATTACHMENT_NAME),
+        imageRef: register(IMAGE_NAME),
+        attachmentRef: register(ATTACHMENT_NAME),
         validateErrors,
         fileErrors,
         createToggle,

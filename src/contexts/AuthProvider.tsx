@@ -1,23 +1,68 @@
-import {type ReactNode, useState} from "react";
-import { AuthContext } from "./AuthContext";
+import { useState, useEffect, useCallback } from 'react';
+import { AuthContext } from './AuthContext';
+import { getUserProfile } from '@/api/profile/profile.api';
 
-export const AuthProvider = ({ children } : { children: ReactNode }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('accessToken'));
+import type { UserBasicResponse } from '@/types/type.user';
 
-    const login = (token?: string) => {
-        if(!token) return;
-        sessionStorage.setItem('accessToken', token);
-        setIsLoggedIn(true);
-    };
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<UserBasicResponse | undefined>(undefined);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('accessToken'));
 
-    const logout = () => {
-        sessionStorage.removeItem('accessToken');
+  const refreshUser = useCallback(async () => {
+    try {
+      const res = await getUserProfile();
+      setUser(res.data?.user ?? undefined);
+    } catch {
+      setUser(undefined);
+      setIsLoggedIn(false);
+      sessionStorage.removeItem('accessToken');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) return;
+
+    const fetchUser = async () => {
+      try {
+        const res = await getUserProfile();
+        setUser(res.data?.user ?? undefined);
+      } catch {
+        setUser(undefined);
         setIsLoggedIn(false);
+        sessionStorage.removeItem('accessToken');
+      }
     };
 
-    return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+    fetchUser();
+  }, [isLoggedIn]);
+
+  const login = async (token?: string) => {
+    if (!token) return;
+
+    sessionStorage.setItem('accessToken', token);
+    setIsLoggedIn(true);
+
+    await refreshUser();
+  };
+
+  const logout = () => {
+    sessionStorage.removeItem('accessToken');
+    setUser(undefined);
+    setIsLoggedIn(false);
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        isLoggedIn,
+        user,
+        setUser,
+        login,
+        logout,
+        refreshUser,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };

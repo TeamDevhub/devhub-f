@@ -1,5 +1,6 @@
 import {type ReactNode, useMemo, useState} from "react";
-import {LoadingContext, spinnerOverlayStyle} from "@/contexts/LoadingContext.ts";
+import {LoadingContext} from "@/contexts/LoadingContext.ts";
+import Loading from "@/components/_common/layout/Loading.tsx";
 
 export const LoadingProvider = ({ children }: { children: ReactNode }) => {
     const [loadingCount, setLoadingCount] = useState(0);
@@ -15,9 +16,7 @@ export const LoadingProvider = ({ children }: { children: ReactNode }) => {
         <LoadingContext.Provider value={{ isLoading, ...loadingActions }}>
             {children}
             {isLoading && (
-                <div style={spinnerOverlayStyle}>
-                    <div className="spinner">로딩 중...</div>
-                </div>
+                <Loading/>
             )}
         </LoadingContext.Provider>
     );

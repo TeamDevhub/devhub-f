@@ -3,6 +3,7 @@ import {createBoard} from '@/api/boards/boards.api';
 import { useMutation } from '@/hooks/_common/api.hook';
 import { Validators } from '@/utils/util._common';
 import useFormState from "@/hooks/_common/useFormState.ts";
+import { useNavigate } from 'react-router-dom';
 
 const initData : BoardCreate = {
     title:'',
@@ -18,8 +19,10 @@ export default function useCreateBoard() {
         categoryCd : [Validators.required()],
     }
 
+    const navigate = useNavigate();
     const handleSuccessCreate = () => {
         alert('생성이 완료되었습니다.');
+        navigate(`/boards`);
     }
 
     const handleFailCreate = () => {

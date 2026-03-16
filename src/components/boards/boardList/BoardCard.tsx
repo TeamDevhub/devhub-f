@@ -8,10 +8,12 @@ import {convertString} from "@/utils/util.date.ts";
 interface BoardCardProps {
   boardData : BoardSummary;
   handleLike:(boardGuid:string) => void;
+  handleDetail:(boardGuid:string) => void;
 }
 export default function BoardCard({
   boardData, 
-  handleLike
+  handleLike,
+  handleDetail
 } : BoardCardProps){
 
   const {
@@ -21,7 +23,7 @@ export default function BoardCard({
   } = boardData;
   
   return(
-    <Paper className='board-box w-100 flex-col align-center' elevation={4}>
+    <Paper className='board-box w-100 flex-col align-center' elevation={4} onClick={()=>handleDetail(boardBasicResponseDto.boardGuid)}>
         <div className="top w-100 justify-between">
           <div className="left-area flex-col align-start flex-1">
             <BoardCategoryChip categoryCd={boardBasicResponseDto.categoryCd}></BoardCategoryChip>
