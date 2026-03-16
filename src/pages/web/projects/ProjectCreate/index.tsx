@@ -247,7 +247,7 @@ export default function ProjectCreate() {
         </div>
         {/* 3. action buttons */}
         <div className="action-button-box align-center justify-end">
-          <Button size='large' variant='outlined'>취소</Button>
+          <Button size='large' variant='outlined' onClick={()=>{history.back();}}>취소</Button>
           <Button size='large' variant='outlined'>양식 미리보기</Button>
           <Button size='large' variant='contained' onClick={onSubmit}>등록</Button>
         </div>
