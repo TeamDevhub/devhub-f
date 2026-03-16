@@ -11,6 +11,7 @@ import TopButton from "@/components/_common/button/TopButton.tsx";
 import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import HeartButton from "@/components/_common/button/HeartButton.tsx";
 import { useParams } from "react-router-dom";
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function ProjectDetail() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export default function ProjectDetail() {
   const { getCodeName } = useCodes();
   const { res } = useSelectProjectDetail(projectGuid);
   const { onDeleteProject } = useDeleteProject(projectGuid);
+  const authContext = useAuth();
 
   //[수정필요]
   const handleApplyClick = () => {
@@ -38,7 +40,12 @@ export default function ProjectDetail() {
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. project detail */}
-      <Paper className='project-box project-detail-box w-100 flex-col' elevation={4}>
+      <Paper className='project-box project-detail-box w-100 mt-10 flex-col' elevation={4}>
+        {authContext?.user?.userGuid === res.data.userGuid && 
+        <div className="action-button-box align-center justify-end">
+          <Button size='medium' variant='contained' onClick={()=>{navigate(`/projects/update/${res?.data?.projectGuid}`)}}>수정</Button>
+          <Button size='medium' variant='outlined' onClick={onDeleteProject}>삭제</Button>
+        </div>}
         <div className="project-header">
           <div className="top flex-col">
             <div className='chip-box align-center'>
@@ -192,8 +199,6 @@ export default function ProjectDetail() {
         </Tooltip>
         <TopButton />
       </div>
-      <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }} onClick={()=>{navigate(`/projects/update/${res?.data?.projectGuid}`)}}>수정</Button>
-      <Button size='medium' variant='outlined' sx={{ height: '3.6rem !important' }} onClick={onDeleteProject}>삭제</Button>
     </div>
   )
 }
