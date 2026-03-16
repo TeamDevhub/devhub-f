@@ -17,12 +17,12 @@ export default function useCreateProject() {
         title: '',
         content: '',
         recruitmentTypeCd: '3001',
-        recruitmentStartDate: dayjs(),
-        recruitmentEndDate: dayjs(),
+        recruitmentStartDate: null,
+        recruitmentEndDate: null,
         progressTypeCd: '3101',
         progressRegionCd: '',
-        progressStartDate: dayjs(),
-        progressEndDate: dayjs(),
+        progressStartDate: null,
+        progressEndDate: null,
         skillList: [],
         positionList: [{
             position: '',
@@ -33,6 +33,16 @@ export default function useCreateProject() {
         additionalFormList: [],
     };
 
+    const positionValidator = (v: Position[]) => {
+        if (v.length == 0) {
+            return ERROR_MESSAGES.VALIDATE_MIN_ARRAY_LENGTH(1);
+        }
+        const filterdPosition = v.filter(position => position.position == '' || position.level == '' || position.capacity == 0);
+        if (filterdPosition.length > 0) {
+            return '모집인원을 선택해주세요.';
+        }
+        return null;
+    }
     const validations = {
         title: [Validators.required()],
         category: [Validators.required()],
@@ -40,12 +50,12 @@ export default function useCreateProject() {
         recruitmentTypeCd: [Validators.required()],
         recruitmentStartDate: [Validators.required()],
         recruitmentEndDate: [Validators.required()],
+        positionList: [positionValidator],
         progressTypeCd: [Validators.required()],
         progressRegionCd: [Validators.required()],
         progressStartDate: [Validators.required()],
         progressEndDate: [Validators.required()],
         skillList: [Validators.minArrayLength(1)],
-        positionList: [(v: Position[]) => v.length >= 1 ? null : ERROR_MESSAGES.VALIDATE_MIN_ARRAY_LENGTH(1)]
     }
 
     const IMAGE_NAME = 'image' as const;
@@ -92,6 +102,7 @@ export default function useCreateProject() {
         );
 
         checkError();
+        console.log(Object.entries(validateErrors));
         const error = Object.entries(validateErrors).find(([, value]) => !!value);
         if (error) {
             alert(`${error[0]}은/는 ${error[1]}`);

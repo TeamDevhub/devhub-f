@@ -73,6 +73,7 @@ export default function ProjectCreate() {
                 <div className='align-center'>
                   <DatePicker
                     onChange={(value: DateType) => onHandleEvent("recruitmentStartDate", value)}
+                    maxDate={values.recruitmentEndDate ?? undefined}
                     slotProps={{
                       textField: {
                         size: 'medium',
@@ -86,6 +87,7 @@ export default function ProjectCreate() {
                   ~
                   <DatePicker
                     onChange={(value: DateType) => onHandleEvent("recruitmentEndDate", value)}
+                    minDate={values.recruitmentStartDate ?? undefined}
                     slotProps={{
                       textField: {
                         size: 'medium'
@@ -145,6 +147,7 @@ export default function ProjectCreate() {
                 <div className='align-center'>
                   <DatePicker
                     onChange={(value: DateType) => onHandleEvent("progressStartDate", value)}
+                    maxDate={values.progressEndDate ?? undefined}
                     slotProps={{
                       textField: {
                         size: 'medium',
@@ -158,6 +161,7 @@ export default function ProjectCreate() {
                   ~
                   <DatePicker
                     onChange={(value: DateType) => onHandleEvent("progressEndDate", value)}
+                    minDate={values.progressStartDate ?? undefined}
                     slotProps={{
                       textField: {
                         size: 'medium'
@@ -247,7 +251,7 @@ export default function ProjectCreate() {
         </div>
         {/* 3. action buttons */}
         <div className="action-button-box align-center justify-end">
-          <Button size='large' variant='outlined' onClick={()=>{history.back();}}>취소</Button>
+          <Button size='large' variant='outlined' onClick={() => { history.back(); }}>취소</Button>
           <Button size='large' variant='outlined'>양식 미리보기</Button>
           <Button size='large' variant='contained' onClick={onSubmit}>등록</Button>
         </div>
