@@ -8,7 +8,6 @@ export default function useSelectProjectDetail(
   const options = {
     apiFn: getProjectDetail,
     req: projectId!,
-    cacheKey: projectId ? `project-detail-${projectId}` : undefined,
     enabled: !!projectId,
   }
 
