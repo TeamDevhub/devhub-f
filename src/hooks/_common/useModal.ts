@@ -23,5 +23,5 @@ export const useModal = () => {
         });
     }, [openModal]);
 
-    return { alert, confirm };
+    return { alert, confirm, closeModal};
 };

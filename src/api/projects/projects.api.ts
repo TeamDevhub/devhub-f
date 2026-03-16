@@ -1,9 +1,9 @@
-import type { ApplicationFormBasic, ApplicationFormRequest, ProjectCreate, ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, ProjectUpdate, ProjectFormDetailResponse } from "@/types/type.projects";
+import type { ApplicationFormBasic, ApplicationFormRequest, ProjectCreate, ProjectDetailResponse, ProjectExtra, ProjectSearchRequest, ProjectUpdate, ProjectFormDetailResponse } from "@/types/type.projects";
 import fetcher from "@/utils/util.api";
 
 export const getProjects = (req: ProjectSearchRequest) =>
-  fetcher<ProjectListResponse, ProjectSearchRequest>(
-    "/projects/list",
+  fetcher<ProjectExtra, ProjectSearchRequest>(
+    "/projects",
     req,
     { method: "get" }
   );
@@ -54,5 +54,12 @@ export const getApplicationForms = (req: ApplicationFormRequest) =>
     '/applicationForms',
     req,
     { method: "get" }
+  );
+
+export const deleteProject = (projectId: string) =>
+  fetcher<void, string>(
+    `/projects/${projectId}`,
+    undefined,
+    { method: "delete" }
   );
 

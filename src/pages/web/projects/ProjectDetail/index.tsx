@@ -1,6 +1,7 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
 import { DDayChip, PositionChips, ProgressRegionChip, RecruitmentChip, RecruitStatusChip, SkillChips } from '@/components/projects/ProjectChips';
 import useSelectProjectDetail from '@/hooks/projects/useSelectProjectDetail';
+import useDeleteProject from '@/hooks/projects/useDeleteProject'
 import { COMMON_CODE } from '@/types/const';
 import { AccessTime, ContentPaste, LocationOn, OpenInNew, People, Person, Settings, Visibility } from '@mui/icons-material';
 import { Divider, Paper, Tooltip, Button } from '@mui/material';
@@ -13,10 +14,15 @@ import { useParams } from "react-router-dom";
 
 export default function ProjectDetail() {
   const navigate = useNavigate();
-  const { projectGuid } = useParams();
+  const { projectGuid } = useParams<{ projectGuid: string }>();
+
+  if (!projectGuid) {
+    navigate('/projects');
+  }
 
   const { getCodeName } = useCodes();
   const { res } = useSelectProjectDetail(projectGuid);
+  const { onDeleteProject } = useDeleteProject(projectGuid);
 
   //[수정필요]
   const handleApplyClick = () => {
@@ -171,7 +177,7 @@ export default function ProjectDetail() {
             elevation={5}
             sx={{ cursor: 'pointer' }}
           >
-            <HeartButton />
+            <HeartButton likeCount={res?.data?.likeCount}/>
           </Paper>
         </Tooltip>
         <Tooltip arrow placement='right' title='지원하기'>
@@ -187,6 +193,7 @@ export default function ProjectDetail() {
         <TopButton />
       </div>
       <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }} onClick={()=>{navigate(`/projects/update/${res?.data?.projectGuid}`)}}>수정</Button>
+      <Button size='medium' variant='outlined' sx={{ height: '3.6rem !important' }} onClick={onDeleteProject}>삭제</Button>
     </div>
   )
 }

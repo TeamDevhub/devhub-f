@@ -10,7 +10,7 @@ import useCreateProject from '@/hooks/projects/useCreateProject.ts'
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import { COMMON_CODE } from '@/types/const';
 import { type DateType } from '@/types/type.api';
-import type { ApplicationsFormCreate, Position } from '@/types/type.projects';
+import type { Position, ApplicationFormCreate } from '@/types/type.projects';
 import { AddCircle, Remove, Search } from '@mui/icons-material';
 import { Button, Divider, FormControl, FormLabel, IconButton, Paper } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -255,7 +255,7 @@ export default function ProjectCreate() {
 
       <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={values.skillList ? values.skillList : []} setValues={(values: string[]) => onHandleEvent("skillList", values)} />
       <RegionPopup isOpen={regionPopup.isOpen} onClose={regionPopup.close} values={values.progressRegionCd ? [values.progressRegionCd] : ['']} setValues={(values: string[]) => onHandleEvent("progressRegionCd", values.toString())} />
-      <AdditionalFormPopup isOpen={additionalPopup.isOpen} onClose={additionalPopup.close} onSubmit={(newForm: ApplicationsFormCreate) => onHandleEvent("additionalFormList", values.additionalFormList.concat(newForm))} />
+      <AdditionalFormPopup isOpen={additionalPopup.isOpen} onClose={additionalPopup.close} onSubmit={(newForm: ApplicationFormCreate) => onHandleEvent("additionalFormList", values.additionalFormList.concat(newForm))} />
 
     </div>
   )
