@@ -6,59 +6,36 @@ import FieldGroup from '@/components/design/FieldGroup';
 import FormField from '@/components/design/FormField';
 import { useParams, useNavigate } from 'react-router-dom';
 import useCreateProjectApplication from '@/hooks/projects/useCreateProjectApplication';
-
-// TODO: PROJECT_APPLICATION_FORM, APPLICATION_FORM 테이블의 실제 guid 값으로 교체 필요
-const FORM_FIELDS = [
-  { key: 'name',       label: '이름',          projectApplicationFormGuid: 'FORM_GUID_NAME',       applicationFormGuid: 'APP_FORM_GUID_NAME',       type: 'text'     },
-  { key: 'age',        label: '나이',          projectApplicationFormGuid: 'FORM_GUID_AGE',        applicationFormGuid: 'APP_FORM_GUID_AGE',        type: 'text'     },
-  { key: 'motivation', label: '지원동기',      projectApplicationFormGuid: 'FORM_GUID_MOTIVATION', applicationFormGuid: 'APP_FORM_GUID_MOTIVATION', type: 'textarea' },
-  { key: 'career',     label: '경력',          projectApplicationFormGuid: 'FORM_GUID_CAREER',     applicationFormGuid: 'APP_FORM_GUID_CAREER',     type: 'textarea' },
-  { key: 'attachment', label: '첨부파일',      projectApplicationFormGuid: 'FORM_GUID_ATTACHMENT', applicationFormGuid: 'APP_FORM_GUID_ATTACHMENT', type: 'textarea' },
-  { key: 'days',       label: '참여가능 요일', projectApplicationFormGuid: 'FORM_GUID_DAYS',       applicationFormGuid: 'APP_FORM_GUID_DAYS',       type: 'checkbox' },
-] as const;
-
-const DAY_OPTIONS = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
-
-// TODO: PROJECT_REQUIREMENT 테이블의 실제 guid + 포지션/레벨 코드 데이터로 교체 필요
-const POSITION_OPTIONS = [
-  { requirementGuid: 'requirement-guid-001', positionLabel: '기획자',        levelLabel: '하급' },
-  { requirementGuid: 'requirement-guid-002', positionLabel: '디자이너',      levelLabel: '하급' },
-  { requirementGuid: 'requirement-guid-003', positionLabel: '퍼블리셔',      levelLabel: '하급' },
-  { requirementGuid: 'requirement-guid-004', positionLabel: '프론트엔드개발자', levelLabel: '하급' },
-  { requirementGuid: 'requirement-guid-005', positionLabel: '백엔드개발자',  levelLabel: '하급' },
-];
+import { useCodes } from '@/contexts/CommonCodeContext';
+import { COMMON_CODE } from '@/types/const';
+import { APPLICATION_FORM_TYPE } from '@/types/const.projectCreate';
 
 export default function ProjectApply() {
   const { projectGuid } = useParams<{ projectGuid: string }>();
   const navigate = useNavigate();
+  const { getCodeName } = useCodes();
 
-  const { values, onHandleEvent, createToggle, onSubmit, loading } = useCreateProjectApplication(
-    () => {
-      alert('지원이 완료되었습니다.');
-      navigate(-1);
-    },
-    () => {
-      alert('지원에 실패했습니다. 다시 시도해주세요.');
-    }
-  );
-
-  const handleSubmit = async () => {
-    if (!projectGuid) return;
-    if (!values.requirementGuid) {
-      alert('지원 포지션을 선택해주세요.');
-      return;
-    }
-
-    const answers = FORM_FIELDS.map(field => ({
-      projectApplicationFormGuid: field.projectApplicationFormGuid,
-      applicationFormGuid: field.applicationFormGuid,
-      content: field.key === 'days'
-        ? values.days.join(', ')
-        : (values[field.key as keyof typeof values] as string) ?? '',
-    }));
-
-    await onSubmit(projectGuid, answers);
-  };
+  const {
+    projectTitle,
+    registrantUsername,
+    registrantEmail,
+    registeredDate,
+    applicantUsername,
+    applicantEmail,
+    applicantMannerDegree,
+    applicantIntroduction,
+    applicantSkillList,
+    positions,
+    formFields,
+    requirementGuid,
+    setRequirementGuid,
+    textAnswers,
+    checkboxAnswers,
+    handleTextAnswer,
+    handleCheckboxToggle,
+    onSubmit,
+    loading,
+  } = useCreateProjectApplication(projectGuid ?? '1');
 
   return (
     <div className='main-page'>
@@ -95,7 +72,7 @@ export default function ProjectApply() {
                 }
               />
             </div>
-            <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집하는 글입니다 많은 참여 부탁드립니다</strong>
+            <strong className='main-text'>{projectTitle}</strong>
           </div>
           <div className="bottom align-end justify-between">
             <div className="user-info align-center">
@@ -106,8 +83,8 @@ export default function ProjectApply() {
                 />
               </div>
               <div className="right-area">
-                <p className='user-nickname'>닉네임</p>
-                <p className='user-email'>email@gmail.com</p>
+                <p className='user-nickname'>{registrantUsername}</p>
+                <p className='user-email'>{registrantEmail}</p>
               </div>
             </div>
             <div className="project-info align-center">
@@ -115,7 +92,7 @@ export default function ProjectApply() {
                 <Visibility sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.3)' }} />
                 <p>100+</p>
               </div>
-              <p className="post-date">2025.03.01</p>
+              <p className="post-date">{registeredDate}</p>
             </div>
           </div>
         </div>
@@ -135,14 +112,14 @@ export default function ProjectApply() {
                     avatarIcon={<Person sx={{ fontSize: 24 }} />}
                   />
                   <div className="flex-col">
-                    <p className='user-nickname'>지원자</p>
-                    <p className='user-email'>email@gmail.com</p>
+                    <p className='user-nickname'>{applicantUsername}</p>
+                    <p className='user-email'>{applicantEmail}</p>
                   </div>
                 </div>
                 <div className="bottom manner-box flex-col">
                   <div className="manner-text justify-between">
                     <p className='text'>매너온도</p>
-                    <p className='manner-temperature'>36.5°C</p>
+                    <p className='manner-temperature'>{applicantMannerDegree}°C</p>
                   </div>
                   <div className="manner-figure">
                     <span className='current-figure h-100'></span>
@@ -154,17 +131,15 @@ export default function ProjectApply() {
                 <div className="skill-box align-start">
                   <p className="title">보유 스킬</p>
                   <div className="content align-center">
-                    <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-                    <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-                    <Chip size='small' variant='outlined' color='secondary' label='Docker' />
-                    <Chip size='small' variant='outlined' color='secondary' label='GO' />
+                    {applicantSkillList.map(skillCd => (
+                      <Chip key={skillCd} size='small' variant='outlined' color='secondary' label={getCodeName(COMMON_CODE.SKILL_CODE, skillCd)} />
+                    ))}
                   </div>
                 </div>
                 <div className="introduce-box align-start">
                   <p className="title">자기 소개</p>
                   <div className="content">
-                    안녕하세요 저는 광명에 거주하고 있는 김수빈이라고 합니다.<br />
-                    저는 멋쟁이 토마토입니다. 나는야 주스 될거야 나는야 케찹 될거야 나는야 춤을 출거야
+                    {applicantIntroduction}
                   </div>
                 </div>
               </div>
@@ -181,18 +156,18 @@ export default function ProjectApply() {
                 <FormControl>
                   <RadioGroup
                     aria-labelledby='position-radio-group-label'
-                    value={values.requirementGuid}
-                    onChange={(_, value) => onHandleEvent('requirementGuid', value)}
+                    value={requirementGuid}
+                    onChange={(_, value) => setRequirementGuid(value)}
                   >
-                    {POSITION_OPTIONS.map(({ requirementGuid, positionLabel, levelLabel }) => (
+                    {positions.map(pos => (
                       <FormControlLabel
-                        key={requirementGuid}
-                        value={requirementGuid}
+                        key={pos.requirementGuid}
+                        value={pos.requirementGuid}
                         control={<Radio />}
                         label={
                           <Stack direction="row" spacing={0.5} alignItems="center">
-                            <Chip size='medium' variant='outlined' color='primary' label={positionLabel} />
-                            <Chip size='medium' variant='filled' color='default' label={levelLabel} />
+                            <Chip size='medium' variant='outlined' color='primary' label={getCodeName(COMMON_CODE.POSITION_CODE, pos.positionCd)} />
+                            <Chip size='medium' variant='filled' color='default' label={getCodeName(COMMON_CODE.POSITION_LEVEL_CODE, pos.level)} />
                           </Stack>
                         }
                       />
@@ -203,85 +178,39 @@ export default function ProjectApply() {
             </div>
           </div>
           {/* 3-3. 입력 정보 */}
-          <div className="form-box w-100 align-start">
-            <div className="label-area flex">
-              <span className='required'>*</span>
-              <p className='label-text'>입력 정보</p>
-            </div>
-            <div className="field-area inform-field-box flex-col flex-1" style={{ gap: '1.2rem' }}>
-              <FormField label='이름'>
-                <FieldGroup>
-                  <CustomTextfield
-                    placeholder='이름을 입력해 주세요.'
-                    value={values.name}
-                    onChange={(e) => onHandleEvent('name', e.target.value)}
-                  />
-                </FieldGroup>
-              </FormField>
-              <FormField label='나이'>
-                <FieldGroup>
-                  <CustomTextfield
-                    placeholder='나이를 입력해 주세요.'
-                    value={values.age}
-                    onChange={(e) => onHandleEvent('age', e.target.value)}
-                  />
-                </FieldGroup>
-              </FormField>
-              <FormField label='지원동기'>
-                <FieldGroup>
-                  <CustomTextfield
-                    type='textarea'
-                    placeholder='지원동기를 입력해 주세요.'
-                    value={values.motivation}
-                    onChange={(e) => onHandleEvent('motivation', e.target.value)}
-                  />
-                </FieldGroup>
-              </FormField>
-              <FormField label='경력'>
-                <FieldGroup>
-                  <CustomTextfield
-                    type='textarea'
-                    placeholder='경력을 입력해 주세요.'
-                    value={values.career}
-                    onChange={(e) => onHandleEvent('career', e.target.value)}
-                  />
-                </FieldGroup>
-              </FormField>
-              <FormField label='첨부파일'>
-                <FieldGroup>
-                  <CustomTextfield
-                    type='textarea'
-                    noCountStr
-                    placeholder='Link or Drag and Drop'
-                    value={values.attachment}
-                    onChange={(e) => onHandleEvent('attachment', e.target.value)}
-                  />
-                </FieldGroup>
-              </FormField>
-              <FormField label='참여가능 요일'>
+          {formFields.map(field => (
+            <FormField key={field.applicationFormGuid} label={field.title} required>
+              {field.typeCd === APPLICATION_FORM_TYPE.CHECKBOX ? (
                 <FormGroup row>
-                  {DAY_OPTIONS.map(day => (
+                  {(field.itemList ?? []).map(item => (
                     <FormControlLabel
-                      key={day}
+                      key={item}
                       control={
                         <Checkbox
-                          checked={values.days.includes(day)}
-                          onChange={() => createToggle('days')(day)}
+                          checked={(checkboxAnswers[field.applicationFormGuid] ?? []).includes(item)}
+                          onChange={() => handleCheckboxToggle(field.applicationFormGuid)(item)}
                         />
                       }
-                      label={day}
+                      label={item}
                     />
                   ))}
                 </FormGroup>
-              </FormField>
-            </div>
-          </div>
+              ) : (
+                <CustomTextfield
+                  type={field.typeCd === APPLICATION_FORM_TYPE.TEXTAREA ? 'textarea' : undefined}
+                  placeholder={field.helpText ?? `${field.title}을/를 입력해 주세요.`}
+                  value={textAnswers[field.applicationFormGuid] ?? ''}
+                  onChange={(e) => handleTextAnswer(field.applicationFormGuid, e.target.value)}
+                />
+              )}
+            </FormField>
+          ))}
         </div>
         <Divider />
         {/* 4. action buttons */}
         <div className="action-button-box align-center justify-end">
           <Button size='large' variant='outlined' onClick={() => navigate(-1)}>취소</Button>
-          <Button size='large' variant='contained' onClick={handleSubmit} disabled={loading}>
+          <Button size='large' variant='contained' onClick={onSubmit} disabled={loading}>
             {loading ? '등록 중...' : '등록'}
           </Button>
         </div>

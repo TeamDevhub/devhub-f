@@ -43,7 +43,6 @@ import FormManagementPage from '@/pages/design/admin/forms/FormManagementPage';
 import BoardManagementPage from '@/pages/design/admin/boards/BoardManagementPage';
 import BannerManagementPage from '@/pages/design/admin/banner/BannerManagementPage';
 import TermsManagementPage from '@/pages/design/admin/terms/TermsManagementPage';
-
 import ProjectApplyList from '@/pages/web/projects/ProjectApplyList';
 import ProjectApply from '@/pages/web/projects/ProjectApply';
 
@@ -97,6 +96,14 @@ const router = createBrowserRouter([
           {
             path: 'update/:projectGuid',
             element: <ProjectUpdate />,
+          },
+          {
+            path: 'applyList/:projectGuid',
+            element: <ProjectApplyList />,
+          },
+          {
+            path: 'apply',
+            element: <ProjectApply />,
           },
         ]
       },

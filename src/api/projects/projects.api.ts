@@ -1,10 +1,17 @@
-import type { ApplicationFormBasic, ApplicationFormRequest, ProjectCreate, ProjectDetailResponse, ProjectListResponse, ProjectSearchRequest, ProjectUpdate, ProjectFormDetailResponse } from "@/types/type.projects";
+import type { ApplicationFormBasic, ApplicationFormRequest, ProjectApplicationListRequest, ProjectApplicationListResponseData, ProjectApplicationResponse, ProjectCreate, ProjectDetailResponse, ProjectExtra, ProjectSearchRequest, ProjectUpdate, ProjectFormDetailResponse, CreateApplicationRequest } from "@/types/type.projects";
 import fetcher from "@/utils/util.api";
 
 export const getProjects = (req: ProjectSearchRequest) =>
-  fetcher<ProjectListResponse, ProjectSearchRequest>(
+  fetcher<ProjectExtra, ProjectSearchRequest>(
     "/projects/list",
     req,
+    { method: "get" }
+  );
+
+export const getProjectApplicationList = (req: { projectGuid: string } & ProjectApplicationListRequest) =>
+  fetcher<ProjectApplicationListResponseData, ProjectApplicationListRequest>(
+    `/projects/${req.projectGuid}/applications`,
+    { page: req.page, size: req.size },
     { method: "get" }
   );
 
@@ -56,9 +63,9 @@ export const getApplicationForms = (req: ApplicationFormRequest) =>
     { method: "get" }
   );
 
-export const getProjectApplication = (req: ProjectApplicationRequest) =>
+export const getProjectApplication = (applicationGuid: string) =>
   fetcher<ProjectApplicationResponse>(
-    `/projects/${req.projectGuid}/applications/${req.applicationGuid}`,
+    `/projects/applications/${applicationGuid}`,
     undefined,
     { method: "get" }
   );

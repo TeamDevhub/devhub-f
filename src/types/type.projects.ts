@@ -33,6 +33,25 @@ export interface Position {
   isFull?: boolean;
 }
 
+export interface PositionDetail {
+  requirementGuid: string;
+  positionCd: string;
+  level: string;
+  capacity: number;
+  full: boolean;
+}
+
+export interface ApplicationFormResponse {
+  projectApplicationFormGuid: string;
+  applicationFormGuid: string;
+  typeCd: string;
+  title: string;
+  helpText?: string;
+  isCustomized?: boolean;
+  isUsed?: boolean;
+  itemList?: string[];
+}
+
 export interface ProjectDetail extends ProjectBasic {
   skillList: string[];
   positionList: Position[];
@@ -108,35 +127,58 @@ export interface ProjectDetailResponse extends ProjectExtra {
   email: string;
 }
 
-export interface ProjectFormDetailResponse extends ProjectExtra {
-  applicationFormList: string[];
-  additionalFormList: ApplicationFormCreate[];
+export interface ProjectFormDetailResponse extends Omit<ProjectExtra, 'positionList'> {
+  email: string;
+  positionList: PositionDetail[];
+  applicationFormList: ApplicationFormResponse[];
+  additionalFormList: ApplicationFormResponse[];
 }
 
 export type ProjectUpdate = ProjectFormDetailResponse
 
-export interface ProjectApplicationRequest {
-  projectGuid: string;
-  applicationGuid: string;
+export interface ProjectApplicationListRequest {
+  page: number;
+  size: number;
+}
+
+export interface ProjectApplicationListResponseData {
+  projectDetailDto: ProjectDetailResponse;
+  applicationList: ProjectApplicationListItem[];
+}
+
+export interface ProjectApplicationListItem {
+  applicationGuid?: string;
+  userName?: string;
+  email?: string;
+  mannerDegree?: string;
+  applyDate?: string;
+  position?: string;
+  skillList?: string[];
+}
+
+export interface ProjectApplicationAnswerDetailItem {
+  applicationAnswerGuid?: string;
+  projectApplicationFormGuid?: string;
+  fileGuid?: string;
+  content?: string;
+  userName?: string;
+  email?: string;
+  mannerDegree?: string;
+  userSkillList?: string[];
+  positionCd?: string;
+  introduction?: string;
 }
 
 export interface ProjectApplicationResponse {
-  applicationGuid?: string;
-  projectGuid?: string;
-  userGuid?: string;
-  userName?: string;
-  userEmail?: string;
-  mannerTemperature?: string;
-  position?: string;
-  applicationDate?: string;
-  skillList?: string[];
-  introduce?: string;
-  applicationPurpose?: string;
-  career?: string;
-  projectHistory?: string[];
-  applicationMotivation?: string;
-  attachmentFileGuid?: string;
-  statusCd?: string;
+  projectApplicationBasicDto?: {
+    applicationGuid?: string;
+    requirementGuid?: string;
+    applicantGuid?: string;
+    approverGuid?: string;
+    decisionDate?: string;
+    applyDate?: string;
+  };
+  projectApplicationAnswerList?: ProjectApplicationAnswerDetailItem[];
 }
 
 export interface CreateApplicationAnswerRequest {

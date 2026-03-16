@@ -8,9 +8,27 @@ import 'swiper/swiper.css';
 import WebPopup from '@/components/_common/popup/WebPopup'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import useSelectProjectApplicationList from '@/hooks/projects/useSelectProjectApplicationList'
 import useSelectProjectApplication from '@/hooks/projects/useSelectProjectApplication'
+import type { ProjectApplicationListItem } from '@/types/type.projects'
+import type { DateType } from '@/types/type.api'
+import dayjs from 'dayjs'
+
+const formatDate = (date: DateType) => date ? dayjs(date).format('YYYY.MM.DD') : ''
 
 export default function ProjectApplyList(){
+  const { projectGuid } = useParams<{ projectGuid: string }>();
+  const { applicationList, projectDetail } = useSelectProjectApplicationList(projectGuid);
+
+  // position 기준으로 그룹핑
+  const grouped = applicationList.reduce<Record<string, ProjectApplicationListItem[]>>((acc, item) => {
+    const pos = item.position ?? '기타';
+    if (!acc[pos]) acc[pos] = [];
+    acc[pos].push(item);
+    return acc;
+  }, {});
+
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. left area */}
@@ -22,10 +40,10 @@ export default function ProjectApplyList(){
           <div className="left-area flex-col">
             <div className="chip-box align-center">
               <Chip size='small' variant='filled' color='primary' label='모집중' />
-              <Chip 
-                size='small' 
-                variant='filled' 
-                color='default' 
+              <Chip
+                size='small'
+                variant='filled'
+                color='default'
                 label='서울'
                 icon={
                   <CustomAvatar
@@ -33,232 +51,75 @@ export default function ProjectApplyList(){
                     sx={{ backgroundColor: '#AEAEAE' }}
                     avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
                   />
-                } 
+                }
               />
               <Chip size='small' variant='filled' color='error' label='추가모집' />
-              <Chip 
-                size='small' 
-                variant='filled' 
-                color='warning' 
+              <Chip
+                size='small'
+                variant='filled'
+                color='warning'
                 label='D-13'
                 icon={
-                  <CustomAvatar 
+                  <CustomAvatar
                   size={18}
                   sx={{ backgroundColor: '#E65100' }}
                   avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
                   />
-                } 
+                }
               />
             </div>
-            <strong className='main-text'>[데이터 분석] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.</strong>
+            <strong className='main-text'>{projectDetail?.title}</strong>
             <div className='sub-text align-center'>
               <div className='align-center'>
                 <div className='title flex'><AccessTime />모집기간</div>
-                <p className='flex'>2025.12.03 ~ 2025.02.03</p>
+                <p className='flex'>{formatDate(projectDetail?.recruitmentStartDate)} ~ {formatDate(projectDetail?.recruitmentEndDate)}</p>
               </div>
               <div className='align-center'>
                 <div className='title flex'><AccessTime />진행기간</div>
-                <p>2025.12.03 ~ 2025.02.03</p>
+                <p>{formatDate(projectDetail?.progressStartDate)} ~ {formatDate(projectDetail?.progressEndDate)}</p>
               </div>
             </div>
           </div>
         </div>
-         <Divider />        
+        <Divider />
         {/* 2-2. project applicants */}
-        <ApplicantList 
-          position='기획자'
-          currentRecruitNumber='1'
-          totalRecruitNumber='10'
-          applicantNumber='5' 
-        >
-          <Swiper
-            observer
-            observeParents
-            spaceBetween={12}
-            centeredSlides={false}
-            slidesPerView={4}
-            navigation={{
-              nextEl: '.next1',
-              prevEl: '.prev1',
-            }}
-            className='applicant-swiper'
-            scrollbar={{ draggable: true }}
-            modules={[Navigation, Scrollbar]}
+        {Object.entries(grouped).map(([position, applicants], index) => (
+          <ApplicantList
+            key={position}
+            position={position}
+            applicantNumber={String(applicants.length)}
           >
-            <SwiperSlide>
-              <ApplicantCard
-                projectGuid='1'
-                applicationGuid='1'
-                applicationDate='2025.12.03'
-                userName='홍길동'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='김수빈'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='두쫀쿠'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='김파핑'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='데브헙'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-          </Swiper>
-          <div className='swiper-button-prev prev1'></div>
-          <div className='swiper-button-next next1'></div>
-        </ApplicantList>
-        <ApplicantList 
-          position='디자이너'
-          currentRecruitNumber='1'
-          totalRecruitNumber='10'
-          applicantNumber='5' 
-        >
-          <Swiper
-            observer
-            observeParents
-            spaceBetween={12}
-            centeredSlides={false}
-            slidesPerView={4}
-            navigation={{
-              nextEl: '.next2',
-              prevEl: '.prev2',
-            }}
-            className='applicant-swiper'
-            scrollbar={{ draggable: true }}
-            modules={[Navigation, Scrollbar]}
-          >
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='홍길동'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='김수빈'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='두쫀쿠'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='김파핑'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='데브헙'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-          </Swiper>
-          <div className='swiper-button-prev prev2'></div>
-          <div className='swiper-button-next next2'></div>
-        </ApplicantList>
-        <ApplicantList 
-          position='퍼블리셔'
-          currentRecruitNumber='1'
-          totalRecruitNumber='10'
-          applicantNumber='5' 
-        >
-          <Swiper
-            observer
-            observeParents
-            spaceBetween={12}
-            centeredSlides={false}
-            slidesPerView={4}
-            navigation={{
-              nextEl: '.next3',
-              prevEl: '.prev3',
-            }}
-            className='applicant-swiper'
-            scrollbar={{ draggable: true }}
-            modules={[Navigation, Scrollbar]}
-          >
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='홍길동'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='김수빈'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='두쫀쿠'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='김파핑'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ApplicantCard 
-                applicationDate='2025.12.03'
-                userName='데브헙'
-                userEmail='email@gmail.com'
-                mannerTemperature='36.5'
-              />
-            </SwiperSlide>
-          </Swiper>
-          <div className='swiper-button-prev prev3'></div>
-          <div className='swiper-button-next next3'></div>
-        </ApplicantList>
+            <Swiper
+              observer
+              observeParents
+              spaceBetween={12}
+              centeredSlides={false}
+              slidesPerView={4}
+              navigation={{
+                nextEl: `.next-${index}`,
+                prevEl: `.prev-${index}`,
+              }}
+              className='applicant-swiper'
+              scrollbar={{ draggable: true }}
+              modules={[Navigation, Scrollbar]}
+            >
+              {applicants.map((applicant, i) => (
+                <SwiperSlide key={i}>
+                  <ApplicantCard
+                    applicationGuid={applicant.applicationGuid}
+                    applicationDate={applicant.applyDate}
+                    userName={applicant.userName}
+                    userEmail={applicant.email}
+                    mannerTemperature={applicant.mannerDegree}
+                    skillList={applicant.skillList}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <div className={`swiper-button-prev prev-${index}`}></div>
+            <div className={`swiper-button-next next-${index}`}></div>
+          </ApplicantList>
+        ))}
       </Paper>
     </div>
   )
@@ -291,12 +152,12 @@ function ApplicantList ({
         </div>
         <div className="right-area align-center">
           <div className="count-text align-center">
-            <strong className='title'>모집</strong> 
+            <strong className='title'>모집</strong>
             <p className='count'><em>{currentRecruitNumber}</em> / {totalRecruitNumber}명</p>
           </div>
           <Divider orientation='vertical' flexItem />
           <div className="count-text align-center">
-            <strong className='title'>지원자</strong> 
+            <strong className='title'>지원자</strong>
             <p className='count'><em>{applicantNumber}</em>명</p>
           </div>
         </div>
@@ -311,28 +172,30 @@ function ApplicantList ({
 
 // 2. ApplicantCard
 type ApplicantCardProps = {
-  projectGuid?: string;
   applicationGuid?: string;
   applicationDate?: string;
   userName?: string;
   userEmail?: string;
   mannerTemperature?: string;
+  skillList?: string[];
 }
 
 function ApplicantCard ({
-  projectGuid = '1',
-  applicationGuid = '1',
+  applicationGuid,
   applicationDate,
   userName,
   userEmail,
   mannerTemperature,
+  skillList,
 }: ApplicantCardProps){
   // 상세보기 팝업
   const [openDetailPopup, setOpenDetailPopup] = useState(false);
   const clickOpenDetailPopup = () => {setOpenDetailPopup(true);}
 
-  const { res: detailRes } = useSelectProjectApplication(projectGuid, applicationGuid, openDetailPopup);
-  const detail = detailRes?.data;
+  const { res: detailRes } = useSelectProjectApplication(applicationGuid, openDetailPopup);
+  const detailData = detailRes?.data;
+  const userInfo = detailData?.projectApplicationAnswerList?.[0];
+  const answerList = detailData?.projectApplicationAnswerList ?? [];
 
   return (
     <>
@@ -344,10 +207,10 @@ function ApplicantCard ({
           <div className="user-info-box flex-col">
             <div className="top-area align-center">
               <div className="left-area">
-                <CustomAvatar 
+                <CustomAvatar
                   size={32}
                   sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                  avatarIcon={<Person sx={{ fontSize: 24 }} />} 
+                  avatarIcon={<Person sx={{ fontSize: 24 }} />}
                 />
               </div>
               <div className="right-area">
@@ -356,9 +219,9 @@ function ApplicantCard ({
               </div>
             </div>
             <div className="bottom-area align-center flex-wrap">
-              <Chip size='small' variant='outlined' color='secondary' label='JAVA' />
-              <Chip size='small' variant='outlined' color='secondary' label='ORACLE' />
-              <Chip size='small' variant='outlined' color='secondary' label='JS' />
+              {skillList?.map((skill, i) => (
+                <Chip key={i} size='small' variant='outlined' color='secondary' label={skill} />
+              ))}
             </div>
           </div>
           <div className="manner-box flex-col">
@@ -392,23 +255,23 @@ function ApplicantCard ({
         <div className="mypage-popup flex-col gap-16">
           {/* 1. 기본 정보 */}
           <div className="form-wrap flex-col">
-            <div className="form-box w-100 flex-col">   
+            <div className="form-box w-100 flex-col">
               <div className="field-area user-info-box flex">
                 <div className="left-area flex-col">
                   <div className="top align-center">
-                    <CustomAvatar 
+                    <CustomAvatar
                       sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-                      avatarIcon={<Person sx={{ fontSize: 24 }} />} 
+                      avatarIcon={<Person sx={{ fontSize: 24 }} />}
                     />
                     <div className="flex-col">
-                      <p className='user-nickname'>{userName}</p>
-                      <p className='user-email'>{userEmail}</p>
+                      <p className='user-nickname'>{userInfo?.userName}</p>
+                      <p className='user-email'>{userInfo?.email}</p>
                     </div>
                   </div>
                   <div className="bottom manner-box flex-col">
                     <div className="manner-text justify-between">
                       <p className='text'>매너온도</p>
-                      <p className='manner-temperature'>{mannerTemperature}°C</p>
+                      <p className='manner-temperature'>{userInfo?.mannerDegree}°C</p>
                     </div>
                     <div className="manner-figure">
                       <span className='current-figure h-100'></span>
@@ -420,20 +283,20 @@ function ApplicantCard ({
                   <div className="position-box align-start">
                     <p className="title">지원 포지션</p>
                     <div className="content align-center">
-                      {detail?.position && <Chip size='small' variant='outlined' color='primary' label={detail.position} />}
+                      {userInfo?.positionCd && <Chip size='small' variant='outlined' color='primary' label={userInfo.positionCd} />}
                     </div>
                   </div>
                   <div className="skill-box align-start">
                     <p className="title">보유 스킬</p>
                     <div className="content align-center">
-                      {detail?.skillList?.map((skill, i) => (
+                      {userInfo?.userSkillList?.map((skill, i) => (
                         <Chip key={i} size='small' variant='outlined' color='secondary' label={skill} />
                       ))}
                     </div>
                   </div>
                   <div className="introduce-box align-start">
                     <p className="title">자기 소개</p>
-                    <div className="content">{detail?.introduce}</div>
+                    <div className="content">{userInfo?.introduction}</div>
                   </div>
                 </div>
               </div>
@@ -441,46 +304,16 @@ function ApplicantCard ({
           </div>
           {/* 2. 추가 정보 */}
           <div className="inform-wrap flex-col">
-            <div className="inform-box align-start">
-              <div className="label-area">
-                <strong>프로젝트 참여 목적</strong>
-              </div>
-              <div className="field-area">
-                <p>{detail?.applicationPurpose}</p>
-              </div>
-            </div>
-            <Divider />
-            <div className="inform-box align-start">
-              <div className="label-area">
-                <strong>경력</strong>
-              </div>
-              <div className="field-area">
-                <p>{detail?.career}</p>
-              </div>
-            </div>
-            <Divider />
-            <div className="inform-box align-start">
-              <div className="label-area">
-                <strong>프로젝트 참여 이력</strong>
-              </div>
-              <div className="field-area history-part">
-                {detail?.projectHistory?.map((item, i) => (
-                  <div key={i} className='align-center'>
-                    <span></span>
-                    <p>{item}</p>
+            {answerList.map((answer, i) => (
+              <React.Fragment key={i}>
+                <div className="inform-box align-start">
+                  <div className="field-area">
+                    <p>{answer.content}</p>
                   </div>
-                ))}
-              </div>
-            </div>
-            <Divider />
-            <div className="inform-box align-start">
-              <div className="label-area">
-                <strong>지원동기</strong>
-              </div>
-              <div className="field-area">
-                <p>{detail?.applicationMotivation}</p>
-              </div>
-            </div>
+                </div>
+                {i < answerList.length - 1 && <Divider />}
+              </React.Fragment>
+            ))}
             <Divider />
             <div className="inform-box align-start">
               <div className="label-area">
@@ -497,4 +330,3 @@ function ApplicantCard ({
     </>
   )
 }
-

@@ -33,7 +33,7 @@ export const useSelect = <TRes, TReq>({
 
       const res = await apiFn(req);
       setData(res);
-
+      console.log('data>>>', res);
       if (cacheKey) {
         cacheStore.set(cacheKey, res);
       }
