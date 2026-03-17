@@ -10,7 +10,7 @@ import useCreateProject from '@/hooks/projects/useCreateProject.ts'
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import { COMMON_CODE } from '@/types/const';
 import { type DateType } from '@/types/type.api';
-import type { ApplicationsFormCreate, Position } from '@/types/type.projects';
+import type { Position, ApplicationFormCreate } from '@/types/type.projects';
 import { AddCircle, Remove, Search } from '@mui/icons-material';
 import { Button, Divider, FormControl, FormLabel, IconButton, Paper } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -73,6 +73,7 @@ export default function ProjectCreate() {
                 <div className='align-center'>
                   <DatePicker
                     onChange={(value: DateType) => onHandleEvent("recruitmentStartDate", value)}
+                    maxDate={values.recruitmentEndDate ?? undefined}
                     slotProps={{
                       textField: {
                         size: 'medium',
@@ -86,6 +87,7 @@ export default function ProjectCreate() {
                   ~
                   <DatePicker
                     onChange={(value: DateType) => onHandleEvent("recruitmentEndDate", value)}
+                    minDate={values.recruitmentStartDate ?? undefined}
                     slotProps={{
                       textField: {
                         size: 'medium'
@@ -145,6 +147,7 @@ export default function ProjectCreate() {
                 <div className='align-center'>
                   <DatePicker
                     onChange={(value: DateType) => onHandleEvent("progressStartDate", value)}
+                    maxDate={values.progressEndDate ?? undefined}
                     slotProps={{
                       textField: {
                         size: 'medium',
@@ -158,6 +161,7 @@ export default function ProjectCreate() {
                   ~
                   <DatePicker
                     onChange={(value: DateType) => onHandleEvent("progressEndDate", value)}
+                    minDate={values.progressStartDate ?? undefined}
                     slotProps={{
                       textField: {
                         size: 'medium'
@@ -247,7 +251,7 @@ export default function ProjectCreate() {
         </div>
         {/* 3. action buttons */}
         <div className="action-button-box align-center justify-end">
-          <Button size='large' variant='outlined'>취소</Button>
+          <Button size='large' variant='outlined' onClick={() => { history.back(); }}>취소</Button>
           <Button size='large' variant='outlined'>양식 미리보기</Button>
           <Button size='large' variant='contained' onClick={onSubmit}>등록</Button>
         </div>
@@ -255,7 +259,7 @@ export default function ProjectCreate() {
 
       <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={values.skillList ? values.skillList : []} setValues={(values: string[]) => onHandleEvent("skillList", values)} />
       <RegionPopup isOpen={regionPopup.isOpen} onClose={regionPopup.close} values={values.progressRegionCd ? [values.progressRegionCd] : ['']} setValues={(values: string[]) => onHandleEvent("progressRegionCd", values.toString())} />
-      <AdditionalFormPopup isOpen={additionalPopup.isOpen} onClose={additionalPopup.close} onSubmit={(newForm: ApplicationsFormCreate) => onHandleEvent("additionalFormList", values.additionalFormList.concat(newForm))} />
+      <AdditionalFormPopup isOpen={additionalPopup.isOpen} onClose={additionalPopup.close} onSubmit={(newForm: ApplicationFormCreate) => onHandleEvent("additionalFormList", values.additionalFormList.concat(newForm))} />
 
     </div>
   )
