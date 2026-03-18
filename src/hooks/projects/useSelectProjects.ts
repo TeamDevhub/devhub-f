@@ -1,6 +1,6 @@
 import { getProjects } from "@/api/projects/projects.api";
 import useFormState from '@/hooks/_common/useFormState.ts';
-import type { FilterData, ProjectListResponse, ProjectSearchRequest, SearchData } from "@/types/type.projects";
+import type { FilterData, ProjectExtra, ProjectSearchRequest, SearchData } from "@/types/type.projects";
 import { useState } from "react";
 import { useSelect } from "../_common/api.hook";
 
@@ -53,7 +53,7 @@ export default function useSelectProjects(
     apiFn: getProjects,
     req: request,
   }
-  const { res, loading } = useSelect<ProjectListResponse, ProjectSearchRequest>(options);
+  const { res, loading } = useSelect<ProjectExtra, ProjectSearchRequest>(options);
 
   const setPage = (page: number) => {
     setRequest((prev) => ({...prev, page: page}));
