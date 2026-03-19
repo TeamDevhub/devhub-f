@@ -7,7 +7,7 @@ import { useSelect } from "../_common/api.hook";
 const initData:SearchData = {
   page:0,
   size:10,
-  order:'',
+  order:'001',
 }
 
 const initFilterData:FilterData = {

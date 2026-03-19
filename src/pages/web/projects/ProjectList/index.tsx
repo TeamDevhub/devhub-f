@@ -48,7 +48,9 @@ export default function ProjectList(){
         <strong className='page-count'>전체 <em>{res?.pagination?.totalElements}</em>개 프로젝트</strong>
         <FormControl variant='standard'>
           <Select id='filter' value={request.order} onChange={(e)=>{setOrder(e.target.value)}} size='small' displayEmpty>
-            <MenuItem value=''>기본순</MenuItem>
+            <MenuItem value='001'>기본순</MenuItem>
+            <MenuItem value='002'>모집 마감일순</MenuItem>
+            {/* <MenuItem value='003'>좋아요순</MenuItem> */}
           </Select>
         </FormControl>
       </div>

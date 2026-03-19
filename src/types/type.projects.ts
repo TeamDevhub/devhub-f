@@ -118,8 +118,11 @@ export interface ProjectDetailResponse extends ProjectExtra, ProjectFileMetaData
 }
 
 export interface ProjectFormDetailResponse extends ProjectExtra, ProjectFileMetaData {
-  applicationFormList: string[];
+  applicationFormList: ApplicationFormBasic[];
   additionalFormList: ApplicationFormCreate[];
 }
 
-export type ProjectUpdate = ProjectFormDetailResponse
+export interface ProjectUpdate extends ProjectExtra, ProjectFileMetaData {
+  applicationFormList: string[];
+  additionalFormList: ApplicationFormCreate[];
+}
