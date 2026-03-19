@@ -43,6 +43,7 @@ import FormManagementPage from '@/pages/design/admin/forms/FormManagementPage';
 import BoardManagementPage from '@/pages/design/admin/boards/BoardManagementPage';
 import BannerManagementPage from '@/pages/design/admin/banner/BannerManagementPage';
 import TermsManagementPage from '@/pages/design/admin/terms/TermsManagementPage';
+import DesignMainPage from '@/pages/design/web/main/DesignMainPage';
 
 
 const router = createBrowserRouter([
@@ -170,7 +171,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <MainPage />,
+            element: <DesignMainPage />,
           },
           {
             path: 'projects',

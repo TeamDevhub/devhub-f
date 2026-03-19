@@ -4,7 +4,6 @@
 .header {
   height: 7rem;
   padding: 1.2rem 3.2rem;
-  border-radius: 0;
   .header-left-box {
     gap: 3.2rem;
     .logo-box {
@@ -28,6 +27,17 @@
     > * {
       cursor: pointer;
     }
+  }
+}
+
+/* footer */
+footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg, rgba(66, 165, 245, 0.08) 0%, rgba(186, 104, 200, 0.06) 100%);
+  .left-section { width: 70%; 
+    .footer-logo { font-size: 4rem; font-weight: bold; line-height: 120%; color: #626262; user-select: none; }
+    .footer-info { font-size: 1.3rem; font-weight: 300; color: #626262; }
+  }
+  .right-section {
+    a { font-size: 1.5rem; line-height: 100%; font-weight: 500; color: #626262; }
   }
 }
 
@@ -220,6 +230,21 @@
   // .field-content {
   //   &:not(:has(.required)) { padding-left: 1.6rem; }
   // }
+}
+// 5. board box
+.board-box, .board-detail-box { padding: 1.2rem 2rem; gap: 1.2rem; cursor: pointer;
+  > div { gap: 1.2rem; }
+  .top { 
+    .left-area { min-width: 0; gap: 1.2rem;
+      .main-text { width: 100%; font-size: 2rem; font-weight: 600; line-height: 120%; color: #000; }
+    }
+    .right-area { min-width: 12rem; max-width: 12rem; }
+  }
+  .bottom {
+    > div { gap: 1.2rem;
+      p { font-size: 1rem; font-weight: 300; line-height: 100%; color: #000; }
+    }
+  }
 }
 
 /* user&view info */
@@ -496,3 +521,9 @@
 
 .seperator { font-size: 1.4rem; line-height: 2.4rem; letter-spacing: 0.15px; color: #000; }
 
+/* swiper */
+.swiper-button-prev, .swiper-button-next { position: absolute; z-index: 100; top: 50%; transform: translateY(-50%); display: flex; width: 3.4rem; height: 3.4rem; align-items: center; justify-content: center; background-color: #fff; border-radius: 50%; box-shadow: 0px 2px 4px -1px #00000033, 0px 4px 5px 0px #00000024, 0px 1px 10px 0px #0000001F; cursor: pointer; background-repeat: no-repeat; background-size: 80% auto; background-position: center;
+  .swiper-navigation-icon { width: 0.7rem; display: none; }
+}
+.swiper-button-prev { left: -1rem; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14.2951 18L15.7051 16.59L11.1251 12L15.7051 7.41L14.2951 6L8.29508 12L14.2951 18Z' fill='black' fill-opacity='0.56'/%3E%3C/svg%3E%0A"); }
+.swiper-button-next { right:- 1rem; background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z' fill='black' fill-opacity='0.56'/%3E%3C/svg%3E%0A"); }

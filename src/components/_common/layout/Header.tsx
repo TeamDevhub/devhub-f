@@ -10,7 +10,7 @@ export default function Header(){
 
   return (
     <header>
-      <Paper className='header w-100 align-center justify-between' elevation={1}>
+      <Paper className='header w-100 align-center justify-between' elevation={1} sx={{ borderRadius: 0 }}>
         <div className="header-left-box align-center">
           <h1 className="logo-box">
             <Link to={"/"} className='align-center'>
