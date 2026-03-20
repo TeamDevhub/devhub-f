@@ -10,18 +10,18 @@ import type { FilterData } from '@/types/type.projects';
 import { FilterAlt } from '@mui/icons-material';
 import { Button, FormControl, MenuItem, Pagination, Paper, Select } from '@mui/material';
 
-export default function ProjectList(){
+export default function ProjectList() {
 
   const skillPopup = useDisclosure();
   const filterPopup = useDisclosure();
   const navigate = useNavigate();
 
-  const handleApplyFilterPopup = (data:FilterData) => {
+  const handleApplyFilterPopup = (data: FilterData) => {
     filterPopup.close();
     applyFilter(data);
   }
 
-  const { 
+  const {
     res,
     filters,
     resetFilters,
@@ -32,7 +32,7 @@ export default function ProjectList(){
     applySearch,
     request,
     keyword, setKeyword,
-    setOrder,setPage
+    setOrder, setPage
 
   } = useSelectProjects();
 
@@ -40,17 +40,17 @@ export default function ProjectList(){
     <main className='main-page flex-col h-fit'>
 
       <Paper className='search-box align-stretch' elevation={4}>
-        <CustomTextfield size='small' type='search' placeholder='프로젝트 명을 입력해 주세요.' value={keyword} onChange={(e)=>{setKeyword(e.target.value)}}/>
+        <CustomTextfield size='small' type='search' placeholder='프로젝트 명을 입력해 주세요.' value={keyword} onChange={(e) => { setKeyword(e.target.value) }} />
         <Button size='medium' variant='contained' onClick={applySearch}>검색</Button>
       </Paper>
 
       <div className='page-summary w-100 align-center justify-between'>
         <strong className='page-count'>전체 <em>{res?.pagination?.totalElements}</em>개 프로젝트</strong>
         <FormControl variant='standard'>
-          <Select id='filter' value={request.order} onChange={(e)=>{setOrder(e.target.value)}} size='small' displayEmpty>
+          <Select id='filter' value={request.order} onChange={(e) => { setOrder(e.target.value) }} size='small' displayEmpty>
             <MenuItem value='001'>기본순</MenuItem>
             <MenuItem value='002'>모집 마감일순</MenuItem>
-            {/* <MenuItem value='003'>좋아요순</MenuItem> */}
+            <MenuItem value='003'>좋아요순</MenuItem>
           </Select>
         </FormControl>
       </div>
@@ -58,30 +58,30 @@ export default function ProjectList(){
       <div className='project-list-box wh-100 flex flex-1'>
         <Paper className='left-filter-bar flex-col flex-grow' elevation={4}>
           <FilterList
-            filterData={filters} 
-            clickOpenSkillPopup={skillPopup.open} 
-            handleResetFilter={resetFilters} 
+            filterData={filters}
+            clickOpenSkillPopup={skillPopup.open}
+            handleResetFilter={resetFilters}
             setFilter={setFilter}
             createToggle={createToggle}
           />
           <div className='filter-button-box w-100 align-center'>
-              <Button className='flex-1' size='small' variant='outlined' startIcon={<FilterAlt />} onClick={filterPopup.open}>상세 필터</Button>
-              <Button className='flex-1' size='small' variant='contained' onClick={()=>{applyFilter();}}>필터 적용</Button>
+            <Button className='flex-1' size='small' variant='outlined' startIcon={<FilterAlt />} onClick={filterPopup.open}>상세 필터</Button>
+            <Button className='flex-1' size='small' variant='contained' onClick={() => { applyFilter(); }}>필터 적용</Button>
           </div>
         </Paper>
 
         <div className='project-list flex-col align-center'>
-          {res?.dataList?.map((item, index)=>{
+          {res?.dataList?.map((item, index) => {
             return <ProjectCard key={index} {...item}></ProjectCard>
           })}
           <div className='list-bottom-box w-100 align-center mt-a'>
-            <Pagination page={request.page} count={res?.pagination?.totalPages} onChange={(_, v)=>{setPage(v)}} color='primary' className='w-100 flex-center' showFirstButton showLastButton/>
-            <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }} onClick={()=>{navigate('/projects/create')}}>글쓰기</Button>
+            <Pagination page={request.page} count={res?.pagination?.totalPages} onChange={(_, v) => { setPage(v) }} color='primary' className='w-100 flex-center' showFirstButton showLastButton />
+            <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }} onClick={() => { navigate('/projects/create') }}>글쓰기</Button>
           </div>
         </div>
       </div>
-      <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={filters.skillCodeList} setValues={createFilterHandler('skillCodeList')}/>
-      <FilterPopup isOpen={filterPopup.isOpen} onClose={filterPopup.close} initialValue={filters} onSubmit={handleApplyFilterPopup}/>
+      <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={filters.skillCodeList} setValues={createFilterHandler('skillCodeList')} />
+      <FilterPopup isOpen={filterPopup.isOpen} onClose={filterPopup.close} initialValue={filters} onSubmit={handleApplyFilterPopup} />
     </main>
   )
 }
