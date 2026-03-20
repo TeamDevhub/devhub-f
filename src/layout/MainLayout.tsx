@@ -16,7 +16,7 @@ export default function MainLayout() {
                     <ModalProvider>
                         <div id='devHub' className='wh-100'>
                             <Header></Header>
-                            <main>
+                            <main className='wh-100'>
                                 <Outlet></Outlet>
                             </main>
                         </div>
