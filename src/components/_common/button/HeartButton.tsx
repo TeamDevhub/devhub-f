@@ -29,7 +29,7 @@ export default function HeartButton({
     <div className={['heart-box flex-col align-end', className].filter(Boolean).join(' ')}>
       <IconButton size='small' onClick={handleClick}>
         {liked ? (
-          <Favorite sx={{ fontSize: 24, color: '#D05B5B' }} />
+          <Favorite sx={{ fontSize: 24, color: '#D05B5B !important' }} />
         ) : (
           <FavoriteBorder sx={{ fontSize: 24, color: '#D05B5B' }} />
         )}
