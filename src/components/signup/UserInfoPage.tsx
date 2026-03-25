@@ -20,7 +20,8 @@ interface Props {
 export default function UserInfoPage({ email }: Props) {
   const skillPopup = useDisclosure();
   const { getCodesByGroup } = useCodes();
-  const { userInfo, handleChange, createToggle, createHandler, applySignup, loading } = useSignup(email);
+  const { userInfo, handleChange, createToggle, createHandler, terms, toggleTerms, agreeAllTerms, applySignup, loading } = useSignup(email);
+  const isAllChecked = terms.length > 0 && terms.every((t) => t.isAgreed);
 
   return (
     <div className="auth-page flex-center">
@@ -105,7 +106,35 @@ export default function UserInfoPage({ email }: Props) {
             </div>
           </FormSection>
 
-          <SkillPopup key={skillPopup.isOpen ? 'open' : 'close'} isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={userInfo.skillList} setValues={createHandler('skillList')} />
+          <SkillPopup
+            key={skillPopup.isOpen ? 'open' : 'close'}
+            isOpen={skillPopup.isOpen}
+            onClose={skillPopup.close}
+            values={userInfo.skillList}
+            setValues={createHandler('skillList')}
+          />
+
+          <FieldBox title="약관 동의" type="wide" helpText="필수 약관에 동의해야 가입이 가능합니다.">
+            <div className="flex-col" style={{ gap: '0.5rem' }}>
+              {/* 전체 동의 */}
+              <label style={{ fontWeight: 600 }}>
+                <input type="checkbox" checked={isAllChecked} onChange={(e) => agreeAllTerms(e.target.checked)} />
+                전체 동의
+              </label>
+
+              <Divider />
+
+              {/* 개별 약관 */}
+              {terms.map((t) => (
+                <label key={t.termsGuid} style={{ display: 'flex', gap: '0.4rem' }}>
+                  <input type="checkbox" checked={t.isAgreed} onChange={() => toggleTerms(t.termsGuid)} />
+                  <span>
+                    {t.title} {t.isRequired && <span style={{ color: 'red' }}>(필수)</span>}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </FieldBox>
 
           <Divider sx={{ marginY: '0.5rem' }} />
 
