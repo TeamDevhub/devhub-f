@@ -96,7 +96,7 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
 
         {/* 버튼 영역 */}
         <div className="button-box w-100 flex justify-end gap-12">
-          <Button size="small" variant="outlined" color="primary" onClick={passwordChangePopup.open}>
+          <Button size="medium" variant="outlined" color="primary" onClick={passwordChangePopup.open}>
             비밀번호 변경
           </Button>
 

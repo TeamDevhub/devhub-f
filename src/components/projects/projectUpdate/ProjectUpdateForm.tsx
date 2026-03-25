@@ -181,7 +181,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropForm name={"attachment"} ref={attachmentRef} />
+                <DragAndDropForm name={"attachment"} initialFileName={values.attachmentFileName} ref={attachmentRef} />
               </div>
             </div>
           </div>
@@ -192,7 +192,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropForm name={"image"} ref={imageRef} />
+                <DragAndDropForm name={"image"} initialFileName={values.imageFileName} ref={imageRef} />
               </div>
             </div>
           </div>
@@ -236,7 +236,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
         </div>
         {/* 3. action buttons */}
         <div className="action-button-box align-center justify-end">
-          <Button size='large' variant='outlined'>취소</Button>
+          <Button size='large' variant='outlined' onClick={()=>{history.back()}}>취소</Button>
           <Button size='large' variant='outlined'>양식 미리보기</Button>
           <Button size='large' variant='contained' onClick={onSubmit}>등록</Button>
         </div>
