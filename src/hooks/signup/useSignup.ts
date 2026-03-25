@@ -23,6 +23,7 @@ export default function useSignup(email: string) {
     introduction: '',
     skillList: [],
     positionList: [],
+    termsAgreementList: [],
   };
 
   const validations = {
@@ -61,6 +62,7 @@ export default function useSignup(email: string) {
       introduction: userInfo.introduction,
       skillList: userInfo.skillList,
       positionList: userInfo.positionList,
+      termsAgreementList: [],
     };
 
     await requestSignup(payload);
