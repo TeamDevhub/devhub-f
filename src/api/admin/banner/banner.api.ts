@@ -3,9 +3,9 @@ import type {Banner, BannerSearchRequest} from "@/types/type.banner.ts";
 
 export const selectBanner = (req : BannerSearchRequest) =>
     fetcher<Banner, BannerSearchRequest>(
-        `/admin/banner`,
+        `/admin/banner/list`,
         req,
-        { method : "post"}
+        { method : "get"}
     );
 
 export const saveBanner = (req : Banner) =>

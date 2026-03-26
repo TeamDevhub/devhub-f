@@ -1,5 +1,6 @@
 import {DatePicker} from "@mui/x-date-pickers";
 import type {DateType} from "@/types/type.api.ts";
+import dayjs from "dayjs";
 
 export default function CustomDateRange({
     label,
@@ -14,6 +15,9 @@ export default function CustomDateRange({
     onStartChange:(value:DateType) => void;
     onEndChange:(value:DateType) => void;
 }){
+    if(startDate && typeof startDate === "string") startDate = dayjs(startDate);
+    if(endDate && typeof endDate === "string") endDate = dayjs(endDate);
+
     return (
         <div className="align-center gap-4">
             <DatePicker

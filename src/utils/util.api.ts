@@ -177,8 +177,6 @@ export const fetcher = async <T = unknown, P = unknown>(url: string, data?: P, c
   const baseUrl = import.meta.env.VITE_API_URL;
   url = baseUrl + url;
 
-  console.log(url);
-
   const res = await instance.request<ApiResponse<T>>({
     url,
     method: method as Method,

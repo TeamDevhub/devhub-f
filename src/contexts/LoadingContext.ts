@@ -10,14 +10,14 @@ interface LoadingContextType {
 
 export const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
-export const UseLoading = () => {
+export const useLoading = () => {
   const context = useContext(LoadingContext);
   if (!context) throw new Error("useLoading must be used within a LoadingProvider");
   return context;
 };
 
 export const LoadingBridge = () => {
-  const {show, hide} = UseLoading();
+  const {show, hide} = useLoading();
   const navigation = useNavigation();
 
   useEffect(() => {

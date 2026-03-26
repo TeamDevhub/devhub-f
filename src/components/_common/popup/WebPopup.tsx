@@ -28,8 +28,9 @@ export default function WebPopup({
   const handleClose = () => {
     onClose?.();
   }
-  const handleSubmit = () => {
-    onSubmit?.();
+  const handleSubmit = async () => {
+    const isSubmit = await onSubmit?.();
+    if(isSubmit === false) return;
     if(closeOnSubmit) onClose?.();
   }
 

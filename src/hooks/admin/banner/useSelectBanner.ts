@@ -11,6 +11,8 @@ const initData = {
     used: '',
     keyword: '',
     bannerType: 'MAIN',
+    page: 0,
+    size: 10
 } as BannerSearchRequest;
 export default function useSelectBanner () {
 
@@ -24,22 +26,20 @@ export default function useSelectBanner () {
         , handleChange: subBannerChange
     } = useFormState<BannerSearchRequest>({...initData, bannerType: "SUB"});
 
-    const [mainSearchParams, setMainSearchParams] = useState<BannerSearchRequest>(mainBannerState);
-    const [subSearchParams, setSubSearchParams] = useState<BannerSearchRequest>(subBannerState);
+    const [mainSearchParams, setMainSearchParams] = useState<BannerSearchRequest>({...initData, bannerType: "MAIN"});
+    const [subSearchParams, setSubSearchParams] = useState<BannerSearchRequest>({...initData, bannerType: "SUB"});
 
     const mainOptions = {
         apiFn: selectBanner,
         req : mainSearchParams,
-        cacheKey: `boards-${JSON.stringify(mainBannerState)}`
     }
-    const {res: mainBannerRes} = useSelect(mainOptions);
+    const {res: mainBannerRes, refetch: mainRefetch} = useSelect(mainOptions);
 
     const subOptions = {
         apiFn: selectBanner,
         req : subSearchParams,
-        cacheKey: `boards-${JSON.stringify(subBannerState)}`
     }
-    const {res: subBannerRes} = useSelect(subOptions);
+    const {res: subBannerRes, refetch: subRefetch} = useSelect(subOptions);
 
     const mainSearch = () => {
         setMainSearchParams(mainBannerState);
@@ -58,5 +58,7 @@ export default function useSelectBanner () {
         subBannerChange,
         subBannerRes,
         subSearch,
+        mainRefetch,
+        subRefetch
     }
 }

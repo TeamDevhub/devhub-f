@@ -16,7 +16,6 @@ export default function useMutationBoards(
     );
 
     const handleLike = async (boardGuid:string) => {
-        console.log(boardGuid)
         await likeBoardMu(boardGuid);
     }
 
