@@ -1,5 +1,5 @@
 import { Checkbox, FormControlLabel, FormGroup } from "@mui/material"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { type ApplicationFormBasic } from '@/types/type.projects';
 import useSelectApplicationForms from "@/hooks/projects/useSelectApplicationForms"
 
@@ -9,7 +9,8 @@ interface CustomCheckboxGroupProps {
 }
 
 export default function ApplicationFormGroup({ onChange, defaultCheckedValues = [] }: CustomCheckboxGroupProps) {
-    const { res } = useSelectApplicationForms({ customYn: 'N' });
+    const params = useMemo(() => ({ customYn: 'N' }), []);
+    const { res } = useSelectApplicationForms(params);
     const [checkedValues, setCheckedValues] = useState<string[]>(defaultCheckedValues);
     const handleOnChange = (applicationFormGuid: string, value: boolean) => {
         let newValues: string[];

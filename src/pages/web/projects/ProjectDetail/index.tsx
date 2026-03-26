@@ -19,6 +19,7 @@ export default function ProjectDetail() {
 
   if (!projectGuid) {
     navigate('/projects');
+    return;
   }
 
   const { getCodeName } = useCodes();
@@ -38,14 +39,15 @@ export default function ProjectDetail() {
   }
 
   return (
-    <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
+    <div className='main-page align-stretch flex-col' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. project detail */}
-      <Paper className='project-box project-detail-box w-100 mt-10 flex-col' elevation={4}>
-        {authContext?.user?.userGuid === res.data.userGuid && 
+      {authContext?.user?.userGuid === res.data.userGuid &&
         <div className="action-button-box align-center justify-end">
-          <Button size='medium' variant='contained' onClick={()=>{navigate(`/projects/update/${res?.data?.projectGuid}`)}}>수정</Button>
+          <Button size='medium' variant='contained' onClick={() => { navigate(`/projects/update/${res?.data?.projectGuid}`) }}>수정</Button>
           <Button size='medium' variant='outlined' onClick={onDeleteProject}>삭제</Button>
-        </div>}
+        </div>
+      }
+      <Paper className='project-box project-detail-box w-100 mt-10 flex-col flex-1' elevation={4}>
         <div className="project-header">
           <div className="top flex-col">
             <div className='chip-box align-center'>
@@ -171,7 +173,7 @@ export default function ProjectDetail() {
           <div className="detail-content">
             {res?.data?.content}
             <div>
-            {res?.data?.imageFileGuid && <img src={`${import.meta.env.VITE_API_URL}/files/${res.data.imageFileGuid}`}/>}
+              {res?.data?.imageFileGuid && <img src={`${import.meta.env.VITE_API_URL}/files/${res.data.imageFileGuid}`} />}
             </div>
           </div>
         </div>
@@ -184,7 +186,7 @@ export default function ProjectDetail() {
             elevation={5}
             sx={{ cursor: 'pointer' }}
           >
-            <HeartButton likeCount={res?.data?.likeCount}/>
+            <HeartButton likeCount={res?.data?.likeCount} />
           </Paper>
         </Tooltip>
         <Tooltip arrow placement='right' title='지원하기'>
