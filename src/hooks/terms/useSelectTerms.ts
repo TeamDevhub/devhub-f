@@ -1,5 +1,5 @@
-import { useSelect } from '../_common/api.hook';
 import { useCallback } from 'react';
+import { useSelect } from '@/hooks/_common/api.hook';
 import { getTerms } from '@/api/terms/terms.api';
 
 import type { TermsResponse } from '@/types/type.terms';
@@ -12,5 +12,9 @@ export default function useSelectTerms() {
     req: undefined,
   });
 
-  return { res, loading, error };
+  return {
+    termsList: res?.dataList ?? [],
+    loading,
+    error,
+  };
 }
