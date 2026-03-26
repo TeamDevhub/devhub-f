@@ -3,12 +3,12 @@ import { Email, Favorite, InfoOutline, Person, Settings } from '@mui/icons-mater
 
 export type FieldLabel = '닉네임' | '이메일' | '내 소개' | '관심 포지션' | '보유 기술';
 
-export type InfoFieldBoxProps = {
+export type MyProfileBaseFormProps = {
   label: FieldLabel;
   children?: React.ReactNode;
 };
 
-export default function InfoFieldBox({ label, children }: InfoFieldBoxProps) {
+export default function MyProfileBaseForm({ label, children }: MyProfileBaseFormProps) {
   const renderIcon = (fieldLabel: FieldLabel) => {
     const iconProps = { sx: { fontSize: 24, color: 'primary.main' } };
 
