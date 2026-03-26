@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import logo from '@/assets/images/devHub-logo.png';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
@@ -14,7 +12,6 @@ import SelectableGroup from '@/components/_common/SelectableGroup';
 import { FormSection } from './FormSection';
 import AddableChipGroup from '../_common/AddableChipGroup';
 import { useCodes } from '@/contexts/CommonCodeContext.ts';
-import TermsDialog from '@/components/terms/TermsDialog';
 
 interface Props {
   email: string;
@@ -25,10 +22,6 @@ export default function UserInfoPage({ email }: Props) {
   const { getCodesByGroup } = useCodes();
   const { userInfo, handleChange, createToggle, createHandler, terms, toggleTerms, agreeAllTerms, applySignup, loading } = useSignup(email);
   const isAllChecked = terms.length > 0 && terms.every((t) => t.isAgreed);
-  const [selectedTerms, setSelectedTerms] = useState<null | {
-    title: string;
-    content: string;
-  }>(null);
 
   return (
     <div className="auth-page flex-center">
@@ -123,6 +116,7 @@ export default function UserInfoPage({ email }: Props) {
 
           <FieldBox title="약관 동의" type="wide" helpText="필수 약관에 동의해야 가입이 가능합니다.">
             <div className="flex-col" style={{ gap: '0.5rem' }}>
+              {/* 전체 동의 */}
               <label style={{ fontWeight: 600 }}>
                 <input type="checkbox" checked={isAllChecked} onChange={(e) => agreeAllTerms(e.target.checked)} />
                 전체 동의
@@ -132,47 +126,17 @@ export default function UserInfoPage({ email }: Props) {
 
               {/* 개별 약관 */}
               {terms.map((t) => (
-                <div
-                  key={t.termsGuid}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <label style={{ display: 'flex', gap: '0.4rem' }}>
-                    <input type="checkbox" checked={t.isAgreed} onChange={() => toggleTerms(t.termsGuid)} />
-                    <span>
-                      {t.title} {t.isRequired && <span style={{ color: 'red' }}>(필수)</span>}
-                    </span>
-                  </label>
-
-                  {/* ▶ 상세보기 */}
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setSelectedTerms({
-                        title: t.title,
-                        content: t.content,
-                      })
-                    }
-                    style={{
-                      border: 'none',
-                      background: 'none',
-                      cursor: 'pointer',
-                      fontSize: '16px',
-                    }}
-                  >
-                    ▶
-                  </button>
-                </div>
+                <label key={t.termsGuid} style={{ display: 'flex', gap: '0.4rem' }}>
+                  <input type="checkbox" checked={t.isAgreed} onChange={() => toggleTerms(t.termsGuid)} />
+                  <span>
+                    {t.title} {t.isRequired && <span style={{ color: 'red' }}>(필수)</span>}
+                  </span>
+                </label>
               ))}
             </div>
           </FieldBox>
 
           <Divider sx={{ marginY: '0.5rem' }} />
-
-          <TermsDialog open={!!selectedTerms} title={selectedTerms?.title} content={selectedTerms?.content} onClose={() => setSelectedTerms(null)} />
 
           <Button size="large" variant="contained" fullWidth onClick={applySignup} disabled={loading}>
             {loading ? '가입 중...' : '회원가입'}
