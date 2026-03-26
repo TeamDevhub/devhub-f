@@ -63,3 +63,10 @@ export const deleteProject = (projectId: string) =>
     { method: "delete" }
   );
 
+export const createProjectLike = (projectId: string) => 
+  fetcher<void, string>(
+    `/projects/${projectId}/likes`,
+    undefined,
+    { method: "post" }
+  );
+
