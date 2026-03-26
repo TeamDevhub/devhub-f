@@ -92,6 +92,15 @@ export interface ProjectSearchRequest {
   progressStartDate?: DateType;
 }
 
+export interface ProjectFileMetaData {
+  imageFileGuid?: string;
+  imageFileName?: string;
+  imageFileUrl?: string;
+  attachmentFileGuid?: string;
+  attachmentFileName?: string;
+  attachmentFileUrl?: string;
+}
+
 export type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword' | 'size'>;
 export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
@@ -104,13 +113,16 @@ export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 //   //필요시 추가
 // }
 
-export interface ProjectDetailResponse extends ProjectExtra {
+export interface ProjectDetailResponse extends ProjectExtra, ProjectFileMetaData {
   email: string;
 }
 
-export interface ProjectFormDetailResponse extends ProjectExtra {
-  applicationFormList: string[];
+export interface ProjectFormDetailResponse extends ProjectExtra, ProjectFileMetaData {
+  applicationFormList: ApplicationFormBasic[];
   additionalFormList: ApplicationFormCreate[];
 }
 
-export type ProjectUpdate = ProjectFormDetailResponse
+export interface ProjectUpdate extends ProjectExtra, ProjectFileMetaData {
+  applicationFormList: string[];
+  additionalFormList: ApplicationFormCreate[];
+}

@@ -1,16 +1,16 @@
 import { getProjects } from "@/api/projects/projects.api";
 import useFormState from '@/hooks/_common/useFormState.ts';
-import type { FilterData, ProjectListResponse, ProjectSearchRequest, SearchData } from "@/types/type.projects";
+import type { FilterData, ProjectExtra, ProjectSearchRequest, SearchData } from "@/types/type.projects";
 import { useState } from "react";
 import { useSelect } from "../_common/api.hook";
 
-const initData:SearchData = {
-  page:0,
-  size:10,
-  order:'',
+const initData: SearchData = {
+  page: 0,
+  size: 10,
+  order: '001',
 }
 
-const initFilterData:FilterData = {
+const initFilterData: FilterData = {
   skillCodeList: [],
   regionCodeList: [],
   positionCodeList: [],
@@ -18,7 +18,7 @@ const initFilterData:FilterData = {
   positionLevelCodeList: [],
   projectRecruitTypeList: [],
   projectProgressTypeList: [],
-  projectRecruitStatusList: [], 
+  projectRecruitStatusList: [],
   recruitmentStartDate: null,
   recruitmentEndDate: null,
   progressStartDate: null,
@@ -28,15 +28,15 @@ export default function useSelectProjects(
   initialFilter?: Partial<FilterData>,
   initialSearch?: Partial<SearchData>,
   initialKeyword?: string,
-){  
+) {
 
   const baseFilter = { ...initFilterData, ...initialFilter };
   const baseSearch = { ...initData, ...initialSearch };
   const baseKeyword = initialKeyword ?? "";
 
   const {
-    state: filters, 
-    setState: setFilters, 
+    state: filters,
+    setState: setFilters,
     handleChange: setFilter,
     createToggle,
     createHandler: createFilterHandler,
@@ -52,16 +52,15 @@ export default function useSelectProjects(
   const options = {
     apiFn: getProjects,
     req: request,
-    cacheKey: `projects-${JSON.stringify(request)}`,
   }
-  const { res, loading } = useSelect<ProjectListResponse, ProjectSearchRequest>(options);
+  const { res, loading } = useSelect<ProjectExtra, ProjectSearchRequest>(options);
 
   const setPage = (page: number) => {
-    setRequest((prev) => ({...prev, page: page}));
+    setRequest((prev) => ({ ...prev, page: page }));
   }
 
   const setOrder = (order: string) => {
-    setRequest((prev) => ({...prev, order: order, page: 1}));
+    setRequest((prev) => ({ ...prev, order: order, page: 0 }));
   }
 
   const resetAll = () => {
@@ -84,22 +83,22 @@ export default function useSelectProjects(
     });
   }
 
-  const applyFilter = (filterData?:FilterData) => {
-    setRequest((prev)=>({
+  const applyFilter = (filterData?: FilterData) => {
+    setRequest((prev) => ({
       ...prev,
       ...filters,
       ...filterData,
       page: 0
     }));
-    if(filterData) setFilters(filterData);
+    if (filterData) setFilters(filterData);
   }
 
-  return { 
+  return {
     filters, setFilters, setFilter, createToggle, createFilterHandler, resetFilters,
     request, setRequest,
     keyword, setKeyword,
     setPage, setOrder,
-    res, loading, 
-    applySearch, applyFilter, resetAll 
+    res, loading,
+    applySearch, applyFilter, resetAll
   };
 }

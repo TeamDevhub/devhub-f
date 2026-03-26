@@ -1,5 +1,5 @@
 import WebPopup from "@/components/_common/popup/WebPopup";
-import {type ApplicationsFormCreate} from "@/types/type.projects"
+import {type ApplicationFormCreate} from "@/types/type.projects"
 import {type ChangeEvent, useState} from "react";
 import CustomTextfield from "@/components/_common/customMUI/CustomTextfield";
 import CustomRadioGroup from "@/components/_common/customMUI/CustomRadioGroup"
@@ -11,7 +11,7 @@ import {APPLICATION_FORM_TYPE, APPLICATION_FORM_TYPE_OPTIONS, USE_YN_OPTIONS, ty
 interface  AdditionnalFormPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (newForm:ApplicationsFormCreate) => void;
+  onSubmit: (newForm:ApplicationFormCreate) => void;
 }
 
 function PopupField({
@@ -58,7 +58,7 @@ export default function AdditionalFormPopup ({
     onClose,
     onSubmit,
 }: AdditionnalFormPopupProps) {
-    const initData:ApplicationsFormCreate =  {
+    const initData:ApplicationFormCreate =  {
         typeCd: APPLICATION_FORM_TYPE.SHORTTEXT,
         title: '',
         helpText: '',
@@ -105,7 +105,7 @@ export default function AdditionalFormPopup ({
 
     const onHandleSubmit = () => {
         const {helpText, itemList, ...restState } = state;
-        const cleanState = {...restState} as ApplicationsFormCreate;
+        const cleanState = {...restState} as ApplicationFormCreate;
         if(helpText) {
             cleanState.helpText = helpText;
         } 

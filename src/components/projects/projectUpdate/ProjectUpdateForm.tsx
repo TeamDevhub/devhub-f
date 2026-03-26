@@ -10,7 +10,7 @@ import useUpdateProject from '@/hooks/projects/useUpdateProject.ts'
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import { COMMON_CODE } from '@/types/const';
 import { type DateType } from '@/types/type.api';
-import type { Position, ProjectUpdate } from '@/types/type.projects';
+import type { Position, ProjectUpdate, ApplicationFormCreate } from '@/types/type.projects';
 import { AddCircle, Remove, Search } from '@mui/icons-material';
 import { Button, Divider, FormControl, FormLabel, IconButton, Paper } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -181,7 +181,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropForm name={"attachment"} ref={attachmentRef} />
+                <DragAndDropForm name={"attachment"} initialFileName={values.attachmentFileName} ref={attachmentRef} />
               </div>
             </div>
           </div>
@@ -192,7 +192,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <DragAndDropForm name={"image"} ref={imageRef} />
+                <DragAndDropForm name={"image"} initialFileName={values.imageFileName} ref={imageRef} />
               </div>
             </div>
           </div>
@@ -236,7 +236,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
         </div>
         {/* 3. action buttons */}
         <div className="action-button-box align-center justify-end">
-          <Button size='large' variant='outlined'>취소</Button>
+          <Button size='large' variant='outlined' onClick={()=>{history.back()}}>취소</Button>
           <Button size='large' variant='outlined'>양식 미리보기</Button>
           <Button size='large' variant='contained' onClick={onSubmit}>등록</Button>
         </div>
@@ -244,7 +244,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
 
       <SkillPopup isOpen={skillPopup.isOpen} onClose={skillPopup.close} values={values.skillList ? values.skillList : []} setValues={(values: string[]) => onHandleEvent("skillList", values)} />
       <RegionPopup isOpen={regionPopup.isOpen} onClose={regionPopup.close} values={values.progressRegionCd ? [values.progressRegionCd] : ['']} setValues={(values: string[]) => onHandleEvent("progressRegionCd", values.toString())} />
-      <AdditionalFormPopup isOpen={additionalPopup.isOpen} onClose={additionalPopup.close} onSubmit={(newForm: ApplicationsFormCreate) => onHandleEvent("additionalFormList", values.additionalFormList.concat(newForm))} />
+      <AdditionalFormPopup isOpen={additionalPopup.isOpen} onClose={additionalPopup.close} onSubmit={(newForm: ApplicationFormCreate) => onHandleEvent("additionalFormList", values.additionalFormList.concat(newForm))} />
 
     </div>
   )

@@ -3,15 +3,16 @@ import { useState, useRef, forwardRef, useImperativeHandle, type ChangeEvent, ty
 export interface DragAndDropFormProps {
     placeHolder?: string;
     name?: string;
+    initialFileName?: string;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 const DragAndDropForm = forwardRef<HTMLInputElement, DragAndDropFormProps>(
-    ({ placeHolder = "파일을 드래그하거나 클릭하세요", name , onChange, ...res}, ref) => {
+    ({ placeHolder = "파일을 드래그하거나 클릭하세요", name , initialFileName = null, onChange, ...res}, ref) => {
         const internalRef = useRef<HTMLInputElement>(null);
 
         useImperativeHandle(ref, () => internalRef.current!);
-        const [fileName, setFileName] = useState<string | null>(null);
+        const [fileName, setFileName] = useState<string | null>(initialFileName);
 
         const onDrop = (e: DragEvent<HTMLDivElement>) => {
             e.preventDefault();
@@ -28,7 +29,7 @@ const DragAndDropForm = forwardRef<HTMLInputElement, DragAndDropFormProps>(
         const _onChange = (e: ChangeEvent<HTMLInputElement>) => {
             const file = e.target.files?.[0];
             if (file) {
-                setFileName(file.name); // UI 업데이트는 여기서만!
+                setFileName(file.name);
             }
             onChange?.(e);
         };
