@@ -28,7 +28,7 @@ export default function useSignup(email: string) {
   useEffect(() => {
     const fetchTerms = async () => {
       try {
-        const res = await getTerms(0, 100);
+        const res = await getTerms();
         const data = res.data ?? [];
 
         setTerms(
