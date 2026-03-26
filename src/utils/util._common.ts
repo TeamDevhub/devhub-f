@@ -69,7 +69,7 @@ export const removeLocalStorage = (key: string): void => {
 export const Validators = {
   // 필수값 체크
   required: (msg: string = ERROR_MESSAGES.VALIDATE_REQUIRED) =>
-    (v: unknown) => (v !== null && v !== undefined && v !== "" ? null : msg),
+    (v: unknown) => (v !== null && v !== undefined && v != "" ? null : msg),
 
   // 최소 길이 체크
   minLength: (min: number, msg?: string) => 

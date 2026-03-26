@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { UploadResponse } from '@/types/type.api.ts';
 import { ERROR_MESSAGES } from '@/types/const.errorMessages.ts';
 import fetcher from '@/utils/util.api.ts';
+import {useLoading} from "@/contexts/LoadingContext.ts";
 
 interface FileState {
   file: File | null;
@@ -20,6 +21,7 @@ const useFileUpload = () => {
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const [errors, setErrors] = useState<Record<string, string | null>>({});
   const [fileStates, setFileStates] = useState<Record<string, FileState>>({});
+  const { show, hide } = useLoading();
 
   useEffect(() => {
     return () => {
@@ -39,6 +41,9 @@ const useFileUpload = () => {
     const finalMaxSize = options?.maxSize ?? DEFAULT_MAX_SIZE_MB;
     el.accept = finalAccept;
 
+    el.onclick = show;
+    el.oncancel = hide;
+
     el.onchange = () => {
       const file = el.files?.[0] || null;
       let errorMessage: string | null = null;
@@ -50,6 +55,7 @@ const useFileUpload = () => {
           errorMessage = ERROR_MESSAGES.FILE_INVALID_TYPE;
         }
       }
+
       if (errorMessage) {
         el.value = '';
         setErrors((prev) => ({
@@ -86,6 +92,7 @@ const useFileUpload = () => {
   };
 
   const handleFileUpdate = (name: string, file: File | null) => {
+    hide();
     if (fileStates[name]?.previewUrl) URL.revokeObjectURL(fileStates[name].previewUrl);
     const previewUrl = file ? URL.createObjectURL(file) : null;
     setFileStates((prev) => ({
@@ -136,6 +143,7 @@ const useFileUpload = () => {
 
   return {
     register,
+    inputRefs,
     fileStates,
     upload,
     errors,

@@ -3,6 +3,7 @@ import { AuthContext } from './AuthContext';
 import { getUserProfile } from '@/api/profile/profile.api';
 
 import type { UserBasicResponse } from '@/types/type.user';
+import {setSessionStorage} from "@/utils/util._common.ts";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserBasicResponse | undefined>(undefined);
@@ -39,7 +40,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const login = async (token?: string) => {
     if (!token) return;
 
-    sessionStorage.setItem('accessToken', token);
+    setSessionStorage('accessToken', token);
     setIsLoggedIn(true);
 
     await refreshUser();

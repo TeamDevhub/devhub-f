@@ -43,6 +43,7 @@ import FormManagementPage from '@/pages/design/admin/forms/FormManagementPage';
 import BoardManagementPage from '@/pages/design/admin/boards/BoardManagementPage';
 import BannerManagementPage from '@/pages/design/admin/banner/BannerManagementPage';
 import TermsManagementPage from '@/pages/design/admin/terms/TermsManagementPage';
+import Banner from '@/pages/admin/Banner';
 import DesignMainPage from '@/pages/design/web/main/DesignMainPage';
 
 
@@ -116,6 +117,22 @@ const router = createBrowserRouter([
           },
         ]
       },
+    ],
+  },
+  {
+    path: '/admin',
+    element: <AdminLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'banner',
+        children: [
+          {
+            index: true,
+            element: <Banner />,
+          }
+        ]
+      }
     ],
   },
   {
