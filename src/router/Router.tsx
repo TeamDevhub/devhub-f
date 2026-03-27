@@ -21,10 +21,12 @@ import ErrorPage from '@/pages/ErrorPage';
 import BoardList from '@/pages/web/boards/BoardList';
 import BoardCreate from '@/pages/web/boards/BoardCreate';
 import BoardDetail from '@/pages/web/boards/BoardDetail';
+import BoardUpdate from '@/pages/web/boards/BoardUpdate';
 import Login from '@/pages/web/login/Login';
 import ProfileLayout from '@/layout/ProfileLayout';
 import MyProfileHome from '@/pages/web/profile/home';
 import MyProfileUpdateWrapper from '@/pages/web/profile/update';
+import MyProfileBoardList from '@/pages/web/profile/boards';
 import MainPage from '@/pages/web/MainPage';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
@@ -72,10 +74,10 @@ const router = createBrowserRouter([
           //   path: 'projects',
           //   element: <MyProfileProjectList />,
           // },
-          // {
-          //   path: 'boards',
-          //   element: <MyProfileBoardList />,
-          // },
+          {
+            path: 'boards',
+            element: <MyProfileBoardList />,
+          },
         ],
       },
       {
@@ -113,6 +115,10 @@ const router = createBrowserRouter([
           {
             path: 'detail',
             element: <BoardDetail />
+          },
+          {
+            path: 'update',
+            element: <BoardUpdate/>
           },
         ]
       },
