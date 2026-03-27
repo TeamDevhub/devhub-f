@@ -162,55 +162,53 @@ export default function FormManagementPage(){
         submitText={'등록'}
         onSubmit={() => {}}
       >
-        <div className="admin-popup">
-          <div className="description-list flex-col gap-4">
-            <dl className='align-center gap-4'>
-              <dt>필드 명</dt>
-              <dd className='w-100'>
-                <CustomTextfield size='small' />
-              </dd>
-            </dl>
-            <dl className='align-center gap-4'>
-              <dt>타입</dt>
-              <dd className='w-100'>
-                <Select 
-                  id='category' value={type} onChange={handleChange2} size='small' displayEmpty
-                  renderValue={(selected) => selected === '' ? 'Textfield' : selected }
-                  sx={{
-                    width: '100%',
-                    '& legend': { display: 'none' },
-                    '& fieldset': { top: 0 },
-                  }}
-                >
-                  <MenuItem value=''>Textfield</MenuItem>
-                </Select>
-              </dd>
-            </dl>
-            <dl className='align-stretch gap-4'>
-              <dt>글자 수 제한</dt>
-              <dd className='w-100 flex-col gap-4' style={{ padding: '1.3rem 0.8rem' }}>
-                <FormControl>
-                  <RadioGroup row aria-labelledby='text-limit-radio-group-label' defaultValue='true'>
-                    <FormControlLabel value='true' control={<Radio />} label='사용' />
-                    <FormControlLabel value='false' control={<Radio />} label='미사용' />
-                  </RadioGroup>
-                </FormControl>
-                <CustomTextfield size='small' />
-              </dd>
-            </dl>
-            <dl className='align-stretch gap-4'>
-              <dt>도움말</dt>
-              <dd className='w-100 flex-col gap-4' style={{ padding: '1.3rem 0.8rem' }}>
-                <FormControl>
-                  <RadioGroup row aria-labelledby='help-radio-group-label' defaultValue='true'>
-                    <FormControlLabel value='true' control={<Radio />} label='사용' />
-                    <FormControlLabel value='false' control={<Radio />} label='미사용' />
-                  </RadioGroup>
-                </FormControl>
-                <CustomTextfield size='small' />
-              </dd>
-            </dl>
-          </div>
+        <div className="description-list flex-col gap-4">
+          <dl className='align-center gap-4'>
+            <dt>필드 명</dt>
+            <dd className='w-100'>
+              <CustomTextfield size='small' />
+            </dd>
+          </dl>
+          <dl className='align-center gap-4'>
+            <dt>타입</dt>
+            <dd className='w-100'>
+              <Select 
+                id='category' value={type} onChange={handleChange2} size='small' displayEmpty
+                renderValue={(selected) => selected === '' ? 'Textfield' : selected }
+                sx={{
+                  width: '100%',
+                  '& legend': { display: 'none' },
+                  '& fieldset': { top: 0 },
+                }}
+              >
+                <MenuItem value=''>Textfield</MenuItem>
+              </Select>
+            </dd>
+          </dl>
+          <dl className='align-stretch gap-4'>
+            <dt>글자 수 제한</dt>
+            <dd className='w-100 flex-col gap-4' style={{ padding: '1.3rem 0.8rem' }}>
+              <FormControl>
+                <RadioGroup row aria-labelledby='text-limit-radio-group-label' defaultValue='true'>
+                  <FormControlLabel value='true' control={<Radio />} label='사용' />
+                  <FormControlLabel value='false' control={<Radio />} label='미사용' />
+                </RadioGroup>
+              </FormControl>
+              <CustomTextfield size='small' />
+            </dd>
+          </dl>
+          <dl className='align-stretch gap-4'>
+            <dt>도움말</dt>
+            <dd className='w-100 flex-col gap-4' style={{ padding: '1.3rem 0.8rem' }}>
+              <FormControl>
+                <RadioGroup row aria-labelledby='help-radio-group-label' defaultValue='true'>
+                  <FormControlLabel value='true' control={<Radio />} label='사용' />
+                  <FormControlLabel value='false' control={<Radio />} label='미사용' />
+                </RadioGroup>
+              </FormControl>
+              <CustomTextfield size='small' />
+            </dd>
+          </dl>
         </div>
       </WebPopup> */}
       {/* 3-2. type = radio */}
@@ -222,84 +220,82 @@ export default function FormManagementPage(){
         submitText={'등록'}
         onSubmit={() => {}}
       >
-        <div className="admin-popup">
-          <div className="description-list flex-col gap-4">
-            <dl className='align-center gap-4'>
-              <dt>필드 명</dt>
-              <dd className='w-100'>
+        <div className="description-list flex-col gap-4">
+          <dl className='align-center gap-4'>
+            <dt>필드 명</dt>
+            <dd className='w-100'>
+              <CustomTextfield size='small' />
+            </dd>
+          </dl>
+          <dl className='align-center gap-4'>
+            <dt>타입</dt>
+            <dd className='w-100'>
+              <Select 
+                id='category' value={type} onChange={handleChange2} size='small' displayEmpty
+                renderValue={(selected) => selected === '' ? 'Radio' : selected }
+                sx={{
+                  width: '100%',
+                  '& legend': { display: 'none' },
+                  '& fieldset': { top: 0 },
+                }}
+              >
+                <MenuItem value=''>Radio</MenuItem>
+              </Select>
+            </dd>
+          </dl>
+          <dl className='align-stretch gap-4'>
+            <dt>가로 여부</dt>
+            <dd className='w-100'>
+              <FormControl>
+                <RadioGroup row aria-labelledby='text-limit-radio-group-label' defaultValue='horizontal'>
+                  <FormControlLabel value='horizontal' control={<Radio />} label='가로' />
+                  <FormControlLabel value='vertical' control={<Radio />} label='세로' />
+                </RadioGroup>
+              </FormControl>
+            </dd>
+          </dl>
+          <dl className='align-stretch gap-4'>
+            <dt>선택항목</dt>
+            <dd className='w-100 flex-col gap-4'>
+              <div className="flex gap-8">
                 <CustomTextfield size='small' />
-              </dd>
-            </dl>
-            <dl className='align-center gap-4'>
-              <dt>타입</dt>
-              <dd className='w-100'>
-                <Select 
-                  id='category' value={type} onChange={handleChange2} size='small' displayEmpty
-                  renderValue={(selected) => selected === '' ? 'Radio' : selected }
-                  sx={{
-                    width: '100%',
-                    '& legend': { display: 'none' },
-                    '& fieldset': { top: 0 },
-                  }}
-                >
-                  <MenuItem value=''>Radio</MenuItem>
-                </Select>
-              </dd>
-            </dl>
-            <dl className='align-stretch gap-4'>
-              <dt>가로 여부</dt>
-              <dd className='w-100'>
-                <FormControl>
-                  <RadioGroup row aria-labelledby='text-limit-radio-group-label' defaultValue='horizontal'>
-                    <FormControlLabel value='horizontal' control={<Radio />} label='가로' />
-                    <FormControlLabel value='vertical' control={<Radio />} label='세로' />
-                  </RadioGroup>
-                </FormControl>
-              </dd>
-            </dl>
-            <dl className='align-stretch gap-4'>
-              <dt>선택항목</dt>
-              <dd className='w-100 flex-col gap-4'>
-                <div className="flex gap-8">
-                  <CustomTextfield size='small' />
-                  <IconButton size="small" className="w-fit">
-                    <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
-                  </IconButton> 
-                </div>
-                <div className="flex gap-8">
-                  <CustomTextfield size='small' />
-                  <IconButton size="small" className="w-fit">
-                    <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
-                  </IconButton> 
-                </div>
-                <div className="flex gap-8">
-                  <CustomTextfield size='small' />
-                  <IconButton size="small" className="w-fit">
-                    <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
-                  </IconButton> 
-                </div>
-                <div className="flex gap-8">
-                  <CustomTextfield size='small' />
-                  <IconButton size="small" className="w-fit">
-                    <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
-                  </IconButton> 
-                </div>
-                <Button size='medium' variant='contained' color='primary'>추가</Button>
-              </dd>
-            </dl>
-            <dl className='align-stretch gap-4'>
-              <dt>도움말</dt>
-              <dd className='w-100 flex-col gap-4' style={{ padding: '1.3rem 0.8rem' }}>
-                <FormControl>
-                  <RadioGroup row aria-labelledby='help-radio-group-label' defaultValue='true'>
-                    <FormControlLabel value='true' control={<Radio />} label='사용' />
-                    <FormControlLabel value='false' control={<Radio />} label='미사용' />
-                  </RadioGroup>
-                </FormControl>
+                <IconButton size="small" className="w-fit">
+                  <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
+                </IconButton> 
+              </div>
+              <div className="flex gap-8">
                 <CustomTextfield size='small' />
-              </dd>
-            </dl>
-          </div>
+                <IconButton size="small" className="w-fit">
+                  <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
+                </IconButton> 
+              </div>
+              <div className="flex gap-8">
+                <CustomTextfield size='small' />
+                <IconButton size="small" className="w-fit">
+                  <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
+                </IconButton> 
+              </div>
+              <div className="flex gap-8">
+                <CustomTextfield size='small' />
+                <IconButton size="small" className="w-fit">
+                  <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
+                </IconButton> 
+              </div>
+              <Button size='medium' variant='contained' color='primary'>추가</Button>
+            </dd>
+          </dl>
+          <dl className='align-stretch gap-4'>
+            <dt>도움말</dt>
+            <dd className='w-100 flex-col gap-4' style={{ padding: '1.3rem 0.8rem' }}>
+              <FormControl>
+                <RadioGroup row aria-labelledby='help-radio-group-label' defaultValue='true'>
+                  <FormControlLabel value='true' control={<Radio />} label='사용' />
+                  <FormControlLabel value='false' control={<Radio />} label='미사용' />
+                </RadioGroup>
+              </FormControl>
+              <CustomTextfield size='small' />
+            </dd>
+          </dl>
         </div>
       </WebPopup> */}
       {/* 3-3. type = select */}
@@ -311,73 +307,71 @@ export default function FormManagementPage(){
         submitText={'등록'}
         onSubmit={() => {}}
       >
-        <div className="admin-popup">
-          <div className="description-list flex-col gap-4">
-            <dl className='align-center gap-4'>
-              <dt>필드 명</dt>
-              <dd className='w-100'>
+        <div className="description-list flex-col gap-4">
+          <dl className='align-center gap-4'>
+            <dt>필드 명</dt>
+            <dd className='w-100'>
+              <CustomTextfield size='small' />
+            </dd>
+          </dl>
+          <dl className='align-center gap-4'>
+            <dt>타입</dt>
+            <dd className='w-100'>
+              <Select 
+                id='category' value={type} onChange={handleChange2} size='small' displayEmpty
+                renderValue={(selected) => selected === '' ? 'Select' : selected }
+                sx={{
+                  width: '100%',
+                  '& legend': { display: 'none' },
+                  '& fieldset': { top: 0 },
+                }}
+              >
+                <MenuItem value=''>Select</MenuItem>
+              </Select>
+            </dd>
+          </dl>
+          <dl className='align-stretch gap-4'>
+            <dt>선택항목</dt>
+            <dd className='w-100 flex-col gap-4'>
+              <div className="flex gap-8">
                 <CustomTextfield size='small' />
-              </dd>
-            </dl>
-            <dl className='align-center gap-4'>
-              <dt>타입</dt>
-              <dd className='w-100'>
-                <Select 
-                  id='category' value={type} onChange={handleChange2} size='small' displayEmpty
-                  renderValue={(selected) => selected === '' ? 'Select' : selected }
-                  sx={{
-                    width: '100%',
-                    '& legend': { display: 'none' },
-                    '& fieldset': { top: 0 },
-                  }}
-                >
-                  <MenuItem value=''>Select</MenuItem>
-                </Select>
-              </dd>
-            </dl>
-            <dl className='align-stretch gap-4'>
-              <dt>선택항목</dt>
-              <dd className='w-100 flex-col gap-4'>
-                <div className="flex gap-8">
-                  <CustomTextfield size='small' />
-                  <IconButton size="small" className="w-fit">
-                    <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
-                  </IconButton> 
-                </div>
-                <div className="flex gap-8">
-                  <CustomTextfield size='small' />
-                  <IconButton size="small" className="w-fit">
-                    <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
-                  </IconButton> 
-                </div>
-                <div className="flex gap-8">
-                  <CustomTextfield size='small' />
-                  <IconButton size="small" className="w-fit">
-                    <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
-                  </IconButton> 
-                </div>
-                <div className="flex gap-8">
-                  <CustomTextfield size='small' />
-                  <IconButton size="small" className="w-fit">
-                    <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
-                  </IconButton> 
-                </div>
-                <Button size='medium' variant='contained' color='primary'>추가</Button>
-              </dd>
-            </dl>
-            <dl className='align-stretch gap-4'>
-              <dt>도움말</dt>
-              <dd className='w-100 flex-col gap-4' style={{ padding: '1.3rem 0.8rem' }}>
-                <FormControl>
-                  <RadioGroup row aria-labelledby='help-radio-group-label' defaultValue='true'>
-                    <FormControlLabel value='true' control={<Radio />} label='사용' />
-                    <FormControlLabel value='false' control={<Radio />} label='미사용' />
-                  </RadioGroup>
-                </FormControl>
+                <IconButton size="small" className="w-fit">
+                  <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
+                </IconButton> 
+              </div>
+              <div className="flex gap-8">
                 <CustomTextfield size='small' />
-              </dd>
-            </dl>
-          </div>
+                <IconButton size="small" className="w-fit">
+                  <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
+                </IconButton> 
+              </div>
+              <div className="flex gap-8">
+                <CustomTextfield size='small' />
+                <IconButton size="small" className="w-fit">
+                  <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
+                </IconButton> 
+              </div>
+              <div className="flex gap-8">
+                <CustomTextfield size='small' />
+                <IconButton size="small" className="w-fit">
+                  <Clear sx={{ fontSize: 25, color: "rgba(0, 0, 0, 0.3)" }} />
+                </IconButton> 
+              </div>
+              <Button size='medium' variant='contained' color='primary'>추가</Button>
+            </dd>
+          </dl>
+          <dl className='align-stretch gap-4'>
+            <dt>도움말</dt>
+            <dd className='w-100 flex-col gap-4' style={{ padding: '1.3rem 0.8rem' }}>
+              <FormControl>
+                <RadioGroup row aria-labelledby='help-radio-group-label' defaultValue='true'>
+                  <FormControlLabel value='true' control={<Radio />} label='사용' />
+                  <FormControlLabel value='false' control={<Radio />} label='미사용' />
+                </RadioGroup>
+              </FormControl>
+              <CustomTextfield size='small' />
+            </dd>
+          </dl>
         </div>
       </WebPopup>
     </div>
