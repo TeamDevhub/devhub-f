@@ -369,18 +369,27 @@
 }
 
 /* popup */
-.web-popup{ overflow: hidden; position: relative; width: fit-content; 
-  .popup-title-box{ padding: 12px 24px; background: linear-gradient(to right, rgba(66, 165, 245, 1) 0%, rgba(156, 39, 176, 0.3));
-    .popup-title{ font-size: 24px; font-weight: 700; line-height: 100%; color: #fff; }
-  }
-  .popup-button-box{ padding: 24px; gap: 10px; }
-  &:has(.admin-popup) {
-    .popup-title-box { background: #fff; 
-      .popup-title { color: #000; }
-      .MuiSvgIcon-root { color: #000; }
+// 1. web popup
+body:has(#devHub) {
+  .web-popup{ overflow: hidden; position: relative; width: fit-content; 
+    .popup-title-box{ padding: 12px 24px; background: linear-gradient(to right, rgba(66, 165, 245, 1) 0%, rgba(156, 39, 176, 0.3));
+      .popup-title{ font-size: 24px; font-weight: 700; line-height: 100%; color: #fff; }
     }
+    .popup-button-box{ padding: 24px; gap: 10px; }
   }
 }
+
+// 2. admin popup
+body:has(#devHubAdmin) {
+  .web-popup{ overflow: hidden; position: relative; width: fit-content; 
+    .popup-title-box { padding: 20px 24px 10px 20px; background: #fff; 
+      .popup-title { font-size: 24px; font-weight: 700; line-height: 100%; color: #000; }
+      .MuiSvgIcon-root { color: #000; }
+    }
+    .popup-button-box{ padding: 10px 24px 20px 24px; gap: 10px; }
+  }
+}
+
 // 1. project
 .left-filter-bar { width: 26rem; min-width: 26rem; padding: 2rem; gap: 1.2rem; position: relative;
   .reset-btn {position: absolute; top: 2rem; right: 2rem;}
@@ -452,16 +461,17 @@
   }
 }
 // 4. admin
-.admin-popup { padding: 1rem 2.4rem;
-  .description-list {
+  .description-list { padding: 0 3.2rem 0.8rem 3.2rem;
     dt { min-width: 15rem; padding: 1.3rem 1.6rem; font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: #000; background-color: #F3F3F3; }
     dd { padding: 1.3rem 0.8rem; font-size: 1.6rem; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-secondary); 
       &:has(.MuiCheckbox-root, .MuiSelect-root, .MuiRadioGroup-root, .MuiPickersTextField-root, .MuiTextField-root, .MuiInputBase-inputMultiline) { padding: 0 0.8rem; }
       &:has(.MuiInputBase-inputMultiline) { padding: 1.3rem 0.8rem; }
     }
   }
-  .only-text { padding: 2.2rem 0; font-size: 2rem; line-height: 2.4rem; letter-spacing: 0.15px; color: #000; }
-}
+  .only-text { padding: 3.2rem; 
+    p { font-size: 2rem; line-height: 2.4rem; letter-spacing: 0.15px; color: #000;  }
+  }
+
 // 5. datepicker
 .MuiPickersLayout-root { margin: 0.8rem 0;
   .MuiPickersCalendarHeader-labelContainer { font-size: 1.6rem; 
