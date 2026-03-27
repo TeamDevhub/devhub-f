@@ -1,3 +1,5 @@
+import type { AgreeTermsRequest } from './type.terms';
+
 export interface SendVerificationCodeRequest {
   verificationType: string;
   value: string;
@@ -16,4 +18,5 @@ export interface SignupRequest {
   introduction: string;
   skillList: string[];
   positionList: string[];
+  termsAgreementList: AgreeTermsRequest[];
 }
