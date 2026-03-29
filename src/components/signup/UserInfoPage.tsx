@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import logo from '@/assets/images/devHub-logo.png';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
@@ -12,6 +13,9 @@ import SelectableGroup from '@/components/_common/SelectableGroup';
 import { FormSection } from './FormSection';
 import AddableChipGroup from '../_common/AddableChipGroup';
 import { useCodes } from '@/contexts/CommonCodeContext.ts';
+import useSelectTerms from '@/hooks/terms/useSelectTerms';
+import { Dialog, DialogTitle, DialogContent } from '@mui/material';
+import type { TermsResponse } from '@/types/type.terms';
 
 interface Props {
   email: string;
@@ -20,8 +24,34 @@ interface Props {
 export default function UserInfoPage({ email }: Props) {
   const skillPopup = useDisclosure();
   const { getCodesByGroup } = useCodes();
-  const { userInfo, handleChange, createToggle, createHandler, terms, toggleTerms, agreeAllTerms, applySignup, loading } = useSignup(email);
-  const isAllChecked = terms.length > 0 && terms.every((t) => t.isAgreed);
+
+  const { userInfo, handleChange, createToggle, createHandler, terms, initTerms, toggleTerms, agreeAllTerms, applySignup, loading } =
+    useSignup(email);
+
+  const { res } = useSelectTerms();
+
+  useEffect(() => {
+    if (res?.dataList) {
+      initTerms(res.dataList);
+    }
+  }, [res, initTerms]);
+
+  const [selectedTerms, setSelectedTerms] = useState<TermsResponse | null>(null);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleOpenTerms = (terms: TermsResponse) => {
+    setSelectedTerms(terms);
+    setOpenDialog(true);
+  };
+
+  const handleCloseTerms = () => {
+    setOpenDialog(false);
+    setSelectedTerms(null);
+  };
+
+  const isAllChecked = terms.length > 0 && terms.every((t) => t.agreed);
+
+  const isRequiredValid = terms.filter((t) => t.required).every((t) => t.agreed);
 
   return (
     <div className="auth-page flex-center">
@@ -40,6 +70,7 @@ export default function UserInfoPage({ email }: Props) {
           </div>
 
           <Divider />
+
           {/* ID */}
           <div className="field-box flex-col">
             <div className="field-title align-center">
@@ -50,7 +81,7 @@ export default function UserInfoPage({ email }: Props) {
             </div>
           </div>
 
-          {/* 비밀번호 설정 */}
+          {/* 비밀번호 */}
           <FormSection title="비밀번호 설정" icon={<LockOutline sx={{ fontSize: 20, color: 'var(--primary-main)' }} />}>
             <CustomTextfield
               type="password"
@@ -80,7 +111,7 @@ export default function UserInfoPage({ email }: Props) {
             />
           </FormSection>
 
-          {/* 관심 포지션 */}
+          {/* 포지션 */}
           <FieldBox title="관심 포지션" type="wide" helpText="관심 포지션은 필수로 선택해야합니다.">
             <div className="chip-box w-100 align-center flex-wrap">
               <SelectableGroup
@@ -92,7 +123,7 @@ export default function UserInfoPage({ email }: Props) {
             </div>
           </FieldBox>
 
-          {/* 기술스택 */}
+          {/* 스킬 */}
           <FormSection title="보유 스킬" className="field-box2" contentGap="0.5rem">
             <div className="content-box align-stretch">
               <div className="chip-box align-center flex-wrap" style={{ flex: 1, minHeight: '56px' }}>
@@ -114,9 +145,9 @@ export default function UserInfoPage({ email }: Props) {
             setValues={createHandler('skillList')}
           />
 
+          {/* 약관 */}
           <FieldBox title="약관 동의" type="wide" helpText="필수 약관에 동의해야 가입이 가능합니다.">
             <div className="flex-col" style={{ gap: '0.5rem' }}>
-              {/* 전체 동의 */}
               <label style={{ fontWeight: 600 }}>
                 <input type="checkbox" checked={isAllChecked} onChange={(e) => agreeAllTerms(e.target.checked)} />
                 전체 동의
@@ -124,24 +155,48 @@ export default function UserInfoPage({ email }: Props) {
 
               <Divider />
 
-              {/* 개별 약관 */}
               {terms.map((t) => (
-                <label key={t.termsGuid} style={{ display: 'flex', gap: '0.4rem' }}>
-                  <input type="checkbox" checked={t.isAgreed} onChange={() => toggleTerms(t.termsGuid)} />
-                  <span>
-                    {t.title} {t.isRequired && <span style={{ color: 'red' }}>(필수)</span>}
+                <div
+                  key={t.termsGuid}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <label style={{ display: 'flex', gap: '0.4rem' }}>
+                    <input type="checkbox" checked={t.agreed} onChange={() => toggleTerms(t.termsGuid)} />
+                    <span>
+                      {t.title} {t.required && <span style={{ color: 'red' }}>(필수)</span>}
+                    </span>
+                  </label>
+
+                  <span style={{ cursor: 'pointer', fontWeight: 600 }} onClick={() => handleOpenTerms(t)}>
+                    &gt;
                   </span>
-                </label>
+                </div>
               ))}
             </div>
           </FieldBox>
 
           <Divider sx={{ marginY: '0.5rem' }} />
 
-          <Button size="large" variant="contained" fullWidth onClick={applySignup} disabled={loading}>
+          <Button size="large" variant="contained" fullWidth onClick={applySignup} disabled={!isRequiredValid || loading}>
             {loading ? '가입 중...' : '회원가입'}
           </Button>
         </Paper>
+
+        <Dialog open={openDialog} onClose={handleCloseTerms} maxWidth="md" fullWidth>
+          <DialogTitle>{selectedTerms?.title}</DialogTitle>
+
+          <DialogContent dividers>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: selectedTerms?.content || '',
+              }}
+            />
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

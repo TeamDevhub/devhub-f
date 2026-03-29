@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState, useCallback } from 'react';
 import { signup } from '@/api/signup/signup.api';
-import { getTerms } from '@/api/terms/terms.api';
 
 import type { ApiResponse } from '@/types/type.api';
 import type { SignupRequest } from '@/types/type.signup';
@@ -17,38 +16,28 @@ interface SignupFormState extends SignupRequest {
 }
 
 interface TermsItem extends TermsResponse {
-  isAgreed: boolean;
+  agreed: boolean;
 }
 
 export default function useSignup(email: string) {
   const { alert } = useModal();
   const navigate = useNavigate();
+
   const [terms, setTerms] = useState<TermsItem[]>([]);
 
-  useEffect(() => {
-    const fetchTerms = async () => {
-      try {
-        const res = await getTerms();
-        const data = res.data ?? [];
-
-        setTerms(
-          data
-            .filter((t) => t.isUsed && !t.isDeleted)
-            .map((t) => ({
-              ...t,
-              isAgreed: false,
-            })),
-        );
-      } catch {
-        alert('약관을 불러오지 못했습니다.');
-      }
-    };
-
-    fetchTerms();
-  }, [alert]);
+  const initTerms = useCallback((termsList: TermsResponse[]) => {
+    setTerms(
+      termsList
+        .filter((t) => t.used && !t.deleted)
+        .map((t) => ({
+          ...t,
+          agreed: false,
+        })),
+    );
+  }, []);
 
   const toggleTerms = (termsGuid: string) => {
-    setTerms((prev) => prev.map((t) => (t.termsGuid === termsGuid ? { ...t, isAgreed: !t.isAgreed } : t)));
+    setTerms((prev) => prev.map((t) => (t.termsGuid === termsGuid ? { ...t, agreed: !t.agreed } : t)));
   };
 
   const agreeAllTerms = (checked: boolean) => {
@@ -61,7 +50,7 @@ export default function useSignup(email: string) {
   };
 
   const validateTerms = () => {
-    const hasUnagreedRequired = terms.some((t) => t.isRequired && !t.isAgreed);
+    const hasUnagreedRequired = terms.some((t) => t.required && !t.agreed);
 
     if (hasUnagreedRequired) {
       alert('필수 약관에 동의해주세요.');
@@ -74,11 +63,11 @@ export default function useSignup(email: string) {
   const buildTermsPayload = (): AgreeTermsRequest[] =>
     terms.map((t) => ({
       termsGuid: t.termsGuid,
-      isAgreed: t.isAgreed,
+      agreed: t.agreed,
     }));
 
   const initData: SignupFormState = {
-    email: email,
+    email,
     password: '',
     passwordConfirm: '',
     username: '',
@@ -119,8 +108,6 @@ export default function useSignup(email: string) {
 
     if (!validateTerms()) return;
 
-    const termsAgreementList = buildTermsPayload();
-
     const payload: SignupRequest = {
       email: userInfo.email,
       password: userInfo.password,
@@ -128,7 +115,7 @@ export default function useSignup(email: string) {
       introduction: userInfo.introduction,
       skillList: userInfo.skillList,
       positionList: userInfo.positionList,
-      termsAgreementList,
+      termsAgreementList: buildTermsPayload(),
     };
 
     await requestSignup(payload);
@@ -141,6 +128,7 @@ export default function useSignup(email: string) {
     createToggle,
 
     terms,
+    initTerms,
     toggleTerms,
     agreeAllTerms,
 

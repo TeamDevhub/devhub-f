@@ -7,13 +7,13 @@ import type { TermsResponse } from '@/types/type.terms';
 export default function useSelectTerms() {
   const apiFn = useCallback(() => getTerms(), []);
 
-  const { res, loading, error } = useSelect<TermsResponse[], void>({
+  const { res, loading, error } = useSelect<TermsResponse, void>({
     apiFn,
     req: undefined,
   });
 
   return {
-    termsList: res?.dataList ?? [],
+    res,
     loading,
     error,
   };

@@ -2,29 +2,29 @@ export interface Terms {
   termsGuid: string;
   title: string;
   content: string;
-  isRequired: boolean;
-  isUsed: boolean;
-  isDeleted: boolean;
+  required: boolean;
+  used: boolean;
+  deleted: boolean;
 }
 
 export interface AgreeTermsRequest {
   termsGuid: string;
-  isAgreed: boolean;
+  agreed: boolean;
 }
 
 export interface CreateTermsRequest {
   title: string;
   content: string;
-  isRequired: boolean;
-  isUsed: boolean;
-  isDeleted: boolean;
+  required: boolean;
+  used: boolean;
+  deleted: boolean;
 }
 
 export interface TermsResponse {
   termsGuid: string;
   title: string;
   content: string;
-  isRequired: boolean;
-  isUsed: boolean;
-  isDeleted: boolean;
+  required: boolean;
+  used: boolean;
+  deleted: boolean;
 }
