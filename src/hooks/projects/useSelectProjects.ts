@@ -101,6 +101,6 @@ export default function useSelectProjects(
     setPage, setOrder,
     res, loading,
     applySearch, applyFilter, resetAll,
-    toggleLike: projectLikeMutate,
+    toggleLike: projectLikeMutate
   };
 }

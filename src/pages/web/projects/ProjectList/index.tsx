@@ -8,6 +8,7 @@ import useSelectProjects from '@/hooks/projects/useSelectProjects';
 import { useNavigate } from 'react-router-dom';
 import type { FilterData } from '@/types/type.projects';
 import { FilterAlt } from '@mui/icons-material';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button, FormControl, MenuItem, Pagination, Paper, Select } from '@mui/material';
 
 export default function ProjectList() {
@@ -15,6 +16,7 @@ export default function ProjectList() {
   const skillPopup = useDisclosure();
   const filterPopup = useDisclosure();
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
   const handleApplyFilterPopup = (data: FilterData) => {
     filterPopup.close();
@@ -34,7 +36,6 @@ export default function ProjectList() {
     keyword, setKeyword,
     setOrder, setPage,
     toggleLike
-
   } = useSelectProjects();
 
   return (
@@ -73,7 +74,7 @@ export default function ProjectList() {
 
         <div className='project-list flex-col align-center'>
           {res?.dataList?.map((item, index) => {
-            return <ProjectCard key={index} projectData={item} toggleLike={toggleLike}></ProjectCard>
+            return <ProjectCard key={index} projectData={item} toggleLike={toggleLike} isLoggedIn={isLoggedIn ?? false}></ProjectCard>
           })}
           <div className='list-bottom-box w-100 align-center mt-a'>
             <Pagination page={request.page} count={res?.pagination?.totalPages} onChange={(_, v) => { setPage(v) }} color='primary' className='w-100 flex-center' showFirstButton showLastButton />

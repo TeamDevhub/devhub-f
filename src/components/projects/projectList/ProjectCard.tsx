@@ -11,8 +11,9 @@ import { useNavigate } from 'react-router-dom';
 interface ProjectCardProps {
   projectData: ProjectExtra;
   toggleLike: (projectGuid: string) => void;
+  isLoggedIn: boolean;
 }
-export default function ProjectCard({ projectData, toggleLike }: ProjectCardProps) {
+export default function ProjectCard({ projectData, toggleLike, isLoggedIn }: ProjectCardProps) {
   const {
     projectGuid,
     title,
@@ -71,7 +72,7 @@ export default function ProjectCard({ projectData, toggleLike }: ProjectCardProp
       <Divider orientation='vertical' />
       <div className='right-area flex-col justify-between'>
         <div className='heart-box flex-col align-end'>
-          <HeartButton likeCount={likeCount} onClick={onClickHeartBtn} defaultLiked={projectLiked} />
+          {isLoggedIn ? <HeartButton likeCount={likeCount} onClick={onClickHeartBtn} defaultLiked={projectLiked} /> : null}
         </div>
         <div className='chip-box flex-col'>
           <div className='recruit-chip-box align-center'>
