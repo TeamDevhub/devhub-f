@@ -2,9 +2,9 @@ import { Button, Divider, Paper } from '@mui/material';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import PasswordChangePopup from '@/components/_common/popup/PasswordChangePopup';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
-import FormField2 from '@/components/profile/FormField2';
-import FormFieldExtra from './FormFiledExtra';
-import FieldGroup2 from '@/components/profile/FieldGroup2';
+import MyProfileUpdateBaseForm from './update/MyProfileUpdateBaseForm';
+import MyProfileUpdateExtraForm from './update/MyProfileUpdateExtraForm';
+import MyProfileUpdateFieldGroup from './update/MyProfileUpdateFieldGroup';
 import SelectableGroup from '@/components/_common/SelectableGroup';
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import { useCodes } from '@/contexts/CommonCodeContext';
@@ -29,23 +29,23 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
     <>
       <Paper className="mypage-box flex-col flex-1" elevation={4}>
         {/* 이메일 */}
-        <FormField2 label="이메일">
-          <FieldGroup2>
+        <MyProfileUpdateBaseForm label="이메일">
+          <MyProfileUpdateFieldGroup>
             <div className="flex-col">
               <CustomTextfield value={profile.user.email} readonly />
             </div>
-          </FieldGroup2>
-        </FormField2>
+          </MyProfileUpdateFieldGroup>
+        </MyProfileUpdateBaseForm>
 
         {/* 기본 정보 */}
-        <FormField2 label="내 정보">
-          <FieldGroup2>
+        <MyProfileUpdateBaseForm label="내 정보">
+          <MyProfileUpdateFieldGroup>
             <div className="flex-col">
               <CustomTextfield value={userInfo.username} onChange={(e) => handleChange('username', e.target.value)} placeholder="닉네임" />
             </div>
-          </FieldGroup2>
+          </MyProfileUpdateFieldGroup>
 
-          <FieldGroup2>
+          <MyProfileUpdateFieldGroup>
             <div className="flex-col">
               <CustomTextfield
                 type="textarea"
@@ -55,11 +55,11 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
                 placeholder="자기소개"
               />
             </div>
-          </FieldGroup2>
-        </FormField2>
+          </MyProfileUpdateFieldGroup>
+        </MyProfileUpdateBaseForm>
 
         {/* 관심 포지션 */}
-        <FormFieldExtra label="관심 포지션">
+        <MyProfileUpdateExtraForm label="관심 포지션">
           <div className="chip-box w-100 align-center flex-wrap">
             <SelectableGroup
               type="chip"
@@ -68,10 +68,10 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
               onToggle={createToggle('positionList')}
             />
           </div>
-        </FormFieldExtra>
+        </MyProfileUpdateExtraForm>
 
         {/* 보유 스킬 */}
-        <FormFieldExtra label="보유 스킬">
+        <MyProfileUpdateExtraForm label="보유 스킬">
           <div className="content-box align-stretch">
             <div className="chip-box align-center flex-wrap" style={{ flex: 1, minHeight: '56px' }}>
               <AddableChipGroup
@@ -82,7 +82,7 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
               />
             </div>
           </div>
-        </FormFieldExtra>
+        </MyProfileUpdateExtraForm>
 
         <SkillPopup
           key={skillPopup.isOpen ? 'open' : 'close'}

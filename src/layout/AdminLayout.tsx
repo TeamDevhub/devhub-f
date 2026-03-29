@@ -1,10 +1,10 @@
-import Header from '@/components/_common/layout/Header';
 import {Outlet} from 'react-router-dom';
 import {LoadingProvider} from "@/contexts/LoadingProvider";
 import {CommonCodeProvider} from "@/contexts/CommonCodeProvider.tsx";
 import {LoadingBridge} from "@/contexts/LoadingContext.ts";
 import {AuthProvider} from "@/contexts/AuthProvider.tsx";
 import {ModalProvider} from "@/contexts/ModalProvider.tsx";
+import LeftMenuBar from "@/components/design/LeftMenuBar.tsx";
 
 export default function AdminLayout() {
 
@@ -21,7 +21,10 @@ export default function AdminLayout() {
                                 <h1 style={{ color: '#fff' }}>DevHub</h1>
                             </div>
                             <main>
-                              <Outlet></Outlet>
+                                <div className='admin-page flex'>
+                                    <LeftMenuBar selectedKey='banner' />
+                                    <Outlet></Outlet>
+                                </div>
                             </main>
                         </div>
                     </ModalProvider>

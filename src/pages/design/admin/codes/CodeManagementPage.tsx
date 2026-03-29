@@ -267,49 +267,47 @@ export default function CodeManagementPage(){
         submitText={'등록'}
         onSubmit={() => {}}
       >
-        <div className="admin-popup">
-          <div className="description-list flex-col gap-4">
-            <dl className='align-center gap-4'>
-              <dt>코드</dt>
-              <dd className='w-100'>
-                <CustomTextfield size='small' />
-              </dd>
-            </dl>
-            <dl className='align-center gap-4'>
-              <dt>이름</dt>
-              <dd className='w-100'>
-                <CustomTextfield size='small' />
-              </dd>
-            </dl>
-            <dl className='align-center gap-4'>
-              <dt>사용여부</dt>
-              <dd className='w-100'>
-                <Select 
-                  id='category' value={usedYn} onChange={handleChange5} size='small' displayEmpty
-                  renderValue={(selected) => selected === '' ? '사용' : selected }
-                  sx={{
-                    width: '100%',
-                    '& legend': { display: 'none' },
-                    '& fieldset': { top: 0 },
-                  }}
-                >
-                  <MenuItem value=''>사용</MenuItem>
-                </Select>
-              </dd>
-            </dl>
-            <dl className='align-center gap-4'>
-              <dt>정렬</dt>
-              <dd className='w-100'>
-                <CustomTextfield size='small' />
-              </dd>
-            </dl>
-            <dl className='align-center gap-4'>
-              <dt>비고</dt>
-              <dd className='w-100'>
-                <CustomTextfield size='small' />
-              </dd>
-            </dl>
-          </div>
+        <div className="description-list flex-col gap-4">
+          <dl className='align-center gap-4'>
+            <dt>코드</dt>
+            <dd className='w-100'>
+              <CustomTextfield size='small' />
+            </dd>
+          </dl>
+          <dl className='align-center gap-4'>
+            <dt>이름</dt>
+            <dd className='w-100'>
+              <CustomTextfield size='small' />
+            </dd>
+          </dl>
+          <dl className='align-center gap-4'>
+            <dt>사용여부</dt>
+            <dd className='w-100'>
+              <Select 
+                id='category' value={usedYn} onChange={handleChange5} size='small' displayEmpty
+                renderValue={(selected) => selected === '' ? '사용' : selected }
+                sx={{
+                  width: '100%',
+                  '& legend': { display: 'none' },
+                  '& fieldset': { top: 0 },
+                }}
+              >
+                <MenuItem value=''>사용</MenuItem>
+              </Select>
+            </dd>
+          </dl>
+          <dl className='align-center gap-4'>
+            <dt>정렬</dt>
+            <dd className='w-100'>
+              <CustomTextfield size='small' />
+            </dd>
+          </dl>
+          <dl className='align-center gap-4'>
+            <dt>비고</dt>
+            <dd className='w-100'>
+              <CustomTextfield size='small' />
+            </dd>
+          </dl>
         </div>
       </WebPopup>
       {/* 3-2. 팝업2 */}
@@ -321,7 +319,6 @@ export default function CodeManagementPage(){
         submitText={'등록'}
         onSubmit={() => {}}
       >
-        <div className="admin-popup">
           <div className="description-list flex-col gap-4">
             <dl className='align-center gap-4'>
               <dt>상위 코드</dt>
@@ -370,7 +367,6 @@ export default function CodeManagementPage(){
               </dd>
             </dl>
           </div>
-        </div>
       </WebPopup>
     </div>
   )
