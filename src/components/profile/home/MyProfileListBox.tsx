@@ -1,14 +1,14 @@
 import { ArrowForwardIos } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import ListCard, { type ListCardProps, type ListCardVariant } from './ListCard';
+import MyProfileListCard, { type MyProfileListCardProps, type MyProfileListCardVariant } from './MyProfileListCard';
 
-export type ListBoxProps = {
+export type MyProfileListBoxProps = {
   listTitle?: string;
-  variant: ListCardVariant;
-  items: ListCardProps[];
+  variant: MyProfileListCardVariant;
+  items: MyProfileListCardProps[];
 };
 
-export default function ListBox({ listTitle, variant, items }: ListBoxProps) {
+export default function MyProfileListBox({ listTitle, variant, items }: MyProfileListBoxProps) {
   return (
     <div className="list-box flex-col">
       <div className="list-top align-center justify-between">
@@ -20,7 +20,7 @@ export default function ListBox({ listTitle, variant, items }: ListBoxProps) {
 
       <div className="list-bottom flex-col">
         {items.map((item, index) => (
-          <ListCard key={index} {...item} variant={variant} />
+          <MyProfileListCard key={index} {...item} variant={variant} />
         ))}
       </div>
     </div>

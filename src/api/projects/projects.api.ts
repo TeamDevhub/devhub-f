@@ -77,3 +77,10 @@ export const createProjectApplication = (req: CreateApplicationRequest) =>
     { method: "post" }
   );
 
+export const deleteProject = (projectId: string) =>
+  fetcher<void, string>(
+    `/projects/${projectId}`,
+    undefined,
+    { method: "delete" }
+  );
+

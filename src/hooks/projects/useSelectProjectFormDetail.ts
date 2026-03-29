@@ -8,7 +8,6 @@ export default function useSelectProjectFormDetail(
   const options = {
     apiFn: getProjectFormDetail,
     req: projectId!,
-    cacheKey: projectId ? `project-detail-${projectId}-form` : undefined,
     enabled: !!projectId,
 }
 

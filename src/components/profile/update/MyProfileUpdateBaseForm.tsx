@@ -1,17 +1,17 @@
 import { LockOutline, MailOutline, PersonOutlined } from '@mui/icons-material';
 import React from 'react';
 
-type fieldLabel = '이메일 인증' | '이메일' | '비밀번호' | '비밀번호 설정' | '내 정보' | '관심 포지션' | '보유 스킬';
+type MyProfileUpdateBaseFormLabel = '이메일 인증' | '이메일' | '비밀번호' | '비밀번호 설정' | '내 정보' | '관심 포지션' | '보유 스킬';
 
-type FormField2Props = {
+type MyProfileUpdateBaseFormProps = {
   type?: 1 | 2;
-  label: fieldLabel;
+  label: MyProfileUpdateBaseFormLabel;
   children?: React.ReactNode;
 };
 
-export default function FormField2({ type = 1, label, children }: FormField2Props) {
+export default function MyProfileUpdateBaseForm({ type = 1, label, children }: MyProfileUpdateBaseFormProps) {
   // renderIcon
-  const renderIcon = (fieldLabel: fieldLabel) => {
+  const renderIcon = (fieldLabel: MyProfileUpdateBaseFormLabel) => {
     const iconProps = { sx: { fontSize: 20, color: 'primary.main' } };
 
     switch (fieldLabel) {

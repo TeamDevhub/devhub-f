@@ -164,51 +164,49 @@ export default function TermsManagementPage(){
           onDelete={() => {}}
           onSubmit={() => {}}
         >
-          <div className="admin-popup">
-            <div className="description-list flex-col gap-4">
-              <dl className='align-center gap-4'>
-                <dt>약관 명</dt>
-                <dd className='w-100'>
-                  <CustomTextfield size='small' />
-                </dd>
-              </dl>
-              <dl className='align-center gap-4'>
-                <dt>필수 여부</dt>
-                <dd className='w-100'>
-                  <FormControl>
-                    <RadioGroup row aria-labelledby='required-status-radio-group-label' defaultValue='true'>
-                      <FormControlLabel value='true' control={<Radio />} label='필수' />
-                      <FormControlLabel value='false' control={<Radio />} label='선택' />
-                    </RadioGroup>
-                  </FormControl>
-                </dd>
-              </dl>
-              <dl className='align-center gap-4'>
-                <dt>사용 여부</dt>
-                <dd className='w-100'>
-                  <FormControl>
-                    <RadioGroup row aria-labelledby='used-status-radio-group-label' defaultValue='true'>
-                      <FormControlLabel value='true' control={<Radio />} label='사용' />
-                      <FormControlLabel value='false' control={<Radio />} label='미사용' />
-                    </RadioGroup>
-                  </FormControl>
-                </dd>
-              </dl>
-              <dl className='align-stretch gap-4'>
-                <dt>약관 내용</dt>
-                <dd className='w-100'>
-                  <CustomTextfield size='small' type='textarea' />
-                </dd>
-              </dl>
-              <dl className='align-center gap-4'>
-                <dt>등록일</dt>
-                <dd className='w-100'>2026.01.01</dd>
-              </dl>
-              <dl className='align-center gap-4'>
-                <dt>수정일</dt>
-                <dd className='w-100'>-</dd>
-              </dl>
-            </div>
+          <div className="description-list flex-col gap-4">
+            <dl className='align-center gap-4'>
+              <dt>약관 명</dt>
+              <dd className='w-100'>
+                <CustomTextfield size='small' />
+              </dd>
+            </dl>
+            <dl className='align-center gap-4'>
+              <dt>필수 여부</dt>
+              <dd className='w-100'>
+                <FormControl>
+                  <RadioGroup row aria-labelledby='required-status-radio-group-label' defaultValue='true'>
+                    <FormControlLabel value='true' control={<Radio />} label='필수' />
+                    <FormControlLabel value='false' control={<Radio />} label='선택' />
+                  </RadioGroup>
+                </FormControl>
+              </dd>
+            </dl>
+            <dl className='align-center gap-4'>
+              <dt>사용 여부</dt>
+              <dd className='w-100'>
+                <FormControl>
+                  <RadioGroup row aria-labelledby='used-status-radio-group-label' defaultValue='true'>
+                    <FormControlLabel value='true' control={<Radio />} label='사용' />
+                    <FormControlLabel value='false' control={<Radio />} label='미사용' />
+                  </RadioGroup>
+                </FormControl>
+              </dd>
+            </dl>
+            <dl className='align-stretch gap-4'>
+              <dt>약관 내용</dt>
+              <dd className='w-100'>
+                <CustomTextfield size='small' type='textarea' />
+              </dd>
+            </dl>
+            <dl className='align-center gap-4'>
+              <dt>등록일</dt>
+              <dd className='w-100'>2026.01.01</dd>
+            </dl>
+            <dl className='align-center gap-4'>
+              <dt>수정일</dt>
+              <dd className='w-100'>-</dd>
+            </dl>
           </div>
         </WebPopup>
         {/* 4. 약관 등록(생성) 팝업 */}
@@ -220,43 +218,41 @@ export default function TermsManagementPage(){
           submitText={'등록'}
           onSubmit={() => {}}
         >
-          <div className="admin-popup">
-            <div className="description-list flex-col gap-4">
-              <dl className='align-center gap-4'>
-                <dt>약관 명</dt>
-                <dd className='w-100'>
-                  <CustomTextfield size='small' />
-                </dd>
-              </dl>
-              <dl className='align-center gap-4'>
-                <dt>필수 여부</dt>
-                <dd className='w-100'>
-                  <FormControl>
-                    <RadioGroup row aria-labelledby='required-status-radio-group-label' defaultValue='true'>
-                      <FormControlLabel value='true' control={<Radio />} label='필수' />
-                      <FormControlLabel value='false' control={<Radio />} label='선택' />
-                    </RadioGroup>
-                  </FormControl>
-                </dd>
-              </dl>
-              <dl className='align-center gap-4'>
-                <dt>사용 여부</dt>
-                <dd className='w-100'>
-                  <FormControl>
-                    <RadioGroup row aria-labelledby='used-status-radio-group-label' defaultValue='true'>
-                      <FormControlLabel value='true' control={<Radio />} label='사용' />
-                      <FormControlLabel value='false' control={<Radio />} label='미사용' />
-                    </RadioGroup>
-                  </FormControl>
-                </dd>
-              </dl>
-              <dl className='align-stretch gap-4'>
-                <dt>약관 내용</dt>
-                <dd className='w-100'>
-                  <CustomTextfield size='small' type='textarea' />
-                </dd>
-              </dl>
-            </div>
+          <div className="description-list flex-col gap-4">
+            <dl className='align-center gap-4'>
+              <dt>약관 명</dt>
+              <dd className='w-100'>
+                <CustomTextfield size='small' />
+              </dd>
+            </dl>
+            <dl className='align-center gap-4'>
+              <dt>필수 여부</dt>
+              <dd className='w-100'>
+                <FormControl>
+                  <RadioGroup row aria-labelledby='required-status-radio-group-label' defaultValue='true'>
+                    <FormControlLabel value='true' control={<Radio />} label='필수' />
+                    <FormControlLabel value='false' control={<Radio />} label='선택' />
+                  </RadioGroup>
+                </FormControl>
+              </dd>
+            </dl>
+            <dl className='align-center gap-4'>
+              <dt>사용 여부</dt>
+              <dd className='w-100'>
+                <FormControl>
+                  <RadioGroup row aria-labelledby='used-status-radio-group-label' defaultValue='true'>
+                    <FormControlLabel value='true' control={<Radio />} label='사용' />
+                    <FormControlLabel value='false' control={<Radio />} label='미사용' />
+                  </RadioGroup>
+                </FormControl>
+              </dd>
+            </dl>
+            <dl className='align-stretch gap-4'>
+              <dt>약관 내용</dt>
+              <dd className='w-100'>
+                <CustomTextfield size='small' type='textarea' />
+              </dd>
+            </dl>
           </div>
         </WebPopup>
       </div>

@@ -176,79 +176,77 @@ export default function UserReportPage(){
         }}
       >
         { step == 1 &&
-          <div className="admin-popup">
-            <div className="description-list flex-col gap-4">
-              <dl className='align-center gap-4'>
-                <dt>신고 사유</dt>
-                <dd>
-                  <FormGroup row>
-                    <FormControlLabel control={<Checkbox />} label='욕설/비방' />
-                    <FormControlLabel control={<Checkbox />} label='불건전/유해' />
-                    <FormControlLabel control={<Checkbox />} label='스팸/광고' />
-                    <FormControlLabel control={<Checkbox />} label='음란물' />
-                    <FormControlLabel control={<Checkbox />} label='기타' />
-                  </FormGroup>
-                </dd>
-              </dl>
-              <dl className='align-center gap-4'>
-                <dt>상세 사유</dt>
-                <dd>
-                  COCO000199
-                </dd>
-              </dl>
-              <dl className='align-center gap-4'>
-                <dt>정지 기간</dt>
-                <dd>
-                  <FormControl>
-                    <RadioGroup row aria-labelledby='recruitment-status-radio-group-label' defaultValue='general'>
-                      <FormControlLabel value='general' control={<Radio />} label='7일' />
-                      <FormControlLabel value='additional' control={<Radio />} label='30일' />
-                      <FormControlLabel value='additional' control={<Radio />} label='영구정지' />
-                      <FormControlLabel value='additional' control={<Radio />} label='기타' />
-                    </RadioGroup>
-                  </FormControl>
-                </dd>
-              </dl>
-              <dl className='align-center gap-4'>
-                <dt>정지 기간 설정</dt>
-                <dd className='w-100 align-center gap-8'>
-                  <DatePicker
-                    slotProps={{
-                      textField: {
-                        size: 'small',
-                        InputLabelProps: {
-                          shrink: true,
-                        }
-                      },
-                    }}
-                    sx={{
-                      '& legend': { display: 'none' },
-                      '& fieldset': { top: 0 },
-                    }}
-                  />
-                  <p className='seperator'>~</p>
-                  <DatePicker
-                    slotProps={{
-                      textField: {
-                        size: 'small',
-                        InputLabelProps: {
-                          shrink: true,
-                        }
-                      },
-                    }}
-                    sx={{
-                      '& legend': { display: 'none' },
-                      '& fieldset': { top: 0 },
-                    }}
-                  />
-                </dd>
-              </dl>
-            </div>
+          <div className="description-list flex-col gap-4">
+            <dl className='align-center gap-4'>
+              <dt>신고 사유</dt>
+              <dd>
+                <FormGroup row>
+                  <FormControlLabel control={<Checkbox />} label='욕설/비방' />
+                  <FormControlLabel control={<Checkbox />} label='불건전/유해' />
+                  <FormControlLabel control={<Checkbox />} label='스팸/광고' />
+                  <FormControlLabel control={<Checkbox />} label='음란물' />
+                  <FormControlLabel control={<Checkbox />} label='기타' />
+                </FormGroup>
+              </dd>
+            </dl>
+            <dl className='align-center gap-4'>
+              <dt>상세 사유</dt>
+              <dd>
+                COCO000199
+              </dd>
+            </dl>
+            <dl className='align-center gap-4'>
+              <dt>정지 기간</dt>
+              <dd>
+                <FormControl>
+                  <RadioGroup row aria-labelledby='recruitment-status-radio-group-label' defaultValue='general'>
+                    <FormControlLabel value='general' control={<Radio />} label='7일' />
+                    <FormControlLabel value='additional' control={<Radio />} label='30일' />
+                    <FormControlLabel value='additional' control={<Radio />} label='영구정지' />
+                    <FormControlLabel value='additional' control={<Radio />} label='기타' />
+                  </RadioGroup>
+                </FormControl>
+              </dd>
+            </dl>
+            <dl className='align-center gap-4'>
+              <dt>정지 기간 설정</dt>
+              <dd className='w-100 align-center gap-8'>
+                <DatePicker
+                  slotProps={{
+                    textField: {
+                      size: 'small',
+                      InputLabelProps: {
+                        shrink: true,
+                      }
+                    },
+                  }}
+                  sx={{
+                    '& legend': { display: 'none' },
+                    '& fieldset': { top: 0 },
+                  }}
+                />
+                <p className='seperator'>~</p>
+                <DatePicker
+                  slotProps={{
+                    textField: {
+                      size: 'small',
+                      InputLabelProps: {
+                        shrink: true,
+                      }
+                    },
+                  }}
+                  sx={{
+                    '& legend': { display: 'none' },
+                    '& fieldset': { top: 0 },
+                  }}
+                />
+              </dd>
+            </dl>
           </div>
         }
         { step == 2 &&
-          <div className="admin-popup">
-            <p className='only-text'>정말 정지하시겠습니까?</p>
+          <div className='only-text'>
+            <p>정말 정지하시겠습니까?</p>
           </div>
         }
       </WebPopup>

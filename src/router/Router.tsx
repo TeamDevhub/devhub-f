@@ -43,6 +43,9 @@ import FormManagementPage from '@/pages/design/admin/forms/FormManagementPage';
 import BoardManagementPage from '@/pages/design/admin/boards/BoardManagementPage';
 import BannerManagementPage from '@/pages/design/admin/banner/BannerManagementPage';
 import TermsManagementPage from '@/pages/design/admin/terms/TermsManagementPage';
+import Banner from '@/pages/admin/Banner';
+import DesignMainPage from '@/pages/design/web/main/DesignMainPage';
+
 import ProjectApplyList from '@/pages/web/projects/ProjectApplyList';
 import ProjectApply from '@/pages/web/projects/ProjectApply';
 
@@ -127,6 +130,22 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: '/admin',
+    element: <AdminLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'banner',
+        children: [
+          {
+            index: true,
+            element: <Banner />,
+          }
+        ]
+      }
+    ],
+  },
+  {
     path: '/auth',
     element: <AuthLayout />,
     errorElement: <ErrorPage />,
@@ -179,7 +198,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <MainPage />,
+            element: <DesignMainPage />,
           },
           {
             path: 'projects',

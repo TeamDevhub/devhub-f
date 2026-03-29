@@ -30,7 +30,6 @@ export const useSelect = <TRes, TReq>({
         setData(cacheStore.get(cacheKey) as ApiResponse<TRes>);
         return;
       }
-
       const res = await apiFn(req);
       setData(res);
       console.log('data>>>', res);
