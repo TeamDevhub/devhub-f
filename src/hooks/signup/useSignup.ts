@@ -1,9 +1,8 @@
-import { useState, useCallback } from 'react';
 import { signup } from '@/api/signup/signup.api';
 
 import type { ApiResponse } from '@/types/type.api';
 import type { SignupRequest } from '@/types/type.signup';
-import type { TermsResponse, AgreeTermsRequest } from '@/types/type.terms';
+import type { AgreeTermsRequest } from '@/types/type.terms';
 
 import { Validators } from '@/utils/util._common';
 import { useNavigate } from 'react-router-dom';
@@ -15,56 +14,9 @@ interface SignupFormState extends SignupRequest {
   passwordConfirm: string;
 }
 
-interface TermsItem extends TermsResponse {
-  agreed: boolean;
-}
-
 export default function useSignup(email: string) {
   const { alert } = useModal();
   const navigate = useNavigate();
-
-  const [terms, setTerms] = useState<TermsItem[]>([]);
-
-  const initTerms = useCallback((termsList: TermsResponse[]) => {
-    setTerms(
-      termsList
-        .filter((t) => t.used && !t.deleted)
-        .map((t) => ({
-          ...t,
-          agreed: false,
-        })),
-    );
-  }, []);
-
-  const toggleTerms = (termsGuid: string) => {
-    setTerms((prev) => prev.map((t) => (t.termsGuid === termsGuid ? { ...t, agreed: !t.agreed } : t)));
-  };
-
-  const agreeAllTerms = (checked: boolean) => {
-    setTerms((prev) =>
-      prev.map((t) => ({
-        ...t,
-        isAgreed: checked,
-      })),
-    );
-  };
-
-  const validateTerms = () => {
-    const hasUnagreedRequired = terms.some((t) => t.required && !t.agreed);
-
-    if (hasUnagreedRequired) {
-      alert('필수 약관에 동의해주세요.');
-      return false;
-    }
-
-    return true;
-  };
-
-  const buildTermsPayload = (): AgreeTermsRequest[] =>
-    terms.map((t) => ({
-      termsGuid: t.termsGuid,
-      agreed: t.agreed,
-    }));
 
   const initData: SignupFormState = {
     email,
@@ -98,15 +50,13 @@ export default function useSignup(email: string) {
 
   const { mutate: requestSignup, loading } = useMutation<SignupRequest, void>(signup, handleSuccessSignup, handleFailSignup);
 
-  const applySignup = async () => {
+  const applySignup = async (termsAgreementList: AgreeTermsRequest[]) => {
     if (checkError()) return;
 
     if (userInfo.password !== userInfo.passwordConfirm) {
       alert('비밀번호가 일치하지 않습니다.');
       return;
     }
-
-    if (!validateTerms()) return;
 
     const payload: SignupRequest = {
       email: userInfo.email,
@@ -115,7 +65,7 @@ export default function useSignup(email: string) {
       introduction: userInfo.introduction,
       skillList: userInfo.skillList,
       positionList: userInfo.positionList,
-      termsAgreementList: buildTermsPayload(),
+      termsAgreementList,
     };
 
     await requestSignup(payload);
@@ -126,12 +76,6 @@ export default function useSignup(email: string) {
     handleChange,
     createHandler,
     createToggle,
-
-    terms,
-    initTerms,
-    toggleTerms,
-    agreeAllTerms,
-
     applySignup,
     loading,
   };

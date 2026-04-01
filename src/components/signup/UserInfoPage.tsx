@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
 import logo from '@/assets/images/devHub-logo.png';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
+import TermsPopup from '@/components/_common/popup/TermsPopup';
 import FieldBox from './FieldBox';
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import useSignup from '@/hooks/signup/useSignup';
@@ -13,45 +13,20 @@ import SelectableGroup from '@/components/_common/SelectableGroup';
 import { FormSection } from './FormSection';
 import AddableChipGroup from '../_common/AddableChipGroup';
 import { useCodes } from '@/contexts/CommonCodeContext.ts';
-import useSelectTerms from '@/hooks/terms/useSelectTerms';
-import { Dialog, DialogTitle, DialogContent } from '@mui/material';
-import type { TermsResponse } from '@/types/type.terms';
+import useTerms from '@/hooks/terms/useTerms';
 
 interface Props {
   email: string;
 }
 
 export default function UserInfoPage({ email }: Props) {
-  const skillPopup = useDisclosure();
   const { getCodesByGroup } = useCodes();
+  const { userInfo, handleChange, createToggle, createHandler, applySignup, loading } = useSignup(email);
 
-  const { userInfo, handleChange, createToggle, createHandler, terms, initTerms, toggleTerms, agreeAllTerms, applySignup, loading } =
-    useSignup(email);
+  const { terms, toggleTerms, agreeAllTerms, isAllChecked, isRequiredValid, getAgreementList } = useTerms();
 
-  const { res } = useSelectTerms();
-
-  useEffect(() => {
-    if (res?.dataList) {
-      initTerms(res.dataList);
-    }
-  }, [res, initTerms]);
-
-  const [selectedTerms, setSelectedTerms] = useState<TermsResponse | null>(null);
-  const [openDialog, setOpenDialog] = useState(false);
-
-  const handleOpenTerms = (terms: TermsResponse) => {
-    setSelectedTerms(terms);
-    setOpenDialog(true);
-  };
-
-  const handleCloseTerms = () => {
-    setOpenDialog(false);
-    setSelectedTerms(null);
-  };
-
-  const isAllChecked = terms.length > 0 && terms.every((t) => t.agreed);
-
-  const isRequiredValid = terms.filter((t) => t.required).every((t) => t.agreed);
+  const skillPopup = useDisclosure();
+  const termsPopup = useDisclosure();
 
   return (
     <div className="auth-page flex-center">
@@ -146,7 +121,7 @@ export default function UserInfoPage({ email }: Props) {
           />
 
           {/* 약관 */}
-          <FieldBox title="약관 동의" type="wide" helpText="필수 약관에 동의해야 가입이 가능합니다.">
+          <FieldBox title="약관 동의" type="wide">
             <div className="flex-col" style={{ gap: '0.5rem' }}>
               <label style={{ fontWeight: 600 }}>
                 <input type="checkbox" checked={isAllChecked} onChange={(e) => agreeAllTerms(e.target.checked)} />
@@ -171,7 +146,7 @@ export default function UserInfoPage({ email }: Props) {
                     </span>
                   </label>
 
-                  <span style={{ cursor: 'pointer', fontWeight: 600 }} onClick={() => handleOpenTerms(t)}>
+                  <span style={{ cursor: 'pointer', fontWeight: 600 }} onClick={termsPopup.open}>
                     &gt;
                   </span>
                 </div>
@@ -181,22 +156,12 @@ export default function UserInfoPage({ email }: Props) {
 
           <Divider sx={{ marginY: '0.5rem' }} />
 
-          <Button size="large" variant="contained" fullWidth onClick={applySignup} disabled={!isRequiredValid || loading}>
+          <Button size="large" variant="contained" fullWidth onClick={() => applySignup(getAgreementList())} disabled={!isRequiredValid || loading}>
             {loading ? '가입 중...' : '회원가입'}
           </Button>
         </Paper>
 
-        <Dialog open={openDialog} onClose={handleCloseTerms} maxWidth="md" fullWidth>
-          <DialogTitle>{selectedTerms?.title}</DialogTitle>
-
-          <DialogContent dividers>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: selectedTerms?.content || '',
-              }}
-            />
-          </DialogContent>
-        </Dialog>
+        <TermsPopup isOpen={termsPopup.isOpen} terms={terms} onClose={termsPopup.close} />
       </div>
     </div>
   );
