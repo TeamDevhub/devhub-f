@@ -1,7 +1,10 @@
 import type { comment } from "@/types/type.boards";
 import { Button, Divider } from '@mui/material'
-import type { DateType } from '@/types/type.api';
-import dayjs from 'dayjs';
+import { useState } from "react";
+import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
+import { elapsedTime } from '@/utils/util.date';
+import useUpdateComment from '@/hooks/comments/useUpdateComment';
+import useDeleteComment from '@/hooks/comments/useDeleteComment';
 
 interface CommentCardProps {
   commentData :  comment;
@@ -9,37 +12,86 @@ interface CommentCardProps {
 export default function CommentCard({
   commentData
 } : CommentCardProps){
+
+  const {
+    updateContent, setUpdateContent, 
+    handleUpdate
+  } = useUpdateComment(commentData.boardGuid, commentData.commentGuid, commentData.content);
+
+  const {handleDelete} = useDeleteComment();
+
+  const [page, setPage] = useState("info");
+
+  return (
+    <>
+      {page === "info" && <InfoPage setPage={setPage} data={commentData} handleDelete={handleDelete} />}
+      {page === "modify" && (
+        <ModifyPage
+          setPage={setPage}
+          data={commentData}
+          updateContent={updateContent}
+          setUpdateContent={setUpdateContent}
+          handleUpdate={handleUpdate}
+        />
+      )}
+    </>
+  );
+}
+
+interface InfoPageProps {
+  setPage: (page: string) => void;
+  data: any; 
+  handleDelete:(boardGuid:string, commentGuid:string) => void;
+}
+function InfoPage( {setPage, data, handleDelete} : InfoPageProps) {
+
   return (
     <div className="reply-box flex-col">
       <div className="commenter-info align-center">
-        <p className='commenter-id'>{commentData.userName}</p>
-        <p className='comment-time'>{elapsedTime(commentData.auditInfo.registeredDate)}</p>
+        <p className='commenter-id'>{data.userName}</p>
+        <p className='comment-time'>{elapsedTime(data.auditInfo.registeredDate)}</p>
       </div>
       <div className="reply-content mt-4">
-        <p dangerouslySetInnerHTML={{ __html: commentData.content}} />
+        <p dangerouslySetInnerHTML={{ __html: data.content}} />
       </div>
-      <Button size='small' color='warning' className='ml-a'>신고하기</Button>
+      
+
+      <div className="action-button-box align-center justify-end">
+        <Button size='small' color='warning' onClick={() => handleDelete(data.boardGuid, data.commentGuid)}>삭제</Button>
+        <Button size='small' onClick={()=>{setPage("modify");}}>수정하기</Button>
+        <Button size='small' color='warning' >신고하기</Button>
+      </div>
+
       <Divider />
     </div>
   )
 }
 
-const elapsedTime = (date: DateType): string => {
-  const start = dayjs(date);
-	const end = dayjs();
-  
-  const seconds = end.diff(start, 'second')
-	if (seconds < 60) return '방금 전';
+interface ModiPageProps {
+  setPage: (page: string) => void;
+  data: any; 
+  updateContent:string;
+  setUpdateContent: (value:string) => void;
+  handleUpdate: () => void;
+}
+function ModifyPage({setPage, data, updateContent, setUpdateContent, handleUpdate } : ModiPageProps) {
+    return (
+    <div className="reply-box flex-col">
+      <div className="commenter-info align-center">
+        <p className='commenter-id'>{data.userName}</p>
+        <p className='comment-time'>{elapsedTime(data.auditInfo.registeredDate)}</p>
+      </div>
+      <div className="align-stretch">        
+        <CustomTextfield size='small' type='text' placeholder='댓글을 입력해 주세요.' value={updateContent}
+          onChange={(e)=>setUpdateContent(e.target.value)}/>
+        <Button size='small' onClick={handleUpdate}>수정</Button>
+        <Button size='small' onClick={()=>{setUpdateContent(data.content); setPage("info");}}>취소</Button>
+      </div>
+      <Divider />
+    </div>
+  )
+}
 
-  const minutes = end.diff(start, 'minutes')
-	if (minutes < 60) return `${minutes}분 전`;
 
-  const hours = end.diff(start, 'hours')
-	if (hours < 24) return `${hours}시간 전`;
 
-	const days = hours / 24;
-	if (days < 7) return `${Math.floor(days)}일 전`;
-
-	return `${start.format('YYYY.MM.DD')}`;
-};
 
