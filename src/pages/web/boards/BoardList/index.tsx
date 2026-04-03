@@ -6,8 +6,10 @@ import {Button, Pagination, Paper, Tab, Tabs} from '@mui/material';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 import {COMMON_CODE} from "@/types/const.ts";
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function BoardList(){
+    const { isLoggedIn } = useAuth();
     const {
         res, request, 
         setPage, 
@@ -50,7 +52,7 @@ export default function BoardList(){
         {/* 4. board list */}
         <div className="board-list flex-col" style={{ gap: '0.8rem' }}>
             {res?.dataList?.map((item, index) => {
-                return <BoardCard key={index} boardData={item} handleLike={handleLike} handleDetail={()=>handleDetail(item.boardBasicResponseDto.boardGuid)}></BoardCard>
+                return <BoardCard key={index} boardData={item} handleLike={handleLike} handleDetail={()=>handleDetail(item.boardBasicResponseDto.boardGuid)} isLoggedIn={isLoggedIn ?? false}></BoardCard>
             })}
             <div className='list-bottom-box w-100 align-center mt-14'>
                 <Pagination count={res?.pagination?.totalPages} page={request.page} onChange={(_, page) => {setPage(page);}} showFirstButton showLastButton color='primary' className='w-100 flex-center' />

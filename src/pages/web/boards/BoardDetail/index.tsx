@@ -9,13 +9,12 @@ import useCreateComment from '@/hooks/comments/useCreateComment';
 import { BoardCategoryChip } from '@/components/boards/BoardChips';
 import CommentCard from '@/components/boards/boardDetail/CommentCard';
 import useMutationBoards from '@/hooks/boards/useMutationBoards';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function BoardDetail(){
 
   const {state} = useLocation();
-  const {
-    res
-  } = useSelectBoardDetail(state?.boardGuid);
+  const {res} = useSelectBoardDetail(state?.boardGuid);
 
   const {
     content, setContent,
@@ -23,6 +22,7 @@ export default function BoardDetail(){
   } = useCreateComment(state?.boardGuid)
 
   const { handleLike } = useMutationBoards();
+  const { isLoggedIn } = useAuth();
 
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
@@ -36,9 +36,9 @@ export default function BoardDetail(){
                 {res?.data?.boardSummaryResponseDto.boardBasicResponseDto.title}
               </strong>
             </div>
-            <div className="right-area flex-col">
-              <HeartButton onClick={(e) => handleLike(res?.data?.boardSummaryResponseDto.boardBasicResponseDto.boardGuid)} likeCount={res?.data?.boardSummaryResponseDto.likeCount} /> 
-            </div>
+            {isLoggedIn ? <div className="right-area flex-col">
+              <HeartButton onClick={(e) => handleLike(res?.data?.boardSummaryResponseDto.boardBasicResponseDto.boardGuid)} likeCount={res?.data?.boardSummaryResponseDto.likeCount} defaultLiked={res?.data?.isLiked}/> 
+            </div> : null }
           </div>
           <div className="bottom w-100 align-end justify-between">
             <div className="user-info align-center">

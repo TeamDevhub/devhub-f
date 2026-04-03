@@ -40,6 +40,7 @@ export interface BoardDetail {
     boardSummaryResponseDto:BoardSummary;
     commentList: comment[];
     userEmail:string;
+    isLiked:boolean;
 }
 
 export interface BoardSearchRequest {
