@@ -8,14 +8,14 @@ import useFileUpload from '@/hooks/_common/useFileUpload.ts';
 import useUpdateProfileImage from '@/hooks/profile/useUpdateProfileImage';
 import { Link } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_FILE_API_URL;
+
 type MyPageNavKey = 'home' | 'projects' | 'boards';
 
 interface MyPageNavProps {
   selectedKey: MyPageNavKey;
   onChange?: (key: MyPageNavKey) => void;
 }
-
-const API_URL = 'http://localhost:8080';
 
 export default function MyInfoBox({ selectedKey }: MyPageNavProps) {
   const { user, refreshUser } = useAuth();
@@ -56,7 +56,7 @@ export default function MyInfoBox({ selectedKey }: MyPageNavProps) {
         <div className="profile-area flex-col align-center">
           <CustomAvatar
             size={80}
-            src={user?.profileImageUrl ? `${API_URL}${user.profileImageUrl}` : undefined}
+            src={user?.fileGuid ? `${API_URL}${user.fileGuid}` : undefined}
             sx={{
               background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%)',
               cursor: 'pointer',

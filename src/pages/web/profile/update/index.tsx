@@ -1,5 +1,5 @@
 import useSelectUserProfile from '@/hooks/profile/useSelectProfile';
-import MyProfileUpdate from '@/components/profile/MyProfileUpdate';
+import MyProfileUpdate from '@/components/profile/update/MyProfileUpdate';
 
 export default function MyProfileUpdateWrapper() {
   const { res, loading, error } = useSelectUserProfile();
