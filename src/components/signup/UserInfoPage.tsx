@@ -14,6 +14,9 @@ import { FormSection } from './FormSection';
 import AddableChipGroup from '../_common/AddableChipGroup';
 import { useCodes } from '@/contexts/CommonCodeContext.ts';
 import useTerms from '@/hooks/terms/useTerms';
+import { useState } from 'react';
+
+import type { TermsResponse } from '@/types/type.terms';
 
 interface Props {
   email: string;
@@ -22,8 +25,8 @@ interface Props {
 export default function UserInfoPage({ email }: Props) {
   const { getCodesByGroup } = useCodes();
   const { userInfo, handleChange, createToggle, createHandler, applySignup, loading } = useSignup(email);
-
   const { terms, toggleTerms, agreeAllTerms, isAllChecked, isRequiredValid, getAgreementList } = useTerms();
+  const [selectedTerms, setSelectedTerms] = useState<TermsResponse | null>(null);
 
   const skillPopup = useDisclosure();
   const termsPopup = useDisclosure();
@@ -146,7 +149,13 @@ export default function UserInfoPage({ email }: Props) {
                     </span>
                   </label>
 
-                  <span style={{ cursor: 'pointer', fontWeight: 600 }} onClick={termsPopup.open}>
+                  <span
+                    style={{ cursor: 'pointer', fontWeight: 600 }}
+                    onClick={() => {
+                      setSelectedTerms(t);
+                      termsPopup.open();
+                    }}
+                  >
                     &gt;
                   </span>
                 </div>
@@ -161,7 +170,14 @@ export default function UserInfoPage({ email }: Props) {
           </Button>
         </Paper>
 
-        <TermsPopup isOpen={termsPopup.isOpen} terms={terms} onClose={termsPopup.close} />
+        <TermsPopup
+          isOpen={termsPopup.isOpen}
+          terms={selectedTerms}
+          onClose={() => {
+            termsPopup.close();
+            setSelectedTerms(null);
+          }}
+        />
       </div>
     </div>
   );
