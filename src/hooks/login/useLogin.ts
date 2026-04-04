@@ -35,7 +35,6 @@ export default function useLogin() {
 
   const handleSuccessLogin = (res: ApiResponse<LoginResponse>) => {
     _login?.(res.data?.accessToken);
-    //setSessionStorage('accessToken', res.data?.accessToken);
     navigate('/');
   };
 

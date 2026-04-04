@@ -2,11 +2,9 @@ import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
 import { ImageCropPopup } from '../_common/popup/image';
 import { Person } from '@mui/icons-material';
 import { Button, Divider, List, ListItemButton, Paper } from '@mui/material';
-import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import useFileUpload from '@/hooks/_common/useFileUpload.ts';
-import useUpdateProfileImage from '@/hooks/profile/useUpdateProfileImage';
 import { Link } from 'react-router-dom';
+import useProfileImageUpload from '@/hooks/profile/image/useProfileImage';
 
 const API_URL = import.meta.env.VITE_FILE_API_URL;
 
@@ -19,36 +17,9 @@ interface MyPageNavProps {
 
 export default function MyInfoBox({ selectedKey }: MyPageNavProps) {
   const { user, refreshUser } = useAuth();
-  const { upload } = useFileUpload();
-  const { applyUpdateProfileImage } = useUpdateProfileImage(async () => {
+  const popup = useProfileImageUpload(async () => {
     await refreshUser();
   });
-  const [openProfilePopup, setOpenProfilePopup] = useState(false);
-
-  const clickOpenProfilePopup = () => {
-    setOpenProfilePopup(true);
-  };
-
-  const handleClosePopup = () => {
-    setOpenProfilePopup(false);
-  };
-
-  const handleUploadProfileImage = async (file: File) => {
-    try {
-      const res = await upload(undefined, file);
-
-      if (!res?.data?.fileGuids.file) {
-        throw new Error('파일 업로드 응답이 올바르지 않습니다.');
-      }
-      const fileGuid = res?.data?.fileGuids?.file;
-
-      await applyUpdateProfileImage(fileGuid);
-
-      setOpenProfilePopup(false);
-    } catch (error) {
-      console.error('이미지 업로드 실패', error);
-    }
-  };
 
   return (
     <>
@@ -62,7 +33,7 @@ export default function MyInfoBox({ selectedKey }: MyPageNavProps) {
               cursor: 'pointer',
             }}
             avatarIcon={<Person sx={{ fontSize: 24 }} />}
-            onClick={clickOpenProfilePopup}
+            onClick={popup.open}
           />
 
           <div className="flex-col align-center" style={{ padding: '0.4rem 0' }}>
@@ -93,7 +64,7 @@ export default function MyInfoBox({ selectedKey }: MyPageNavProps) {
 
         <Divider />
 
-        <List component="nav" aria-label="mypage list">
+        <List component="nav">
           <ListItemButton component={Link} to="/profile" selected={selectedKey === 'home'}>
             내 정보 홈
           </ListItemButton>
@@ -108,7 +79,7 @@ export default function MyInfoBox({ selectedKey }: MyPageNavProps) {
         </List>
       </Paper>
 
-      <ImageCropPopup isOpen={openProfilePopup} onClose={handleClosePopup} onSubmit={handleUploadProfileImage} />
+      <ImageCropPopup isOpen={popup.isOpen} onClose={popup.close} onSubmit={popup.handleUpload} />
     </>
   );
 }

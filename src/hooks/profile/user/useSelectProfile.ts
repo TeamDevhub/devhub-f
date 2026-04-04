@@ -1,4 +1,4 @@
-import { useSelect } from '../_common/api.hook';
+import { useSelect } from '../../_common/api.hook';
 import { useCallback } from 'react';
 import { getUserProfile } from '@/api/profile/profile.api';
 
