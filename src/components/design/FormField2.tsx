@@ -10,7 +10,6 @@ type FormField2Props = {
 };
 
 export default function FormField2({ type = 1, label, children }: FormField2Props) {
-  // renderIcon
   const renderIcon = (fieldLabel: fieldLabel) => {
     const iconProps = { sx: { fontSize: 20, color: 'primary.main' } };
 

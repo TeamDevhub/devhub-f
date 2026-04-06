@@ -18,6 +18,7 @@ export type BoardCreate = Omit<BoardBasic, 'boardGuid'>;
 
 export interface comment {
     commentGuid: string;
+    boardGuid: string, 
     content: string;
     userGuid: string;
     userName: string;
@@ -47,9 +48,5 @@ export interface BoardSearchRequest {
     title?: string;
 }
 
-export interface CommentCreate {
-    boardGuid: string;
-    content: string;
-}
 
 export type SearchData = Pick<BoardSearchRequest, 'page' | 'categoryCd' | 'title'>;
