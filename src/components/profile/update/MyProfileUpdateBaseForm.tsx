@@ -10,7 +10,6 @@ type MyProfileUpdateBaseFormProps = {
 };
 
 export default function MyProfileUpdateBaseForm({ type = 1, label, children }: MyProfileUpdateBaseFormProps) {
-  // renderIcon
   const renderIcon = (fieldLabel: MyProfileUpdateBaseFormLabel) => {
     const iconProps = { sx: { fontSize: 20, color: 'primary.main' } };
 

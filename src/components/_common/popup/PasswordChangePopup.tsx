@@ -1,6 +1,6 @@
 import CustomTextfield from '../customMUI/CustomTextfield';
 import WebPopup from './WebPopup';
-import useUpdatePassword from '@/hooks/profile/useUpdatePassword';
+import useUpdatePassword from '@/hooks/profile/user/useUpdatePassword';
 
 export interface PasswordPopupProps {
   isOpen: boolean;

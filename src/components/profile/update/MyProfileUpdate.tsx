@@ -2,15 +2,15 @@ import { Button, Divider, Paper } from '@mui/material';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import PasswordChangePopup from '@/components/_common/popup/PasswordChangePopup';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
-import MyProfileUpdateBaseForm from './update/MyProfileUpdateBaseForm';
-import MyProfileUpdateExtraForm from './update/MyProfileUpdateExtraForm';
-import MyProfileUpdateFieldGroup from './update/MyProfileUpdateFieldGroup';
+import MyProfileUpdateBaseForm from './MyProfileUpdateBaseForm';
+import MyProfileUpdateExtraForm from './MyProfileUpdateExtraForm';
+import MyProfileUpdateFieldGroup from './MyProfileUpdateFieldGroup';
 import SelectableGroup from '@/components/_common/SelectableGroup';
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import { useCodes } from '@/contexts/CommonCodeContext';
 import { COMMON_CODE } from '@/types/const';
 import AddableChipGroup from '@/components/_common/AddableChipGroup';
-import useUpdateProfile from '@/hooks/profile/useUpdateProfile';
+import useUpdateProfile from '@/hooks/profile/user/useUpdateProfile';
 
 import type { UserDetailResponse } from '@/types/type.user';
 

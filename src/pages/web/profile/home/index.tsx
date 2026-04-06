@@ -2,17 +2,18 @@ import { Chip, Divider, Paper } from '@mui/material';
 import MyProfileBaseForm from '@/components/profile/home/MyProfileBaseForm';
 import MyProfileListBox from '@/components/profile/home/MyProfileListBox';
 import useSelectUserProfile from '@/hooks/profile/useSelectProfile';
+import useSelectMyProjects from '@/hooks/profile/useSelectMyProjects';
 import { COMMON_CODE } from '@/types/const';
 import { useCodes } from '@/contexts/CommonCodeContext';
-
-import type { MyProfileListCardProps } from '@/components/profile/home/MyProfileListCard';
+import type { MyProjectList } from '@/types/type.projects';
 
 export default function MyProfileHome() {
   const { getCodeName } = useCodes();
   const { res } = useSelectUserProfile();
+  const { res:projectRes, loading, error, setPage, handleTabChange } = useSelectMyProjects();
   const profile = res?.data;
 
-  const registerProjects: MyProfileListCardProps[] = [
+  const registerProjects: MyProjectList[] = [
     {
       title: '[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
       recruitmentStartDate: '2025.12.03',
@@ -37,7 +38,7 @@ export default function MyProfileHome() {
     },
   ];
 
-  const applyProjects: MyProfileListCardProps[] = [
+  const applyProjects: MyProjectList[] = [
     {
       title: '[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
       recruitmentStartDate: '2025.12.03',
