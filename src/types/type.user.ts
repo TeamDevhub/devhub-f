@@ -4,7 +4,6 @@ export interface UserBasicResponse {
   username: string;
   introduction: string;
   fileGuid: string;
-  profileImageUrl: string;
   mannerDegree: number;
   blocked: boolean;
   blockEndDate: string | null;

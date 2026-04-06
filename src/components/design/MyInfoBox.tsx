@@ -13,7 +13,6 @@ interface MyPageNavProps {
 }
 
 export default function MyInfoBox({ selectedKey, onChange }: MyPageNavProps) {
-  // 1. 사용자 이미지 변경 팝업
   const { user } = useAuth();
   console.log('user', user);
   const [openProfilePopup, setOpenProfilePopup] = useState(false);

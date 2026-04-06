@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { UploadResponse } from '@/types/type.api.ts';
 import { ERROR_MESSAGES } from '@/types/const.errorMessages.ts';
 import fetcher from '@/utils/util.api.ts';
-import {useLoading} from "@/contexts/LoadingContext.ts";
+import { useLoading } from '@/contexts/LoadingContext.ts';
 
 interface FileState {
   file: File | null;
@@ -10,7 +10,7 @@ interface FileState {
 }
 
 interface RegisterOptions {
-  accept?: string; //(예: 'image/*', '.pdf')
+  accept?: string;
   maxSize?: number;
 }
 
@@ -30,7 +30,7 @@ const useFileUpload = () => {
           URL.revokeObjectURL(state.previewUrl);
         }
       });
-    }; // eslint-disable-next-line react-hooks/exhaustive-deps
+    };
   }, []);
 
   const register = (name: string, options?: RegisterOptions) => (el: HTMLInputElement | null) => {
