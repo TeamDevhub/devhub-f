@@ -45,3 +45,25 @@ export const isBetween = (target: string, start: string, end: string): boolean =
 export const convertString = (target: DateType, format?:string): string => {
     return dayjs(target).format(format ?? 'YYYY-MM-DD');
 }
+
+/**
+ * 몇분전
+ */
+export const elapsedTime = (date: DateType): string => {
+  const start = dayjs(date);
+	const end = dayjs();
+  
+  const seconds = end.diff(start, 'second')
+	if (seconds < 60) return '방금 전';
+
+  const minutes = end.diff(start, 'minutes')
+	if (minutes < 60) return `${minutes}분 전`;
+
+  const hours = end.diff(start, 'hours')
+	if (hours < 24) return `${hours}시간 전`;
+
+	const days = hours / 24;
+	if (days < 7) return `${Math.floor(days)}일 전`;
+
+	return `${start.format('YYYY.MM.DD')}`;
+};

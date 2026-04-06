@@ -7,7 +7,6 @@ import { Button, Divider, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export default function Login() {
-
   const { loginInfo, changeId, changePassword, applyLogin } = useLogin();
 
   return (
