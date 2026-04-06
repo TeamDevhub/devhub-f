@@ -5,7 +5,7 @@ import useSelectUserProfile from '@/hooks/profile/useSelectProfile';
 import useSelectMyProjects from '@/hooks/profile/useSelectMyProjects';
 import { COMMON_CODE } from '@/types/const';
 import { useCodes } from '@/contexts/CommonCodeContext';
-import type { MyProjectList } from '@/types/type.projects';
+import type { MyProject } from '@/types/type.projects';
 
 export default function MyProfileHome() {
   const { getCodeName } = useCodes();
@@ -13,7 +13,7 @@ export default function MyProfileHome() {
   const { res:projectRes, loading, error, setPage, handleTabChange } = useSelectMyProjects();
   const profile = res?.data;
 
-  const registerProjects: MyProjectList[] = [
+  const registerProjects: MyProject[] = [
     {
       title: '[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
       recruitmentStartDate: '2025.12.03',
@@ -38,7 +38,7 @@ export default function MyProfileHome() {
     },
   ];
 
-  const applyProjects: MyProjectList[] = [
+  const applyProjects: MyProject[] = [
     {
       title: '[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
       recruitmentStartDate: '2025.12.03',
