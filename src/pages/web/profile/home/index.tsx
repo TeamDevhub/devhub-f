@@ -1,7 +1,7 @@
 import { Chip, Divider, Paper } from '@mui/material';
 import MyProfileBaseForm from '@/components/profile/home/MyProfileBaseForm';
 import MyProfileListBox from '@/components/profile/home/MyProfileListBox';
-import useSelectUserProfile from '@/hooks/profile/useSelectProfile';
+import useSelectUserProfile from '@/hooks/profile/user/useSelectProfile';
 import useSelectMyProjects from '@/hooks/profile/useSelectMyProjects';
 import { COMMON_CODE } from '@/types/const';
 import { useCodes } from '@/contexts/CommonCodeContext';
