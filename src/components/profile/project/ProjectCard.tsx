@@ -4,32 +4,13 @@ import { Button, Chip } from '@mui/material'
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import HeartButton from '@/components/_common/button/HeartButton'
 import WebPopup from '@/components/_common/popup/WebPopup'
-// 2. ProjectCard
-type ProjectCardVariant = 'register' | 'apply' | 'favorite' | 'participate';
-type ApprovalStateType = '승인 대기중' | '참가 승인' | '참가 거절';
-type ProgressStateType = '진행중' | '진행완료';
-
-type ProjectCardProps = {
-  variant?: ProjectCardVariant;
-  title?: string;
-  recruitStartDate?: string;
-  recruitEndDate?: string;
-  progressStartDate?: string;
-  progressEndDate?: string;
-  currentRecriutNumber?: string;
-  totalRecriutNumber?: string;
-  applicantNumber?: string;
-  approvalNumber?: string;
-  approvalState?: ApprovalStateType;
-  progressState?: ProgressStateType;
-  children?: React.ReactNode;
-}
+import type { MyProject } from '@/types/type.projects'
 
 export default function ProjectCard ({
   variant,
   title,
-  recruitStartDate,
-  recruitEndDate,
+  recruitmentStartDate,
+  recruitmentEndDate,
   progressStartDate,
   progressEndDate,
   currentRecriutNumber,
@@ -39,7 +20,7 @@ export default function ProjectCard ({
   approvalState,
   progressState,
   children
-}: ProjectCardProps){
+}: MyProject){
   // 승인 상태에 따른 텍스트 색상 변경
   const approvalColorMap = {
     '승인 대기중': 'var(--text-primary)',
@@ -100,7 +81,7 @@ export default function ProjectCard ({
         <div className='sub-text align-center'>
           <div className='align-center'>
             <div className='title flex'><AccessTime />모집기간</div>
-            <p className='flex'>{recruitStartDate} ~ {recruitEndDate}</p>
+            <p className='flex'>{recruitmentStartDate} ~ {recruitmentEndDate}</p>
           </div>
           <div className='align-center'>
             <div className='title flex'><AccessTime />진행기간</div>

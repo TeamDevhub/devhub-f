@@ -130,11 +130,11 @@ export interface ProjectUpdate extends ProjectExtra, ProjectFileMetaData {
 }
 
 // Profile
-export type MyProfileListCardVariant = 'register' | 'apply';
+export type MyProjectListCardVariant = 'register' | 'apply' | 'favorite' | 'participate';
 export type ApprovalStateType = '승인 대기중' | '참가 승인' | '참가 거절';
-
-export interface MyProjectList {
-  variant?: MyProfileListCardVariant;
+export type ProgressStateType = '진행중' | '진행완료';
+export interface MyProject {
+  variant?: MyProjectListCardVariant;
   title?: string;
   recruitmentStartDate?: string;
   recruitmentEndDate?: string;
@@ -145,4 +145,6 @@ export interface MyProjectList {
   applicantNumber?: string;
   approvalNumber?: string;
   approvalState?: ApprovalStateType;
+  progressState?: ProgressStateType;
+  children?: React.ReactNode;
 };
