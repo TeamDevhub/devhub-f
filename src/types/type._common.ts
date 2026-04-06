@@ -5,6 +5,8 @@ export interface CommonCodeItem {
   parentCode?: string;
   name: string;
   used?: boolean;
+  remarks?: string;
+  order?: string;
   children?: CommonCodeItem[];
 }
 

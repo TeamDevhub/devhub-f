@@ -37,14 +37,15 @@ import UserReportPage from '@/pages/design/admin/users/UserReportPage';
 import UserDetailPage from '@/pages/design/admin/users/UserDetailPage';
 import ProjectListPage2 from '@/pages/design/admin/projects/ProjectListPage';
 import ProjectDetailPage2 from '@/pages/design/admin/projects/ProjectDetailPage';
-import AdminLayout from '@/layout/AdminLayout';
 import CodeManagementPage from '@/pages/design/admin/codes/CodeManagementPage';
 import FormManagementPage from '@/pages/design/admin/forms/FormManagementPage';
 import BoardManagementPage from '@/pages/design/admin/boards/BoardManagementPage';
 import BannerManagementPage from '@/pages/design/admin/banner/BannerManagementPage';
 import TermsManagementPage from '@/pages/design/admin/terms/TermsManagementPage';
-import Banner from '@/pages/admin/Banner';
 import DesignMainPage from '@/pages/design/web/main/DesignMainPage';
+import AdminLayout from '@/layout/AdminLayout';
+import Banner from '@/pages/admin/Banner';
+import Codes from '@/pages/admin/Codes';
 
 
 const router = createBrowserRouter([
@@ -130,6 +131,15 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Banner />,
+          }
+        ]
+      },
+      {
+        path: 'codes',
+        children: [
+          {
+            index: true,
+            element: <Codes />,
           }
         ]
       }
