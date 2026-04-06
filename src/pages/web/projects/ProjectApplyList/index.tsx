@@ -11,6 +11,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useSelectProjectApplicationList from '@/hooks/projects/useSelectProjectApplicationList'
 import useSelectProjectApplication from '@/hooks/projects/useSelectProjectApplication'
+import useApproveProjectApplication from '@/hooks/projects/useApproveProjectApplication'
 import type { ProjectApplicationListItem } from '@/types/type.projects'
 import type { DateType } from '@/types/type.api'
 import dayjs from 'dayjs'
@@ -106,6 +107,7 @@ export default function ProjectApplyList(){
               {applicants.map((applicant, i) => (
                 <SwiperSlide key={i}>
                   <ApplicantCard
+                    projectGuid={projectGuid}
                     applicationGuid={applicant.applicationGuid}
                     applicationDate={applicant.applyDate}
                     userName={applicant.userName}
@@ -172,6 +174,7 @@ function ApplicantList ({
 
 // 2. ApplicantCard
 type ApplicantCardProps = {
+  projectGuid?: string;
   applicationGuid?: string;
   applicationDate?: string;
   userName?: string;
@@ -181,6 +184,7 @@ type ApplicantCardProps = {
 }
 
 function ApplicantCard ({
+  projectGuid,
   applicationGuid,
   applicationDate,
   userName,
@@ -196,6 +200,16 @@ function ApplicantCard ({
   const detailData = detailRes?.data;
   const userInfo = detailData?.projectApplicationAnswerList?.[0];
   const answerList = detailData?.projectApplicationAnswerList ?? [];
+
+  const { mutate: approve, loading: approveLoading } = useApproveProjectApplication(
+    () => alert('처리되었습니다.'),
+    () => alert('처리에 실패했습니다.')
+  );
+
+  const handleApprove = (approved: boolean) => {
+    if (!projectGuid || !applicationGuid) return;
+    approve({ projectGuid, applicationGuid, approved });
+  };
 
   return (
     <>
@@ -237,8 +251,8 @@ function ApplicantCard ({
         </div>
         <div className="bottom">
           <div className="button-box flex gap-4">
-            <Button fullWidth size='small' variant='outlined' color='primary'>거절</Button>
-            <Button fullWidth size='small' variant='contained' color='primary'>승인</Button>
+            <Button fullWidth size='small' variant='outlined' color='primary' disabled={approveLoading} onClick={() => handleApprove(false)}>거절</Button>
+            <Button fullWidth size='small' variant='contained' color='primary' disabled={approveLoading} onClick={() => handleApprove(true)}>승인</Button>
           </div>
         </div>
       </Paper>

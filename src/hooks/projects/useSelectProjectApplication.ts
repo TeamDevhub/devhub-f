@@ -14,7 +14,6 @@ export default function useSelectProjectApplication(
   };
 
   const { res, loading } = useSelect<ProjectApplicationResponse, string>(options);
-
   return {
     res,
     loading,

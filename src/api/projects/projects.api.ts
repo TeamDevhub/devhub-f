@@ -77,6 +77,13 @@ export const createProjectApplication = (req: CreateApplicationRequest) =>
     { method: "post" }
   );
 
+export const approveProjectApplication = (req: { projectGuid: string; applicationGuid: string; approved: boolean }) =>
+  fetcher<void>(
+    `/projects/applications/${req.applicationGuid}/approve?approved=${req.approved}`,
+    undefined,
+    { method: "put" }
+  );
+
 export const deleteProject = (projectId: string) =>
   fetcher<void, string>(
     `/projects/${projectId}`,
