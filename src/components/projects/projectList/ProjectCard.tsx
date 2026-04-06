@@ -72,7 +72,7 @@ export default function ProjectCard({ projectData, toggleLike, isLoggedIn }: Pro
       <Divider orientation='vertical' />
       <div className='right-area flex-col justify-between'>
         <div className='heart-box flex-col align-end'>
-          {isLoggedIn ? <HeartButton likeCount={likeCount} onClick={onClickHeartBtn} defaultLiked={projectLiked} /> : null}
+          {isLoggedIn ? <HeartButton key={projectGuid} likeCount={likeCount} onClick={onClickHeartBtn} defaultLiked={projectLiked} /> : null}
         </div>
         <div className='chip-box flex-col'>
           <div className='recruit-chip-box align-center'>
