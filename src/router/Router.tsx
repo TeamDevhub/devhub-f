@@ -26,6 +26,7 @@ import Login from '@/pages/web/login/Login';
 import ProfileLayout from '@/layout/ProfileLayout';
 import MyProfileHome from '@/pages/web/profile/home';
 import MyProfileUpdateWrapper from '@/pages/web/profile/update';
+import MyProfileProjectListPage from '@/pages/web/profile/projects';
 import MyProfileBoardList from '@/pages/web/profile/boards';
 import MainPage from '@/pages/web/MainPage';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
@@ -71,6 +72,14 @@ const router = createBrowserRouter([
             path: 'update',
             element: <MyProfileUpdateWrapper />,
           },
+          {
+            path: 'projects',
+            element: <MyProfileProjectListPage />,
+          },
+          // {
+          //   path: 'boards',
+          //   element: <MyProfileBoardList />,
+          // },
           // {
           //   path: 'projects',
           //   element: <MyProfileProjectList />,
