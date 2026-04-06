@@ -1,6 +1,6 @@
 import type { ProjectDetailResponse } from "@/types/type.projects";
-import { useSelect } from "../_common/api.hook";
-import { getProjectDetail } from "@/api/projects/projects.api";
+import { useSelect, useMutation } from "../_common/api.hook";
+import { getProjectDetail, createProjectLike } from "@/api/projects/projects.api";
 
 export default function useSelectProjectDetail(
   projectId?: string
@@ -12,10 +12,12 @@ export default function useSelectProjectDetail(
   }
 
   const { res, loading } = useSelect<ProjectDetailResponse, string>(options);
+  const { mutate: projectLikeMutate } = useMutation<string, void>(createProjectLike);
 
   return {
-    res, 
+    res,
     loading,
+    toggleLike: projectLikeMutate
   };
 }
 

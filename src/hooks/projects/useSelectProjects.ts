@@ -1,8 +1,8 @@
-import { getProjects } from "@/api/projects/projects.api";
+import { getProjects, createProjectLike } from "@/api/projects/projects.api";
 import useFormState from '@/hooks/_common/useFormState.ts';
 import type { FilterData, ProjectExtra, ProjectSearchRequest, SearchData } from "@/types/type.projects";
 import { useState } from "react";
-import { useSelect } from "../_common/api.hook";
+import { useSelect, useMutation } from "../_common/api.hook";
 
 const initData: SearchData = {
   page: 0,
@@ -54,6 +54,7 @@ export default function useSelectProjects(
     req: request,
   }
   const { res, loading } = useSelect<ProjectExtra, ProjectSearchRequest>(options);
+  const { mutate: projectLikeMutate } = useMutation<string, void>(createProjectLike);
 
   const setPage = (page: number) => {
     setRequest((prev) => ({ ...prev, page: page }));
@@ -99,6 +100,7 @@ export default function useSelectProjects(
     keyword, setKeyword,
     setPage, setOrder,
     res, loading,
-    applySearch, applyFilter, resetAll
+    applySearch, applyFilter, resetAll,
+    toggleLike: projectLikeMutate
   };
 }

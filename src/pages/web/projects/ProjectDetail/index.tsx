@@ -23,9 +23,9 @@ export default function ProjectDetail() {
   }
 
   const { getCodeName } = useCodes();
-  const { res } = useSelectProjectDetail(projectGuid);
+  const { res, toggleLike } = useSelectProjectDetail(projectGuid);
   const { onDeleteProject } = useDeleteProject(projectGuid);
-  const authContext = useAuth();
+  const { isLoggedIn, user } = useAuth();
 
   //[수정필요]
   const handleApplyClick = () => {
@@ -41,7 +41,7 @@ export default function ProjectDetail() {
   return (
     <div className='main-page align-stretch flex-col' style={{ minHeight: 'calc(100vh - 7rem)' }}>
       {/* 1. project detail */}
-      {authContext?.user?.userGuid === res.data.userGuid &&
+      {user?.userGuid === res.data.userGuid &&
         <div className="action-button-box align-center justify-end">
           <Button size='medium' variant='contained' onClick={() => { navigate(`/projects/update/${res?.data?.projectGuid}`) }}>수정</Button>
           <Button size='medium' variant='outlined' onClick={onDeleteProject}>삭제</Button>
@@ -180,15 +180,16 @@ export default function ProjectDetail() {
       </Paper>
       {/* 2. floating action buttons */}
       <div className='floating-button-box flex-col'>
-        <Tooltip arrow placement='right' title='좋아요'>
-          <Paper
-            className='float-button favorite-button flex-center'
-            elevation={5}
-            sx={{ cursor: 'pointer' }}
-          >
-            <HeartButton likeCount={res?.data?.likeCount} />
-          </Paper>
-        </Tooltip>
+        {isLoggedIn
+          ? <Tooltip arrow placement='right' title='좋아요'>
+            <Paper
+              className='float-button favorite-button flex-center'
+              elevation={5}
+              sx={{ cursor: 'pointer' }}
+            >
+              <HeartButton likeCount={res?.data?.likeCount} onClick={() => { toggleLike(res.data.projectGuid) }} defaultLiked={res?.data.projectLiked} />
+            </Paper>
+          </Tooltip> : null}
         <Tooltip arrow placement='right' title='지원하기'>
           <Paper className='float-button apply-button flex-center active' elevation={5} onClick={handleApplyClick}>
             <ContentPaste sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />

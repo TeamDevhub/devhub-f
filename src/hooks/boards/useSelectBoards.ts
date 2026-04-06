@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { getBoards } from "@/api/boards/boards.api";
 import { useSelect } from "@/hooks/_common/api.hook";
 import type { BoardSearchRequest, SearchData } from "@/types/type.boards";
@@ -18,10 +18,15 @@ export default function useSelectBoards(
     const [title, setTitle] = useState<string>(baseTitle);
     const [request, setRequest] = useState<BoardSearchRequest>({...baseSearch});
 
-    const options = {
+    const options = useMemo(() => ({
         apiFn: getBoards,
-        req : request,
-    }
+        req: {
+            categoryCd: request.categoryCd,
+            page: request.page - 1,
+            title: request.title
+        }
+    }), [request.categoryCd, request.page, request.title]);
+
     const {res} = useSelect(options);
 
     const navigate = useNavigate();

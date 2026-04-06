@@ -8,7 +8,12 @@ import { convertString } from "@/utils/util.date";
 import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import { useNavigate } from 'react-router-dom';
 
-export default function ProjectCard(projectData: ProjectExtra) {
+interface ProjectCardProps {
+  projectData: ProjectExtra;
+  toggleLike: (projectGuid: string) => void;
+  isLoggedIn: boolean;
+}
+export default function ProjectCard({ projectData, toggleLike, isLoggedIn }: ProjectCardProps) {
   const {
     projectGuid,
     title,
@@ -22,6 +27,7 @@ export default function ProjectCard(projectData: ProjectExtra) {
     progressEndDate, // 진행기간 마감일
     viewCount,
     likeCount,
+    projectLiked,
     recruitStatus,
     registeredDate, // 작성일
     skillList,
@@ -31,6 +37,9 @@ export default function ProjectCard(projectData: ProjectExtra) {
   const { getCodeName } = useCodes();
   const navigate = useNavigate();
 
+  const onClickHeartBtn = () => {
+    toggleLike(projectGuid);
+  }
   return (
     <Paper className='project-box w-100 h-fit flex' elevation={4} onClick={() => { navigate(`/projects/detail/${projectGuid}`) }}>
       <div className='left-area flex-col flex-1'>
@@ -63,7 +72,7 @@ export default function ProjectCard(projectData: ProjectExtra) {
       <Divider orientation='vertical' />
       <div className='right-area flex-col justify-between'>
         <div className='heart-box flex-col align-end'>
-          <HeartButton likeCount={likeCount} />
+          {isLoggedIn ? <HeartButton likeCount={likeCount} onClick={onClickHeartBtn} defaultLiked={projectLiked} /> : null}
         </div>
         <div className='chip-box flex-col'>
           <div className='recruit-chip-box align-center'>

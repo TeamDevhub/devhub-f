@@ -3,7 +3,7 @@ import type { ApplicationFormType } from "@/types/const.projectCreate.ts"
 import type { ProjectRecruitStatusCode } from '@/types/type._common';
 
 export interface ProjectBasic {
-  projectGuid?: string;
+  projectGuid: string;
   userGuid?: string;
   username?: string;
   category: string;
@@ -57,7 +57,7 @@ export interface ProjectDetail extends ProjectBasic {
   positionList: Position[];
 }
 
-export interface ProjectCreate extends ProjectDetail {
+export interface ProjectCreate extends Omit<ProjectDetail, 'projectGuid'> {
   applicationFormList: string[];
   additionalFormList: ApplicationFormCreate[];
 }
@@ -65,6 +65,7 @@ export interface ProjectCreate extends ProjectDetail {
 export interface ProjectExtra extends ProjectDetail {
   likeCount: string;
   recruitStatus: ProjectRecruitStatusCode;
+  projectLiked?: boolean;
 }
 
 export interface ApplicationFormBasic {

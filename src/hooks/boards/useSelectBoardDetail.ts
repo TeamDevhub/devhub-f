@@ -9,7 +9,7 @@ export default function useSelectBoardDetail(
         apiFn: getBoardDetail,
         req : boardGuid,
     }
-    const {res} = useSelect<BoardDetail, string>(options);
+    const {res, loading, error} = useSelect<BoardDetail, string>(options);
 
-    return { res };
+    return { res, loading, error };
 } 
