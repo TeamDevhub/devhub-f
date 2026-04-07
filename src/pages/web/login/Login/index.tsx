@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 
 export default function Login() {
   const { loginInfo, changeId, changePassword, applyLogin } = useLogin();
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:8080/auth/oauth/google';
+  };
 
   return (
     <div className="auth-page flex-center">
@@ -55,7 +58,7 @@ export default function Login() {
           </div>
           <Divider />
           <div className="button-box flex-col">
-            <Button fullWidth size="medium" variant="outlined" color="primary">
+            <Button fullWidth size="medium" variant="outlined" color="primary" onClick={handleGoogleLogin}>
               <img src={googleIcon} alt="google icon" className="button-icon" />
               Google로 로그인
             </Button>
