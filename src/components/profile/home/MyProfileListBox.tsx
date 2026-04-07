@@ -1,12 +1,12 @@
 import { ArrowForwardIos } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import MyProfileListCard from '@/components/profile/home/MyProfileListCard'
-import { type MyProjectList, type MyProfileListCardVariant } from '@/types/type.projects';
+import { type MyProject, type MyProjectListCardVariant } from '@/types/type.projects';
 
 export type MyProfileListBoxProps = {
   listTitle?: string;
-  variant: MyProfileListCardVariant;
-  items: MyProjectList[];
+  variant: MyProjectListCardVariant;
+  items: MyProject[];
 };
 
 export default function MyProfileListBox({ listTitle, variant, items }: MyProfileListBoxProps) {
