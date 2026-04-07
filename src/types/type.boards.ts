@@ -49,5 +49,20 @@ export interface BoardSearchRequest {
     title?: string;
 }
 
+export interface AdminBoardSearchRequest {
+    page:number;
+    categoryCd?: string;
+    title?: string;
+    userStatus?:string;
+    reported?:string;
+    registeredStartDate?: DateType;
+    registeredEndDate?: DateType;
+}
+
+export interface AdminBoard {
+    boardBasicResponseDto:BoardBasic;
+    userstatus?:string;
+    reportCount?:string;
+}
 
 export type SearchData = Pick<BoardSearchRequest, 'page' | 'categoryCd' | 'title'>;
