@@ -8,6 +8,7 @@ import type { MyProject } from '@/types/type.projects'
 
 export default function ProjectCard ({
   variant,
+  projectGuid,
   title,
   recruitmentStartDate,
   recruitmentEndDate,
@@ -36,8 +37,13 @@ export default function ProjectCard ({
   const [openEvaluatePopup, setOpenEvaluatePopup] = useState(false);
   const clickOpenEvaluatePopup = () => {setOpenEvaluatePopup(true);}
 
+  const onClickApplicant = (e:React.MouseEvent<T, MouseEvent>) => {
+    e.stopPropagation();
+    location.href='/projects/update/'+projectGuid;
+  }
+
   return <>
-    <div className="project-box2 w-100 justify-between">
+    <div className="project-box2 w-100 justify-between" onClick={()=>{location.href='/projects/detail/'+projectGuid}}>
       <div className="left-area flex-col">
         <div className="chip-box align-center">
           { variant !== 'participate' && <Chip size='small' variant='filled' color='primary' label='모집중' /> }
@@ -107,7 +113,7 @@ export default function ProjectCard ({
           </div>
           <div className="bottom align-center">
             <Button fullWidth size='small' variant='outlined' color='primary'>신청자</Button>
-            <Button fullWidth size='small' variant='outlined' color='primary'>수정</Button>
+            <Button fullWidth size='small' variant='outlined' color='primary' onClick={onClickApplicant}>수정</Button>
             <Button fullWidth size='small' variant='contained' color='primary'>마감</Button>
           </div>
         </div>

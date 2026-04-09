@@ -18,7 +18,7 @@ export default function MyProfileProjectListPage(){
         </Tabs>
         {/* 2-2. list summary */}
         <strong className="list-summary">
-          총 <em>3</em>건
+          총 <em>{res?.dataList?.length}</em>건
         </strong>
         {/* 2-3. tab contents */}
         {/* 2-3-1. 내가 등록한 프로젝트 */}
