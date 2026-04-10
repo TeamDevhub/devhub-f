@@ -167,8 +167,20 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/oauth/callback',
-    element: <OauthCallback />,
+    path: '/oauth',
+    element: <AuthLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'callback',
+        children: [
+          {
+            index: true,
+            element: <OauthCallback />,
+          },
+        ],
+      },
+    ],
   },
   {
     path: '/design',
