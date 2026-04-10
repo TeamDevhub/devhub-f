@@ -1,24 +1,7 @@
 import { AccessTime, LocationOn } from '@mui/icons-material';
 import { Chip } from '@mui/material';
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
-
-export type MyProfileListCardVariant = 'register' | 'apply';
-
-export type ApprovalStateType = '승인 대기중' | '참가 승인' | '참가 거절';
-
-export type MyProfileListCardProps = {
-  variant?: MyProfileListCardVariant;
-  title?: string;
-  recruitmentStartDate?: string;
-  recruitmentEndDate?: string;
-  progressStartDate?: string;
-  progressEndDate?: string;
-  currentRecriutNumber?: string;
-  totalRecriutNumber?: string;
-  applicantNumber?: string;
-  approvalNumber?: string;
-  approvalState?: ApprovalStateType;
-};
+import type {MyProject} from '@/types/type.projects'
 
 export default function MyProfileListCard({
   variant,
@@ -32,7 +15,7 @@ export default function MyProfileListCard({
   applicantNumber,
   approvalNumber,
   approvalState,
-}: MyProfileListCardProps) {
+}: MyProject) {
   const approvalColorMap = {
     '승인 대기중': 'var(--text-primary)',
     '참가 승인': 'var(--primary-main)',
