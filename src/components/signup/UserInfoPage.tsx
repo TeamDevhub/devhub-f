@@ -19,17 +19,20 @@ import { useState } from 'react';
 import type { TermsResponse } from '@/types/type.terms';
 
 interface Props {
-  email: string;
+  email?: string;
+  tempToken?: string;
 }
 
-export default function UserInfoPage({ email }: Props) {
+export default function UserInfoPage({ email, tempToken }: Props) {
   const { getCodesByGroup } = useCodes();
-  const { userInfo, handleChange, createToggle, createHandler, applySignup, loading } = useSignup(email);
+  const { userInfo, handleChange, createToggle, createHandler, applySignup, loading } = useSignup({ email, tempToken });
   const { terms, toggleTerms, agreeAllTerms, isAllChecked, isRequiredValid, getAgreementList } = useTerms();
   const [selectedTerms, setSelectedTerms] = useState<TermsResponse | null>(null);
 
   const skillPopup = useDisclosure();
   const termsPopup = useDisclosure();
+
+  const isOauthUser = !!tempToken;
 
   return (
     <div className="auth-page flex-center">
@@ -50,14 +53,16 @@ export default function UserInfoPage({ email }: Props) {
           <Divider />
 
           {/* ID */}
-          <div className="field-box flex-col">
-            <div className="field-title align-center">
-              <p>ID</p>
+          {!isOauthUser && (
+            <div className="field-box flex-col">
+              <div className="field-title align-center">
+                <p>ID</p>
+              </div>
+              <div className="field-content flex-col">
+                <TextField value={email} fullWidth disabled />
+              </div>
             </div>
-            <div className="field-content flex-col">
-              <TextField value={email} fullWidth disabled />
-            </div>
-          </div>
+          )}
 
           {/* 비밀번호 */}
           <FormSection title="비밀번호 설정" icon={<LockOutline sx={{ fontSize: 20, color: 'var(--primary-main)' }} />}>

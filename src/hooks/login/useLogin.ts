@@ -1,8 +1,8 @@
 import { useMutation } from '../_common/api.hook';
 import { Validators } from '@/utils/util._common';
-import { login } from '@/api/login/login.api';
+import { login } from '@/api/auth/auth.api';
 import type { ApiResponse } from '@/types/type.api';
-import type { LoginRequest, LoginResponse } from '@/types/type.login';
+import type { LoginRequest, TokenResponseDto } from '@/types/type.auth';
 import { useNavigate } from 'react-router-dom';
 import useFormState from '@/hooks/_common/useFormState.ts';
 import { useAuth } from '@/contexts/AuthContext.ts';
@@ -33,17 +33,17 @@ export default function useLogin() {
     setLoginInfo((prev) => ({ ...prev, password: value }));
   };
 
-  const handleSuccessLogin = (res: ApiResponse<LoginResponse>) => {
+  const handleSuccessLogin = (res: ApiResponse<TokenResponseDto>) => {
     _login?.(res.data?.accessToken);
     navigate('/');
   };
 
-  const handleFailLogin = (res: ApiResponse<LoginResponse>) => {
+  const handleFailLogin = (res: ApiResponse<TokenResponseDto>) => {
     alert(res.code);
     changePassword('');
   };
 
-  const { mutate: requestLogin, loading } = useMutation<LoginRequest, LoginResponse>(login, handleSuccessLogin, handleFailLogin);
+  const { mutate: requestLogin, loading } = useMutation<LoginRequest, TokenResponseDto>(login, handleSuccessLogin, handleFailLogin);
 
   const applyLogin = async () => {
     if (checkError()) return;
