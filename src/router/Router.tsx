@@ -26,6 +26,7 @@ import Login from '@/pages/web/login/Login';
 import ProfileLayout from '@/layout/ProfileLayout';
 import MyProfileHome from '@/pages/web/profile/home';
 import MyProfileUpdateWrapper from '@/pages/web/profile/update';
+import MyProfileProjectListPage from '@/pages/web/profile/projects';
 import MyProfileBoardList from '@/pages/web/profile/boards';
 import MainPage from '@/pages/web/MainPage';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
@@ -39,15 +40,17 @@ import UserReportPage from '@/pages/design/admin/users/UserReportPage';
 import UserDetailPage from '@/pages/design/admin/users/UserDetailPage';
 import ProjectListPage2 from '@/pages/design/admin/projects/ProjectListPage';
 import ProjectDetailPage2 from '@/pages/design/admin/projects/ProjectDetailPage';
-import AdminLayout from '@/layout/AdminLayout';
 import CodeManagementPage from '@/pages/design/admin/codes/CodeManagementPage';
 import FormManagementPage from '@/pages/design/admin/forms/FormManagementPage';
 import BoardManagementPage from '@/pages/design/admin/boards/BoardManagementPage';
 import BannerManagementPage from '@/pages/design/admin/banner/BannerManagementPage';
 import TermsManagementPage from '@/pages/design/admin/terms/TermsManagementPage';
-import Banner from '@/pages/admin/Banner';
 import DesignMainPage from '@/pages/design/web/main/DesignMainPage';
 import OauthCallback from '@/pages/web/login/Login';
+import AdminLayout from '@/layout/AdminLayout';
+import Banner from '@/pages/admin/Banner';
+import Codes from '@/pages/admin/Codes';
+
 
 const router = createBrowserRouter([
   {
@@ -71,6 +74,14 @@ const router = createBrowserRouter([
             path: 'update',
             element: <MyProfileUpdateWrapper />,
           },
+          {
+            path: 'projects',
+            element: <MyProfileProjectListPage />,
+          },
+          // {
+          //   path: 'boards',
+          //   element: <MyProfileBoardList />,
+          // },
           // {
           //   path: 'projects',
           //   element: <MyProfileProjectList />,
@@ -139,6 +150,18 @@ const router = createBrowserRouter([
           },
         ],
       },
+          }
+        ]
+      },
+      {
+        path: 'codes',
+        children: [
+          {
+            index: true,
+            element: <Codes />,
+          }
+        ]
+      }
     ],
   },
   {

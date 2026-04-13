@@ -7,6 +7,7 @@ export interface HeartButtonProps {
   className?: string;
   noCount?: boolean;
   defaultLiked?: boolean;
+  disabled?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>, liked:boolean)=>void;
 }
 export default function HeartButton({
@@ -14,11 +15,15 @@ export default function HeartButton({
   className,
   noCount = false,
   defaultLiked = false,
+  disabled = false,
   onClick
 }: HeartButtonProps){
   const [liked, setLiked] = useState(defaultLiked);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (disabled) return;
+
+    
     e.stopPropagation(); 
     const nextLiked = !liked;
     setLiked(nextLiked);
@@ -27,7 +32,7 @@ export default function HeartButton({
 
   return (
     <div className={['heart-box flex-col align-end', className].filter(Boolean).join(' ')}>
-      <IconButton size='small' onClick={handleClick}>
+      <IconButton size='small' disabled={disabled} onClick={handleClick}>
         {liked ? (
           <Favorite sx={{ fontSize: 24, color: '#D05B5B !important' }} />
         ) : (

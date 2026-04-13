@@ -10,9 +10,8 @@ export const CommonCodeProvider = ({ children } : { children: ReactNode}) => {
     const options = useMemo(() => ({
         apiFn: getCommonCode,
         req: {},
-        cacheKey: `code-common`,
     }), []);
-    const { res, loading } = useSelect<CommonCodeResponse, CommonCodeRequest>(options);
+    const { res, loading, refetch } = useSelect<CommonCodeResponse, CommonCodeRequest>(options);
     const codes = res?.data;
 
     const getCodesByGroup = useMemo(() =>
@@ -55,7 +54,8 @@ export const CommonCodeProvider = ({ children } : { children: ReactNode}) => {
         getCodesByGroup,
         getCodeName,
         getSelectOptions,
-    }), [codes, loading, getCodesByGroup, getCodeName, getSelectOptions]);
+        refetch,
+    }), [codes, loading, getCodesByGroup, getCodeName, getSelectOptions, refetch]);
 
     return (
         <CommonCodeContext.Provider value={value}>

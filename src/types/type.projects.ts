@@ -103,6 +103,7 @@ export interface ProjectFileMetaData {
 }
 
 export type SearchData = Pick<ProjectSearchRequest, 'page' | 'order' | 'keyword' | 'size'>;
+export type SearchUserData = Pick<ProjectSearchRequest, 'page' | 'size'>;
 export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 
 // export interface ProjectUpdate extends ProjectDetail {
@@ -127,3 +128,23 @@ export interface ProjectUpdate extends ProjectExtra, ProjectFileMetaData {
   applicationFormList: string[];
   additionalFormList: ApplicationFormCreate[];
 }
+
+// Profile
+export type MyProjectListCardVariant = 'register' | 'apply' | 'favorite' | 'participate';
+export type ApprovalStateType = '승인 대기중' | '참가 승인' | '참가 거절';
+export type ProgressStateType = '진행중' | '진행완료';
+export interface MyProject {
+  variant?: MyProjectListCardVariant;
+  title?: string;
+  recruitmentStartDate?: string;
+  recruitmentEndDate?: string;
+  progressStartDate?: string;
+  progressEndDate?: string;
+  currentRecriutNumber?: string;
+  totalRecriutNumber?: string;
+  applicantNumber?: string;
+  approvalNumber?: string;
+  approvalState?: ApprovalStateType;
+  progressState?: ProgressStateType;
+  children?: React.ReactNode;
+};

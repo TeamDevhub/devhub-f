@@ -5,7 +5,13 @@ export interface CommonCodeItem {
   parentCode?: string;
   name: string;
   used?: boolean;
+  remarks?: string;
+  order?: string;
   children?: CommonCodeItem[];
+}
+
+export interface RequestCommonCodeItem extends CommonCodeItem {
+  insert?: boolean;
 }
 
 export type CommonCodeMap = Record<string, CommonCodeItem[]>;
