@@ -1,14 +1,16 @@
 interface FieldBoxProps {
   title: string;
+  icon: React.ReactNode;
   children: React.ReactNode;
   helpText?: string;
   type?: 'normal' | 'wide';
 }
 
-export default function FieldBox({ title, children, helpText, type = 'normal' }: FieldBoxProps) {
+export default function FieldBox({ title, icon, children, helpText, type = 'normal' }: FieldBoxProps) {
   return (
     <div className={`${type === 'wide' ? 'field-box2' : 'field-box'} flex-col`}>
       <div className="field-title align-center">
+        {icon}
         <p>{title}</p>
       </div>
 
