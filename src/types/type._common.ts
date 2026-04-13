@@ -10,6 +10,10 @@ export interface CommonCodeItem {
   children?: CommonCodeItem[];
 }
 
+export interface RequestCommonCodeItem extends CommonCodeItem {
+  insert?: boolean;
+}
+
 export type CommonCodeMap = Record<string, CommonCodeItem[]>;
 
 export type CommonCode = typeof COMMON_CODE[keyof typeof COMMON_CODE];

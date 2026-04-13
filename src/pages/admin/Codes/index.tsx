@@ -1,7 +1,5 @@
-import {KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import {
     Button, Chip,
-    IconButton,
     MenuItem,
     Paper,
     Select,
@@ -37,7 +35,9 @@ export default function CodeManagementPage(){
         onChangeSuperCode,
         onClickMainRow,
         onClickSubRow,
-        refetch
+        refetch,
+        used,
+        setUsed
     } = useSelectCodes();
 
     const { isOpen, open, close } = useDisclosure();
@@ -70,7 +70,7 @@ export default function CodeManagementPage(){
                             <div className="align-center gap-8">
                                 <Select
                                     label='상태'
-                                    value={''} onChange={()=>{}} size='small'
+                                    value={used} onChange={(e)=>{setUsed(e.target.value)}} size='small'
                                     displayEmpty
                                     sx={{ width: '22rem' }}
                                 >
@@ -173,8 +173,7 @@ export default function CodeManagementPage(){
                                                     <TableCell align="center">ID</TableCell>
                                                     <TableCell align="center">NAME</TableCell>
                                                     <TableCell align="center">사용여부</TableCell>
-                                                    <TableCell align="center">정렬</TableCell>
-                                                    <TableCell align="center">비고</TableCell>
+                                                    <TableCell align="center" width={400}>비고</TableCell>
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>
@@ -195,16 +194,6 @@ export default function CodeManagementPage(){
                                                                 size="small"
                                                             />
                                                         </TableCell>
-                                                        <TableCell align="center">
-                                                            <div className="flex-center">
-                                                                <IconButton size="small" className="w-fit">
-                                                                    <KeyboardArrowUp sx={{ fontSize: 25, color: "rgba(0,0,0,0.3)" }} />
-                                                                </IconButton>
-                                                                <IconButton size="small" className="w-fit">
-                                                                    <KeyboardArrowDown sx={{ fontSize: 25, color: "rgba(0,0,0,0.3)" }} />
-                                                                </IconButton>
-                                                            </div>
-                                                        </TableCell>
                                                         <TableCell align="center">{row.remarks}</TableCell>
                                                     </TableRow>
                                                 ))}
@@ -214,7 +203,6 @@ export default function CodeManagementPage(){
                                 </Paper>
                                 <div className="align-center gap-8 ml-a">
                                     <Button size='large' variant='outlined' color='primary' onClick={()=>{openPopup(selectedSubCode, true)}}>수정</Button>
-                                    <Button size='large' variant='contained' color='primary'>저장</Button>
                                 </div>
                             </div>
                         </div>

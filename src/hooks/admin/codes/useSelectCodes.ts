@@ -1,5 +1,5 @@
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
-import { useMemo, useState} from "react";
+import { useCallback, useMemo, useState} from "react";
 import type {CommonCode, CommonCodeItem} from "@/types/type._common.ts";
 
 export default function useSelectCodes(){
@@ -19,6 +19,7 @@ export default function useSelectCodes(){
     const [selectedSubCode, setSelectedSubCode] = useState<CommonCodeItem | undefined>();
     const [mainKeywords, setMainKeywords] = useState('');
     const [subKeywords, setSubKeywords] = useState('');
+    const [used, setUsed] = useState('');
 
     const mainCodeList = useMemo(() => {
         return selectedSuper ? getCodesByGroup(selectedSuper.code as CommonCode) : [];
@@ -29,21 +30,24 @@ export default function useSelectCodes(){
         return target?.children ?? [];
     }, [selectedMainCode, mainCodeList]);
 
+    const checkFilter = useCallback((item: CommonCodeItem, keyword: string) => {
+        const lowerKeyword = keyword.toLowerCase();
+        const matchesKeyword = item.code.toLowerCase().includes(lowerKeyword) || item.name.toLowerCase().includes(lowerKeyword);
+        const matchesUsed = used == '' ? true : used == 'Y' ? item.used : !item.used;
+        return matchesKeyword && matchesUsed;
+    },[used]);
+
     const filteredMainCodes = useMemo(() => {
-        const lowerKeyword = mainKeywords.toLowerCase();
-        return mainCodeList.filter(item =>
-            item.code.toLowerCase().includes(lowerKeyword) ||
-            item.name.toLowerCase().includes(lowerKeyword)
-        );
-    }, [mainCodeList, mainKeywords]);
+        return mainCodeList
+            .filter(item => checkFilter(item, mainKeywords))
+            .sort((a, b) => Number((a.order ?? 999)) - Number((b.order ?? 999)));
+    }, [mainCodeList, mainKeywords, checkFilter]);
 
     const filteredSubCodes = useMemo(() => {
-        const lowerKeyword = subKeywords.toLowerCase();
-        return subCodeList.filter(item =>
-            item.code.toLowerCase().includes(lowerKeyword) ||
-            item.name.toLowerCase().includes(lowerKeyword)
-        );
-    }, [subCodeList, subKeywords]);
+        return subCodeList
+            .filter(item => checkFilter(item, subKeywords))
+            .sort((a, b) => Number((a.order ?? 999)) - Number((b.order ?? 999)));
+    }, [subCodeList, subKeywords, checkFilter]);
 
     const onChangeSuperCode = (code: CommonCode) => {
         setSelectedSuperKey(code);
@@ -78,5 +82,7 @@ export default function useSelectCodes(){
         onClickMainRow,
         onClickSubRow,
         refetch,
+        used,
+        setUsed
     };
 }
