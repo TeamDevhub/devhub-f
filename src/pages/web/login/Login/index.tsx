@@ -1,6 +1,6 @@
 import logo from '@/assets/images/devHub-logo.png';
 import googleIcon from '@/assets/images/google-icon.svg';
-import kakaoIcon from '@/assets/images/kakao-icon.svg';
+import kakaoIcon from '@/assets/images/kakao-icon.png';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import useLogin from '@/hooks/login/useLogin';
 import { GitHub } from '@mui/icons-material';
@@ -91,11 +91,11 @@ export default function Login() {
               variant="outlined"
               onClick={handleKakaoLogin}
               sx={{
-                backgroundColor: '#FEE500',
+                borderColor: '#FEE500',
                 color: '#000',
                 fontWeight: 600,
                 '&:hover': {
-                  backgroundColor: '#FDDC00',
+                  backgroundColor: 'rgba(253, 220, 0, 0.1)',
                 },
               }}
             >
