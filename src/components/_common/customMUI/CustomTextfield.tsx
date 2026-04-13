@@ -67,7 +67,7 @@ export default function CustomTextfield({
   };
 
   return (
-    <div className='w-100'>
+    <div className='w-100 h-100'>
       <TextField 
         id={id ? id: name + '-input'}
         fullWidth

@@ -227,9 +227,6 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
     border-radius: 0.4rem;
     border: 1px solid rgba(0, 0, 0, 0.23);
   }
-  .field-content {
-    &:not(:has(.required)) { padding-left: 1.6rem; }
-  }
 }
 // 5. board box
 .board-box, .board-detail-box { padding: 1.2rem 2rem; gap: 1.2rem; cursor: pointer;
