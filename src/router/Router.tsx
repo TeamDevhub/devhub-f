@@ -50,7 +50,6 @@ import BoardAdmin from '@/pages/admin/Boards';
 import DesignMainPage from '@/pages/design/web/main/DesignMainPage';
 import OauthCallback from '@/pages/web/login/Login';
 import AdminLayout from '@/layout/AdminLayout';
-import Banner from '@/pages/admin/Banner';
 import Codes from '@/pages/admin/Codes';
 
 
