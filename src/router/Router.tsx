@@ -40,7 +40,6 @@ import UserReportPage from '@/pages/design/admin/users/UserReportPage';
 import UserDetailPage from '@/pages/design/admin/users/UserDetailPage';
 import ProjectListPage2 from '@/pages/design/admin/projects/ProjectListPage';
 import ProjectDetailPage2 from '@/pages/design/admin/projects/ProjectDetailPage';
-import AdminLayout from '@/layout/AdminLayout';
 import CodeManagementPage from '@/pages/design/admin/codes/CodeManagementPage';
 import FormManagementPage from '@/pages/design/admin/forms/FormManagementPage';
 import BoardManagementPage from '@/pages/design/admin/boards/BoardManagementPage';
@@ -49,6 +48,10 @@ import TermsManagementPage from '@/pages/design/admin/terms/TermsManagementPage'
 import Banner from '@/pages/admin/Banner';
 import BoardAdmin from '@/pages/admin/Boards';
 import DesignMainPage from '@/pages/design/web/main/DesignMainPage';
+import OauthCallback from '@/pages/web/login/Login';
+import AdminLayout from '@/layout/AdminLayout';
+import Banner from '@/pages/admin/Banner';
+import Codes from '@/pages/admin/Codes';
 
 
 const router = createBrowserRouter([
@@ -121,17 +124,17 @@ const router = createBrowserRouter([
           },
           {
             path: 'create',
-            element: <BoardCreate />
+            element: <BoardCreate />,
           },
           {
             path: 'detail',
-            element: <BoardDetail />
+            element: <BoardDetail />,
           },
           {
             path: 'update',
-            element: <BoardUpdate/>
+            element: <BoardUpdate />,
           },
-        ]
+        ],
       },
     ],
   },
@@ -146,6 +149,18 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Banner />,
+          },
+        ],
+      },
+          }
+        ]
+      },
+      {
+        path: 'codes',
+        children: [
+          {
+            index: true,
+            element: <Codes />,
           }
         ]
       },
@@ -186,6 +201,22 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: '/oauth',
+    element: <AuthLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'callback',
+        children: [
+          {
+            index: true,
+            element: <OauthCallback />,
+          },
+        ],
+      },
+    ],
+  },
+  {
     path: '/design',
     errorElement: <ErrorPage />,
     children: [
@@ -195,17 +226,17 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'login',
-            element: <LoginPage />
+            element: <LoginPage />,
           },
           {
             path: 'signup',
-            element: <SignupPage />
+            element: <SignupPage />,
           },
           {
             path: 'signin2',
-            element: <SignInPage2 />
-          }
-        ]
+            element: <SignInPage2 />,
+          },
+        ],
       },
       {
         path: 'web',
@@ -220,74 +251,74 @@ const router = createBrowserRouter([
             children: [
               {
                 path: 'detail',
-                element: <ProjectDetailPage />
+                element: <ProjectDetailPage />,
               },
               {
                 path: 'create',
-                element: <ProjectCreatePage />
+                element: <ProjectCreatePage />,
               },
               {
                 path: 'apply',
-                element: <ProjectApplyPage />
+                element: <ProjectApplyPage />,
               },
-            ]
+            ],
           },
           {
             path: 'boards',
             children: [
               {
                 index: true,
-                element: <BoardListPage />
+                element: <BoardListPage />,
               },
               {
                 path: 'detail',
-                element: <BoardDetailPage />
+                element: <BoardDetailPage />,
               },
               {
                 path: 'create',
-                element: <BoardCreatePage />
+                element: <BoardCreatePage />,
               },
               {
                 path: 'modify',
-                element: <BoardModifyPage />
+                element: <BoardModifyPage />,
               },
-            ]
+            ],
           },
           {
             path: 'mypage',
             children: [
               {
                 path: 'home',
-                element: <MyHomePage />
+                element: <MyHomePage />,
               },
               {
                 path: 'home/modify',
-                element: <MyHomeModifyPage />
+                element: <MyHomeModifyPage />,
               },
               {
                 path: 'projects/list',
-                element: <MyProjectListPage />
+                element: <MyProjectListPage />,
               },
               {
                 path: 'projects/list/applicants',
-                element: <MyProjectApplicantPage />
+                element: <MyProjectApplicantPage />,
               },
               {
                 path: 'boards',
-                element: <MyBoardPage />
-              }
-            ]
+                element: <MyBoardPage />,
+              },
+            ],
           },
           {
             path: 'skilltrends',
             children: [
               {
                 index: true,
-                element: <SkillTrendsPage />
+                element: <SkillTrendsPage />,
               },
-            ]
+            ],
           },
-        ]
+        ],
       },
       {
         path: 'admin',
@@ -298,80 +329,80 @@ const router = createBrowserRouter([
             children: [
               {
                 path: 'list',
-                element: <UserListPage />
+                element: <UserListPage />,
               },
               {
                 path: 'detail',
-                element: <UserDetailPage />
+                element: <UserDetailPage />,
               },
               {
                 path: 'reports',
-                element: <UserReportPage />
-              }
-            ]
+                element: <UserReportPage />,
+              },
+            ],
           },
           {
             path: 'projects',
             children: [
               {
                 path: 'list',
-                element: <ProjectListPage2 />
+                element: <ProjectListPage2 />,
               },
               {
                 path: 'detail',
-                element: <ProjectDetailPage2 />
-              }
-            ]
+                element: <ProjectDetailPage2 />,
+              },
+            ],
           },
           {
             path: 'codes',
             children: [
               {
                 index: true,
-                element: <CodeManagementPage />
-              }
-            ]
+                element: <CodeManagementPage />,
+              },
+            ],
           },
           {
             path: 'forms',
             children: [
               {
                 index: true,
-                element: <FormManagementPage />
-              }
-            ]
+                element: <FormManagementPage />,
+              },
+            ],
           },
           {
             path: 'boards',
             children: [
               {
                 index: true,
-                element: <BoardManagementPage />
-              }
-            ]
+                element: <BoardManagementPage />,
+              },
+            ],
           },
           {
             path: 'banner',
             children: [
               {
                 index: true,
-                element: <BannerManagementPage />
-              }
-            ]
+                element: <BannerManagementPage />,
+              },
+            ],
           },
           {
             path: 'terms',
             children: [
               {
                 index: true,
-                element: <TermsManagementPage />
-              }
-            ]
-          }
-        ]
-      }
+                element: <TermsManagementPage />,
+              },
+            ],
+          },
+        ],
+      },
     ],
-  }
+  },
 ]);
 
 export default router;

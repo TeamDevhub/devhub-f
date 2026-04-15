@@ -6,7 +6,7 @@ import FieldBox from './FieldBox';
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import useSignup from '@/hooks/signup/useSignup';
 import { COMMON_CODE } from '@/types/const';
-import { LockOutline, PersonOutlined } from '@mui/icons-material';
+import { BadgeOutlined, Favorite, Gavel, LockOutline, PersonOutlined, Settings } from '@mui/icons-material';
 import { Button, Divider, Paper, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import SelectableGroup from '@/components/_common/SelectableGroup';
@@ -19,17 +19,20 @@ import { useState } from 'react';
 import type { TermsResponse } from '@/types/type.terms';
 
 interface Props {
-  email: string;
+  email?: string;
+  tempToken?: string;
 }
 
-export default function UserInfoPage({ email }: Props) {
+export default function UserInfoPage({ email, tempToken }: Props) {
   const { getCodesByGroup } = useCodes();
-  const { userInfo, handleChange, createToggle, createHandler, applySignup, loading } = useSignup(email);
+  const { userInfo, handleChange, createToggle, createHandler, applySignup, loading } = useSignup({ email, tempToken });
   const { terms, toggleTerms, agreeAllTerms, isAllChecked, isRequiredValid, getAgreementList } = useTerms();
   const [selectedTerms, setSelectedTerms] = useState<TermsResponse | null>(null);
 
   const skillPopup = useDisclosure();
   const termsPopup = useDisclosure();
+
+  const isOauthUser = !!tempToken;
 
   return (
     <div className="auth-page flex-center">
@@ -50,14 +53,17 @@ export default function UserInfoPage({ email }: Props) {
           <Divider />
 
           {/* ID */}
-          <div className="field-box flex-col">
-            <div className="field-title align-center">
-              <p>ID</p>
+          {!isOauthUser && (
+            <div className="field-box flex-col">
+              <div className="field-title align-center">
+                <BadgeOutlined sx={{ fontSize: 20, color: 'var(--primary-main)' }} />
+                <p>ID</p>
+              </div>
+              <div className="field-content flex-col">
+                <TextField value={email} fullWidth disabled />
+              </div>
             </div>
-            <div className="field-content flex-col">
-              <TextField value={email} fullWidth disabled />
-            </div>
-          </div>
+          )}
 
           {/* 비밀번호 */}
           <FormSection title="비밀번호 설정" icon={<LockOutline sx={{ fontSize: 20, color: 'var(--primary-main)' }} />}>
@@ -90,7 +96,7 @@ export default function UserInfoPage({ email }: Props) {
           </FormSection>
 
           {/* 포지션 */}
-          <FieldBox title="관심 포지션" type="wide" helpText="관심 포지션은 필수로 선택해야합니다.">
+          <FieldBox title="관심 포지션" icon={<Favorite sx={{ fontSize: 20, color: 'var(--primary-main)' }} />} type="wide" helpText="관심 포지션은 필수로 선택해야합니다.">
             <div className="chip-box w-100 align-center flex-wrap">
               <SelectableGroup
                 type="chip"
@@ -102,7 +108,7 @@ export default function UserInfoPage({ email }: Props) {
           </FieldBox>
 
           {/* 스킬 */}
-          <FormSection title="보유 스킬" className="field-box2" contentGap="0.5rem">
+          <FormSection title="보유 스킬" icon={<Settings sx={{ fontSize: 20, color: 'var(--primary-main)' }} />} className="field-box2" contentGap="0.5rem">
             <div className="content-box align-stretch">
               <div className="chip-box align-center flex-wrap" style={{ flex: 1, minHeight: '56px' }}>
                 <AddableChipGroup
@@ -124,7 +130,7 @@ export default function UserInfoPage({ email }: Props) {
           />
 
           {/* 약관 */}
-          <FieldBox title="약관 동의" type="wide">
+          <FieldBox title="약관 동의" icon={<Gavel sx={{ fontSize: 20, color: 'var(--primary-main)' }} />} type="wide">
             <div className="flex-col" style={{ gap: '0.5rem' }}>
               <label style={{ fontWeight: 600 }}>
                 <input type="checkbox" checked={isAllChecked} onChange={(e) => agreeAllTerms(e.target.checked)} />
