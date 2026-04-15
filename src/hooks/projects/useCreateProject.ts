@@ -1,4 +1,4 @@
-import { createProject, createProjectLike } from "@/api/projects/projects.api"
+import { createProject } from "@/api/projects/projects.api"
 import { deleteFile } from "@/api/file/file.api"
 import useFormState from '@/hooks/_common/useFormState.ts';
 import type { ProjectCreate, Position } from "@/types/type.projects";

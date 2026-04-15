@@ -1,5 +1,5 @@
 import { Pagination, Paper, Tab, Tabs } from '@mui/material'
-import useSelectMyProjects from '@/hooks/profile/useSelectMyProjects';
+import useSelectMyProjects from '@/hooks/profile/project/useSelectMyProjects';
 import ProjectCard from '@/components/profile/project/ProjectCard';
 import EvaluateCard from '@/components/profile/project/EvaluateCard';
 import TabPanel from '@/components/_common/TabPanel';

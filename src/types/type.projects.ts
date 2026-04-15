@@ -147,5 +147,6 @@ export interface MyProject {
   approvalNumber?: string;
   approvalState?: ApprovalStateType;
   progressState?: ProgressStateType;
+  recruitStatus: ProjectRecruitStatusCode;
   children?: React.ReactNode;
 };

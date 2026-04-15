@@ -1,8 +1,8 @@
-import { useSelect } from '../_common/api.hook';
+import { useSelect, useMutation } from "@/hooks/_common/api.hook";
 import { useState } from 'react';
 import type { SearchUserData, MyProject, MyProjectListCardVariant } from "@/types/type.projects";
 import type { ApiResponse } from '@/types/type.api';
-import { getUserProjects, getUserLikeProjects, getUserApplyProjects } from '@/api/projects/projects.api';
+import { getUserProjects, getUserLikeProjects, getUserApplyProjects, closeProject } from '@/api/projects/projects.api';
 
 type TabType = 0 | 1 | 2 | 3;
 const apiMap: Record<TabType, (req: SearchUserData) => Promise<ApiResponse<MyProject>> 
@@ -40,6 +40,13 @@ export default function useSelectMyProjects() {
   const handleTabChange = (_: React.SyntheticEvent, newValue: TabType) => {
       setTabValue(newValue);
     };
+
+  const onSuccessCloseProject = (res) => {
+        
+    }
+  const { mutate: projectCloseMutate } = useMutation<string, void>(closeProject);
+
+  return {projectCloseMutate};
     
   return { res, loading, error, setPage, tabValue, handleTabChange, tabVariant:tapMap[tabValue] };
 }

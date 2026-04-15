@@ -5,6 +5,8 @@ import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import HeartButton from '@/components/_common/button/HeartButton'
 import WebPopup from '@/components/_common/popup/WebPopup'
 import type { MyProject } from '@/types/type.projects'
+import useCloseMyProjects from '@/hooks/profile/project/useCloseMyProjects'
+import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/projects/ProjectChips";
 
 export default function ProjectCard ({
   variant,
@@ -20,6 +22,7 @@ export default function ProjectCard ({
   approvalNumber,
   approvalState,
   progressState,
+  recruitStatus,
   children
 }: MyProject){
   // 승인 상태에 따른 텍스트 색상 변경
@@ -37,22 +40,34 @@ export default function ProjectCard ({
   const [openEvaluatePopup, setOpenEvaluatePopup] = useState(false);
   const clickOpenEvaluatePopup = () => {setOpenEvaluatePopup(true);}
 
-  const onClickApplicant = (e:React.MouseEvent<T, MouseEvent>) => {
+  const onClickApplicant = (e:React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     location.href='/projects/update/'+projectGuid;
   }
+  const {projectCloseMutate} = useCloseMyProjects();
+
+  const onClickCloseProject = (e:React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    projectCloseMutate(projectGuid);
+  }
+
 
   return <>
     <div className="project-box2 w-100 justify-between" onClick={()=>{location.href='/projects/detail/'+projectGuid}}>
       <div className="left-area flex-col">
         <div className="chip-box align-center">
-          { variant !== 'participate' && <Chip size='small' variant='filled' color='primary' label='모집중' /> }
+          { variant !== 'participate' && <RecruitStatusChip
+              recruitStatusCode={recruitStatus}
+            /> }
           {variant === 'participate' && progressState && (
-            <Chip
-              size='small'
-              variant='outlined'
-              color={progressState === '진행중' ? 'primary' : 'success'}
-              label={progressState}
+            // <Chip
+            //   size='small'
+            //   variant='outlined'
+            //   color={progressState === '진행중' ? 'primary' : 'success'}
+            //   label={progressState}
+            // />
+            <RecruitStatusChip
+              recruitStatusCode={recruitStatus}
             />
           )}
           <Chip 
@@ -114,7 +129,7 @@ export default function ProjectCard ({
           <div className="bottom align-center">
             <Button fullWidth size='small' variant='outlined' color='primary'>신청자</Button>
             <Button fullWidth size='small' variant='outlined' color='primary' onClick={onClickApplicant}>수정</Button>
-            <Button fullWidth size='small' variant='contained' color='primary'>마감</Button>
+            <Button fullWidth size='small' variant='contained' color='primary' onClick={onClickCloseProject}>마감</Button>
           </div>
         </div>
       }

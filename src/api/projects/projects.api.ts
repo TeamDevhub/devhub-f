@@ -98,3 +98,10 @@ export const createProjectLike = (projectId: string) =>
     { method: "post" }
   );
 
+export const closeProject = (projectId: string) => 
+  fetcher<void, string>(
+    `/projects/${projectId}/close`,
+    undefined,
+    { method: "post" }
+  );
+
