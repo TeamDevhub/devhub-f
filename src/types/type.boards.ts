@@ -61,7 +61,7 @@ export interface AdminBoardSearchRequest {
 
 export interface AdminBoard {
     boardBasicResponseDto:BoardBasic;
-    userstatus?:string;
+    userstatus:string;
     reportCount?:string;
 }
 
