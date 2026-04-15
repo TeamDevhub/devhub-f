@@ -4,7 +4,9 @@ import type { FilterData, ProjectExtra, ProjectSearchRequest, SearchData } from 
 import { useSelect, useMutation } from "@/hooks/_common/api.hook";
 
 export default function useCloseMyProjects(
-) { 
-    
+) {
+    const { mutate: projectCloseMutate } = useMutation<string, void>(closeProject);
+
+    return { projectCloseMutate };
 
 }

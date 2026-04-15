@@ -135,12 +135,14 @@ export type ApprovalStateType = '승인 대기중' | '참가 승인' | '참가 �
 export type ProgressStateType = '진행중' | '진행완료';
 export interface MyProject {
   variant?: MyProjectListCardVariant;
-  projectGuid?: string;
+  projectGuid: string;
   title?: string;
   recruitmentStartDate?: string;
   recruitmentEndDate?: string;
   progressStartDate?: string;
   progressEndDate?: string;
+  progressRegionCd?: string;
+  recruitmentTypeCd?: string;
   currentRecriutNumber?: string;
   totalRecriutNumber?: string;
   applicantNumber?: string;
