@@ -152,9 +152,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-          }
-        ]
-      },
       {
         path: 'codes',
         children: [
