@@ -9,7 +9,7 @@ import axios from 'axios';
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserBasicResponse | undefined>(undefined);
-  const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem('accessToken'));
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const logout = useCallback(() => {
     sessionStorage.removeItem('accessToken');
@@ -20,13 +20,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const tryReissue = useCallback(async (): Promise<string | null> => {
     try {
       const res = await reissue();
+      console.log('reissue response:', res);
+
       const newAccessToken = res?.data?.accessToken;
 
       if (!newAccessToken) return null;
 
       setSessionStorage('accessToken', newAccessToken);
       return newAccessToken;
-    } catch {
+    } catch (e) {
+      console.log('reissue error:', e);
       return null;
     }
   }, []);
