@@ -1,19 +1,23 @@
 import { Pagination, Paper, Tab, Tabs } from '@mui/material'
 import useSelectMyProjects from '@/hooks/profile/project/useSelectMyProjects';
 import useSelectLikeProjects from '@/hooks/profile/project/useSelectLikeProjects';
+import useSelectApplyProjects from '@/hooks/profile/project/useSelectApplyProjects';
+import useSelectParticipateProjects from '@/hooks/profile/project/useSelectParticipateProjects';
 import ProjectCard from '@/components/profile/project/ProjectCard';
 import EvaluateCard from '@/components/profile/project/EvaluateCard';
 import TabPanel from '@/components/_common/TabPanel';
 import { useState } from 'react';
 
-export default function MyProfileProjectListPage(){
+export default function MyProfileProjectListPage() {
   type TabType = 0 | 1 | 2 | 3;
   const [tabValue, setTabValue] = useState<TabType>(0);
   const handleTabChange = (event: React.SyntheticEvent<Element, Event>, value: TabType) => {
     setTabValue(value);
   }
-  const { res: myRes, setPage:setMyPage } = useSelectMyProjects();
-  const { res: likeRes, setPage:setLikePage } = useSelectLikeProjects();
+  const { res: myRes, setPage: setMyPage } = useSelectMyProjects();
+  const { res: likeRes, setPage: setLikePage } = useSelectLikeProjects();
+  const { res: applyRes, setPage: setApplyPage } = useSelectApplyProjects();
+  const { res: participateRes, setPage: setParticipatePage } = useSelectParticipateProjects();
   return (
     <>
       <Paper className='mypage-box flex-col flex-grow' elevation={4}>
@@ -32,53 +36,26 @@ export default function MyProfileProjectListPage(){
             총 <em>{myRes?.dataList?.length}</em>건
           </strong>
           <div className="list-box flex-col active">
-              {myRes?.dataList?.map((item, index) => {
-                return <ProjectCard key={index} {...item} variant={"register"} ></ProjectCard>
-              })}
+            {myRes?.dataList?.map((item, index) => {
+              return <ProjectCard key={index} {...item} variant={"register"} ></ProjectCard>
+            })}
           </div>
           {/* 2-4. pagination */}
           <Pagination count={myRes?.pagination?.totalPages} onChange={(_, v) => { setMyPage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
         </TabPanel>
-          
+
         {/* 2-3-2. 내가 신청한 프로젝트 */}
         <TabPanel value={tabValue} index={1}>
           <strong className="list-summary">
-            총 <em>{myRes?.dataList?.length}</em>건
+            총 <em>{applyRes?.dataList?.length}</em>건
           </strong>
           <div className="list-box flex-col">
-            {likeRes?.dataList?.map((item, index) => {
+            {applyRes?.dataList?.map((item, index) => {
               return <ProjectCard key={index} {...item} variant={"apply"} ></ProjectCard>
             })}
-            {/* <ProjectCard 
-              variant='apply'
-              title='[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다. 타이틀이 길어지면 말줄임표가 자동 처리됩니다.'
-              recruitStartDate='2025.12.03'
-              recruitEndDate='2026.02.03'
-              progressStartDate='2025.12.03'
-              progressEndDate='2026.02.03'
-              approvalState='승인 대기중'
-            />
-            <ProjectCard 
-              variant='apply'
-              title='[데이터 분석2] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.'
-              recruitStartDate='2025.12.03'
-              recruitEndDate='2026.02.03'
-              progressStartDate='2025.12.03'
-              progressEndDate='2026.02.03'
-              approvalState='참가 거절'
-            />
-            <ProjectCard 
-              variant='apply'
-              title='[데이터 분석3] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.'
-              recruitStartDate='2025.12.03'
-              recruitEndDate='2026.02.03'
-              progressStartDate='2025.12.03'
-              progressEndDate='2026.02.03'
-              approvalState='참가 승인'
-            /> */}
           </div>
           {/* 2-4. pagination */}
-          <Pagination count={myRes?.pagination?.totalPages} onChange={(_, v) => { setMyPage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
+          <Pagination count={applyRes?.pagination?.totalPages} onChange={(_, v) => { setApplyPage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
         </TabPanel>
         {/* 2-3-3. 관심 프로젝트 */}
         <TabPanel value={tabValue} index={2}>
@@ -86,34 +63,9 @@ export default function MyProfileProjectListPage(){
             총 <em>{likeRes?.dataList?.length}</em>건
           </strong>
           <div className="list-box flex-col">
-          {likeRes?.dataList?.map((item, index) => {
+            {likeRes?.dataList?.map((item, index) => {
               return <ProjectCard key={index} {...item} variant={"favorite"} ></ProjectCard>
             })}
-            {/* <ProjectCard 
-              variant='favorite'
-              title='[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다. 타이틀이 길어지면 말줄임표가 자동 처리됩니다.'
-              recruitStartDate='2025.12.03'
-              recruitEndDate='2026.02.03'
-              progressStartDate='2025.12.03'
-              progressEndDate='2026.02.03'
-            />
-            <ProjectCard 
-              variant='favorite'
-              title='[데이터 분석2] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.'
-              recruitStartDate='2025.12.03'
-              recruitEndDate='2026.02.03'
-              progressStartDate='2025.12.03'
-              progressEndDate='2026.02.03'
-            />
-            <ProjectCard 
-              variant='favorite'
-              title='[데이터 분석3] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.'
-              recruitStartDate='2025.12.03'
-              recruitEndDate='2026.02.03'
-              progressStartDate='2025.12.03'
-              progressEndDate='2026.02.03'
-            /> */}
-            
           </div>
           {/* 2-4. pagination */}
           <Pagination count={likeRes?.pagination?.totalPages} onChange={(_, v) => { setLikePage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
@@ -121,10 +73,10 @@ export default function MyProfileProjectListPage(){
         {/* 2-3-4. 참여한 프로젝트 */}
         <TabPanel value={tabValue} index={3}>
           <strong className="list-summary">
-            총 <em>{myRes?.dataList?.length}</em>건
+            총 <em>{participateRes?.dataList?.length}</em>건
           </strong>
           <div className="list-box flex-col">
-            {myRes?.dataList?.map((item, index) => {
+            {participateRes?.dataList?.map((item, index) => {
               return <ProjectCard key={index} {...item} variant={"participate"} ></ProjectCard>
             })}
             {/* <ProjectCard 
@@ -179,9 +131,9 @@ export default function MyProfileProjectListPage(){
             /> */}
           </div>
           {/* 2-4. pagination */}
-          <Pagination count={myRes?.pagination?.totalPages} onChange={(_, v) => { setMyPage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
+          <Pagination count={participateRes?.pagination?.totalPages} onChange={(_, v) => { setParticipatePage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
         </TabPanel>
-        
+
       </Paper>
     </>
   )

@@ -15,33 +15,33 @@ export const getProjectDetail = (projectId: string) =>
     { method: "get" }
   );
 
- export const getUserProjects = (req: SearchUserData) =>
+export const getUserProjects = (req: SearchUserData) =>
   fetcher<MyProject, SearchUserData>(
     "/user/projects",
     req,
     { method: "get" }
   );
 
-  export const getUserLikeProjects = (req: SearchUserData) =>
+export const getUserLikeProjects = (req: SearchUserData) =>
   fetcher<MyProject, SearchUserData>(
     "/user/projects/likes",
     req,
     { method: "get" }
   );
 
-  export const getUserApplyProjects = (req: SearchUserData) =>
+export const getUserApplyProjects = (req: SearchUserData) =>
   fetcher<MyProject, SearchUserData>(
     "/user/projects/applications",
     req,
     { method: "get" }
   );
 
-  // export const getUserDoProjects = (req: SearchUserData) =>
-  // fetcher<MyProjectList, SearchUserData>(
-  //   "/user/projects",
-  //   req,
-  //   { method: "get" }
-  // );
+export const getUserParticapateProjects = (req: SearchUserData) =>
+  fetcher<MyProject, SearchUserData>(
+    "/user/projects/participates",
+    req,
+    { method: "get" }
+  );
 
 export const getProjectFormDetail = (projectId: string) =>
   fetcher<ProjectFormDetailResponse>(
@@ -91,14 +91,14 @@ export const deleteProject = (projectId: string) =>
     { method: "delete" }
   );
 
-export const createProjectLike = (projectId: string) => 
+export const createProjectLike = (projectId: string) =>
   fetcher<void, string>(
     `/projects/${projectId}/likes`,
     undefined,
     { method: "post" }
   );
 
-export const closeProject = (projectId: string) => 
+export const closeProject = (projectId: string) =>
   fetcher<void, string>(
     `/projects/${projectId}/close`,
     undefined,
