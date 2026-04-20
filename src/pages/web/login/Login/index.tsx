@@ -1,5 +1,6 @@
 import logo from '@/assets/images/devHub-logo.png';
 import googleIcon from '@/assets/images/google-icon.svg';
+import kakaoIcon from '@/assets/images/kakao-icon.png';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import useLogin from '@/hooks/login/useLogin';
 import { GitHub } from '@mui/icons-material';
@@ -8,6 +9,18 @@ import { Link } from 'react-router-dom';
 
 export default function Login() {
   const { loginInfo, changeId, changePassword, applyLogin } = useLogin();
+
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:8080/auth/oauth/google';
+  };
+
+  const handleGithubLogin = () => {
+    window.location.href = 'http://localhost:8080/auth/oauth/github';
+  };
+
+  const handleKakaoLogin = () => {
+    window.location.href = 'http://localhost:8080/auth/oauth/kakao';
+  };
 
   return (
     <div className="auth-page flex-center">
@@ -55,19 +68,39 @@ export default function Login() {
           </div>
           <Divider />
           <div className="button-box flex-col">
-            <Button fullWidth size="medium" variant="outlined" color="primary">
+            <Button fullWidth size="medium" variant="outlined" color="primary" onClick={handleGoogleLogin}>
               <img src={googleIcon} alt="google icon" className="button-icon" />
               Google로 로그인
             </Button>
+
             <Button
               fullWidth
               size="medium"
               variant="outlined"
               color="primary"
+              onClick={handleGithubLogin}
               startIcon={<GitHub sx={{ fontSize: '2rem' }} />}
               sx={{ color: 'text.primary', borderColor: 'text.primary' }}
             >
               Github로 로그인
+            </Button>
+
+            <Button
+              fullWidth
+              size="medium"
+              variant="outlined"
+              onClick={handleKakaoLogin}
+              sx={{
+                borderColor: '#FEE500',
+                color: '#000',
+                fontWeight: 600,
+                '&:hover': {
+                  backgroundColor: 'rgba(253, 220, 0, 0.1)',
+                },
+              }}
+            >
+              <img src={kakaoIcon} alt="google icon" className="button-icon" />
+              Kakao로 로그인
             </Button>
           </div>
         </Paper>

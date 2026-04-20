@@ -5,7 +5,7 @@ import React from 'react';
 export interface WebPopupProps{
   title:string;
   onClose?:()=>void;
-  onSubmit?:()=>void;
+  onSubmit?: () => void | boolean | Promise<void | boolean>;
   onDelete?:()=>void;
   children:React.ReactNode;
   isOpen?:boolean;

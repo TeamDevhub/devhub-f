@@ -9,11 +9,13 @@ interface BoardCardProps {
   boardData : BoardSummary;
   handleLike:(boardGuid:string) => void;
   handleDetail:(boardGuid:string) => void;
+  isLoggedIn: boolean;
 }
 export default function BoardCard({
   boardData, 
   handleLike,
-  handleDetail
+  handleDetail,
+  isLoggedIn
 } : BoardCardProps){
 
   const {
@@ -33,7 +35,7 @@ export default function BoardCard({
           </div>
           <div className="right-area flex-col">
             <div className='heart-box flex-col align-end'>
-              <HeartButton likeCount={likeCount} onClick={()=>handleLike(boardBasicResponseDto.boardGuid)}/>
+              {isLoggedIn ? <HeartButton likeCount={likeCount} onClick={()=>handleLike(boardBasicResponseDto.boardGuid)}/> : null}
             </div>
           </div>
         </div>

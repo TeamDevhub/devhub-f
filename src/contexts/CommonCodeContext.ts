@@ -8,6 +8,7 @@ interface CodeContextType {
     getCodesByGroup: (groupCode: CommonCode) => CommonCodeItem[];
     getCodeName: (groupCode: CommonCode, targetCode: string) => string;
     getSelectOptions: (groupCode: CommonCode) => SelectComponentProps[];
+    refetch: () => void;
 }
 
 export const CommonCodeContext = createContext<CodeContextType | undefined>(undefined);

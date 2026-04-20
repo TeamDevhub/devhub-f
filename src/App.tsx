@@ -5,10 +5,9 @@ import 'dayjs/locale/ko';
 import { RouterProvider } from 'react-router-dom';
 
 function App() {
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </LocalizationProvider>
   );
 }
