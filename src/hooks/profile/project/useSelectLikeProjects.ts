@@ -1,17 +1,17 @@
 import { useSelect } from "@/hooks/_common/api.hook";
 import { useState } from 'react';
 import type { SearchUserData, MyProject } from "@/types/type.projects";
-import { getUserProjects } from '@/api/projects/projects.api';
+import { getUserLikeProjects } from '@/api/projects/projects.api';
 
 const initData: SearchUserData = {
   page: 0,
   size: 10
 }
-export default function useSelectMyProjects() {
+export default function useSelectLikeProjects() {
   const [request, setRequest] = useState<SearchUserData>(initData);
 
   const options = {
-    apiFn: getUserProjects,
+    apiFn: getUserLikeProjects,
     req: request,
   }
   const { res, loading, error } = useSelect<MyProject, SearchUserData>(options);
