@@ -40,6 +40,7 @@ export interface BoardDetail {
     boardSummaryResponseDto:BoardSummary;
     commentList: comment[];
     userEmail:string;
+    isLiked:boolean;
 }
 
 export interface BoardSearchRequest {
@@ -48,5 +49,20 @@ export interface BoardSearchRequest {
     title?: string;
 }
 
+export interface AdminBoardSearchRequest {
+    page:number;
+    categoryCd?: string;
+    title?: string;
+    userStatus?:string;
+    reported?:string;
+    registeredStartDate?: DateType;
+    registeredEndDate?: DateType;
+}
+
+export interface AdminBoard {
+    boardBasicResponseDto:BoardBasic;
+    userstatus:string;
+    reportCount?:string;
+}
 
 export type SearchData = Pick<BoardSearchRequest, 'page' | 'categoryCd' | 'title'>;

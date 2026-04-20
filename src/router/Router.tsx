@@ -45,10 +45,11 @@ import FormManagementPage from '@/pages/design/admin/forms/FormManagementPage';
 import BoardManagementPage from '@/pages/design/admin/boards/BoardManagementPage';
 import BannerManagementPage from '@/pages/design/admin/banner/BannerManagementPage';
 import TermsManagementPage from '@/pages/design/admin/terms/TermsManagementPage';
+import Banner from '@/pages/admin/Banner';
+import BoardAdmin from '@/pages/admin/Boards';
 import DesignMainPage from '@/pages/design/web/main/DesignMainPage';
 import OauthCallback from '@/pages/web/login/Login';
 import AdminLayout from '@/layout/AdminLayout';
-import Banner from '@/pages/admin/Banner';
 import Codes from '@/pages/admin/Codes';
 
 
@@ -150,15 +151,21 @@ const router = createBrowserRouter([
           },
         ],
       },
-          }
-        ]
-      },
       {
         path: 'codes',
         children: [
           {
             index: true,
             element: <Codes />,
+          }
+        ]
+      },
+      {
+        path: 'boards',
+        children: [
+          {
+            index: true,
+            element: <BoardAdmin />,
           }
         ]
       }

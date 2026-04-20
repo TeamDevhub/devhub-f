@@ -1,4 +1,4 @@
-import type {BoardSummary, BoardSearchRequest, BoardCreate, BoardDetail, BoardBasic} from "@/types/type.boards";
+import type {BoardSummary, BoardSearchRequest, BoardCreate, BoardDetail, BoardBasic, AdminBoard, AdminBoardSearchRequest} from "@/types/type.boards";
 import fetcher from "@/utils/util.api";
 
 export const getBoards = (req : BoardSearchRequest) => {
@@ -35,17 +35,25 @@ export const createBoard = (req : BoardCreate) =>
         { method : "post"}
     );
 
-export const deleteBoard = (req : string) =>
-    fetcher<void, string>(
-        `/boards/${req}`,
-        undefined,
-        { method : "delete"}
+export const deleteBoard = (req : string[]) => {
+    const body = { boardGuids: req };
+    return fetcher<void, typeof body>(
+        `/boards/delete`,
+        body,
+        { method : "post"}
     );
+}
 
 export const updateBoard = (req : BoardBasic) =>
     fetcher<void, BoardBasic>(
-        `/boards/${req.boardGuid}`,
+        `/boards/${req.boardGuid}`, 
         req,
         { method : "put"}
     );
 
+export const getAdminBoards = (req : AdminBoardSearchRequest) =>
+    fetcher<AdminBoard, AdminBoardSearchRequest>(
+        `/admin/boards`,
+        req,
+        { method : "get"}
+    );
