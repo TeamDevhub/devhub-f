@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import { AccessTime, LocationOn } from '@mui/icons-material'
 import { Button, Chip } from '@mui/material'
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
+import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import HeartButton from '@/components/_common/button/HeartButton'
 import WebPopup from '@/components/_common/popup/WebPopup'
-import type { MyProject } from '@/types/type.projects'
+import { type MyProject } from '@/types/type.projects';
 import useCloseMyProjects from '@/hooks/profile/project/useCloseMyProjects'
 import useUpdateProjectLike from '@/hooks/projects/useUpdateProjectLike'
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/projects/ProjectChips";
+import { COMMON_CODE } from "@/types/const";
+import type { ProjectApprovalStatusCode } from '@/types/type._common';
 
 export default function ProjectCard({
   variant,
@@ -28,12 +31,9 @@ export default function ProjectCard({
   recruitStatus,
   children
 }: MyProject) {
-  // 승인 상태에 따른 텍스트 색상 변경
-  const approvalColorMap = {
-    '승인 대기중': 'var(--text-primary)',
-    '참가 승인': 'var(--primary-main)',
-    '참가 거절': 'var(--error-main)'
-  } as const;
+
+
+  const { getCodeName } = useCodes();
 
   // 내가 신청한 프로젝트 中 지원 취소 팝업
   const [openCancelPopup, setOpenCancelPopup] = useState(false);
@@ -58,7 +58,12 @@ export default function ProjectCard({
   const onClickHeartButton = (e: React.MouseEvent<HTMLButtonElement>, liked: boolean) => {
     toggleLike(projectGuid, liked);
   }
-
+  // 승인 상태에 따른 텍스트 색상 변경
+  const approvalColorMap: Record<ProjectApprovalStatusCode, string> = {
+    '3301': 'var(--text-primary)', // 대기 (기본색)
+    '3302': 'var(--primary-main)',  // 승인 (강조색)
+    '3303': 'var(--error-main)'    // 반려 (에러색)
+  } as const;
 
   return <>
     <div className="project-box2 w-100 justify-between" onClick={() => { location.href = '/projects/detail/' + projectGuid }}>

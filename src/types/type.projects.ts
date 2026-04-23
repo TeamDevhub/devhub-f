@@ -1,6 +1,6 @@
 import type { DateType } from "@/types/type.api";
 import type { ApplicationFormType } from "@/types/const.projectCreate.ts"
-import type { ProjectRecruitStatusCode } from '@/types/type._common';
+import type { ProjectRecruitStatusCode, ProjectApprovalStatusCode } from '@/types/type._common';
 
 export interface ProjectBasic {
   projectGuid: string;
@@ -131,8 +131,8 @@ export interface ProjectUpdate extends ProjectExtra, ProjectFileMetaData {
 
 // Profile
 export type MyProjectListCardVariant = 'register' | 'apply' | 'favorite' | 'participate';
-export type ApprovalStateType = '승인 대기중' | '참가 승인' | '참가 거절';
 export type ProgressStateType = '진행중' | '진행완료';
+
 export interface MyProject {
   variant?: MyProjectListCardVariant;
   projectGuid: string;
@@ -147,7 +147,7 @@ export interface MyProject {
   totalRecriutNumber?: string;
   applicantNumber?: string;
   approvalNumber?: string;
-  approvalState?: ApprovalStateType;
+  approvalState?: ProjectApprovalStatusCode;
   progressState?: ProgressStateType;
   recruitStatus: ProjectRecruitStatusCode;
   children?: React.ReactNode;

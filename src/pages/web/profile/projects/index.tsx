@@ -77,7 +77,30 @@ export default function MyProfileProjectListPage() {
           </strong>
           <div className="list-box flex-col">
             {participateRes?.dataList?.map((item, index) => {
-              return <ProjectCard key={index} {...item} variant={"participate"} ></ProjectCard>
+              return <ProjectCard key={index} {...item} variant={"participate"} >
+                <EvaluateCard
+                  userID='김수빈'
+                  userEmail='rolling0321@naver.com'
+                  mannerTemperature='40'
+                  completeRating
+                />
+                <EvaluateCard
+                  userID='데브헙'
+                  userEmail='devHub@naver.com'
+                  mannerTemperature='40'
+                />
+                <EvaluateCard
+                  userID='파핑'
+                  userEmail='5finger@naver.com'
+                  mannerTemperature='40'
+                />
+                <EvaluateCard
+                  userID='두쫀쿠'
+                  userEmail='dubaichoco@naver.com'
+                  mannerTemperature='40'
+                  completeRating
+                />
+              </ProjectCard>
             })}
             {/* <ProjectCard 
               variant='participate'

@@ -1,6 +1,6 @@
 export const PROJECT_RECRUIT_TYPE = {
-  GENERAL : {CODE:'3001', NAME:'일반 모집'},
-  ADDITIONAL : {CODE:'3002', NAME:'추가 모집'},
+  GENERAL: { CODE: '3001', NAME: '일반 모집' },
+  ADDITIONAL: { CODE: '3002', NAME: '추가 모집' },
 } as const;
 
 export const PROJECT_RECRUIT_STATUS = {
@@ -9,11 +9,23 @@ export const PROJECT_RECRUIT_STATUS = {
   WAITING: { CODE: '3203', NAME: '모집대기' },
 } as const;
 
+export const PROJECT_PROGRESS_TYPE = {
+  WAITING: { CODE: '3101', NAME: '모집중' },
+  COMPLETE: { CODE: '3102', NAME: '모집완료' },
+  REJECT: { CODE: '3103', NAME: '승인거절' },
+} as const;
+
+export const PROJECT_APPROVAL_STATUS = {
+  WAITING: { CODE: '3301', NAME: '승인대기' },
+  COMPLETE: { CODE: '3302', NAME: '승인완료' },
+  REJECT: { CODE: '3303', NAME: '승인거절' },
+} as const;
+
 export const BOARD_CATEGORY = {
-  FREE: { CODE: '4001', NAME:'자유게시판'},
-  QNA: { CODE: '4002', NAME:'질문게시판'},
-  NOTICE: { CODE: '4003', NAME:'공지사항'},
-}as const;
+  FREE: { CODE: '4001', NAME: '자유게시판' },
+  QNA: { CODE: '4002', NAME: '질문게시판' },
+  NOTICE: { CODE: '4003', NAME: '공지사항' },
+} as const;
 
 export const COMMON_CODE = {
   SKILL_CODE: "SKILL_CODE",
@@ -33,8 +45,8 @@ export const COMMON_CODE = {
 } as const;
 
 export const ERROR_CODE = {
-  INVALID_INPUT_VALUE : 'ERR.DVH.0001', // 400
-  NOT_FOUND_API_KEY : 'ERR.DVH.0005', //400
+  INVALID_INPUT_VALUE: 'ERR.DVH.0001', // 400
+  NOT_FOUND_API_KEY: 'ERR.DVH.0005', //400
 
   // //FORBIDDEN
   // HANDLE_ACCESS_DENIED : 'ERR.DVH.0004', // 403
@@ -50,17 +62,17 @@ export const ERROR_CODE = {
   // UNKNOWN_HOST : 'ERR.DVH.2002', //500
   // PROXY_SERVICE_NOT_CONNECT : 'ERR.DVH.2000', //500
   // PROXY_SERVICE_READ_TIMEOUT : 'ERR.DVH.2001', //500
-  
+
   // // UNAUTHORIZED
   // INVALID_API_KEY : 'ERR.DVH.0006', //401
   // EXPIRE_API_KEY : 'ERR.DVH.0007', //401
   // NOT_EXIST_ACCESS_TOKEN : 'ERR.DVH.3002', //401 
-  INVALID_ACCESS_TOKEN : 'ERR.DVH.3003', //401
-  SIGNATURE_ERROR_ACCESS_TOKEN : 'ERR.DVH.3004', //401
+  INVALID_ACCESS_TOKEN: 'ERR.DVH.3003', //401
+  SIGNATURE_ERROR_ACCESS_TOKEN: 'ERR.DVH.3004', //401
   // MALFORMED_JWT_ERROR_ACCESS_TOKEN : 'ERR.DVH.3005', //401
-  EXPIRE_ACCESS_TOKEN : 'ERR.DVH.3006', //401
+  EXPIRE_ACCESS_TOKEN: 'ERR.DVH.3006', //401
   // UNSUPPORT_JWT_TOKEN : 'ERR.DVH.3007', //401
   // INVALID_TOKEN : 'ERR.DVH.3008', //401
-  DUP_LOGIN : 'ERR.DVH.3010', //401
-  
+  DUP_LOGIN: 'ERR.DVH.3010', //401
+
 } as const;
