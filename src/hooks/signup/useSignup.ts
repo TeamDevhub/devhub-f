@@ -49,16 +49,17 @@ export default function useSignup({ email, tempToken }: SignupParams) {
 
   const handleSuccessSignup = (res: ApiResponse<TokenResponseDto>) => {
     alert(res.code);
+    navigate('/auth/login');
+  };
 
+  const handleSuccessOauthSignup = (res: ApiResponse<TokenResponseDto>) => {
+    alert(res.code);
     const accessToken = res.data?.accessToken;
-
     if (accessToken) {
       setSessionStorage('accessToken', accessToken);
-      navigate('/'); // 🔥 메인으로 바로 이동
-      return;
     }
 
-    navigate('/auth/login');
+    navigate('/');
   };
 
   const handleFailSignup = (res: ApiResponse<TokenResponseDto>) => {
@@ -73,7 +74,7 @@ export default function useSignup({ email, tempToken }: SignupParams) {
 
   const { mutate: requestOauthSignup, loading: oauthSignupLoading } = useMutation<OauthSignupRequest, TokenResponseDto>(
     oauthSignup,
-    handleSuccessSignup,
+    handleSuccessOauthSignup,
     handleFailSignup,
   );
 
