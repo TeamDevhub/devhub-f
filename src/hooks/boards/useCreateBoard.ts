@@ -1,5 +1,5 @@
 import type { BoardCreate } from "@/types/type.boards";
-import {createBoard} from '@/api/boards/boards.api';
+import {createBoard} from '@/api/web/boards.api';
 import { useMutation } from '@/hooks/_common/api.hook';
 import { Validators } from '@/utils/util._common';
 import useFormState from "@/hooks/_common/useFormState.ts";

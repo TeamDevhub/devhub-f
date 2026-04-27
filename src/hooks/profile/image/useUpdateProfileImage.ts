@@ -1,6 +1,6 @@
 import type { ApiResponse } from '@/types/type.api';
 import { useMutation } from '@/hooks/_common/api.hook';
-import { updateProfileImage } from '@/api/profile/profile.api';
+import { updateProfileImage } from '@/api/web/profile.api';
 import type { UpdateProfileImageRequest } from '@/types/type.user';
 import { useModal } from '@/hooks/_common/useModal';
 

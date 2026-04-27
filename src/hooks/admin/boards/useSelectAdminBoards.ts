@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getAdminBoards } from "@/api/boards/boards.api";
+import { getAdminBoards } from "@/api/web/boards.api";
 import { useSelect } from "@/hooks/_common/api.hook";
 import type { AdminBoardSearchRequest } from "@/types/type.boards";
 import { useNavigate } from 'react-router-dom';

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { AuthContext } from './AuthContext';
-import { getUserProfile } from '@/api/profile/profile.api';
-import { reissue } from '@/api/auth/auth.api';
+import { getUserProfile } from '@/api/web/profile.api';
+import { reissue } from '@/api/web/auth.api';
 
 import type { UserBasicResponse } from '@/types/type.user';
 import { setSessionStorage } from '@/utils/util._common.ts';

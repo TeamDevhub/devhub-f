@@ -1,4 +1,4 @@
-import {getNotificationList} from "@/api/notification/notification.api.ts";
+import {getNotificationList} from "@/api/web/notification.api.ts";
 import useSelect from "@/hooks/_common/api.hook.ts";
 
 export default function useNotificationList(){

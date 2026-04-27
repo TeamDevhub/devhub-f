@@ -1,5 +1,5 @@
 import {type ReactNode, useMemo} from "react";
-import {getCommonCode} from "@/api/common/common.api.ts";
+import {getCommonCode} from "@/api/common.api.ts";
 import {useSelect} from "@/hooks/_common/api.hook.ts";
 import type {CommonCodeRequest, CommonCodeResponse} from "@/types/type.api.ts";
 import { CommonCodeContext } from "./CommonCodeContext";

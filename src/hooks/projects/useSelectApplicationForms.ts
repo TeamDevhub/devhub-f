@@ -1,6 +1,6 @@
 import type { ApplicationFormRequest, ApplicationFormBasic } from "@/types/type.projects";
 import { useSelect } from "../_common/api.hook";
-import { getApplicationForms } from "@/api/projects/projects.api"
+import { getApplicationForms } from "@/api/web/projects.api"
 
 export default function useSelectApplicationForms(params: ApplicationFormRequest) {
     const options = {

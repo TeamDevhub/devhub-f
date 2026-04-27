@@ -1,6 +1,6 @@
 import type { ProjectFormDetailResponse } from "@/types/type.projects";
 import { useSelect } from "../_common/api.hook";
-import { getProjectFormDetail } from "@/api/projects/projects.api";
+import { getProjectFormDetail } from "@/api/web/projects.api";
 
 export default function useSelectProjectFormDetail(
   projectId?: string

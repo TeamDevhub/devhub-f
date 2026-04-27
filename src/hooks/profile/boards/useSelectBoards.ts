@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { getUserBoards } from "@/api/profile/profile.api";
+import { getUserBoards } from "@/api/web/profile.api";
 import { useSelect } from "@/hooks/_common/api.hook";
 
 export default function useSelectBoards(

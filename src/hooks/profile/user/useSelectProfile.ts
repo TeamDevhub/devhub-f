@@ -1,6 +1,6 @@
 import { useSelect } from '../../_common/api.hook';
 import { useCallback } from 'react';
-import { getUserProfile } from '@/api/profile/profile.api';
+import { getUserProfile } from '@/api/web/profile.api';
 
 import type { UserDetailResponse } from '@/types/type.user';
 

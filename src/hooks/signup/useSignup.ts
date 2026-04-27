@@ -1,4 +1,4 @@
-import { signup, oauthSignup } from '@/api/signup/signup.api';
+import { signup, oauthSignup } from '@/api/web/signup.api';
 
 import type { ApiResponse } from '@/types/type.api';
 import type { SignupRequest, OauthSignupRequest } from '@/types/type.signup';

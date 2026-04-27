@@ -1,6 +1,6 @@
 import { useMutation } from '@/hooks/_common/api.hook';
 import { useModal } from '@/hooks/_common/useModal';
-import {deleteBoard} from '@/api/boards/boards.api';
+import {deleteBoard} from '@/api/web/boards.api';
 
 export default function useDeleteBoard(onSuccessAdminBoardDelete?: () => void) {
 

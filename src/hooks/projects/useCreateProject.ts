@@ -1,5 +1,5 @@
-import { createProject } from "@/api/projects/projects.api"
-import { deleteFile } from "@/api/file/file.api"
+import { createProject } from "@/api/web/projects.api"
+import { deleteFile } from "@/api/web/file.api"
 import useFormState from '@/hooks/_common/useFormState.ts';
 import type { ProjectCreate, Position } from "@/types/type.projects";
 import { useMutation } from "@/hooks/_common/api.hook";
