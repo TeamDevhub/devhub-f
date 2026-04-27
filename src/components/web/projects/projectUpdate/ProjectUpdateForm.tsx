@@ -2,11 +2,11 @@ import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import CustomRadioGroup from '@/components/_common/customMUI/CustomRadioGroup';
 import RegionPopup from '@/components/_common/popup/RegionPopup';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
-import AdditionalFormPopup from '@/components/projects/projectCreate/AdditionalFormPopup'
-import ApplicationFormGroup from '@/components/projects/projectCreate/ApplicationFormGroup';
-import PositionGroup from '@/components/projects/projectCreate/PositionGroup';
+import AdditionalFormPopup from '@/components/web/projects/projectCreate/AdditionalFormPopup'
+import ApplicationFormGroup from '@/components/web/projects/projectCreate/ApplicationFormGroup';
+import PositionGroup from '@/components/web/projects/projectCreate/PositionGroup';
 import DragAndDropForm from '@/components/_common/DragAndDropForm'
-import useUpdateProject from '@/hooks/projects/useUpdateProject.ts'
+import useUpdateProject from '@/hooks/web/projects/useUpdateProject.ts'
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import { COMMON_CODE } from '@/types/const';
 import { type DateType } from '@/types/type.api';

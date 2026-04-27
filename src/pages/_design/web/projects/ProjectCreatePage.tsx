@@ -1,8 +1,8 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { Remove, Search } from '@mui/icons-material';
 import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, MenuItem, Paper, Radio, RadioGroup, Select, type SelectChangeEvent } from '@mui/material'
-import FieldGroup from '@/components/design/FieldGroup';
-import FormField from '@/components/design/FormField';
+import FieldGroup from '@/components/_design/FieldGroup';
+import FormField from '@/components/_design/FormField';
 import { useState } from 'react'
 
 export default function ProjectCreatePage(){

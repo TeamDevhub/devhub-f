@@ -1,7 +1,7 @@
 import { Pagination, Paper } from '@mui/material'
-import useSelectBoards from '@/hooks/profile/boards/useSelectBoards';
-import MyInfoBoardCard from '@/components/profile/MyInfoBoardCard';
-import useDeleteBoard from '@/hooks/boards/useDeleteBoard';
+import useSelectBoards from '@/hooks/web/profile/boards/useSelectBoards';
+import MyInfoBoardCard from '@/components/web/profile/MyInfoBoardCard';
+import useDeleteBoard from '@/hooks/web/boards/useDeleteBoard';
 
 export default function MyProfileBoardList(){
   const {

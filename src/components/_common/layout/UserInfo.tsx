@@ -3,9 +3,9 @@ import {CheckCircle, Create, Inbox, Logout, Notifications, Person} from "@mui/ic
 import useMenu from "@/hooks/_common/useMenu.ts";
 import {IconButton, Menu, MenuItem} from "@mui/material";
 import {Link} from "react-router-dom";
-import useNotificationList from "@/hooks/header/useNotificationList.ts";
+import useNotificationList from "@/hooks/web/header/useNotificationList.ts";
 import NotificationItem from "@/components/_common/layout/NotificationItem.tsx";
-import useCheckedNotification from "@/hooks/header/useCheckedNotification.ts";
+import useCheckedNotification from "@/hooks/web/header/useCheckedNotification.ts";
 
 export default function UserInfo({ logout }:{
     logout?:()=>void;

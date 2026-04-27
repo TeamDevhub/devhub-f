@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import MyInfoBox from '@/components/design/MyInfoBox'
+import MyInfoBox from '@/components/_design/MyInfoBox'
 import { Box, Button, Chip, Pagination, Paper, Rating, Tab, Tabs } from '@mui/material'
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import { AccessTime, LocationOn, Person } from '@mui/icons-material'

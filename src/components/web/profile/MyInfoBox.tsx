@@ -4,7 +4,7 @@ import { Person } from '@mui/icons-material';
 import { Button, Divider, List, ListItemButton, Paper } from '@mui/material';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link } from 'react-router-dom';
-import useProfileImageUpload from '@/hooks/profile/image/useProfileImage';
+import useProfileImageUpload from '@/hooks/web/profile/image/useProfileImage';
 
 const API_URL = import.meta.env.VITE_FILE_API_URL;
 

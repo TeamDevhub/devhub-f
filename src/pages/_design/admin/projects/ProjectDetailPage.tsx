@@ -1,5 +1,5 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
-import LeftMenuBar from '@/components/design/LeftMenuBar'
+import LeftMenuBar from '@/components/_design/LeftMenuBar'
 import { Button, Chip, Divider, MenuItem, Pagination, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, type SelectChangeEvent } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers';
 import React, { useState } from 'react'

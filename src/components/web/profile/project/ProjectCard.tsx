@@ -6,9 +6,9 @@ import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import HeartButton from '@/components/_common/button/HeartButton'
 import WebPopup from '@/components/_common/popup/WebPopup'
 import { type MyProject } from '@/types/type.projects';
-import useCloseMyProjects from '@/hooks/profile/project/useCloseMyProjects'
-import useUpdateProjectLike from '@/hooks/projects/useUpdateProjectLike'
-import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/projects/ProjectChips";
+import useCloseMyProjects from '@/hooks/web/profile/project/useCloseMyProjects'
+import useUpdateProjectLike from '@/hooks/web/projects/useUpdateProjectLike'
+import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/web/projects/ProjectChips";
 import { COMMON_CODE } from "@/types/const";
 import type { ProjectApprovalStatusCode } from '@/types/type._common';
 

@@ -2,7 +2,7 @@ import logo from '@/assets/images/devHub-logo.png';
 import googleIcon from '@/assets/images/google-icon.svg';
 import kakaoIcon from '@/assets/images/kakao-icon.png';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import useLogin from '@/hooks/login/useLogin';
+import useLogin from '@/hooks/web/login/useLogin';
 import { GitHub } from '@mui/icons-material';
 import { Button, Divider, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';

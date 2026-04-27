@@ -1,6 +1,6 @@
 import type { ProjectExtra } from "@/types/type.projects";
 import HeartButton from "@/components/_common/button/HeartButton";
-import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/projects/ProjectChips";
+import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/web/projects/ProjectChips";
 import { AccessTime } from "@mui/icons-material";
 import { Chip, Divider, Paper } from "@mui/material";
 import { COMMON_CODE } from "@/types/const";

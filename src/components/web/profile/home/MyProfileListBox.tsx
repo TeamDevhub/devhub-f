@@ -1,6 +1,6 @@
 import { ArrowForwardIos } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import MyProfileListCard from '@/components/profile/home/MyProfileListCard'
+import MyProfileListCard from '@/components/web/profile/home/MyProfileListCard'
 import { type MyProject, type MyProjectListCardVariant } from '@/types/type.projects';
 
 export type MyProfileListBoxProps = {

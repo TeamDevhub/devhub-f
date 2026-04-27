@@ -2,8 +2,8 @@ import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import { AccessTime, LocationOn, Person, Visibility } from '@mui/icons-material'
 import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, Paper, Radio, RadioGroup, Stack } from '@mui/material'
-import FieldGroup from '@/components/design/FieldGroup';
-import FormField from '@/components/design/FormField';
+import FieldGroup from '@/components/_design/FieldGroup';
+import FormField from '@/components/_design/FormField';
 
 export default function ProjectApplyPage(){
   return (

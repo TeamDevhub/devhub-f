@@ -1,8 +1,8 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { Button, FormControl, MenuItem, Paper, Select} from '@mui/material'
-import FormField from '@/components/design/FormField';
-import FieldGroup from '@/components/design/FieldGroup';
-import useCreateBoard from '@/hooks/boards/useCreateBoard';
+import FormField from '@/components/_design/FormField';
+import FieldGroup from '@/components/_design/FieldGroup';
+import useCreateBoard from '@/hooks/web/boards/useCreateBoard';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 import {COMMON_CODE} from "@/types/const.ts";
 import { FormHelperText} from '@mui/material';

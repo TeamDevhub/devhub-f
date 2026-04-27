@@ -1,13 +1,13 @@
 import type { BoardDetail } from "@/types/type.boards";
 import { Button, FormControl, MenuItem, Paper, Select} from '@mui/material'
-import FormField from '@/components/design/FormField';
-import FieldGroup from '@/components/design/FieldGroup';
+import FormField from '@/components/_design/FormField';
+import FieldGroup from '@/components/_design/FieldGroup';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { FormHelperText} from '@mui/material';
 import { Link } from 'react-router-dom';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 import {COMMON_CODE} from "@/types/const.ts";
-import useUpdateBoard from "@/hooks/boards/useUpdateBoard"
+import useUpdateBoard from "@/hooks/web/boards/useUpdateBoard"
 
 interface BoardCardProps {
   boardData : BoardDetail;

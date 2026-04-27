@@ -1,7 +1,7 @@
 import { Checkbox, FormControlLabel, FormGroup } from "@mui/material"
 import { useState, useMemo } from "react"
 import { type ApplicationFormBasic } from '@/types/type.projects';
-import useSelectApplicationForms from "@/hooks/projects/useSelectApplicationForms"
+import useSelectApplicationForms from "@/hooks/web/projects/useSelectApplicationForms"
 
 interface CustomCheckboxGroupProps {
     onChange?: (newValues: string[]) => void;

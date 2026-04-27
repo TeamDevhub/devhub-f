@@ -2,8 +2,8 @@ import { Button, Chip, Divider, Paper } from '@mui/material'
 import logo from '@/assets/images/devHub-logo.png'
 import { Link } from 'react-router-dom';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import FormField2 from '@/components/design/FormField2';
-import FieldGroup2 from '@/components/design/FieldGroup2';
+import FormField2 from '@/components/_design/FormField2';
+import FieldGroup2 from '@/components/_design/FieldGroup2';
 import React from 'react'
 
 export default function SignInPage2(){

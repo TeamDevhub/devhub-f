@@ -1,8 +1,8 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import WebPopup from '@/components/_common/popup/WebPopup';
-import FieldGroup from '@/components/design/FieldGroup';
-import FormField from '@/components/design/FormField';
-import LeftMenuBar from '@/components/design/LeftMenuBar'
+import FieldGroup from '@/components/_design/FieldGroup';
+import FormField from '@/components/_design/FormField';
+import LeftMenuBar from '@/components/_design/LeftMenuBar'
 import { Clear } from '@mui/icons-material';
 import { Button, Chip, Divider, FormControl, FormControlLabel, IconButton, MenuItem, Paper, Radio, RadioGroup, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, type SelectChangeEvent } from '@mui/material'
 import React, { useState } from 'react'

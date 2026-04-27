@@ -1,7 +1,7 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { Button, FormControl, MenuItem, Paper, Select, type SelectChangeEvent } from '@mui/material'
-import FormField from '@/components/design/FormField';
-import FieldGroup from '@/components/design/FieldGroup';
+import FormField from '@/components/_design/FormField';
+import FieldGroup from '@/components/_design/FieldGroup';
 import { useState } from 'react'
 
 export default function BoardModifyPage(){

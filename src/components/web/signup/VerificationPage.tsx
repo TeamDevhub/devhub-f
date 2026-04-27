@@ -1,7 +1,7 @@
 import logo from '@/assets/images/devHub-logo.png';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import useSendVerificationCode from '@/hooks/signup/useSendVerificationCode';
-import useConfirmVerificationCode from '@/hooks/signup/useConfirmVerificationCode';
+import useSendVerificationCode from '@/hooks/web/signup/useSendVerificationCode';
+import useConfirmVerificationCode from '@/hooks/web/signup/useConfirmVerificationCode';
 import { ArrowForwardIos, MailOutline } from '@mui/icons-material';
 import { Button, Divider, FormControl, MenuItem, Paper, Select } from '@mui/material';
 import { Link } from 'react-router-dom';

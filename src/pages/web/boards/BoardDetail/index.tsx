@@ -4,11 +4,11 @@ import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import { Create, Person, Visibility } from '@mui/icons-material'
 import { Button, Divider, Paper } from '@mui/material'
 import { useLocation } from 'react-router-dom'
-import useSelectBoardDetail from '@/hooks/boards/useSelectBoardDetail';
-import useCreateComment from '@/hooks/comments/useCreateComment';
-import { BoardCategoryChip } from '@/components/boards/BoardChips';
-import CommentCard from '@/components/boards/boardDetail/CommentCard';
-import useMutationBoards from '@/hooks/boards/useMutationBoards';
+import useSelectBoardDetail from '@/hooks/web/boards/useSelectBoardDetail';
+import useCreateComment from '@/hooks/web/comments/useCreateComment';
+import { BoardCategoryChip } from '@/components/web/boards/BoardChips';
+import CommentCard from '@/components/web/boards/boardDetail/CommentCard';
+import useMutationBoards from '@/hooks/web/boards/useMutationBoards';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function BoardDetail(){

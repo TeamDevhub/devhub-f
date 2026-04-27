@@ -3,8 +3,8 @@ import { Button, Divider } from '@mui/material'
 import { useState } from "react";
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { elapsedTime } from '@/utils/util.date';
-import useUpdateComment from '@/hooks/comments/useUpdateComment';
-import useDeleteComment from '@/hooks/comments/useDeleteComment';
+import useUpdateComment from '@/hooks/web/comments/useUpdateComment';
+import useDeleteComment from '@/hooks/web/comments/useDeleteComment';
 
 interface CommentCardProps {
   commentData :  comment;

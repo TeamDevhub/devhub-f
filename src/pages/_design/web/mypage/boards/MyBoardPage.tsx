@@ -1,4 +1,4 @@
-import MyInfoBox from '@/components/design/MyInfoBox'
+import MyInfoBox from '@/components/_design/MyInfoBox'
 import { Button, Chip, Pagination, Paper } from '@mui/material'
 import { Create, Favorite, Visibility } from '@mui/icons-material'
 

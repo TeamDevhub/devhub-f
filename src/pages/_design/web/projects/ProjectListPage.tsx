@@ -2,7 +2,7 @@
 // import { AccessTime, AddCircle, FilterAlt } from '@mui/icons-material'
 // import { Button, Chip, Divider, FormControl, IconButton, MenuItem, Pagination, Paper, Select, type SelectChangeEvent } from '@mui/material'
 // import type { ProjectListResponse, ProjectSearchRequest } from '@/types/type.projects';
-// import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from '@/components/projects/ProjectChips';
+// import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from '@/components/web/projects/ProjectChips';
 // import HeartButton from '@/components/_common/button/HeartButton';
 // import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 // import { COMMON_CODE } from '@/types/const';

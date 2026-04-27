@@ -1,7 +1,7 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import { AccessTime, ArrowForwardIos, Email, Favorite, InfoOutline, LocationOn, Person, Settings } from '@mui/icons-material'
 import { Button, Chip, Divider, Paper } from '@mui/material'
-import MyInfoBox from '@/components/design/MyInfoBox'
+import MyInfoBox from '@/components/_design/MyInfoBox'
 import React from 'react'
 
 export interface MyPageHomeProps { // 데이터가 없을 때, Divider가 안 보여야 해서 임시로 설정해둠

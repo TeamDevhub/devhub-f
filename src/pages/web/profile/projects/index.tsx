@@ -1,10 +1,10 @@
 import { Pagination, Paper, Tab, Tabs } from '@mui/material'
-import useSelectMyProjects from '@/hooks/profile/project/useSelectMyProjects';
-import useSelectLikeProjects from '@/hooks/profile/project/useSelectLikeProjects';
-import useSelectApplyProjects from '@/hooks/profile/project/useSelectApplyProjects';
-import useSelectParticipateProjects from '@/hooks/profile/project/useSelectParticipateProjects';
-import ProjectCard from '@/components/profile/project/ProjectCard';
-import EvaluateCard from '@/components/profile/project/EvaluateCard';
+import useSelectMyProjects from '@/hooks/web/profile/project/useSelectMyProjects';
+import useSelectLikeProjects from '@/hooks/web/profile/project/useSelectLikeProjects';
+import useSelectApplyProjects from '@/hooks/web/profile/project/useSelectApplyProjects';
+import useSelectParticipateProjects from '@/hooks/web/profile/project/useSelectParticipateProjects';
+import ProjectCard from '@/components/web/profile/project/ProjectCard';
+import EvaluateCard from '@/components/web/profile/project/EvaluateCard';
 import TabPanel from '@/components/_common/TabPanel';
 import { useState } from 'react';
 

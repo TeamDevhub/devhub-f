@@ -1,6 +1,6 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import WebPopup from '@/components/_common/popup/WebPopup'
-import LeftMenuBar from '@/components/design/LeftMenuBar'
+import LeftMenuBar from '@/components/_design/LeftMenuBar'
 import { Button, Checkbox, Divider, FormControl, FormControlLabel, FormGroup, MenuItem, Pagination, Paper, Radio, RadioGroup, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, type SelectChangeEvent } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import React, { useState } from 'react'

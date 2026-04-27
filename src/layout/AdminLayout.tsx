@@ -4,7 +4,7 @@ import {CommonCodeProvider} from "@/contexts/CommonCodeProvider.tsx";
 import {LoadingBridge} from "@/contexts/LoadingContext.ts";
 import {AuthProvider} from "@/contexts/AuthProvider.tsx";
 import {ModalProvider} from "@/contexts/ModalProvider.tsx";
-import LeftMenuBar from "@/components/design/LeftMenuBar.tsx";
+import LeftMenuBar from "@/components/_design/LeftMenuBar.tsx";
 
 export default function AdminLayout() {
 

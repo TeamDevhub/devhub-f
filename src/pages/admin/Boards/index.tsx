@@ -1,9 +1,9 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import LeftMenuBar from '@/components/design/LeftMenuBar'
+import LeftMenuBar from '@/components/_design/LeftMenuBar'
 import { Button, Checkbox, Divider, MenuItem, Pagination, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, type SelectChangeEvent } from '@mui/material'
 import useSelectAdminBoards from '@/hooks/admin/boards/useSelectAdminBoards';
 import type {AdminBoard} from "@/types/type.boards.ts";
-import { BoardCategoryChip } from '@/components/boards/BoardChips';
+import { BoardCategoryChip } from '@/components/web/boards/BoardChips';
 import { UserStatusChip } from '@/components/admin/UserStatusChips';
 import {convertString} from "@/utils/util.date.ts";
 import CustomDateRange from "@/components/_common/customMUI/CustomDateRange.tsx";

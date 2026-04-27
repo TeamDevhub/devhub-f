@@ -4,7 +4,7 @@ import SkillPopup from '@/components/_common/popup/SkillPopup';
 import TermsPopup from '@/components/_common/popup/TermsPopup';
 import FieldBox from './FieldBox';
 import useDisclosure from '@/hooks/_common/useDisclosure';
-import useSignup from '@/hooks/signup/useSignup';
+import useSignup from '@/hooks/web/signup/useSignup';
 import { COMMON_CODE } from '@/types/const';
 import { BadgeOutlined, Favorite, Gavel, LockOutline, PersonOutlined, Settings } from '@mui/icons-material';
 import { Button, Divider, Paper, TextField } from '@mui/material';
@@ -13,7 +13,7 @@ import SelectableGroup from '@/components/_common/SelectableGroup';
 import { FormSection } from './FormSection';
 import AddableChipGroup from '../_common/AddableChipGroup';
 import { useCodes } from '@/contexts/CommonCodeContext.ts';
-import useTerms from '@/hooks/terms/useTerms';
+import useTerms from '@/hooks/web/terms/useTerms';
 import { useState } from 'react';
 
 import type { TermsResponse } from '@/types/type.terms';

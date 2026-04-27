@@ -1,5 +1,5 @@
 import { Button } from '@mui/material'
-import { BoardCategoryChip } from '@/components/boards/BoardChips';
+import { BoardCategoryChip } from '@/components/web/boards/BoardChips';
 import type { BoardSummary } from "@/types/type.boards";
 import {convertString} from "@/utils/util.date.ts";
 import { Create, Favorite, Visibility } from '@mui/icons-material'

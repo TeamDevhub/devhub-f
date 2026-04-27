@@ -1,5 +1,5 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
-import LeftMenuBar from '@/components/design/LeftMenuBar'
+import LeftMenuBar from '@/components/_design/LeftMenuBar'
 import { Box, Button, Chip, Divider, Pagination, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@mui/material'
 import React, { useState } from 'react'
 

@@ -1,6 +1,6 @@
-import useSelectProjectFormDetail from '@/hooks/projects/useSelectProjectFormDetail'
+import useSelectProjectFormDetail from '@/hooks/web/projects/useSelectProjectFormDetail'
 import { useParams } from "react-router-dom";
-import ProjectUpdateForm from '@/components/projects/projectUpdate/ProjectUpdateForm'
+import ProjectUpdateForm from '@/components/web/projects/projectUpdate/ProjectUpdateForm'
 import type { ProjectUpdate } from '@/types/type.projects'
 
 export default function ProjectUpdate() {

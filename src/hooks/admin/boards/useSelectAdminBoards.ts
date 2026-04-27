@@ -4,7 +4,7 @@ import { useSelect } from "@/hooks/_common/api.hook";
 import type { AdminBoardSearchRequest } from "@/types/type.boards";
 import { useNavigate } from 'react-router-dom';
 import useFormState from "@/hooks/_common/useFormState.ts";
-import useDeleteBoard from '@/hooks/boards/useDeleteBoard';
+import useDeleteBoard from '@/hooks/web/boards/useDeleteBoard';
 
 const initData : AdminBoardSearchRequest = {
     page : 0,

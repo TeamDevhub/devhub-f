@@ -10,7 +10,7 @@ import useDisclosure from '@/hooks/_common/useDisclosure';
 import { useCodes } from '@/contexts/CommonCodeContext';
 import { COMMON_CODE } from '@/types/const';
 import AddableChipGroup from '@/components/_common/AddableChipGroup';
-import useUpdateProfile from '@/hooks/profile/user/useUpdateProfile';
+import useUpdateProfile from '@/hooks/web/profile/user/useUpdateProfile';
 
 import type { UserDetailResponse } from '@/types/type.user';
 

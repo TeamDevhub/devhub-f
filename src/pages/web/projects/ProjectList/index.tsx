@@ -1,10 +1,10 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import SkillPopup from '@/components/_common/popup/SkillPopup';
-import FilterList from '@/components/projects/projectList/FilterList';
-import FilterPopup from '@/components/projects/projectList/FilterPopup';
-import ProjectCard from '@/components/projects/projectList/ProjectCard';
+import FilterList from '@/components/web/projects/projectList/FilterList';
+import FilterPopup from '@/components/web/projects/projectList/FilterPopup';
+import ProjectCard from '@/components/web/projects/projectList/ProjectCard';
 import useDisclosure from '@/hooks/_common/useDisclosure';
-import useSelectProjects from '@/hooks/projects/useSelectProjects';
+import useSelectProjects from '@/hooks/web/projects/useSelectProjects';
 import { useNavigate } from 'react-router-dom';
 import type { FilterData } from '@/types/type.projects';
 import { FilterAlt } from '@mui/icons-material';

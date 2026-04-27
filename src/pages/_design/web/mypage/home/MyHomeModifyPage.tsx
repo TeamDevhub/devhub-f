@@ -1,9 +1,9 @@
 import { Button, Chip, Divider, Paper } from '@mui/material'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import WebPopup from '@/components/_common/popup/WebPopup'
-import MyInfoBox from '@/components/design/MyInfoBox'
-import FormField2 from '@/components/design/FormField2'
-import FieldGroup2 from '@/components/design/FieldGroup2'
+import MyInfoBox from '@/components/_design/MyInfoBox'
+import FormField2 from '@/components/_design/FormField2'
+import FieldGroup2 from '@/components/_design/FieldGroup2'
 import React, { useState } from 'react'
 
 export default function MyHomeModifyPage(){
