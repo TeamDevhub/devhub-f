@@ -1,4 +1,4 @@
-import type { COMMON_CODE, PROJECT_RECRUIT_STATUS } from "./const";
+import type { COMMON_CODE, PROJECT_RECRUIT_STATUS, PROJECT_PROGRESS_TYPE, PROJECT_APPROVAL_STATUS } from "./const";
 
 export interface CommonCodeItem {
   code: string;
@@ -19,15 +19,16 @@ export type CommonCodeMap = Record<string, CommonCodeItem[]>;
 export type CommonCode = typeof COMMON_CODE[keyof typeof COMMON_CODE];
 
 export interface CheckAbleComponentProps {
-  name : string; 
+  name: string;
   value: string;
-  onClick: (value:string)=> void; 
-  checked?: boolean; 
+  onClick: (value: string) => void;
+  checked?: boolean;
 }
 
 export interface SelectComponentProps {
   value: string;
-  label : string; 
+  label: string;
 }
 
 export type ProjectRecruitStatusCode = typeof PROJECT_RECRUIT_STATUS[keyof typeof PROJECT_RECRUIT_STATUS]["CODE"];
+export type ProjectApprovalStatusCode = typeof PROJECT_APPROVAL_STATUS[keyof typeof PROJECT_APPROVAL_STATUS]["CODE"];

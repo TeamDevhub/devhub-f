@@ -66,20 +66,22 @@ export default function UserInfoPage({ email, tempToken }: Props) {
           )}
 
           {/* 비밀번호 */}
-          <FormSection title="비밀번호 설정" icon={<LockOutline sx={{ fontSize: 20, color: 'var(--primary-main)' }} />}>
-            <CustomTextfield
-              type="password"
-              placeholder="특수문자, 숫자 포함 10자 이상"
-              value={userInfo.password}
-              onChange={(e) => handleChange('password', e.target.value)}
-            />
-            <CustomTextfield
-              type="password"
-              placeholder="비밀번호 확인"
-              value={userInfo.passwordConfirm}
-              onChange={(e) => handleChange('passwordConfirm', e.target.value)}
-            />
-          </FormSection>
+          {!isOauthUser && (
+            <FormSection title="비밀번호 설정" icon={<LockOutline sx={{ fontSize: 20, color: 'var(--primary-main)' }} />}>
+              <CustomTextfield
+                type="password"
+                placeholder="특수문자, 숫자 포함 10자 이상"
+                value={userInfo.password}
+                onChange={(e) => handleChange('password', e.target.value)}
+              />
+              <CustomTextfield
+                type="password"
+                placeholder="비밀번호 확인"
+                value={userInfo.passwordConfirm}
+                onChange={(e) => handleChange('passwordConfirm', e.target.value)}
+              />
+            </FormSection>
+          )}
 
           {/* 프로필 */}
           <FormSection title="프로필" icon={<PersonOutlined sx={{ fontSize: 20, color: 'var(--primary-main)' }} />} contentGap="0.5rem">
@@ -96,7 +98,12 @@ export default function UserInfoPage({ email, tempToken }: Props) {
           </FormSection>
 
           {/* 포지션 */}
-          <FieldBox title="관심 포지션" icon={<Favorite sx={{ fontSize: 20, color: 'var(--primary-main)' }} />} type="wide" helpText="관심 포지션은 필수로 선택해야합니다.">
+          <FieldBox
+            title="관심 포지션"
+            icon={<Favorite sx={{ fontSize: 20, color: 'var(--primary-main)' }} />}
+            type="wide"
+            helpText="관심 포지션은 필수로 선택해야합니다."
+          >
             <div className="chip-box w-100 align-center flex-wrap">
               <SelectableGroup
                 type="chip"
@@ -108,7 +115,12 @@ export default function UserInfoPage({ email, tempToken }: Props) {
           </FieldBox>
 
           {/* 스킬 */}
-          <FormSection title="보유 스킬" icon={<Settings sx={{ fontSize: 20, color: 'var(--primary-main)' }} />} className="field-box2" contentGap="0.5rem">
+          <FormSection
+            title="보유 스킬"
+            icon={<Settings sx={{ fontSize: 20, color: 'var(--primary-main)' }} />}
+            className="field-box2"
+            contentGap="0.5rem"
+          >
             <div className="content-box align-stretch">
               <div className="chip-box align-center flex-wrap" style={{ flex: 1, minHeight: '56px' }}>
                 <AddableChipGroup

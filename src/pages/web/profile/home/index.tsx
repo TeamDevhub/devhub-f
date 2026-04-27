@@ -2,7 +2,7 @@ import { Chip, Divider, Paper } from '@mui/material';
 import MyProfileBaseForm from '@/components/profile/home/MyProfileBaseForm';
 import MyProfileListBox from '@/components/profile/home/MyProfileListBox';
 import useSelectUserProfile from '@/hooks/profile/user/useSelectProfile';
-import useSelectMyProjects from '@/hooks/profile/useSelectMyProjects';
+import useSelectMyProjects from '@/hooks/profile/project/useSelectMyProjects';
 import { COMMON_CODE } from '@/types/const';
 import { useCodes } from '@/contexts/CommonCodeContext';
 import type { MyProject } from '@/types/type.projects';
@@ -10,7 +10,7 @@ import type { MyProject } from '@/types/type.projects';
 export default function MyProfileHome() {
   const { getCodeName } = useCodes();
   const { res } = useSelectUserProfile();
-  const { res:projectRes, loading, error, setPage, handleTabChange } = useSelectMyProjects();
+  const { res: projectRes, loading, error, setPage, handleTabChange } = useSelectMyProjects();
   const profile = res?.data;
 
   const registerProjects: MyProject[] = [
@@ -70,7 +70,7 @@ export default function MyProfileHome() {
       {/* 내 정보 */}
       <div className="top flex-col">
         <MyProfileBaseForm label="닉네임">{profile?.user.username}</MyProfileBaseForm>
-        <MyProfileBaseForm label="이메일">{profile?.user.email}</MyProfileBaseForm>
+        {/* <MyProfileBaseForm label="이메일">{profile?.user.email}</MyProfileBaseForm> */}
         <MyProfileBaseForm label="내 소개">{profile?.user.introduction || '-'}</MyProfileBaseForm>
         <MyProfileBaseForm label="관심 포지션">
           <div className="recruit-chip-box align-center">

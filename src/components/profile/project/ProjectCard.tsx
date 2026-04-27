@@ -2,80 +2,82 @@ import React, { useState } from 'react'
 import { AccessTime, LocationOn } from '@mui/icons-material'
 import { Button, Chip } from '@mui/material'
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
+import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import HeartButton from '@/components/_common/button/HeartButton'
 import WebPopup from '@/components/_common/popup/WebPopup'
-import type { MyProject } from '@/types/type.projects'
+import { type MyProject } from '@/types/type.projects';
+import useCloseMyProjects from '@/hooks/profile/project/useCloseMyProjects'
+import useUpdateProjectLike from '@/hooks/projects/useUpdateProjectLike'
+import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/projects/ProjectChips";
+import { COMMON_CODE } from "@/types/const";
+import type { ProjectApprovalStatusCode } from '@/types/type._common';
 
-export default function ProjectCard ({
+export default function ProjectCard({
   variant,
+  projectGuid,
   title,
   recruitmentStartDate,
   recruitmentEndDate,
   progressStartDate,
   progressEndDate,
+  progressRegionCd,
+  recruitmentTypeCd,
   currentRecriutNumber,
   totalRecriutNumber,
   applicantNumber,
   approvalNumber,
   approvalState,
   progressState,
+  recruitStatus,
   children
-}: MyProject){
-  // 승인 상태에 따른 텍스트 색상 변경
-  const approvalColorMap = {
-    '승인 대기중': 'var(--text-primary)',
-    '참가 승인': 'var(--primary-main)',
-    '참가 거절': 'var(--error-main)'
-  } as const;
+}: MyProject) {
+
+
+  const { getCodeName } = useCodes();
 
   // 내가 신청한 프로젝트 中 지원 취소 팝업
   const [openCancelPopup, setOpenCancelPopup] = useState(false);
-  const clickOpenCancelPopup = () => {setOpenCancelPopup(true);}
-  
+  const clickOpenCancelPopup = () => { setOpenCancelPopup(true); }
+
   // 참여한 프로젝트 中 팀원 평가 팝업
   const [openEvaluatePopup, setOpenEvaluatePopup] = useState(false);
-  const clickOpenEvaluatePopup = () => {setOpenEvaluatePopup(true);}
+  const clickOpenEvaluatePopup = () => { setOpenEvaluatePopup(true); }
+
+  const { projectCloseMutate } = useCloseMyProjects();
+  const { toggleLike, loading } = useUpdateProjectLike();
+
+  const onClickUpdateProject = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    location.href = '/projects/update/' + projectGuid;
+  }
+  const onClickCloseProject = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    projectCloseMutate(projectGuid);
+  }
+
+  const onClickHeartButton = (e: React.MouseEvent<HTMLButtonElement>, liked: boolean) => {
+    toggleLike(projectGuid, liked);
+  }
+  // 승인 상태에 따른 텍스트 색상 변경
+  const approvalColorMap: Record<ProjectApprovalStatusCode, string> = {
+    '3301': 'var(--text-primary)', // 대기 (기본색)
+    '3302': 'var(--primary-main)',  // 승인 (강조색)
+    '3303': 'var(--error-main)'    // 반려 (에러색)
+  } as const;
 
   return <>
-    <div className="project-box2 w-100 justify-between">
+    <div className="project-box2 w-100 justify-between" onClick={() => { location.href = '/projects/detail/' + projectGuid }}>
       <div className="left-area flex-col">
         <div className="chip-box align-center">
-          { variant !== 'participate' && <Chip size='small' variant='filled' color='primary' label='모집중' /> }
+          {variant !== 'participate' && <RecruitStatusChip
+            recruitStatusCode={recruitStatus}
+          />}
           {variant === 'participate' && progressState && (
-            <Chip
-              size='small'
-              variant='outlined'
-              color={progressState === '진행중' ? 'primary' : 'success'}
-              label={progressState}
-            />
+            <RecruitStatusChip recruitStatusCode={recruitStatus} />
           )}
-          <Chip 
-            size='small' 
-            variant='filled' 
-            color='default' 
-            label='서울'
-            icon={
-              <CustomAvatar
-                size={18}
-                sx={{ backgroundColor: '#AEAEAE' }}
-                avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />}
-              />
-            } 
-          />
-          <Chip size='small' variant='filled' color='error' label='추가모집' />
-          <Chip 
-            size='small' 
-            variant='filled' 
-            color='warning' 
-            label='D-13'
-            icon={
-              <CustomAvatar 
-              size={18}
-              sx={{ backgroundColor: '#E65100' }}
-              avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />}
-              />
-            } 
-          />
+          <ProgressRegionChip regionCd={progressRegionCd} />
+          <RecruitmentChip recruitTypeCd={recruitmentTypeCd} />
+          <DDayChip recruitmentEndDate={recruitmentEndDate} />
         </div>
         <strong className='main-text text-ellipsis'>{title}</strong>
         <div className='sub-text align-center'>
@@ -89,7 +91,7 @@ export default function ProjectCard ({
           </div>
         </div>
       </div>
-      { variant == 'register' &&
+      {variant == 'register' &&
         <div className="right-area flex-col" style={{ padding: 0 }}>
           <div className="top justify-between">
             <div className='flex-col align-end'>
@@ -107,12 +109,12 @@ export default function ProjectCard ({
           </div>
           <div className="bottom align-center">
             <Button fullWidth size='small' variant='outlined' color='primary'>신청자</Button>
-            <Button fullWidth size='small' variant='outlined' color='primary'>수정</Button>
-            <Button fullWidth size='small' variant='contained' color='primary'>마감</Button>
+            <Button fullWidth size='small' variant='outlined' color='primary' onClick={onClickUpdateProject}>수정</Button>
+            <Button fullWidth size='small' variant='contained' color='primary' onClick={onClickCloseProject}>마감</Button>
           </div>
         </div>
       }
-      { variant == 'apply' && approvalState &&
+      {variant == 'apply' && approvalState &&
         <>
           <div className="right-area flex-center" style={{ paddingTop: 0, paddingBottom: 0 }}>
             <div className='w-100 flex-col align-center'>
@@ -124,8 +126,8 @@ export default function ProjectCard ({
           {/* 지원 취소 팝업 */}
           <WebPopup
             isOpen={openCancelPopup}
-            onClose={()=>setOpenCancelPopup(false)}
-            onSubmit={()=>{}}
+            onClose={() => setOpenCancelPopup(false)}
+            onSubmit={() => { }}
             title='프로젝트 지원 취소'
             submitText='확인'
           >
@@ -135,29 +137,29 @@ export default function ProjectCard ({
           </WebPopup>
         </>
       }
-      { variant == 'favorite' &&
+      {variant == 'favorite' &&
         <div className="right-area flex-center" style={{ paddingTop: 0, paddingBottom: 0 }}>
           <div className='w-100 flex-col align-center'>
             {/* likeCount는 추후에 데이터와 연결해야함(현재는 임시로 숫자 넣음) */}
-            <HeartButton className='ml-a' noCount defaultLiked /> 
+            <HeartButton className='ml-a' onClick={onClickHeartButton} noCount defaultLiked />
             <Button size='small' variant='outlined' color='primary' className='w-100'>프로젝트 지원</Button>
           </div>
         </div>
       }
-      { variant == 'participate' &&
+      {variant == 'participate' &&
         <>
           <div className="right-area align-end" style={{ paddingTop: 0, paddingBottom: 0 }}>
             <div className='w-100 flex-col align-center'>
-              { progressState == '진행완료' && <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenEvaluatePopup}>팀원 평가</Button> }
+              {progressState == '진행완료' && <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenEvaluatePopup}>팀원 평가</Button>}
             </div>
           </div>
 
-         {/* 팀원 평가 팝업 */}
+          {/* 팀원 평가 팝업 */}
           <WebPopup
             size='auto'
             isOpen={openEvaluatePopup}
-            onClose={()=>setOpenEvaluatePopup(false)}
-            onSubmit={()=>{}}
+            onClose={() => setOpenEvaluatePopup(false)}
+            onSubmit={() => { }}
             title='프로젝트 팀원 평가'
             submitText='저장'
           >
@@ -168,7 +170,7 @@ export default function ProjectCard ({
             </div>
           </WebPopup>
         </>
- }
-    </div>
-    </>
       }
+    </div>
+  </>
+}
