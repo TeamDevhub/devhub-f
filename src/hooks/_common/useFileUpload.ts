@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { UploadResponse } from '@/types/type.api.ts';
 import { ERROR_MESSAGES } from '@/constants/errorMessages';
 import fetcher from '@/utils/util.api.ts';
-import { useLoading } from '@/contexts/LoadingContext.ts';
+import { loadingStore } from '@/stores/loading.store';
 
 interface FileState {
   file: File | null;
@@ -21,7 +21,7 @@ const useFileUpload = () => {
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const [errors, setErrors] = useState<Record<string, string | null>>({});
   const [fileStates, setFileStates] = useState<Record<string, FileState>>({});
-  const { show, hide } = useLoading();
+  const { show, hide } = loadingStore;
 
   useEffect(() => {
     return () => {

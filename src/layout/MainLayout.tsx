@@ -1,28 +1,21 @@
 import Header from '@/components/_common/layout/Header';
-import {Outlet} from 'react-router-dom';
-import {LoadingProvider} from "@/contexts/LoadingProvider";
-import {CommonCodeProvider} from "@/contexts/CommonCodeProvider.tsx";
-import {LoadingBridge} from "@/contexts/LoadingContext.ts";
-import {AuthProvider} from "@/contexts/AuthProvider.tsx";
-import {ModalProvider} from "@/contexts/ModalProvider.tsx";
+import LoadingRenderer from '@/components/_common/layout/LoadingRenderer';
+import ModalRenderer from '@/components/_common/popup/ModalRenderer';
+import { LoadingBridge } from '@/contexts/LoadingContext';
+import { Outlet } from 'react-router-dom';
 
 export default function MainLayout() {
-
-    return (
-        <LoadingProvider>
-            <LoadingBridge/>
-            <CommonCodeProvider>
-                <AuthProvider>
-                    <ModalProvider>
-                        <div id='devHub' className='wh-100'>
-                            <Header></Header>
-                            <main className='wh-100'>
-                                <Outlet></Outlet>
-                            </main>
-                        </div>
-                    </ModalProvider>
-                </AuthProvider>
-            </CommonCodeProvider>
-        </LoadingProvider>
-    )
+  return (
+    <>
+      <LoadingBridge />
+      <div id='devHub' className='wh-100'>
+        <Header />
+        <main className='wh-100'>
+          <Outlet />
+        </main>
+      </div>
+      <ModalRenderer />
+      <LoadingRenderer />
+    </>
+  );
 }

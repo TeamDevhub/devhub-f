@@ -1,106 +1,30 @@
-import { useCallback, useState } from 'react';
+import { useSyncExternalStore } from 'react';
+import { useFormController } from './form/useFormController';
+import type { FormOptions } from './form/FormController';
 
-export type ValidationRule<V, T = unknown> = (value: V, allState: T) => string | null;
-export type ValidationRules<T> = {
-  [K in keyof T]?: ValidationRule<T[K], T>[];
-};
-
-type ArrayKeys<T> = {
-  [K in keyof T]: NonNullable<T[K]> extends unknown[] ? K : never;
-}[keyof T];
-
-type ElementOf<T> = NonNullable<T> extends (infer U)[] ? U : never;
+export type { ValidationRule, ValidationRules } from './form/FormController';
 
 const useFormState = <T extends object>(
   initialState: T,
-  options?: {
-    validations?: ValidationRules<T>;
-    mode?: 'onChange' | 'manual';
-  }
-) => {  
+  options?: FormOptions<T>
+) => {
+  const controller = useFormController(initialState, options);
 
-  const [state, setState] = useState<T>(initialState);
-  const [errors, setErrors] = useState<{ [K in keyof T]?: string }>({});
+  const { state, errors } = useSyncExternalStore(
+    controller.subscribe,
+    controller.getSnapshot,
+  );
 
-  const { validations, mode = 'onChange' } = options || {};
-
-  const getFieldError = useCallback(<K extends keyof T>(key: K, value: T[K], currentState: T) => {
-    if (!validations || !validations[key]) return "";
-    for (const rule of validations[key]) {
-      const error = (rule as (v: T[K], s: T) => string | undefined)(value, currentState);
-      if (error) return error;
-    }
-    return "";
-  }, [validations]);
-
-  const checkError = useCallback(() => {
-    if (mode === 'onChange') {
-      return Object.values(errors).some((msg) => !!msg);
-    }
-
-    const newErrors: { [K in keyof T]?: string } = {};
-    let hasError = false;
-
-    (Object.keys(initialState) as (keyof T)[]).forEach((key) => {
-      const error = getFieldError(key, state[key], state);
-      if (error) {
-        newErrors[key] = error;
-        hasError = true;
-      }
-    });
-
-    setErrors(newErrors);
-    return hasError;
-  }, [mode, errors, state, initialState, getFieldError]);
-
-  const handleChange = useCallback(<K extends keyof T>(key: K, value: T[K]) => {
-    setState((prev) => {
-      const newState = { ...prev, [key]: value };
-      
-      if (mode === 'onChange') {
-        const error = getFieldError(key, value, newState);
-        setErrors((prevErrors) => ({ ...prevErrors, [key]: error }));
-      }
-      
-      return newState;
-    });
-  }, [mode, getFieldError]);
-
-  const createHandler = useCallback(<K extends keyof T>(key: K) => {
-    return (value: T[K]) => handleChange(key, value);
-  }, [handleChange]);
-
-  const createToggle = useCallback(<K extends ArrayKeys<T>>(key: K) => {
-    return (value: ElementOf<T[K]>) => {
-      const currentValues = (state[key] as unknown[]) || [];
-
-      if (value === '') {
-        handleChange(key, [] as T[K]);
-        return;
-      }
-      const isIncluded = currentValues.includes(value);
-      const nextValues = isIncluded
-        ? currentValues.filter((item) => item !== value)
-        : [...currentValues, value];
-
-      handleChange(key, nextValues as T[K]);
-    };
-  }, [state, handleChange]);
-
-  const reset = useCallback(() => {
-    setState(initialState);
-    setErrors({});
-  }, [initialState]);
-
-  return { 
-    state, 
-    errors, 
-    checkError, 
-    setState, 
-    handleChange, 
-    createToggle,
-    createHandler, 
-    reset 
+  return {
+    state,
+    errors,
+    setState: controller.setState,
+    handleChange: controller.handleChange,
+    createHandler: <K extends keyof T>(key: K) => (value: T[K]) => controller.handleChange(key, value),
+    createToggle: controller.createToggle,
+    checkError: controller.checkError,
+    reset: controller.reset,
+    controller,
   } as const;
 };
 

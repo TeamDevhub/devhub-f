@@ -1,27 +1,24 @@
-import {ModalContext} from "@/contexts/ModalContext.ts";
-import {useCallback, useContext} from "react";
+import { modalStore } from '@/stores/modal.store';
 
 export const useModal = () => {
-    const { openModal, closeModal } = useContext(ModalContext);
+  const alert = (message: string): void => {
+    modalStore.openModal({
+      title: '알림',
+      content: message,
+      onSubmit: () => modalStore.closeModal(),
+    });
+  };
 
-    const alert = useCallback((message: string) => {
-        openModal?.({
-            title: '알림',
-            content: message,
-            onSubmit: () => closeModal?.(),
-        });
-    }, [openModal, closeModal]);
+  const confirm = (message: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      modalStore.openModal({
+        title: '확인',
+        content: message,
+        onSubmit: () => { resolve(true); modalStore.closeModal(); },
+        onClose: () => { resolve(false); modalStore.closeModal(); },
+      });
+    });
+  };
 
-    const confirm = useCallback((message: string) => {
-        return new Promise((resolve) => {
-            openModal?.({
-                title: '확인',
-                content: message,
-                onSubmit: () => resolve(true),
-                onClose: () => resolve(false),
-            });
-        });
-    }, [openModal]);
-
-    return { alert, confirm, closeModal};
+  return { alert, confirm, closeModal: modalStore.closeModal };
 };
