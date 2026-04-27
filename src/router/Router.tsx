@@ -48,10 +48,8 @@ import TermsManagementPage from '@/pages/design/admin/terms/TermsManagementPage'
 import Banner from '@/pages/admin/Banner';
 import BoardAdmin from '@/pages/admin/Boards';
 import DesignMainPage from '@/pages/design/web/main/DesignMainPage';
-import OauthCallback from '@/pages/web/login/Login';
 import AdminLayout from '@/layout/AdminLayout';
 import Codes from '@/pages/admin/Codes';
-
 
 const router = createBrowserRouter([
   {
@@ -152,23 +150,14 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: 'codes',
-        children: [
-          {
-            index: true,
-            element: <Codes />,
-          }
-        ]
-      },
-      {
         path: 'boards',
         children: [
           {
             index: true,
-            element: <BoardAdmin />,
-          }
-        ]
-      }
+            element: <Codes />,
+          },
+        ],
+      },
     ],
   },
   {
@@ -191,22 +180,6 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Signup />,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: '/oauth',
-    element: <AuthLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: 'callback',
-        children: [
-          {
-            index: true,
-            element: <OauthCallback />,
           },
         ],
       },

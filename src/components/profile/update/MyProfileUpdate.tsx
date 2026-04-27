@@ -29,13 +29,13 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
     <>
       <Paper className="mypage-box flex-col flex-1" elevation={4}>
         {/* 이메일 */}
-        <MyProfileUpdateBaseForm label="이메일">
+        {/* <MyProfileUpdateBaseForm label="이메일">
           <MyProfileUpdateFieldGroup>
             <div className="flex-col">
               <CustomTextfield value={profile.user.email} readonly />
             </div>
           </MyProfileUpdateFieldGroup>
-        </MyProfileUpdateBaseForm>
+        </MyProfileUpdateBaseForm> */}
 
         {/* 기본 정보 */}
         <MyProfileUpdateBaseForm label="내 정보">
