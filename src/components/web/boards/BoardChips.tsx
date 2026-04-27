@@ -1,4 +1,4 @@
-import { COMMON_CODE } from '@/types/const';
+import { COMMON_CODE } from '@/constants/codes';
 import { Chip } from '@mui/material';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 

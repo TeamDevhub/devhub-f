@@ -3,8 +3,8 @@ import useSelectMyProjects from '@/hooks/web/profile/project/useSelectMyProjects
 import useSelectLikeProjects from '@/hooks/web/profile/project/useSelectLikeProjects';
 import useSelectApplyProjects from '@/hooks/web/profile/project/useSelectApplyProjects';
 import useSelectParticipateProjects from '@/hooks/web/profile/project/useSelectParticipateProjects';
-import ProjectCard from '@/components/web/profile/project/ProjectCard';
-import EvaluateCard from '@/components/web/profile/project/EvaluateCard';
+import ProjectCard from '@/components/web/profile/ProjectCard';
+import EvaluateCard from '@/components/web/profile/EvaluateCard';
 import TabPanel from '@/components/_common/TabPanel';
 import { useState } from 'react';
 

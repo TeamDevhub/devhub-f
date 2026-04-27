@@ -1,4 +1,4 @@
-import { updateProjectLike } from '@/api/web/projects.api';
+import { updateProjectLike } from '@/api/web/api.projects';
 import { useMutation } from '@/hooks/_common/api.hook';
 
 export default function useUpdateProjectLike() {

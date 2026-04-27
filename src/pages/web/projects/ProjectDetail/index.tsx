@@ -2,7 +2,7 @@ import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
 import { DDayChip, PositionChips, ProgressRegionChip, RecruitmentChip, RecruitStatusChip, SkillChips } from '@/components/web/projects/ProjectChips';
 import useSelectProjectDetail from '@/hooks/web/projects/useSelectProjectDetail';
 import useDeleteProject from '@/hooks/web/projects/useDeleteProject'
-import { COMMON_CODE } from '@/types/const';
+import { COMMON_CODE } from '@/constants/codes';
 import { AccessTime, ContentPaste, LocationOn, OpenInNew, People, Person, Settings, Visibility } from '@mui/icons-material';
 import { Divider, Paper, Tooltip, Button } from '@mui/material';
 import dayjs from 'dayjs';

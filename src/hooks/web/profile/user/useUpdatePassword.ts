@@ -5,7 +5,7 @@ import useFormState from '@/hooks/_common/useFormState';
 import { useModal } from '@/hooks/_common/useModal';
 
 import type { UpdatePasswordRequest } from '@/types/type.user';
-import { updatePassword } from '@/api/web/profile.api';
+import { updatePassword } from '@/api/web/api.profile';
 
 interface PasswordForm extends UpdatePasswordRequest {
   confirmPassword: string;

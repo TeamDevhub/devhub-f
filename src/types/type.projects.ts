@@ -1,5 +1,5 @@
 import type { DateType } from "@/types/type.api";
-import type { ApplicationFormType } from "@/types/const.projectCreate.ts"
+import type { ApplicationFormType } from "@/constants/projectCreate"
 import type { ProjectRecruitStatusCode, ProjectApprovalStatusCode } from '@/types/type._common';
 
 export interface ProjectBasic {

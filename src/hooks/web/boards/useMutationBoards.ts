@@ -1,5 +1,5 @@
 import { useMutation } from "@/hooks/_common/api.hook";
-import { likeBoard } from "@/api/web/boards.api";
+import { likeBoard } from "@/api/web/api.boards";
 
 export default function useMutationBoards(
 ) {

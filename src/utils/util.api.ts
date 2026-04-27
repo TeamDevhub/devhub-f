@@ -1,5 +1,5 @@
 import type { ApiResponse } from '@/types/type.api';
-import { ERROR_CODE } from '@/types/const';
+import { ERROR_CODE } from '@/constants/codes';
 import { getSessionStorage } from '@/utils/util._common';
 import axios, { AxiosError, HttpStatusCode, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig, type Method } from 'axios';
 import dayjs from 'dayjs';

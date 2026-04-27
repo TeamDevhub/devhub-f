@@ -1,4 +1,4 @@
-import {COMMON_CODE} from '@/types/const';
+import {COMMON_CODE} from '@/constants/codes';
 import {Button} from '@mui/material';
 import React, {useState} from 'react';
 import CustomTextfield from '../customMUI/CustomTextfield';

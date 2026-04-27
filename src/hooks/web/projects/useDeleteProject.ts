@@ -1,5 +1,5 @@
 import { useModal } from '@/hooks/_common/useModal';
-import { deleteProject } from "@/api/web/projects.api";
+import { deleteProject } from "@/api/web/api.projects";
 import { useMutation } from "../_common/api.hook";
 
 export default function useDeleteProject(

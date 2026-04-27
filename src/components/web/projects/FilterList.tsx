@@ -1,4 +1,4 @@
-import { COMMON_CODE } from "@/types/const";
+import { COMMON_CODE } from "@/constants/codes";
 import type { FilterData } from "@/types/type.projects";
 import { Button, Divider } from "@mui/material";
 import SelectableGroup from '@/components/_common/SelectableGroup';

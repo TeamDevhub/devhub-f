@@ -1,4 +1,4 @@
-import { getProjects, createProjectLike } from "@/api/web/projects.api";
+import { getProjects, createProjectLike } from "@/api/web/api.projects";
 import useFormState from '@/hooks/_common/useFormState.ts';
 import type { FilterData, ProjectExtra, ProjectSearchRequest, SearchData } from "@/types/type.projects";
 import { useState } from "react";

@@ -1,5 +1,5 @@
-import { updateProject } from "@/api/web/projects.api"
-import { deleteFile } from "@/api/web/file.api"
+import { updateProject } from "@/api/web/api.projects"
+import { deleteFile } from "@/api/web/api.file"
 import useFormState from '@/hooks/_common/useFormState.ts';
 import type { ProjectUpdate, Position } from "@/types/type.projects";
 import { useMutation } from "@/hooks/_common/api.hook";
@@ -7,7 +7,7 @@ import { useModal } from "@/hooks/_common/useModal"
 import useFileUpload from "@/hooks/_common/useFileUpload.ts";
 import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
-import { ERROR_MESSAGES } from "@/types/const.errorMessages.ts";
+import { ERROR_MESSAGES } from "@/constants/errorMessages";
 import { useState } from "react";
 
 export default function useUpdateProject(

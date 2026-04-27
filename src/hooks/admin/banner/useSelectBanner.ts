@@ -1,7 +1,7 @@
 import useFormState from "@/hooks/_common/useFormState.ts";
 import type {BannerSearchRequest} from "@/types/type.banner.ts";
 import useSelect from "@/hooks/_common/api.hook.ts";
-import {selectBanner} from "@/api/admin/banner.api.ts";
+import {selectBanner} from "@/api/admin/api.banner.ts";
 import {useState} from "react";
 
 const initData = {

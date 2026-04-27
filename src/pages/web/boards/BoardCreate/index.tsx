@@ -4,7 +4,7 @@ import FormField from '@/components/_design/FormField';
 import FieldGroup from '@/components/_design/FieldGroup';
 import useCreateBoard from '@/hooks/web/boards/useCreateBoard';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
-import {COMMON_CODE} from "@/types/const.ts";
+import {COMMON_CODE} from "@/constants/codes.ts";
 import { FormHelperText} from '@mui/material';
 import { Link } from 'react-router-dom';
 

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useSelect } from '@/hooks/_common/api.hook';
-import { getTerms } from '@/api/web/terms.api';
+import { getTerms } from '@/api/web/api.terms';
 
 import type { TermsResponse } from '@/types/type.terms';
 

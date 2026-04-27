@@ -3,7 +3,7 @@ import HeartButton from "@/components/_common/button/HeartButton";
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/web/projects/ProjectChips";
 import { AccessTime } from "@mui/icons-material";
 import { Chip, Divider, Paper } from "@mui/material";
-import { COMMON_CODE } from "@/types/const";
+import { COMMON_CODE } from "@/constants/codes";
 import { convertString } from "@/utils/util.date";
 import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import { useNavigate } from 'react-router-dom';

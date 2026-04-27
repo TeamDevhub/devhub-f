@@ -6,7 +6,7 @@ import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { FormHelperText} from '@mui/material';
 import { Link } from 'react-router-dom';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
-import {COMMON_CODE} from "@/types/const.ts";
+import {COMMON_CODE} from "@/constants/codes.ts";
 import useUpdateBoard from "@/hooks/web/boards/useUpdateBoard"
 
 interface BoardCardProps {

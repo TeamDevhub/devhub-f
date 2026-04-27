@@ -1,5 +1,5 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import {COMMON_CODE} from '@/types/const';
+import {COMMON_CODE} from '@/constants/codes';
 import type {Position} from '@/types/type.projects';
 import {AddCircle, Remove} from '@mui/icons-material';
 import {FormControl, IconButton, MenuItem, Select} from '@mui/material';

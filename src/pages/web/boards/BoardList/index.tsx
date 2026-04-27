@@ -1,10 +1,10 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import BoardCard from '@/components/web/boards/boardList/BoardCard';
+import BoardCard from '@/components/web/boards/BoardCard';
 import useMutationBoards from '@/hooks/web/boards/useMutationBoards';
 import useSelecttBoards from '@/hooks/web/boards/useSelectBoards';
 import {Button, Pagination, Paper, Tab, Tabs} from '@mui/material';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
-import {COMMON_CODE} from "@/types/const.ts";
+import {COMMON_CODE} from "@/constants/codes.ts";
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 

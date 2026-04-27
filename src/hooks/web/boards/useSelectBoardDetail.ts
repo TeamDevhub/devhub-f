@@ -1,4 +1,4 @@
-import { getBoardDetail } from "@/api/web/boards.api";
+import { getBoardDetail } from "@/api/web/api.boards";
 import { useSelect } from "@/hooks/_common/api.hook";
 import type {BoardDetail} from "@/types/type.boards";
 

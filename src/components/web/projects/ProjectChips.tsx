@@ -1,5 +1,5 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
-import { COMMON_CODE, PROJECT_RECRUIT_STATUS, PROJECT_RECRUIT_TYPE } from '@/types/const';
+import { COMMON_CODE, PROJECT_RECRUIT_STATUS, PROJECT_RECRUIT_TYPE } from '@/constants/codes';
 import type { ProjectRecruitStatusCode } from '@/types/type._common';
 import type { DateType } from '@/types/type.api';
 import type { Position } from '@/types/type.projects';

@@ -6,7 +6,7 @@ import { useModal } from '@/hooks/_common/useModal';
 import { useAuth } from '@/contexts/AuthContext';
 
 import type { UpdateProfileRequest, UserDetailResponse } from '@/types/type.user';
-import { updateProfile } from '@/api/web/profile.api';
+import { updateProfile } from '@/api/web/api.profile';
 
 export default function useUpdateProfile(profile: UserDetailResponse) {
   const { alert } = useModal();

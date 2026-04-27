@@ -1,7 +1,7 @@
 import { useSelect } from "@/hooks/_common/api.hook";
 import { useState } from 'react';
 import type { SearchUserData, MyProject } from "@/types/type.projects";
-import { getUserParticapateProjects } from '@/api/web/projects.api';
+import { getUserParticapateProjects } from '@/api/web/api.projects';
 
 const initData: SearchUserData = {
   page: 0,

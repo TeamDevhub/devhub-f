@@ -1,4 +1,4 @@
-import { confirmEmailVerificationCode } from '@/api/web/signup.api';
+import { confirmEmailVerificationCode } from '@/api/web/api.signup';
 import { useMutation } from '@/hooks/_common/api.hook';
 import type { ApiResponse } from '@/types/type.api';
 import type { ConfrimVerificationCodeRequest } from '@/types/type.signup';

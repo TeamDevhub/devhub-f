@@ -1,7 +1,7 @@
 import useFormState from "@/hooks/_common/useFormState.ts";
 import type {CommonCodeItem, RequestCommonCodeItem} from "@/types/type._common.ts";
 import {useMutation} from "@/hooks/_common/api.hook.ts";
-import {saveCode} from "@/api/admin/codes.api.ts";
+import {saveCode} from "@/api/admin/api.codes.ts";
 import {Validators} from "@/utils/util._common.ts";
 
 export default function useCodePopup(initCodeItem?:CommonCodeItem, onClose?: (save:boolean) => void) {

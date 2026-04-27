@@ -1,6 +1,6 @@
 import type { CommentDelete } from "@/types/type.comments";
 import { useMutation } from '@/hooks/_common/api.hook';
-import {deleteComment} from '@/api/web/comments.api';
+import {deleteComment} from '@/api/web/api.comments';
 
 export default function useDeleteComment(
 ) {

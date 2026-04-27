@@ -1,6 +1,6 @@
 import { useMutation } from '../_common/api.hook';
 import { Validators } from '@/utils/util._common';
-import { login } from '@/api/web/auth.api';
+import { login } from '@/api/web/api.auth';
 import type { ApiResponse } from '@/types/type.api';
 import type { LoginRequest, TokenResponseDto } from '@/types/type.auth';
 import { useNavigate } from 'react-router-dom';

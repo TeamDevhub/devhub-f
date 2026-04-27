@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { getBoards } from "@/api/web/boards.api";
+import { getBoards } from "@/api/web/api.boards";
 import { useSelect } from "@/hooks/_common/api.hook";
 import type { BoardSearchRequest, SearchData } from "@/types/type.boards";
 import { useNavigate } from 'react-router-dom';

@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom'
 import useSelectBoardDetail from '@/hooks/web/boards/useSelectBoardDetail';
 import useCreateComment from '@/hooks/web/comments/useCreateComment';
 import { BoardCategoryChip } from '@/components/web/boards/BoardChips';
-import CommentCard from '@/components/web/boards/boardDetail/CommentCard';
+import CommentCard from '@/components/web/boards/CommentCard';
 import useMutationBoards from '@/hooks/web/boards/useMutationBoards';
 import { useAuth } from '@/contexts/AuthContext';
 

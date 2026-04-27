@@ -5,7 +5,7 @@
 // import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from '@/components/web/projects/ProjectChips';
 // import HeartButton from '@/components/_common/button/HeartButton';
 // import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-// import { COMMON_CODE } from '@/types/const';
+// import { COMMON_CODE } from '@/constants/codes';
 // import { convertString } from '@/utils/util.date';
 
 // export default function ProjectListPage(){

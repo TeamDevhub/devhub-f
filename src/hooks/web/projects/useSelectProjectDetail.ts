@@ -1,6 +1,6 @@
 import type { ProjectDetailResponse } from "@/types/type.projects";
 import { useSelect, useMutation } from "../_common/api.hook";
-import { getProjectDetail, createProjectLike } from "@/api/web/projects.api";
+import { getProjectDetail, createProjectLike } from "@/api/web/api.projects";
 
 export default function useSelectProjectDetail(
   projectId?: string

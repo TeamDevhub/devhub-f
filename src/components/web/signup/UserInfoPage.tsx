@@ -5,7 +5,7 @@ import TermsPopup from '@/components/_common/popup/TermsPopup';
 import FieldBox from './FieldBox';
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import useSignup from '@/hooks/web/signup/useSignup';
-import { COMMON_CODE } from '@/types/const';
+import { COMMON_CODE } from '@/constants/codes';
 import { BadgeOutlined, Favorite, Gavel, LockOutline, PersonOutlined, Settings } from '@mui/icons-material';
 import { Button, Divider, Paper, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';

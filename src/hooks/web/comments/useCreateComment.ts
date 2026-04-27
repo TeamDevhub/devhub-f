@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { CommentCreate } from "@/types/type.comments";
 import { useMutation } from '@/hooks/_common/api.hook';
-import {createComment} from '@/api/web/comments.api';
+import {createComment} from '@/api/web/api.comments';
 
 export default function useCreateComment(
     boardGuid:string,

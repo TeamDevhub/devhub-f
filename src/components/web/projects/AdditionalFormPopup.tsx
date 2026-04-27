@@ -6,7 +6,7 @@ import CustomRadioGroup from "@/components/_common/customMUI/CustomRadioGroup"
 import useFormState from '@/hooks/_common/useFormState.ts';
 import {Divider, IconButton, MenuItem, Select, type SelectChangeEvent} from "@mui/material";
 import {AddCircle, Remove} from '@mui/icons-material';
-import {APPLICATION_FORM_TYPE, APPLICATION_FORM_TYPE_OPTIONS, USE_YN_OPTIONS, type ApplicationFormType}  from '@/types/const.projectCreate.ts'
+import {APPLICATION_FORM_TYPE, APPLICATION_FORM_TYPE_OPTIONS, USE_YN_OPTIONS, type ApplicationFormType}  from '@/constants/projectCreate'
 
 interface  AdditionnalFormPopupProps {
   isOpen: boolean;

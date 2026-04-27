@@ -5,7 +5,7 @@ import WebPopup from "@/components/_common/popup/WebPopup";
 import SelectableGroup from "@/components/_common/SelectableGroup";
 import useFormState from "@/hooks/_common/useFormState.ts";
 import useDisclosure from "@/hooks/_common/useDisclosure";
-import {COMMON_CODE} from "@/types/const";
+import {COMMON_CODE} from "@/constants/codes";
 import type {FilterData} from "@/types/type.projects";
 import {Divider} from "@mui/material";
 import {DatePicker} from "@mui/x-date-pickers";

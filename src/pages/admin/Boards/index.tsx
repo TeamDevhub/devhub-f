@@ -8,7 +8,7 @@ import { UserStatusChip } from '@/components/admin/UserStatusChips';
 import {convertString} from "@/utils/util.date.ts";
 import CustomDateRange from "@/components/_common/customMUI/CustomDateRange.tsx";
 import type {DateType} from "@/types/type.api.ts";
-import {COMMON_CODE} from "@/types/const.ts";
+import {COMMON_CODE} from "@/constants/codes.ts";
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export default function BoardManagementPage(){

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { UploadResponse } from '@/types/type.api.ts';
-import { ERROR_MESSAGES } from '@/types/const.errorMessages.ts';
+import { ERROR_MESSAGES } from '@/constants/errorMessages';
 import fetcher from '@/utils/util.api.ts';
 import { useLoading } from '@/contexts/LoadingContext.ts';
 
