@@ -10,7 +10,7 @@ import type { MyProject } from '@/types/type.projects';
 export default function MyProfileHome() {
   const { getCodeName } = useCodes();
   const { res } = useSelectUserProfile();
-  const { res: projectRes, loading, error, setPage, handleTabChange } = useSelectMyProjects();
+  const { res: projectRes, setPage } = useSelectMyProjects();
   const profile = res?.data;
 
   const registerProjects: MyProject[] = [

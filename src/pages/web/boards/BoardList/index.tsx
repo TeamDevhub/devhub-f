@@ -1,7 +1,7 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import BoardCard from '@/components/web/boards/BoardCard';
 import useMutationBoards from '@/hooks/web/boards/useMutationBoards';
-import useSelecttBoards from '@/hooks/web/boards/useSelectBoards';
+import useSelectBoards from '@/hooks/web/boards/useSelectBoards';
 import {Button, Pagination, Paper, Tab, Tabs} from '@mui/material';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 import {COMMON_CODE} from "@/constants/codes.ts";
@@ -17,7 +17,7 @@ export default function BoardList(){
         title, setTitle,
         handleSearchClick,
         handleDetail
-    } = useSelecttBoards();
+    } = useSelectBoards();
 
     const { handleLike } = useMutationBoards();
     const { getCodesByGroup } = useCodes();

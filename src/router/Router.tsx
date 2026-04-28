@@ -154,7 +154,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Codes />,
+            element: <BoardAdmin />,
           },
         ],
       },
