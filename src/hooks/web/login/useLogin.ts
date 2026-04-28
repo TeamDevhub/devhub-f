@@ -1,4 +1,4 @@
-import { useMutation } from '../_common/api.hook';
+import { useMutation } from '@/hooks/_common/api.hook';
 import { Validators } from '@/utils/util._common';
 import { login } from '@/api/web/api.auth';
 import type { ApiResponse } from '@/types/type.api';

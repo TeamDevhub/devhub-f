@@ -91,11 +91,20 @@ export class FormController<T extends object> {
     this._listeners.forEach((l) => l());
   };
 
-  setState = (updates: Partial<T>): void => {
+  setState = (
+    updatesOrFn: Partial<T> | ((prev: T) => Partial<T>)
+  ): void => {
+    const updates = typeof updatesOrFn === 'function' 
+      ? updatesOrFn(this._state) 
+      : updatesOrFn;
+
     this._state = { ...this._state, ...updates };
 
     for (const key of Object.keys(updates) as (keyof T)[]) {
-      this._fieldSnapshots.set(key, { value: this._state[key], error: this._errors[key] });
+      this._fieldSnapshots.set(key, { 
+        value: this._state[key], 
+        error: this._errors[key] 
+      });
       this._fieldListeners.get(key)?.forEach((l) => l());
     }
 

@@ -1,5 +1,5 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
-import { ImageCropPopup } from '../_common/popup/image';
+import { ImageCropPopup } from '@/components/_common/popup/image';
 import { Person } from '@mui/icons-material';
 import { Button, Divider, List, ListItemButton, Paper } from '@mui/material';
 import { useAuth } from '@/contexts/AuthContext';

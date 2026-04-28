@@ -1,7 +1,7 @@
 import {COMMON_CODE} from '@/constants/codes';
 import {Button} from '@mui/material';
 import React, {useState} from 'react';
-import CustomTextfield from '../customMUI/CustomTextfield';
+import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import WebPopup from './WebPopup';
 import SelectableGroup from "@/components/_common/SelectableGroup.tsx";
 import {useCodes} from "@/contexts/CommonCodeContext.ts";

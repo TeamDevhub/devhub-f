@@ -1,4 +1,4 @@
-import CustomTextfield from '../customMUI/CustomTextfield';
+import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import WebPopup from './WebPopup';
 import useUpdatePassword from '@/hooks/web/profile/user/useUpdatePassword';
 

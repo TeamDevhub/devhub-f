@@ -11,7 +11,7 @@ import { Button, Divider, Paper, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import SelectableGroup from '@/components/_common/SelectableGroup';
 import { FormSection } from './FormSection';
-import AddableChipGroup from '../_common/AddableChipGroup';
+import AddableChipGroup from '@/components/_common/AddableChipGroup';
 import { useCodes } from '@/contexts/CommonCodeContext.ts';
 import useTerms from '@/hooks/web/terms/useTerms';
 import { useState } from 'react';
