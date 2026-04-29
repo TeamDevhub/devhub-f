@@ -11,6 +11,7 @@ DevHub는 개발자가 프로젝트를 모집·신청하고, 게시판·댓글�
 이 레포는 그 사용자/관리자 화면을 담당하는 단일 페이지 애플리케이션이다.
 
 **사용자가 할 수 있는 일 (코드로 확인된 도메인 기준)**
+
 - 회원가입 / 로그인 (일반 + OAuth 분기로 추정 — `api.auth.ts`/`api.signup.ts`)
 - 프로젝트 모집 글 조회/생성/수정/삭제, 신청 양식 작성
 - 게시판(자유/질문/공지) 글 조회/생성/수정/삭제, 좋아요, 댓글
@@ -20,6 +21,7 @@ DevHub는 개발자가 프로젝트를 모집·신청하고, 게시판·댓글�
 - 파일/이미지 업로드 (`api.file.ts`, `useFileUpload`)
 
 **관리자 영역 (`/admin`)**
+
 - 배너 관리, 공통코드 관리, 게시판 관리 (페이지 구현 확인됨)
 - 사용자/프로젝트/약관/신청양식 관리는 디자인 시안(`pages/_design/admin/*`)으로만 존재 — 실제 라우트 미연결
 
@@ -27,20 +29,20 @@ DevHub는 개발자가 프로젝트를 모집·신청하고, 게시판·댓글�
 
 ## Tech Stack
 
-| 영역 | 기술 | 버전 |
-|------|------|------|
-| 프레임워크 | React | 19.2 |
-| 언어 | TypeScript | 5.9 (strict + `verbatimModuleSyntax`) |
-| 빌드/번들 | Vite | 7.2 + `@vitejs/plugin-react` |
-| 라우팅 | React Router | v7 (`createBrowserRouter`) |
-| UI | Material-UI | v7 (`@mui/material`, `@mui/icons-material`, `@mui/x-charts`, `@mui/x-date-pickers`) |
-| HTTP | Axios | 1.13 (전역 인터셉터) |
-| 상태 관리 | 외부 싱글턴 스토어 + `useSyncExternalStore` | (자체 구현, `src/stores/Store.ts`) |
-| 스타일 | SCSS + Emotion (MUI) | sass 1.97 / `@emotion/*` 11.x |
-| 날짜 | Dayjs + MUI DatePicker | 1.11 / `@mui/x-date-pickers` 8.x |
-| 슬라이더 | Swiper | 12.x |
-| 이미지 크롭 | react-easy-crop | 5.x |
-| 린트 | ESLint flat config + typescript-eslint + react-hooks + react-refresh | 9.x |
+| 영역        | 기술                                                                 | 버전                                                                                |
+| ----------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| 프레임워크  | React                                                                | 19.2                                                                                |
+| 언어        | TypeScript                                                           | 5.9 (strict + `verbatimModuleSyntax`)                                               |
+| 빌드/번들   | Vite                                                                 | 7.2 + `@vitejs/plugin-react`                                                        |
+| 라우팅      | React Router                                                         | v7 (`createBrowserRouter`)                                                          |
+| UI          | Material-UI                                                          | v7 (`@mui/material`, `@mui/icons-material`, `@mui/x-charts`, `@mui/x-date-pickers`) |
+| HTTP        | Axios                                                                | 1.13 (전역 인터셉터)                                                                |
+| 상태 관리   | 외부 싱글턴 스토어 + `useSyncExternalStore`                          | (자체 구현, `src/stores/Store.ts`)                                                  |
+| 스타일      | SCSS + Emotion (MUI)                                                 | sass 1.97 / `@emotion/*` 11.x                                                       |
+| 날짜        | Dayjs + MUI DatePicker                                               | 1.11 / `@mui/x-date-pickers` 8.x                                                    |
+| 슬라이더    | Swiper                                                               | 12.x                                                                                |
+| 이미지 크롭 | react-easy-crop                                                      | 5.x                                                                                 |
+| 린트        | ESLint flat config + typescript-eslint + react-hooks + react-refresh | 9.x                                                                                 |
 
 > 자동 테스트 프레임워크는 도입되지 않았다 (`package.json`에 `test` 스크립트 없음).
 > 검증은 빌드/린트와 수동 시나리오로 수행한다.
@@ -98,12 +100,12 @@ DevHub는 개발자가 프로젝트를 모집·신청하고, 게시판·댓글�
 
 React Context로 Provider를 쌓지 않는다. 대신 `src/stores/Store.ts`의 베이스 클래스를 상속한 싱글턴 인스턴스를 만들고, React는 `useSyncExternalStore`로 구독한다.
 
-| 스토어 | 훅 | 역할 |
-|--------|------|------|
-| `auth.store.ts` | `useAuth()` | 로그인 상태, 유저 정보, init/login/logout/reissue |
-| `loading.store.ts` | `useLoading()` | 전역 로딩 스피너 (axios 자동 연동) |
-| `codes.store.ts` | `useCodes()` | 공통 코드(enum) 캐싱 |
-| `modal.store.ts` | `useModal()` | 확인/알림 팝업 |
+| 스토어             | 훅             | 역할                                              |
+| ------------------ | -------------- | ------------------------------------------------- |
+| `auth.store.ts`    | `useAuth()`    | 로그인 상태, 유저 정보, init/login/logout/reissue |
+| `loading.store.ts` | `useLoading()` | 전역 로딩 스피너 (axios 자동 연동)                |
+| `codes.store.ts`   | `useCodes()`   | 공통 코드(enum) 캐싱                              |
+| `modal.store.ts`   | `useModal()`   | 확인/알림 팝업                                    |
 
 `src/contexts/`는 **하위 호환 re-export 전용**이다. 새 코드는 `@/hooks/_common/use*`에서 직접 import.
 
@@ -167,11 +169,11 @@ src/
 
 ### 타입 vs 상수 분리 (엄격)
 
-| 위치 | 내용 |
-|------|------|
-| `src/types/type.{domain}.ts` | `interface`, `type` — 컴파일 타임 정의만 |
-| `src/constants/codes.ts` | `as const` 객체 (`BOARD_CATEGORY`, `COMMON_CODE`, `ERROR_CODE`, `PROJECT_*`) |
-| `src/constants/errorMessages.ts` / `successMessages.ts` | 사용자 노출 한국어 문구 |
+| 위치                                                    | 내용                                                                         |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `src/types/type.{domain}.ts`                            | `interface`, `type` — 컴파일 타임 정의만                                     |
+| `src/constants/codes.ts`                                | `as const` 객체 (`BOARD_CATEGORY`, `COMMON_CODE`, `ERROR_CODE`, `PROJECT_*`) |
+| `src/constants/errorMessages.ts` / `successMessages.ts` | 사용자 노출 한국어 문구                                                      |
 
 > `tsconfig`의 `erasableSyntaxOnly: true` 때문에 `enum` 키워드는 사용 불가 — `as const` 객체 패턴이 표준.
 
@@ -206,10 +208,12 @@ src/
 ## Getting Started
 
 ### Requirements
+
 - Node.js 20+ (Vite 7 / @types/node 24 권장)
 - npm
 
 ### Install
+
 ```bash
 npm install
 ```
@@ -227,12 +231,12 @@ VITE_FILE_API_URL=http://localhost:8080/files/
 
 ### Scripts
 
-| 명령 | 설명 |
-|------|------|
-| `npm run dev` | Vite 개발 서버 (기본 `http://localhost:5173`) |
-| `npm run build` | `tsc -b && vite build` — 타입 체크 + 프로덕션 번들 |
-| `npm run preview` | 빌드 결과 로컬 미리보기 |
-| `npm run lint` | ESLint flat config 실행 |
+| 명령              | 설명                                               |
+| ----------------- | -------------------------------------------------- |
+| `npm run dev`     | Vite 개발 서버 (기본 `http://localhost:5173`)      |
+| `npm run build`   | `tsc -b && vite build` — 타입 체크 + 프로덕션 번들 |
+| `npm run preview` | 빌드 결과 로컬 미리보기                            |
+| `npm run lint`    | ESLint flat config 실행                            |
 
 > `npm test`는 정의되어 있지 않다. 자동 테스트 도입 전이며, 검증은 빌드/린트 + 수동 시나리오로 수행한다.
 
@@ -243,6 +247,7 @@ VITE_FILE_API_URL=http://localhost:8080/files/
 게시판에 "신고하기" 기능을 추가한다고 가정한 표준 흐름.
 
 ### 1) 타입 추가 — `src/types/type.boards.ts`
+
 ```typescript
 export interface BoardReportRequest {
   boardGuid: string;
@@ -251,33 +256,39 @@ export interface BoardReportRequest {
 ```
 
 ### 2) API 함수 — `src/api/web/api.boards.ts`
+
 ```typescript
-import fetcher from '@/utils/util.api';
-import type { BoardReportRequest } from '@/types/type.boards';
+import fetcher from "@/utils/util.api";
+import type { BoardReportRequest } from "@/types/type.boards";
 
 export const reportBoard = (req: BoardReportRequest) =>
-  fetcher<void, BoardReportRequest>(`/boards/${req.boardGuid}/report`, req, { method: 'post' });
+  fetcher<void, BoardReportRequest>(`/boards/${req.boardGuid}/report`, req, {
+    method: "post",
+  });
 ```
 
 ### 3) 도메인 훅 — `src/hooks/web/boards/useReportBoard.ts`
+
 ```typescript
-import { reportBoard } from '@/api/web/api.boards';
-import { useMutation } from '@/hooks/_common/api.hook';
-import { useModal } from '@/hooks/_common/useModal';
-import type { BoardReportRequest } from '@/types/type.boards';
+import { reportBoard } from "@/api/web/api.boards";
+import { useMutation } from "@/hooks/_common/api.hook";
+import { useModal } from "@/hooks/_common/useModal";
+import type { BoardReportRequest } from "@/types/type.boards";
 
 export default function useReportBoard() {
   const { alert, confirm } = useModal();
-  const onSuccess = () => alert('신고가 접수되었습니다.');
-  const onFail = () => alert('신고에 실패했습니다.');
+  const onSuccess = () => alert("신고가 접수되었습니다.");
+  const onFail = () => alert("신고에 실패했습니다.");
 
   const { mutate } = useMutation<BoardReportRequest, void>(
-    reportBoard, onSuccess, onFail,
-    { invalidateKeys: ['board-detail'] }
+    reportBoard,
+    onSuccess,
+    onFail,
+    { invalidateKeys: ["board-detail"] },
   );
 
   const handleReport = async (req: BoardReportRequest) => {
-    if (!(await confirm('이 게시글을 신고하시겠습니까?'))) return;
+    if (!(await confirm("이 게시글을 신고하시겠습니까?"))) return;
     await mutate(req);
   };
 
@@ -286,6 +297,7 @@ export default function useReportBoard() {
 ```
 
 ### 4) 페이지에서 호출 — `src/pages/web/boards/BoardDetail/index.tsx`
+
 ```typescript
 const { handleReport } = useReportBoard();
 // ...
@@ -293,6 +305,7 @@ const { handleReport } = useReportBoard();
 ```
 
 ### 5) 필요 시 라우트/상수 추가
+
 - 신규 페이지면 `src/router/Router.tsx`에 등록
 - 신고 사유 코드는 `COMMON_CODE.REPORT_TYPE` 재사용
 
@@ -305,6 +318,7 @@ const { handleReport } = useReportBoard();
 코드 존재로 확인된 진척도. 백엔드 연동 상태는 별도 확인 필요.
 
 ### ✅ 구현됨 (실서비스 라우트 연결)
+
 - **인증**: 로그인, 회원가입, sessionStorage 기반 토큰 + 쿠키 기반 reissue 흐름
 - **게시판**: 목록(검색/카테고리 탭/페이지네이션), 상세, 작성, 수정, 삭제, 좋아요
 - **댓글**: 게시판 상세 내 댓글 (`api.comments.ts`, `hooks/web/comments/`)
@@ -314,6 +328,7 @@ const { handleReport } = useReportBoard();
 - **공용 인프라**: `useSelect`/`useMutation` + 캐시, `useFormState`/`useFormController`, `useModal`, `useFileUpload`, 전역 로딩, MUI 커스텀 래퍼
 
 ### 🟡 부분/진행 중
+
 - **OAuth 분기**: `[refactor] 사용자 인증 관련 기존 소스 변경 및 Oauth 사용자 비밀번호 입력 제거` 커밋 흔적 — 흐름은 들어왔으나 검증 단계로 추정
 - **401 자동 재발급**: `util.api.ts`의 `responseErrorInterceptor`에 `EXPIRE_ACCESS_TOKEN` 분기 비어 있음(`// 리프레쉬토큰 발급` TODO). 현재는 인터셉터에서 자동 reissue가 동작하지 않음 — `authStore.init()` 시점에서만 reissue 시도
 - **알림(Notification)**: API/타입은 있으나 (`api.notification.ts`, `NotificationItem.tsx`) 전용 페이지 라우트는 미확인
@@ -323,6 +338,7 @@ const { handleReport } = useReportBoard();
 - **Stale UI 처리**: `useDeleteBoard`가 `location.reload()` 사용 — `invalidateKeys` + `cacheKey` 패턴으로 정리 가능
 
 ### 🟥 디자인 시안만 존재 (실서비스 미연결)
+
 - 어드민의 사용자/신고/약관/신청양식/프로젝트 관리 페이지 (`pages/_design/admin/*`)
 - 스킬 트렌드 페이지 (`pages/_design/web/skilltrends/*`)
 - MyHomePage 등 일부 마이페이지 시안
@@ -349,27 +365,29 @@ const { handleReport } = useReportBoard();
 
 ## Docs Reference
 
-| 문서 | 용도 |
-|------|------|
-| [`CLAUDE.md`](CLAUDE.md) | 프로젝트 규칙(모든 룰의 단일 출처) |
-| [`docs/structure.md`](docs/structure.md) | 디렉토리·라우트·전역 스토어·타입 구조 상세 |
-| [`docs/hooks.md`](docs/hooks.md) | 공통 훅 카탈로그 + Fetcher 사용법 |
-| [`docs/agents/feature-agent.md`](docs/agents/feature-agent.md) | 새 기능을 추가할 때의 표준 절차 |
-| [`docs/agents/refactor-agent.md`](docs/agents/refactor-agent.md) | 동작 보존 리팩터의 Smell 카탈로그/체크리스트 |
-| [`docs/agents/review-agent.md`](docs/agents/review-agent.md) | PR 리뷰 5축 + 11개 체크리스트 |
-| [`docs/skills/*`](docs/skills) | 기능 구현 / 안전한 리팩터 / 리뷰 / 테스트 도입 / 디버깅 워크플로 |
-| [`docs/memory/*`](docs/memory) | 스타일·아키텍처·워크플로 메모리 |
+| 문서                                                             | 용도                                                             |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [`CLAUDE.md`](CLAUDE.md)                                         | 프로젝트 규칙(모든 룰의 단일 출처)                               |
+| [`docs/structure.md`](docs/structure.md)                         | 디렉토리·라우트·전역 스토어·타입 구조 상세                       |
+| [`docs/hooks.md`](docs/hooks.md)                                 | 공통 훅 카탈로그 + Fetcher 사용법                                |
+| [`docs/agents/feature-agent.md`](docs/agents/feature-agent.md)   | 새 기능을 추가할 때의 표준 절차                                  |
+| [`docs/agents/refactor-agent.md`](docs/agents/refactor-agent.md) | 동작 보존 리팩터의 Smell 카탈로그/체크리스트                     |
+| [`docs/agents/review-agent.md`](docs/agents/review-agent.md)     | PR 리뷰 5축 + 11개 체크리스트                                    |
+| [`docs/skills/*`](docs/skills)                                   | 기능 구현 / 안전한 리팩터 / 리뷰 / 테스트 도입 / 디버깅 워크플로 |
+| [`docs/memory/*`](docs/memory)                                   | 스타일·아키텍처·워크플로 메모리                                  |
 
 ---
 
 ## Contribution Guide
 
 ### 브랜치 / 커밋
+
 - 통합 브랜치: `dev`
 - 기능 브랜치: `feature/{name}` (예: `feature/board`, `feature/profile`)
 - 커밋 메시지: `[feat] ...`, `[refactor] ...`, `[fix] ...` (한국어 본문)
 
 ### PR 체크리스트
+
 - [ ] `API → Hook → Component` 흐름 준수
 - [ ] `axios` 직접 import 0건 (`fetcher`만 사용)
 - [ ] 페이지가 API 함수 직접 import 0건
@@ -384,6 +402,7 @@ const { handleReport } = useReportBoard();
 - [ ] PR 본문에 수동 검증 시나리오 명시
 
 ### 새 도메인을 추가할 때
+
 1. `src/types/type.{domain}.ts`
 2. `src/api/{web|admin}/api.{domain}.ts`
 3. `src/hooks/{web|admin}/{domain}/`
@@ -393,6 +412,7 @@ const { handleReport } = useReportBoard();
 7. (필요 시) `src/constants/codes.ts`에 enum, `errorMessages`/`successMessages`에 문구 추가
 
 ### 어디에 두지 말 것
+
 - 페이지 안에 `useState` + `useEffect` + `apiFn().then(...)` 조합
 - `_common/` 또는 `utils/`에 도메인 의존 코드
 - 새로운 React Context Provider (외부 싱글턴 + `useSyncExternalStore` 패턴 유지)
@@ -400,7 +420,3 @@ const { handleReport } = useReportBoard();
 - 실서비스 페이지에서 `_design/*` import
 
 ---
-
-## License
-
-내부 프로젝트 — 별도 라이선스 명시 없음.
