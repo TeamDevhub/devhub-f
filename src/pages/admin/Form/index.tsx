@@ -20,7 +20,10 @@ export default function FormManagementPage() {
     const [popupItem, setPopupItem] = useState<FormItem | null>(null);
 
     const { res, state, handleChange, refetch } = useForms();
-    const { handleDelete } = useDeleteForm(refetch);
+    const { handleDelete } = useDeleteForm(() => {
+        refetch();
+        setSelectedRow(null);
+    });
 
     const openCreate = () => {
         setPopupItem(null);
@@ -73,7 +76,7 @@ export default function FormManagementPage() {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {res.map((row, index) => (
+                                        {res.map((row) => (
                                             <TableRow
                                                 key={row.fieldName}
                                                 selected={selectedRow?.fieldName === row.fieldName}
