@@ -10,7 +10,8 @@
       "Bash(xargs grep *)",
       "Bash(git merge *)",
       "Bash(git stash *)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(npm run *)"
     ]
   }
 }

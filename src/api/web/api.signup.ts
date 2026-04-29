@@ -8,6 +8,6 @@ export const sendEmailVerificationCode = (req: SendVerificationCodeRequest) =>
 export const confirmEmailVerificationCode = (req: ConfrimVerificationCodeRequest) =>
   fetcher<void, ConfrimVerificationCodeRequest>('/auth/verification/email/confirm', req, { method: 'post' });
 
-export const signup = (req: SignupRequest) => fetcher<TokenResponseDto, SignupRequest>('/user/signup', req, { method: 'post' });
+export const signup = (req: SignupRequest) => fetcher<void, SignupRequest>('/user/signup', req, { method: 'post' });
 
 export const oauthSignup = (req: OauthSignupRequest) => fetcher<TokenResponseDto, OauthSignupRequest>('/auth/oauth/signup', req, { method: 'post' });

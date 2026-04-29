@@ -5,8 +5,9 @@ import type { ApiResponse } from '@/types/type.api';
 import type { LoginRequest, TokenResponseDto } from '@/types/type.auth';
 import { useNavigate } from 'react-router-dom';
 import useFormState from '@/hooks/_common/useFormState.ts';
-import { useAuth } from '@/contexts/AuthContext.ts';
+import { useAuth } from '@/hooks/_common/useAuth';
 import { useModal } from '@/hooks/_common/useModal';
+import { ERROR_MESSAGES } from '@/constants/errorMessages';
 
 const initData: LoginRequest = {
   email: '',
@@ -39,7 +40,8 @@ export default function useLogin() {
   };
 
   const handleFailLogin = (res: ApiResponse<TokenResponseDto>) => {
-    alert(res.code);
+    console.error('login failed', res.code);
+    alert(ERROR_MESSAGES.LOGIN_FAILED);
     changePassword('');
   };
 
@@ -56,11 +58,16 @@ export default function useLogin() {
     await requestLogin(payload);
   };
 
+  const oauthLogin = (provider: 'google' | 'github' | 'kakao') => {
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/oauth/${provider}`;
+  };
+
   return {
     loginInfo,
     changeId,
     changePassword,
     applyLogin,
+    oauthLogin,
     loading,
   };
 }
