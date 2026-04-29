@@ -47,6 +47,8 @@ import BannerManagementPage from '@/pages/_design/admin/banner/BannerManagementP
 import TermsManagementPage from '@/pages/_design/admin/terms/TermsManagementPage';
 import Banner from '@/pages/admin/Banner';
 import BoardAdmin from '@/pages/admin/Boards';
+import AdminUserList from '@/pages/admin/Users/UserList';
+import AdminUserDetail from '@/pages/admin/Users/UserDetail';
 import DesignMainPage from '@/pages/_design/web/main/DesignMainPage';
 import AdminLayout from '@/layout/AdminLayout';
 import Codes from '@/pages/admin/Codes';
@@ -155,6 +157,19 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <BoardAdmin />,
+          },
+        ],
+      },
+      {
+        path: 'users',
+        children: [
+          {
+            index: true,
+            element: <AdminUserList />,
+          },
+          {
+            path: ':userGuid',
+            element: <AdminUserDetail />,
           },
         ],
       },

@@ -36,3 +36,34 @@ export interface UpdatePasswordRequest {
 export interface UpdateProfileImageRequest {
   fileGuid: string;
 }
+
+export interface AdminUserSummary {
+  userGuid: string;
+  email: string;
+  username: string;
+  userStatusCd: string;
+  registeredDate: string;
+  mannerDegree: number;
+}
+
+export interface AdminUserDetail {
+  user: UserBasicResponse;
+  userStatusCd: string;
+  positionList: string[];
+  skillList: string[];
+}
+
+import type { DateType } from './type.api';
+
+export interface AdminUserSearchRequest {
+  page: number;
+  username?: string;
+  userStatusCd?: string;
+  registeredStartDate?: DateType;
+  registeredEndDate?: DateType;
+}
+
+export interface UpdateUserStatusRequest {
+  userGuid: string;
+  userStatusCd: string;
+}
