@@ -41,7 +41,6 @@ export default function ProjectCard({
 
   // 참여한 프로젝트 中 팀원 평가 팝업
   const [openEvaluatePopup, setOpenEvaluatePopup] = useState(false);
-  const clickOpenEvaluatePopup = () => { setOpenEvaluatePopup(true); }
 
   const { projectCloseMutate } = useCloseMyProjects();
   const { toggleLike, loading } = useUpdateProjectLike();
@@ -53,6 +52,11 @@ export default function ProjectCard({
   const onClickCloseProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     projectCloseMutate(projectGuid);
+  }
+
+  const onClickEvaluatePopup = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setOpenEvaluatePopup(true);
   }
 
   const onClickHeartButton = (e: React.MouseEvent<HTMLButtonElement>, liked: boolean) => {
@@ -150,7 +154,7 @@ export default function ProjectCard({
         <>
           <div className="right-area align-end" style={{ paddingTop: 0, paddingBottom: 0 }}>
             <div className='w-100 flex-col align-center'>
-              {progressState == '진행완료' && <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenEvaluatePopup}>팀원 평가</Button>}
+              {progressState == 'end' && <Button size='small' variant='outlined' color='primary' className='w-100' onClick={onClickEvaluatePopup}>팀원 평가</Button>}
             </div>
           </div>
 
