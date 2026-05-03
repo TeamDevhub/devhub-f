@@ -8,8 +8,9 @@ import WebPopup from '@/components/_common/popup/WebPopup'
 import { type MyProject } from '@/types/type.projects';
 import useCloseMyProjects from '@/hooks/web/profile/project/useCloseMyProjects'
 import useUpdateProjectLike from '@/hooks/web/projects/useUpdateProjectLike'
+import useReviewMember from '@/hooks/web/profile/project/useReviewMember'
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/web/projects/ProjectChips";
-import { COMMON_CODE } from "@/constants/codes";
+import EvaluateCard from '@/components/web/profile/EvaluateCard';
 import type { ProjectApprovalStatusCode } from '@/types/type._common';
 
 export default function ProjectCard({
@@ -29,6 +30,7 @@ export default function ProjectCard({
   approvalState,
   progressState,
   recruitStatus,
+  applicationList,
   children
 }: MyProject) {
 
@@ -43,6 +45,7 @@ export default function ProjectCard({
   const [openEvaluatePopup, setOpenEvaluatePopup] = useState(false);
 
   const { projectCloseMutate } = useCloseMyProjects();
+  const { reviewMemberMutate } = useReviewMember();
   const { toggleLike, loading } = useUpdateProjectLike();
 
   const onClickUpdateProject = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -62,6 +65,10 @@ export default function ProjectCard({
   const onClickHeartButton = (e: React.MouseEvent<HTMLButtonElement>, liked: boolean) => {
     toggleLike(projectGuid, liked);
   }
+
+  const onClickEvaluateButton = (userId: string, score: number) => {
+    reviewMemberMutate({ projectGuid: projectGuid, userGuid: userId, score: score })
+  }
   // 승인 상태에 따른 텍스트 색상 변경
   const approvalColorMap: Record<ProjectApprovalStatusCode, string> = {
     '3301': 'var(--text-primary)', // 대기 (기본색)
@@ -70,7 +77,7 @@ export default function ProjectCard({
   } as const;
 
   return <>
-    <div className="project-box2 w-100 justify-between" onClick={() => { location.href = '/projects/detail/' + projectGuid }}>
+    <div className="project-box2 w-100 justify-between">
       <div className="left-area flex-col">
         <div className="chip-box align-center">
           {variant !== 'participate' && <RecruitStatusChip
@@ -83,7 +90,7 @@ export default function ProjectCard({
           <RecruitmentChip recruitTypeCd={recruitmentTypeCd} />
           <DDayChip recruitmentEndDate={recruitmentEndDate} />
         </div>
-        <strong className='main-text text-ellipsis'>{title}</strong>
+        <strong className='main-text text-ellipsis' onClick={() => { location.href = '/projects/detail/' + projectGuid }}>{title}</strong>
         <div className='sub-text align-center'>
           <div className='align-center'>
             <div className='title flex'><AccessTime />모집기간</div>
@@ -169,7 +176,16 @@ export default function ProjectCard({
           >
             <div className='mypage-popup' style={{ paddingBottom: '1.6rem' }}>
               <div className="evaluate-box">
-                {children}
+                {applicationList && applicationList.map((application, index) => (
+                  <EvaluateCard
+                    key={index}
+                    applicantGuid={application.applicantGuid}
+                    userID={application.userName}
+                    userEmail={application.email}
+                    mannerTemperature={application.mannerDegree}
+                    onClickReview={onClickEvaluateButton}
+                  />
+                ))}
               </div>
             </div>
           </WebPopup>

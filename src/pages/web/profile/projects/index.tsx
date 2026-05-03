@@ -4,7 +4,7 @@ import useSelectLikeProjects from '@/hooks/web/profile/project/useSelectLikeProj
 import useSelectApplyProjects from '@/hooks/web/profile/project/useSelectApplyProjects';
 import useSelectParticipateProjects from '@/hooks/web/profile/project/useSelectParticipateProjects';
 import ProjectCard from '@/components/web/profile/ProjectCard';
-import EvaluateCard from '@/components/web/profile/EvaluateCard';
+
 import TabPanel from '@/components/_common/TabPanel';
 import { useState } from 'react';
 
@@ -78,14 +78,7 @@ export default function MyProfileProjectListPage() {
           <div className="list-box flex-col">
             {participateRes?.dataList?.map((item, index) => {
               return <ProjectCard key={index} {...item} variant={"participate"} >
-                {item.applicationList && item.applicationList.map((application, index) => (
-                  <EvaluateCard
-                    key={index}
-                    userID={application.userName}
-                    userEmail={application.email}
-                    mannerTemperature={application.mannerDegree}
-                  />
-                ))}
+
               </ProjectCard>
             })}
           </div>
