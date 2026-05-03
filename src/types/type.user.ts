@@ -57,6 +57,7 @@ import type { DateType } from './type.api';
 
 export interface AdminUserSearchRequest {
   page: number;
+  size: number;
   username?: string;
   userStatusCd?: string;
   registeredStartDate?: DateType;

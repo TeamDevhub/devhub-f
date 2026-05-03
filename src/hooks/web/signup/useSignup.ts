@@ -40,13 +40,19 @@ export default function useSignup({ email, tempToken }: SignupParams) {
     termsAgreementList: [],
   };
 
-  const validations = {
-    password: [Validators.required(), Validators.minLength(10)],
-    passwordConfirm: [Validators.required()],
-    username: [Validators.required()],
-    skillList: [Validators.minArrayLength(1)],
-    positionList: [Validators.minArrayLength(1)],
-  };
+  const validations = tempToken
+    ? {
+        username: [Validators.required()],
+        skillList: [Validators.minArrayLength(1)],
+        positionList: [Validators.minArrayLength(1)],
+      }
+    : {
+        password: [Validators.required(), Validators.minLength(10)],
+        passwordConfirm: [Validators.required()],
+        username: [Validators.required()],
+        skillList: [Validators.minArrayLength(1)],
+        positionList: [Validators.minArrayLength(1)],
+      };
 
   const { state: userInfo, handleChange, createHandler, createToggle, checkError } = useFormState(initData, { validations });
 
@@ -71,11 +77,7 @@ export default function useSignup({ email, tempToken }: SignupParams) {
     alert(ERROR_MESSAGES.OAUTH_SIGNUP_FAILED);
   };
 
-  const { mutate: requestSignup, loading: signupLoading } = useMutation<SignupRequest, void>(
-    signup,
-    handleSuccessSignup,
-    handleFailSignup,
-  );
+  const { mutate: requestSignup, loading: signupLoading } = useMutation<SignupRequest, void>(signup, handleSuccessSignup, handleFailSignup);
 
   const { mutate: requestOauthSignup, loading: oauthSignupLoading } = useMutation<OauthSignupRequest, TokenResponseDto>(
     oauthSignup,
@@ -96,7 +98,6 @@ export default function useSignup({ email, tempToken }: SignupParams) {
     if (tempToken) {
       const payload: OauthSignupRequest = {
         tempToken: tempToken,
-        password: userInfo.password,
         username: userInfo.username,
         introduction: userInfo.introduction,
         skillList: userInfo.skillList,

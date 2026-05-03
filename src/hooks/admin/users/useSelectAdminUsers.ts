@@ -7,6 +7,7 @@ import type { AdminUserSearchRequest } from '@/types/type.user';
 
 const initData: AdminUserSearchRequest = {
   page: 0,
+  size: 10,
   username: '',
   userStatusCd: '',
   registeredStartDate: null,
