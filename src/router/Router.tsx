@@ -49,6 +49,8 @@ import Banner from '@/pages/admin/Banner';
 import BoardAdmin from '@/pages/admin/Boards';
 import AdminUserList from '@/pages/admin/Users/UserList';
 import AdminUserDetail from '@/pages/admin/Users/UserDetail';
+import AdminProjectList from '@/pages/admin/Projects/List';
+import AdminProjectDetail from '@/pages/admin/Projects/Detail';
 import DesignMainPage from '@/pages/_design/web/main/DesignMainPage';
 import AdminLayout from '@/layout/AdminLayout';
 import Codes from '@/pages/admin/Codes';
@@ -170,6 +172,19 @@ const router = createBrowserRouter([
           {
             path: ':userGuid',
             element: <AdminUserDetail />,
+          },
+        ],
+      },
+      {
+        path: 'projects',
+        children: [
+          {
+            index: true,
+            element: <AdminProjectList />,
+          },
+          {
+            path: ':projectGuid',
+            element: <AdminProjectDetail />,
           },
         ],
       },
