@@ -8,6 +8,7 @@ type EvaluateCardProps = {
   userID: string;
   userEmail?: string;
   mannerTemperature?: string;
+  score?: number;
   completeRating?: boolean;
   onClickReview?: (userGuid: string, score: number) => void;
 }
@@ -17,11 +18,12 @@ export default function EvaluateCard({
   userID,
   userEmail,
   mannerTemperature,
+  score,
   completeRating = false,
   onClickReview = () => { }
 }: EvaluateCardProps) {
 
-  const [score, setScore] = useState<number>(0);
+  const [_score, setScore] = useState<number>(score || 0);
   return (
     <Paper className='evaluate-card flex-col' elevation={2}>
       <div className="user-info align-center">
@@ -54,8 +56,8 @@ export default function EvaluateCard({
       <div className="rating-box flex-col">
         {!completeRating ? (
           <>
-            <Rating name="team-rating" defaultValue={0} precision={0.5} onChange={(event, newValue) => { setScore(newValue || 0); }} />
-            <Button size='small' variant='contained' color='primary' onClick={() => onClickReview(applicantGuid, score)}>평가</Button>
+            <Rating name="team-rating" value={_score} precision={0.5} onChange={(event, newValue) => { setScore(newValue || 0); }} />
+            <Button size='small' variant='contained' color='primary' onClick={() => onClickReview(applicantGuid, _score)}>평가</Button>
           </>
         ) : (
           <>

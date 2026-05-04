@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-import { AccessTime, LocationOn } from '@mui/icons-material'
-import { Button, Chip } from '@mui/material'
-import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
-import { useCodes } from "@/contexts/CommonCodeContext.ts";
+import { AccessTime } from '@mui/icons-material'
+import { Button } from '@mui/material'
 import HeartButton from '@/components/_common/button/HeartButton'
 import WebPopup from '@/components/_common/popup/WebPopup'
 import { type MyProject } from '@/types/type.projects';
@@ -31,11 +29,8 @@ export default function ProjectCard({
   progressState,
   recruitStatus,
   applicationList,
-  children
 }: MyProject) {
 
-
-  const { getCodeName } = useCodes();
 
   // 내가 신청한 프로젝트 中 지원 취소 팝업
   const [openCancelPopup, setOpenCancelPopup] = useState(false);
@@ -46,7 +41,7 @@ export default function ProjectCard({
 
   const { projectCloseMutate } = useCloseMyProjects();
   const { reviewMemberMutate } = useReviewMember();
-  const { toggleLike, loading } = useUpdateProjectLike();
+  const { toggleLike } = useUpdateProjectLike();
 
   const onClickUpdateProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -182,6 +177,7 @@ export default function ProjectCard({
                     applicantGuid={application.applicantGuid}
                     userID={application.userName}
                     userEmail={application.email}
+                    score={application.score}
                     mannerTemperature={application.mannerDegree}
                     onClickReview={onClickEvaluateButton}
                   />
