@@ -14,7 +14,13 @@ export default function MyProfileListBox({ listTitle, variant, items }: MyProfil
     <div className="list-box flex-col">
       <div className="list-top align-center justify-between">
         <strong className="title">{listTitle}</strong>
-        <Button size="small" endIcon={<ArrowForwardIos />}>
+        <Button size="small" endIcon={<ArrowForwardIos />} onClick={()=>{
+          if(variant === 'register') {
+            location.href = '/profile/projects/0';
+          } else {
+            location.href = '/profile/projects/1';
+          }
+        }}>
           전체보기
         </Button>
       </div>

@@ -9,7 +9,8 @@ import useUpdateProjectLike from '@/hooks/web/projects/useUpdateProjectLike'
 import useReviewMember from '@/hooks/web/profile/project/useReviewMember'
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/web/projects/ProjectChips";
 import EvaluateCard from '@/components/web/profile/EvaluateCard';
-import type { ProjectApprovalStatusCode } from '@/types/type._common';
+import { approvalColorMap } from '@/constants/profileProject';
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export default function ProjectCard({
   variant,
@@ -42,6 +43,7 @@ export default function ProjectCard({
   const { projectCloseMutate } = useCloseMyProjects();
   const { reviewMemberMutate } = useReviewMember();
   const { toggleLike } = useUpdateProjectLike();
+  const {getCodeName} = useCodes();
 
   const onClickUpdateProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -64,12 +66,7 @@ export default function ProjectCard({
   const onClickEvaluateButton = (userId: string, score: number) => {
     reviewMemberMutate({ projectGuid: projectGuid, userGuid: userId, score: score })
   }
-  // 승인 상태에 따른 텍스트 색상 변경
-  const approvalColorMap: Record<ProjectApprovalStatusCode, string> = {
-    '3301': 'var(--text-primary)', // 대기 (기본색)
-    '3302': 'var(--primary-main)',  // 승인 (강조색)
-    '3303': 'var(--error-main)'    // 반려 (에러색)
-  } as const;
+
 
   return <>
     <div className="project-box2 w-100 justify-between">
@@ -124,7 +121,7 @@ export default function ProjectCard({
         <>
           <div className="right-area flex-center" style={{ paddingTop: 0, paddingBottom: 0 }}>
             <div className='w-100 flex-col align-center'>
-              <div className="count" style={{ color: approvalColorMap[approvalState], padding: '1.05rem 3.5rem' }}>{approvalState}</div>
+              <div className="count" style={{ color: approvalColorMap[approvalState], padding: '1.05rem 3.5rem' }}>{getCodeName('PROJECT_APPROVAL_STATUS', approvalState)}</div>
               <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenCancelPopup}>신청 취소</Button>
             </div>
           </div>

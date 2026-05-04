@@ -4,13 +4,16 @@ import useSelectLikeProjects from '@/hooks/web/profile/project/useSelectLikeProj
 import useSelectApplyProjects from '@/hooks/web/profile/project/useSelectApplyProjects';
 import useSelectParticipateProjects from '@/hooks/web/profile/project/useSelectParticipateProjects';
 import ProjectCard from '@/components/web/profile/ProjectCard';
+import { useParams } from 'react-router-dom';
 
 import TabPanel from '@/components/_common/TabPanel';
 import { useState } from 'react';
 
 export default function MyProfileProjectListPage() {
   type TabType = 0 | 1 | 2 | 3;
-  const [tabValue, setTabValue] = useState<TabType>(0);
+  const { paramTabValue } = useParams<{ paramTabValue: string }>();
+  const tab = Number(paramTabValue) as TabType;
+  const [tabValue, setTabValue] = useState<TabType>(tab || 0);
   const handleTabChange = (event: React.SyntheticEvent<Element, Event>, value: TabType) => {
     setTabValue(value);
   }
