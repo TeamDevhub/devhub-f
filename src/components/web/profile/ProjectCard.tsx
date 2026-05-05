@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import { AccessTime, LocationOn } from '@mui/icons-material'
-import { Button, Chip } from '@mui/material'
-import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
-import { useCodes } from "@/contexts/CommonCodeContext.ts";
+import { AccessTime } from '@mui/icons-material'
+import { Button } from '@mui/material'
 import HeartButton from '@/components/_common/button/HeartButton'
 import WebPopup from '@/components/_common/popup/WebPopup'
 import { type MyProject } from '@/types/type.projects';
 import useCloseMyProjects from '@/hooks/web/profile/project/useCloseMyProjects'
 import useUpdateProjectLike from '@/hooks/web/projects/useUpdateProjectLike'
+import useReviewMember from '@/hooks/web/profile/project/useReviewMember'
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/web/projects/ProjectChips";
-import { COMMON_CODE } from "@/constants/codes";
-import type { ProjectApprovalStatusCode } from '@/types/type._common';
+import EvaluateCard from '@/components/web/profile/EvaluateCard';
+import { approvalColorMap } from '@/constants/profileProject';
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export default function ProjectCard({
   variant,
@@ -29,11 +29,9 @@ export default function ProjectCard({
   approvalState,
   progressState,
   recruitStatus,
-  children
+  applicationList,
 }: MyProject) {
 
-
-  const { getCodeName } = useCodes();
 
   // 내가 신청한 프로젝트 中 지원 취소 팝업
   const [openCancelPopup, setOpenCancelPopup] = useState(false);
@@ -41,10 +39,11 @@ export default function ProjectCard({
 
   // 참여한 프로젝트 中 팀원 평가 팝업
   const [openEvaluatePopup, setOpenEvaluatePopup] = useState(false);
-  const clickOpenEvaluatePopup = () => { setOpenEvaluatePopup(true); }
 
   const { projectCloseMutate } = useCloseMyProjects();
-  const { toggleLike, loading } = useUpdateProjectLike();
+  const { reviewMemberMutate } = useReviewMember();
+  const { toggleLike } = useUpdateProjectLike();
+  const {getCodeName} = useCodes();
 
   const onClickUpdateProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -55,18 +54,22 @@ export default function ProjectCard({
     projectCloseMutate(projectGuid);
   }
 
+  const onClickEvaluatePopup = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setOpenEvaluatePopup(true);
+  }
+
   const onClickHeartButton = (e: React.MouseEvent<HTMLButtonElement>, liked: boolean) => {
     toggleLike(projectGuid, liked);
   }
-  // 승인 상태에 따른 텍스트 색상 변경
-  const approvalColorMap: Record<ProjectApprovalStatusCode, string> = {
-    '3301': 'var(--text-primary)', // 대기 (기본색)
-    '3302': 'var(--primary-main)',  // 승인 (강조색)
-    '3303': 'var(--error-main)'    // 반려 (에러색)
-  } as const;
+
+  const onClickEvaluateButton = (userId: string, score: number) => {
+    reviewMemberMutate({ projectGuid: projectGuid, userGuid: userId, score: score })
+  }
+
 
   return <>
-    <div className="project-box2 w-100 justify-between" onClick={() => { location.href = '/projects/detail/' + projectGuid }}>
+    <div className="project-box2 w-100 justify-between">
       <div className="left-area flex-col">
         <div className="chip-box align-center">
           {variant !== 'participate' && <RecruitStatusChip
@@ -79,7 +82,7 @@ export default function ProjectCard({
           <RecruitmentChip recruitTypeCd={recruitmentTypeCd} />
           <DDayChip recruitmentEndDate={recruitmentEndDate} />
         </div>
-        <strong className='main-text text-ellipsis'>{title}</strong>
+        <strong className='main-text text-ellipsis' onClick={() => { location.href = '/projects/detail/' + projectGuid }}>{title}</strong>
         <div className='sub-text align-center'>
           <div className='align-center'>
             <div className='title flex'><AccessTime />모집기간</div>
@@ -118,7 +121,7 @@ export default function ProjectCard({
         <>
           <div className="right-area flex-center" style={{ paddingTop: 0, paddingBottom: 0 }}>
             <div className='w-100 flex-col align-center'>
-              <div className="count" style={{ color: approvalColorMap[approvalState], padding: '1.05rem 3.5rem' }}>{approvalState}</div>
+              <div className="count" style={{ color: approvalColorMap[approvalState], padding: '1.05rem 3.5rem' }}>{getCodeName('PROJECT_APPROVAL_STATUS', approvalState)}</div>
               <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenCancelPopup}>신청 취소</Button>
             </div>
           </div>
@@ -150,7 +153,7 @@ export default function ProjectCard({
         <>
           <div className="right-area align-end" style={{ paddingTop: 0, paddingBottom: 0 }}>
             <div className='w-100 flex-col align-center'>
-              {progressState == '진행완료' && <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenEvaluatePopup}>팀원 평가</Button>}
+              {progressState == 'end' && <Button size='small' variant='outlined' color='primary' className='w-100' onClick={onClickEvaluatePopup}>팀원 평가</Button>}
             </div>
           </div>
 
@@ -165,7 +168,17 @@ export default function ProjectCard({
           >
             <div className='mypage-popup' style={{ paddingBottom: '1.6rem' }}>
               <div className="evaluate-box">
-                {children}
+                {applicationList && applicationList.map((application, index) => (
+                  <EvaluateCard
+                    key={index}
+                    applicantGuid={application.applicantGuid}
+                    userID={application.userName}
+                    userEmail={application.email}
+                    score={application.score}
+                    mannerTemperature={application.mannerDegree}
+                    onClickReview={onClickEvaluateButton}
+                  />
+                ))}
               </div>
             </div>
           </WebPopup>

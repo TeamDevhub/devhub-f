@@ -131,7 +131,7 @@ export interface ProjectUpdate extends ProjectExtra, ProjectFileMetaData {
 
 // Profile
 export type MyProjectListCardVariant = 'register' | 'apply' | 'favorite' | 'participate';
-export type ProgressStateType = '진행중' | '진행완료';
+export type ProgressStateType = 'ing' | 'end';
 
 export interface MyProject {
   variant?: MyProjectListCardVariant;
@@ -150,5 +150,6 @@ export interface MyProject {
   approvalState?: ProjectApprovalStatusCode;
   progressState?: ProgressStateType;
   recruitStatus: ProjectRecruitStatusCode;
+  applicationList: Array<T>;
   children?: React.ReactNode;
 };

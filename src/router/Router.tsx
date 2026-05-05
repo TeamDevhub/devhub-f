@@ -74,7 +74,7 @@ const router = createBrowserRouter([
             element: <MyProfileUpdateWrapper />,
           },
           {
-            path: 'projects',
+            path: 'projects/:paramTabValue?',
             element: <MyProfileProjectListPage />,
           },
           // {

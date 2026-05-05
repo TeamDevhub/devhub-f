@@ -1,27 +1,36 @@
 import { Button, Chip, Paper, Rating } from '@mui/material'
 import { Person } from '@mui/icons-material'
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
+import { useState } from 'react'
 // 1. EvaluateCard
 type EvaluateCardProps = {
-  userID?: string;
+  applicantGuid: string;
+  userID: string;
   userEmail?: string;
   mannerTemperature?: string;
+  score?: number;
   completeRating?: boolean;
+  onClickReview?: (userGuid: string, score: number) => void;
 }
 
-export default function EvaluateCard ({
+export default function EvaluateCard({
+  applicantGuid,
   userID,
   userEmail,
   mannerTemperature,
-  completeRating = false
-}: EvaluateCardProps){
+  score,
+  completeRating = false,
+  onClickReview = () => { }
+}: EvaluateCardProps) {
+
+  const [_score, setScore] = useState<number>(score || 0);
   return (
     <Paper className='evaluate-card flex-col' elevation={2}>
       <div className="user-info align-center">
         <div className="left-area">
-          <CustomAvatar 
+          <CustomAvatar
             sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
-            avatarIcon={<Person sx={{ fontSize: 24 }} />} 
+            avatarIcon={<Person sx={{ fontSize: 24 }} />}
           />
         </div>
         <div className="right-area">
@@ -47,8 +56,8 @@ export default function EvaluateCard ({
       <div className="rating-box flex-col">
         {!completeRating ? (
           <>
-            <Rating name="team-rating" defaultValue={0} precision={0.5} />
-            <Button size='small' variant='contained' color='primary'>평가</Button>
+            <Rating name="team-rating" value={_score} precision={0.5} onChange={(event, newValue) => { setScore(newValue || 0); }} />
+            <Button size='small' variant='contained' color='primary' onClick={() => onClickReview(applicantGuid, _score)}>평가</Button>
           </>
         ) : (
           <>

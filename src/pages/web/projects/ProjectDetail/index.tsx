@@ -6,11 +6,10 @@ import { COMMON_CODE } from '@/constants/codes';
 import { AccessTime, ContentPaste, LocationOn, OpenInNew, People, Person, Settings, Visibility } from '@mui/icons-material';
 import { Divider, Paper, Tooltip, Button } from '@mui/material';
 import dayjs from 'dayjs';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import TopButton from "@/components/_common/button/TopButton.tsx";
 import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import HeartButton from "@/components/_common/button/HeartButton.tsx";
-import { useParams } from "react-router-dom";
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function ProjectDetail() {

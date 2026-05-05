@@ -105,3 +105,9 @@ export const closeProject = (projectId: string) =>
     { method: "post" }
   );
 
+export const reviewMember = (req: { projectGuid: string, userGuid: string, score: number }) =>
+  fetcher<void>(
+    `/projects/${req.projectGuid}/members/${req.userGuid}`,
+    { score: req.score },
+    { method: "post" }
+  );
