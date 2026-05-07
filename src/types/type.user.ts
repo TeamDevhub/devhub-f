@@ -1,4 +1,4 @@
-export type DateTimeString = string; // LocalDateTime → ISO string
+export type DateTimeString = string;
 
 export interface UserBasicResponse {
   userGuid: string;
@@ -89,4 +89,26 @@ export interface AdminUserSearchRequest {
 
   registeredStartDate?: DateType;
   registeredEndDate?: DateType;
+}
+
+export interface UserDetailResponse {
+  user: UserBasicResponse;
+  positionList: string[];
+  skillList: string[];
+}
+
+export interface UpdateProfileRequest {
+  username: string;
+  introduction: string | null;
+  positionList: string[];
+  skillList: string[];
+}
+
+export interface UpdatePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface UpdateProfileImageRequest {
+  fileGuid: string;
 }

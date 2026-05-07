@@ -5,18 +5,21 @@ import { useSelect } from '@/hooks/_common/api.hook';
 import useFormState from '@/hooks/_common/useFormState';
 import type { AdminUserSearchRequest } from '@/types/type.user';
 
-const initData: AdminUserSearchRequest = {
+type AdminUsersRequest = AdminUserSearchRequest & { page: number; size: number };
+
+const initData: AdminUsersRequest = {
   page: 0,
   size: 10,
   username: '',
-  userStatusCd: '',
+  blocked: undefined,
+  deleted: undefined,
   registeredStartDate: null,
   registeredEndDate: null,
 };
 
 export default function useSelectAdminUsers() {
-  const { state, setState, handleChange, reset } = useFormState<AdminUserSearchRequest>({ ...initData });
-  const [request, setRequest] = useState<AdminUserSearchRequest>({ ...initData });
+  const { state, setState, handleChange, reset } = useFormState<AdminUsersRequest>({ ...initData });
+  const [request, setRequest] = useState<AdminUsersRequest>({ ...initData });
 
   const options = {
     apiFn: getAdminUsers,

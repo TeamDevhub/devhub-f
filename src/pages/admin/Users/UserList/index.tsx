@@ -1,8 +1,6 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import CustomDateRange from '@/components/_common/customMUI/CustomDateRange';
 import { UserStatusChip } from '@/components/admin/UserStatusChips';
-import { COMMON_CODE } from '@/constants/codes';
-import { useCodes } from '@/contexts/CommonCodeContext';
 import useSelectAdminUsers from '@/hooks/admin/users/useSelectAdminUsers';
 import { convertString } from '@/utils/util.date';
 import {
@@ -20,7 +18,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import type { AdminUserSummary } from '@/types/type.user';
+import type { AdminUserListItem } from '@/types/type.user';
 import type { DateType } from '@/types/type.api';
 
 export default function UserList() {
@@ -35,9 +33,6 @@ export default function UserList() {
     handleReset,
   } = useSelectAdminUsers();
 
-  const { getCodesByGroup } = useCodes();
-  const userStatusCodes = getCodesByGroup(COMMON_CODE.USER_STATUS);
-
   const totalElements = res?.pagination?.totalElements ?? 0;
   const pageSize = res?.pagination?.size ?? 0;
   const currentPage = res?.pagination?.page ?? 0;
@@ -51,20 +46,36 @@ export default function UserList() {
       <div className="search-section flex-col gap-8">
         <div className="align-center gap-16">
           <Select
-            label="계정 상태"
-            id="userStatusCd"
-            sx={{ width: '20rem' }}
+            label="차단 여부"
+            id="blocked"
+            sx={{ width: '16rem' }}
             size="small"
             displayEmpty
-            value={state.userStatusCd}
-            onChange={(e) => onHandleEvent('userStatusCd', e.target.value)}
+            value={state.blocked === undefined ? '' : state.blocked ? 'true' : 'false'}
+            onChange={(e) => {
+              const val = e.target.value;
+              onHandleEvent('blocked', val === '' ? undefined : val === 'true');
+            }}
           >
             <MenuItem value="">전체</MenuItem>
-            {userStatusCodes.map((i) => (
-              <MenuItem key={i.code} value={i.code}>
-                {i.name}
-              </MenuItem>
-            ))}
+            <MenuItem value="true">차단됨</MenuItem>
+            <MenuItem value="false">정상</MenuItem>
+          </Select>
+          <Select
+            label="삭제 여부"
+            id="deleted"
+            sx={{ width: '16rem' }}
+            size="small"
+            displayEmpty
+            value={state.deleted === undefined ? '' : state.deleted ? 'true' : 'false'}
+            onChange={(e) => {
+              const val = e.target.value;
+              onHandleEvent('deleted', val === '' ? undefined : val === 'true');
+            }}
+          >
+            <MenuItem value="">전체</MenuItem>
+            <MenuItem value="true">삭제됨</MenuItem>
+            <MenuItem value="false">정상</MenuItem>
           </Select>
           <CustomDateRange
             label="가입일"
@@ -105,15 +116,14 @@ export default function UserList() {
             <TableHead>
               <TableRow>
                 <TableCell align="center" width={80}>번호</TableCell>
-                <TableCell align="center">이메일</TableCell>
-                <TableCell align="center" width={160}>닉네임</TableCell>
+                <TableCell align="center">닉네임</TableCell>
                 <TableCell align="center" width={120}>계정상태</TableCell>
                 <TableCell align="center" width={140}>가입일</TableCell>
                 <TableCell align="center" width={120}>매너온도</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {(res?.dataList ?? []).map((row: AdminUserSummary, index: number) => (
+              {(res?.dataList ?? []).map((row: AdminUserListItem, index: number) => (
                 <TableRow
                   key={row.userGuid}
                   onClick={() => handleDetail(row.userGuid)}
@@ -122,13 +132,10 @@ export default function UserList() {
                 >
                   <TableCell align="center">{totalElements - currentPage * pageSize - index}</TableCell>
                   <TableCell align="left">
-                    <Typography noWrap>{row.email}</Typography>
-                  </TableCell>
-                  <TableCell align="center">
                     <Typography noWrap>{row.username}</Typography>
                   </TableCell>
                   <TableCell align="center">
-                    <UserStatusChip statusCd={row.userStatusCd} />
+                    <UserStatusChip blocked={row.blocked} deleted={row.deleted} />
                   </TableCell>
                   <TableCell align="center">{convertString(row.registeredDate as unknown as DateType)}</TableCell>
                   <TableCell align="center">{row.mannerDegree?.toFixed?.(1) ?? row.mannerDegree}℃</TableCell>
@@ -136,7 +143,7 @@ export default function UserList() {
               ))}
               {(res?.dataList?.length ?? 0) === 0 && (
                 <TableRow>
-                  <TableCell colSpan={6} align="center">
+                  <TableCell colSpan={5} align="center">
                     조회된 회원이 없습니다.
                   </TableCell>
                 </TableRow>

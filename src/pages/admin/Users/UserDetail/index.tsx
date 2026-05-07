@@ -9,8 +9,6 @@ import { convertString } from '@/utils/util.date';
 import type { DateType } from '@/types/type.api';
 import { useState } from 'react';
 
-const SUSPENDED_STATUS_CD = '7002';
-
 export default function UserDetail() {
   const { userGuid } = useParams<{ userGuid: string }>();
   const navigate = useNavigate();
@@ -21,9 +19,7 @@ export default function UserDetail() {
   const [tab, setTab] = useState(0);
 
   const detail = res?.data;
-  const user = detail?.user;
-  const statusCd = detail?.userStatusCd ?? '';
-  const isSuspended = statusCd === SUSPENDED_STATUS_CD;
+  const isSuspended = detail?.blocked === true;
 
   const positionNames = (detail?.positionList ?? []).map((code) => ({
     code,
@@ -54,17 +50,15 @@ export default function UserDetail() {
         <Paper className="information-area flex-col gap-8" elevation={0} sx={{ padding: '1.6rem 0' }}>
           <div className="align-center">
             <dl className="align-center flex-1 gap-4">
-              <dt>이메일</dt>
-              <dd className="w-100">{user?.email ?? '-'}</dd>
-            </dl>
-            <dl className="align-center flex-1 gap-4">
               <dt>닉네임</dt>
-              <dd className="w-100">{user?.username ?? '-'}</dd>
+              <dd className="w-100">{detail?.username ?? '-'}</dd>
             </dl>
             <dl className="align-center flex-1 gap-4">
               <dt>계정 상태</dt>
               <dd className="w-100">
-                {statusCd ? <UserStatusChip statusCd={statusCd} /> : '-'}
+                {detail ? (
+                  <UserStatusChip blocked={detail.blocked} deleted={detail.deleted} />
+                ) : '-'}
               </dd>
             </dl>
           </div>
@@ -72,7 +66,7 @@ export default function UserDetail() {
           <div className="align-center">
             <dl className="align-center flex-1 gap-4">
               <dt>자기소개</dt>
-              <dd className="w-100">{user?.introduction || '-'}</dd>
+              <dd className="w-100">{detail?.introduction || '-'}</dd>
             </dl>
           </div>
 
@@ -105,15 +99,15 @@ export default function UserDetail() {
           <div className="align-center">
             <dl className="align-center flex-1 gap-4">
               <dt>매너온도</dt>
-              <dd className="w-100">{user?.mannerDegree?.toFixed?.(1) ?? user?.mannerDegree ?? '-'}℃</dd>
+              <dd className="w-100">{detail?.mannerDegree?.toFixed?.(1) ?? detail?.mannerDegree ?? '-'}℃</dd>
             </dl>
             <dl className="align-center flex-1 gap-4">
               <dt>가입일</dt>
-              <dd className="w-100">{user?.registeredDate ? convertString(user.registeredDate as unknown as DateType, 'YYYY-MM-DD HH:mm:ss') : '-'}</dd>
+              <dd className="w-100">{detail?.registeredDate ? convertString(detail.registeredDate as unknown as DateType, 'YYYY-MM-DD HH:mm:ss') : '-'}</dd>
             </dl>
             <dl className="align-center flex-1 gap-4">
-              <dt>최근 로그인</dt>
-              <dd className="w-100">{user?.lastLoginDateTime ? convertString(user.lastLoginDateTime as unknown as DateType, 'YYYY-MM-DD HH:mm:ss') : '-'}</dd>
+              <dt>차단 만료일</dt>
+              <dd className="w-100">{detail?.blockEndDate ? convertString(detail.blockEndDate as unknown as DateType, 'YYYY-MM-DD HH:mm:ss') : '-'}</dd>
             </dl>
           </div>
 
