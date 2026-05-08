@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Chip, Divider, Paper, Tab, Tabs } from '@mui/material';
 import { UserStatusChip } from '@/components/admin/UserStatusChips';
-import { useCodes } from '@/contexts/CommonCodeContext';
+import { useCodes } from '@/hooks/_common/useCodes';
 import { COMMON_CODE } from '@/constants/codes';
 import useSelectAdminUserDetail from '@/hooks/admin/users/useSelectAdminUserDetail';
 import useUpdateUserStatus from '@/hooks/admin/users/useUpdateUserStatus';
@@ -13,7 +13,7 @@ export default function UserDetail() {
   const { userGuid } = useParams<{ userGuid: string }>();
   const navigate = useNavigate();
   const { res, refetch } = useSelectAdminUserDetail(userGuid);
-  const { handleSuspend, handleActivate, loading } = useUpdateUserStatus(() => refetch());
+  const { handleSuspend, handleActivate, loading } = useUpdateUserStatus(userGuid, () => refetch());
   const { getCodeName } = useCodes();
 
   const [tab, setTab] = useState(0);

@@ -5,8 +5,13 @@ import type { AdminBanUserRequest } from '@/types/type.user';
 
 type BanRequest = { userGuid: string } & AdminBanUserRequest;
 
-export default function useUpdateUserStatus(onUpdated?: () => void) {
+export default function useUpdateUserStatus(userGuid: string | undefined, onUpdated?: () => void) {
   const { alert, confirm } = useModal();
+
+  const invalidateKeys = [
+    'admin-users-list',
+    ...(userGuid ? [`admin-user-detail-${userGuid}`] : []),
+  ];
 
   const onSuccess = () => {
     alert('회원 상태가 변경되었습니다.');
@@ -18,27 +23,27 @@ export default function useUpdateUserStatus(onUpdated?: () => void) {
   };
 
   const { mutate: ban, loading: banLoading } = useMutation<BanRequest, void>(
-    ({ userGuid, ...req }) => banAdminUser(userGuid, req),
+    ({ userGuid: targetGuid, ...req }) => banAdminUser(targetGuid, req),
     onSuccess,
     onFail,
-    { invalidateKeys: ['admin-users-list'] },
+    { invalidateKeys },
   );
 
   const { mutate: unban, loading: unbanLoading } = useMutation<string, void>(
     unbanAdminUser,
     onSuccess,
     onFail,
-    { invalidateKeys: ['admin-users-list'] },
+    { invalidateKeys },
   );
 
-  const handleSuspend = async (userGuid: string) => {
+  const handleSuspend = async (targetGuid: string) => {
     if (!(await confirm('해당 회원을 정지 처리하시겠습니까?'))) return;
-    await ban({ userGuid });
+    await ban({ userGuid: targetGuid });
   };
 
-  const handleActivate = async (userGuid: string) => {
+  const handleActivate = async (targetGuid: string) => {
     if (!(await confirm('해당 회원의 정지를 해제하시겠습니까?'))) return;
-    await unban(userGuid);
+    await unban(targetGuid);
   };
 
   return { handleSuspend, handleActivate, loading: banLoading || unbanLoading };

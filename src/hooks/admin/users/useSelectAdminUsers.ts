@@ -4,30 +4,57 @@ import { getAdminUsers } from '@/api/admin/api.users';
 import { useSelect } from '@/hooks/_common/api.hook';
 import useFormState from '@/hooks/_common/useFormState';
 import type { AdminUserSearchRequest } from '@/types/type.user';
+import type { DateType } from '@/types/type.api';
+import { USER_STATUS_FILTER, type UserStatusFilter } from '@/constants/codes';
+
+interface AdminUsersFormState {
+  userStatusFilter: UserStatusFilter;
+  username: string;
+  registeredStartDate: DateType;
+  registeredEndDate: DateType;
+}
 
 type AdminUsersRequest = AdminUserSearchRequest & { page: number; size: number };
 
-const initData: AdminUsersRequest = {
-  page: 0,
-  size: 10,
+const PAGE_SIZE = 10;
+
+const initFormState: AdminUsersFormState = {
+  userStatusFilter: USER_STATUS_FILTER.ALL.VALUE,
   username: '',
-  blocked: undefined,
-  deleted: undefined,
   registeredStartDate: null,
   registeredEndDate: null,
 };
 
+const initRequest: AdminUsersRequest = { page: 0, size: PAGE_SIZE };
+
+const toStatusParams = (filter: UserStatusFilter): Pick<AdminUserSearchRequest, 'blocked' | 'deleted'> => {
+  switch (filter) {
+    case USER_STATUS_FILTER.ACTIVE.VALUE:
+      return {
+        blocked: 'N',
+        deleted: 'N',
+      };
+
+    case USER_STATUS_FILTER.BLOCKED.VALUE:
+      return {
+        blocked: 'Y',
+      };
+
+    case USER_STATUS_FILTER.DELETED.VALUE:
+      return {
+        deleted: 'Y',
+      };
+
+    default:
+      return {};
+  }
+};
+
 export default function useSelectAdminUsers() {
-  const { state, setState, handleChange, reset } = useFormState<AdminUsersRequest>({ ...initData });
-  const [request, setRequest] = useState<AdminUsersRequest>({ ...initData });
+  const { state, handleChange, reset } = useFormState<AdminUsersFormState>({ ...initFormState });
+  const [request, setRequest] = useState<AdminUsersRequest>({ ...initRequest });
 
-  const options = {
-    apiFn: getAdminUsers,
-    req: request,
-    cacheKey: 'admin-users-list',
-  };
-
-  const { res, loading, refetch } = useSelect(options);
+  const { res, loading, refetch } = useSelect({ apiFn: getAdminUsers, req: request });
 
   const navigate = useNavigate();
   const handleDetail = (userGuid: string) => {
@@ -36,9 +63,14 @@ export default function useSelectAdminUsers() {
   };
 
   const userSearch = () => {
-    const searchParams = { ...state, page: 0 };
-    setRequest(searchParams);
-    setState(searchParams);
+    setRequest({
+      page: 0,
+      size: PAGE_SIZE,
+      username: state.username || undefined,
+      registeredStartDate: state.registeredStartDate,
+      registeredEndDate: state.registeredEndDate,
+      ...toStatusParams(state.userStatusFilter),
+    });
   };
 
   const setPage = (page: number) => {

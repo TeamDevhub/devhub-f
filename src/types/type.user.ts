@@ -1,3 +1,5 @@
+import type { DateType } from './type.api';
+
 export type DateTimeString = string;
 
 export interface UserBasicResponse {
@@ -65,6 +67,14 @@ export interface AdminReport {
   registeredDate: DateTimeString;
 }
 
+export interface AdminReportSearchRequest {
+  reportedUser?: string;
+  categoryCd?: string;
+  processed?: boolean;
+  registeredStartDate?: DateType;
+  registeredEndDate?: DateType;
+}
+
 export interface AdminUpdateUserRequest {
   username: string;
   introduction: string;
@@ -79,13 +89,11 @@ export interface AdminBanUserRequest {
   blockEndDate?: DateTimeString;
 }
 
-import type { DateType } from './type.api';
-
 export interface AdminUserSearchRequest {
   username?: string;
 
-  blocked?: boolean;
-  deleted?: boolean;
+  blocked?: string;
+  deleted?: string;
 
   registeredStartDate?: DateType;
   registeredEndDate?: DateType;
