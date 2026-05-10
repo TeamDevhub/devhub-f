@@ -28,7 +28,8 @@ import MyProfileHome from '@/pages/web/profile/home';
 import MyProfileUpdateWrapper from '@/pages/web/profile/update';
 import MyProfileProjectListPage from '@/pages/web/profile/projects';
 import MyProfileBoardList from '@/pages/web/profile/boards';
-import MainPage from '@/pages/web/MainPage';
+import HomePage from '@/pages/web/Home';
+import SkillTrendPage from '@/pages/web/SkillTrend';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
@@ -64,7 +65,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MainPage />,
+        element: <HomePage />,
+      },
+      {
+        path: 'skill-trends',
+        element: <SkillTrendPage />,
       },
       {
         path: 'profile',
