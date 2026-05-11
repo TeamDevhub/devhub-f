@@ -16,10 +16,10 @@ export default function useDeleteForm(onSuccess?: () => void) {
 
     const { mutate } = useMutation<string, void>(deleteForm, handleSuccess, handleFail);
 
-    const handleDelete = async (fieldName: string) => {
+    const handleDelete = async (applicationFormGuid: string) => {
         const confirmed = await confirm('정말 삭제하시겠습니까?');
         if (!confirmed) return;
-        await mutate(fieldName);
+        await mutate(applicationFormGuid);
     };
 
     return { handleDelete };

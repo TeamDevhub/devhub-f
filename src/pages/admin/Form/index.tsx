@@ -1,7 +1,7 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import FieldGroup from '@/components/_design/FieldGroup';
 import FormField from '@/components/_design/FormField';
-import { Button, Chip, Divider, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, MenuItem, Paper, Radio, RadioGroup, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useState } from 'react';
 import useDisclosure from "@/hooks/_common/useDisclosure.ts";
 import useForms from "@/hooks/admin/form/useForms.ts";
@@ -11,6 +11,83 @@ import type { FormItem } from "@/types/type.forms.ts";
 
 function getStatusColor(usedYn: 'Y' | 'N'): 'primary' | 'error' {
     return usedYn === 'Y' ? 'primary' : 'error';
+}
+
+function FormPreview({ item }: { item: FormItem | null }) {
+    const [radioValue, setRadioValue] = useState('');
+    const [selectValue, setSelectValue] = useState('');
+    const [checkedValues, setCheckedValues] = useState<string[]>([]);
+
+    if (!item) {
+        return (
+            <div style={{ color: 'rgba(0,0,0,0.38)', padding: '2rem', textAlign: 'center' }}>
+                항목을 선택하면 미리보기가 표시됩니다.
+            </div>
+        );
+    }
+
+    const helpText = item.helpYn === 'true' ? item.helpText : undefined;
+    const options = item.options ?? [];
+
+    const toggleCheckbox = (value: string) => {
+        setCheckedValues(prev =>
+            prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]
+        );
+    };
+
+    const renderInput = () => {
+        switch (item.type) {
+            case 'text':
+                return <CustomTextfield size='small' placeholder={item.fieldName} />;
+            case 'textarea':
+                return <CustomTextfield type='textarea' placeholder={item.fieldName} />;
+            case 'radio':
+                return (
+                    <FormControl>
+                        <RadioGroup value={radioValue} onChange={(e) => setRadioValue(e.target.value)}>
+                            {options.map((opt, idx) => (
+                                <FormControlLabel key={idx} value={opt} control={<Radio />} label={opt} />
+                            ))}
+                        </RadioGroup>
+                    </FormControl>
+                );
+            case 'select':
+                return (
+                    <Select
+                        size='small'
+                        displayEmpty
+                        value={selectValue}
+                        onChange={(e) => setSelectValue(e.target.value)}
+                        sx={{ width: '100%', '& legend': { display: 'none' }, '& fieldset': { top: 0 } }}
+                    >
+                        <MenuItem value=''>선택하세요</MenuItem>
+                        {options.map((opt, idx) => (
+                            <MenuItem key={idx} value={opt}>{opt}</MenuItem>
+                        ))}
+                    </Select>
+                );
+            case 'checkbox':
+                return (
+                    <FormControl>
+                        {options.map((opt, idx) => (
+                            <FormControlLabel
+                                key={idx}
+                                control={<Checkbox checked={checkedValues.includes(opt)} onChange={() => toggleCheckbox(opt)} />}
+                                label={opt}
+                            />
+                        ))}
+                    </FormControl>
+                );
+        }
+    };
+
+    return (
+        <FormField label={item.fieldName} helpText={helpText}>
+            <FieldGroup>
+                {renderInput()}
+            </FieldGroup>
+        </FormField>
+    );
 }
 
 export default function FormManagementPage() {
@@ -78,8 +155,8 @@ export default function FormManagementPage() {
                                     <TableBody>
                                         {res.map((row) => (
                                             <TableRow
-                                                key={row.fieldName}
-                                                selected={selectedRow?.fieldName === row.fieldName}
+                                                key={row.applicationFormGuid ?? String(row.classify)}
+                                                selected={selectedRow?.classify === row.classify}
                                                 onClick={() => setSelectedRow(row)}
                                                 sx={{ cursor: 'pointer' }}
                                             >
@@ -106,7 +183,7 @@ export default function FormManagementPage() {
                                 variant='outlined'
                                 color='primary'
                                 disabled={!selectedRow}
-                                onClick={() => selectedRow && handleDelete(selectedRow.fieldName)}
+                                onClick={() => selectedRow?.applicationFormGuid && handleDelete(selectedRow.applicationFormGuid)}
                             >
                                 삭제
                             </Button>
@@ -129,16 +206,7 @@ export default function FormManagementPage() {
                         <Divider sx={{ flexGrow: 1 }} />
                     </div>
                     <div className="form-wrap flex-col">
-                        <FormField label='경험' helpText='지원자가 작성해야 하는 항목을 선택하세요.</br> 기본 양식을 선택하거나, 원하면 새로운 양식을 만들 수 있어요.(최대 3개)'>
-                            <FieldGroup>
-                                <CustomTextfield type='textarea' placeholder='경험을 입력해 주세요.' />
-                            </FieldGroup>
-                        </FormField>
-                        <FormField label='경험' helpText='지원자가 작성해야 하는 항목을 선택하세요.</br> 기본 양식을 선택하거나, 원하면 새로운 양식을 만들 수 있어요.(최대 3개)'>
-                            <FieldGroup>
-                                <CustomTextfield type='textarea' placeholder='경험을 입력해 주세요.' />
-                            </FieldGroup>
-                        </FormField>
+                        <FormPreview item={selectedRow} />
                     </div>
                 </div>
             </div>

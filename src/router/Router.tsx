@@ -50,6 +50,7 @@ import BoardAdmin from '@/pages/admin/Boards';
 import DesignMainPage from '@/pages/_design/web/main/DesignMainPage';
 import AdminLayout from '@/layout/AdminLayout';
 import Codes from '@/pages/admin/Codes';
+import FormsPage from '@/pages/admin/Form';
 
 const router = createBrowserRouter([
   {
@@ -155,6 +156,24 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <BoardAdmin />,
+          },
+        ],
+      },
+      {
+        path: 'codes',
+        children: [
+          {
+            index: true,
+            element: <Codes />,
+          },
+        ],
+      },
+      {
+        path: 'forms',
+        children: [
+          {
+            index: true,
+            element: <FormsPage />,
           },
         ],
       },
