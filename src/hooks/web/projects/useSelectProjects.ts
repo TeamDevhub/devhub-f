@@ -22,6 +22,7 @@ const initFilterData: FilterData = {
   recruitmentStartDate: null,
   recruitmentEndDate: null,
   progressStartDate: null,
+  progressEndDate: null,
 }
 
 export default function useSelectProjects(
