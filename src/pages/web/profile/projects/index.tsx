@@ -4,13 +4,16 @@ import useSelectLikeProjects from '@/hooks/web/profile/project/useSelectLikeProj
 import useSelectApplyProjects from '@/hooks/web/profile/project/useSelectApplyProjects';
 import useSelectParticipateProjects from '@/hooks/web/profile/project/useSelectParticipateProjects';
 import ProjectCard from '@/components/web/profile/ProjectCard';
-import EvaluateCard from '@/components/web/profile/EvaluateCard';
+import { useParams } from 'react-router-dom';
+
 import TabPanel from '@/components/_common/TabPanel';
 import { useState } from 'react';
 
 export default function MyProfileProjectListPage() {
   type TabType = 0 | 1 | 2 | 3;
-  const [tabValue, setTabValue] = useState<TabType>(0);
+  const { paramTabValue } = useParams<{ paramTabValue: string }>();
+  const tab = Number(paramTabValue) as TabType;
+  const [tabValue, setTabValue] = useState<TabType>(tab || 0);
   const handleTabChange = (event: React.SyntheticEvent<Element, Event>, value: TabType) => {
     setTabValue(value);
   }
@@ -78,80 +81,9 @@ export default function MyProfileProjectListPage() {
           <div className="list-box flex-col">
             {participateRes?.dataList?.map((item, index) => {
               return <ProjectCard key={index} {...item} variant={"participate"} >
-                <EvaluateCard
-                  userID='김수빈'
-                  userEmail='rolling0321@naver.com'
-                  mannerTemperature='40'
-                  completeRating
-                />
-                <EvaluateCard
-                  userID='데브헙'
-                  userEmail='devHub@naver.com'
-                  mannerTemperature='40'
-                />
-                <EvaluateCard
-                  userID='파핑'
-                  userEmail='5finger@naver.com'
-                  mannerTemperature='40'
-                />
-                <EvaluateCard
-                  userID='두쫀쿠'
-                  userEmail='dubaichoco@naver.com'
-                  mannerTemperature='40'
-                  completeRating
-                />
+
               </ProjectCard>
             })}
-            {/* <ProjectCard 
-              variant='participate'
-              progressState='진행중'
-              title='[데이터 분석2] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.'
-              recruitStartDate='2025.12.03'
-              recruitEndDate='2026.02.03'
-              progressStartDate='2025.12.03'
-              progressEndDate='2026.02.03'
-            />
-            <ProjectCard 
-              variant='participate'
-              progressState='진행완료'
-              title='[데이터 분석2] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.'
-              recruitStartDate='2025.12.03'
-              recruitEndDate='2026.02.03'
-              progressStartDate='2025.12.03'
-              progressEndDate='2026.02.03'
-            >
-              <EvaluateCard 
-                userID='김수빈'
-                userEmail='rolling0321@naver.com'
-                mannerTemperature='40'
-                completeRating
-              />
-              <EvaluateCard 
-                userID='데브헙'
-                userEmail='devHub@naver.com'
-                mannerTemperature='40'
-              />
-              <EvaluateCard 
-                userID='파핑'
-                userEmail='5finger@naver.com'
-                mannerTemperature='40'
-              />
-              <EvaluateCard 
-                userID='두쫀쿠'
-                userEmail='dubaichoco@naver.com'
-                mannerTemperature='40'
-                completeRating
-              />
-            </ProjectCard>
-            <ProjectCard 
-              variant='participate'
-              progressState='진행완료'
-              title='[데이터 분석2] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.'
-              recruitStartDate='2025.12.03'
-              recruitEndDate='2026.02.03'
-              progressStartDate='2025.12.03'
-              progressEndDate='2026.02.03'
-            /> */}
           </div>
           {/* 2-4. pagination */}
           <Pagination count={participateRes?.pagination?.totalPages} onChange={(_, v) => { setParticipatePage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />

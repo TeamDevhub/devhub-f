@@ -2,6 +2,7 @@ import { Chip, Divider, Paper } from '@mui/material';
 import MyProfileBaseForm from '@/components/web/profile/MyProfileBaseForm';
 import MyProfileListBox from '@/components/web/profile/MyProfileListBox';
 import useSelectUserProfile from '@/hooks/web/profile/user/useSelectProfile';
+import useSelectApplyProjects from '@/hooks/web/profile/project/useSelectApplyProjects';
 import useSelectMyProjects from '@/hooks/web/profile/project/useSelectMyProjects';
 import { COMMON_CODE } from '@/constants/codes';
 import { useCodes } from '@/contexts/CommonCodeContext';
@@ -10,60 +11,9 @@ import type { MyProject } from '@/types/type.projects';
 export default function MyProfileHome() {
   const { getCodeName } = useCodes();
   const { res } = useSelectUserProfile();
-  const { res: projectRes, setPage } = useSelectMyProjects();
+  const { res: projectRes } = useSelectMyProjects();
+  const { res: applyRes } = useSelectApplyProjects();
   const profile = res?.data;
-
-  const registerProjects: MyProject[] = [
-    {
-      title: '[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
-      recruitmentStartDate: '2025.12.03',
-      recruitmentEndDate: '2026.02.03',
-      progressStartDate: '2025.12.03',
-      progressEndDate: '2026.02.03',
-      currentRecriutNumber: '1',
-      totalRecriutNumber: '25',
-      applicantNumber: '10',
-      approvalNumber: '10',
-    },
-    {
-      title: '[데이터 분석2] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
-      recruitmentStartDate: '2025.12.03',
-      recruitmentEndDate: '2026.02.03',
-      progressStartDate: '2025.12.03',
-      progressEndDate: '2026.02.03',
-      currentRecriutNumber: '1',
-      totalRecriutNumber: '25',
-      applicantNumber: '10',
-      approvalNumber: '10',
-    },
-  ];
-
-  const applyProjects: MyProject[] = [
-    {
-      title: '[데이터 분석1] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
-      recruitmentStartDate: '2025.12.03',
-      recruitmentEndDate: '2026.02.03',
-      progressStartDate: '2025.12.03',
-      progressEndDate: '2026.02.03',
-      approvalState: '승인 대기중',
-    },
-    {
-      title: '[데이터 분석2] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
-      recruitmentStartDate: '2025.12.03',
-      recruitmentEndDate: '2026.02.03',
-      progressStartDate: '2025.12.03',
-      progressEndDate: '2026.02.03',
-      approvalState: '참가 승인',
-    },
-    {
-      title: '[데이터 분석3] 재난 안전 데이터 활용 공모전에 나갈 팀원을 모집합니다.',
-      recruitmentStartDate: '2025.12.03',
-      recruitmentEndDate: '2026.02.03',
-      progressStartDate: '2025.12.03',
-      progressEndDate: '2026.02.03',
-      approvalState: '참가 거절',
-    },
-  ];
 
   return (
     <Paper className="mypage-box flex-col flex-1" elevation={4}>
@@ -89,13 +39,13 @@ export default function MyProfileHome() {
         </MyProfileBaseForm>
       </div>
 
-      {(registerProjects.length > 0 || applyProjects.length > 0) && <Divider />}
+      {(projectRes?.dataList?.length > 0 || applyRes?.dataList?.length > 0) && <Divider />}
 
       {/* 프로젝트 목록 */}
       <div className="bottom flex-col">
-        {registerProjects.length > 0 && <MyProfileListBox variant="register" listTitle="내가 등록한 프로젝트" items={registerProjects} />}
+        {projectRes?.dataList?.length > 0 && <MyProfileListBox variant="register" listTitle="내가 등록한 프로젝트" items={projectRes?.dataList} />}
 
-        {applyProjects.length > 0 && <MyProfileListBox variant="apply" listTitle="내가 신청한 프로젝트" items={applyProjects} />}
+        {applyRes?.dataList?.length > 0 && <MyProfileListBox variant="apply" listTitle="내가 신청한 프로젝트" items={applyRes?.dataList} />}
       </div>
     </Paper>
   );

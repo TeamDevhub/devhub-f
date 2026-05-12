@@ -2,6 +2,8 @@ import { AccessTime, LocationOn } from '@mui/icons-material';
 import { Chip } from '@mui/material';
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
 import type {MyProject} from '@/types/type.projects'
+import { approvalColorMap } from '@/constants/profileProject';
+import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export default function MyProfileListCard({
   variant,
@@ -16,11 +18,8 @@ export default function MyProfileListCard({
   approvalNumber,
   approvalState,
 }: MyProject) {
-  const approvalColorMap = {
-    '승인 대기중': 'var(--text-primary)',
-    '참가 승인': 'var(--primary-main)',
-    '참가 거절': 'var(--error-main)',
-  } as const;
+
+  const {getCodeName} = useCodes();
 
   return (
     <div className="project-box2 w-100 justify-between">
@@ -95,7 +94,7 @@ export default function MyProfileListCard({
           <div className="flex-col align-center">
             <p className="count-text">승인상태</p>
             <div className="count" style={{ color: approvalColorMap[approvalState] }}>
-              {approvalState}
+              {getCodeName('PROJECT_APPROVAL_STATUS', approvalState)}
             </div>
           </div>
         </div>

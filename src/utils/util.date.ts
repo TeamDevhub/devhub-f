@@ -9,6 +9,16 @@ export const getTodayStr = (): string => {
 };
 
 /**
+ * 입력한 date 타입 날짜를 yyyy-mm-dd 형식으로 반환(T 기준 앞 반환)
+ */
+export const getDateStr = (date?:string): string => {
+    if(!date) {
+      return '';
+    }
+    return date.split('T')[0];
+};
+
+/**
  * 두 날짜 문자열(yyyy-mm-dd) 비교
  * @returns -1 (date1 < date2), 0 (equal), 1 (date1 > date2)
  */
