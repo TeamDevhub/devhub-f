@@ -10,8 +10,8 @@ import { USER_STATUS_FILTER, type UserStatusFilter } from '@/constants/codes';
 interface AdminUsersFormState {
   userStatusFilter: UserStatusFilter;
   username: string;
-  registeredStartDate: DateType;
-  registeredEndDate: DateType;
+  joinedFrom: DateType;
+  joinedTo: DateType;
 }
 
 type AdminUsersRequest = AdminUserSearchRequest & { page: number; size: number };
@@ -21,8 +21,8 @@ const PAGE_SIZE = 10;
 const initFormState: AdminUsersFormState = {
   userStatusFilter: USER_STATUS_FILTER.ALL.VALUE,
   username: '',
-  registeredStartDate: null,
-  registeredEndDate: null,
+  joinedFrom: null,
+  joinedTo: null,
 };
 
 const initRequest: AdminUsersRequest = { page: 0, size: PAGE_SIZE };
@@ -67,8 +67,8 @@ export default function useSelectAdminUsers() {
       page: 0,
       size: PAGE_SIZE,
       username: state.username || undefined,
-      registeredStartDate: state.registeredStartDate,
-      registeredEndDate: state.registeredEndDate,
+      joinedFrom: state.joinedFrom,
+      joinedTo: state.joinedTo,
       ...toStatusParams(state.userStatusFilter),
     });
   };

@@ -95,8 +95,8 @@ export interface AdminUserSearchRequest {
   blocked?: string;
   deleted?: string;
 
-  registeredStartDate?: DateType;
-  registeredEndDate?: DateType;
+  joinedFrom?: DateType;
+  joinedTo?: DateType;
 }
 
 export interface UserDetailResponse {

@@ -61,10 +61,10 @@ export default function UserList() {
 
         <CustomDateRange
           label="가입일"
-          startDate={state.registeredStartDate}
-          endDate={state.registeredEndDate}
-          onStartChange={(v: DateType) => onHandleEvent('registeredStartDate', v)}
-          onEndChange={(v: DateType) => onHandleEvent('registeredEndDate', v)}
+          startDate={state.joinedFrom}
+          endDate={state.joinedTo}
+          onStartChange={(v: DateType) => onHandleEvent('joinedFrom', v)}
+          onEndChange={(v: DateType) => onHandleEvent('joinedTo', v)}
         />
 
         <CustomTextfield
