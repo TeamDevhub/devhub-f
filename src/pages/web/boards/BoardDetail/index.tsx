@@ -22,7 +22,9 @@ export default function BoardDetail(){
   } = useCreateComment(state?.boardGuid)
 
   const { handleLike } = useMutationBoards();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, user } = useAuth();
+  const currentUserGuid  = user?.userGuid;
+  const isBoardOwner = !!currentUserGuid && currentUserGuid === res?.data?.boardSummaryResponseDto.boardBasicResponseDto.userGuid
 
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
@@ -72,20 +74,20 @@ export default function BoardDetail(){
             <p>{res?.data?.boardSummaryResponseDto.boardBasicResponseDto.content}</p>
           </div>
           <Divider flexItem />
-          <Button size='small' color='warning' className='ml-a'>신고하기</Button>
-          <div className="write-reply flex-col">
+          {isLoggedIn && !isBoardOwner && <Button size='small' color='warning' className='ml-a'>신고하기</Button>}
+          {isLoggedIn && <div className="write-reply flex-col">
             <strong>댓글</strong>
             <div className="align-stretch">
               <CustomTextfield size='small' placeholder='댓글을 입력하세요.' value={content}
               onChange={(e)=>setContent(e.target.value)}/>
               <Button size='small' variant='contained' color='primary' onClick={onSubmit}>글쓰기</Button>
             </div>
-          </div>
+          </div>}
         </div>
         {/* 3. board reply */}
         <div className="board-reply flex-col">
           {res?.data?.commentList?.map((item, index) => {
-            return <CommentCard key={index} commentData={item}></CommentCard>
+            return <CommentCard key={index} commentData={item} currentUserGuid={currentUserGuid} isLoggedIn={isLoggedIn}></CommentCard>
           })}
         </div>
       </Paper>

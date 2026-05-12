@@ -8,11 +8,14 @@ import useDeleteComment from '@/hooks/web/comments/useDeleteComment';
 
 interface CommentCardProps {
   commentData :  comment;
+  currentUserGuid? : string;
+  isLoggedIn : boolean;
 }
 export default function CommentCard({
-  commentData
+  commentData, currentUserGuid, isLoggedIn
 } : CommentCardProps){
 
+  const isCommentOwner = !!currentUserGuid && currentUserGuid === commentData.userGuid
   const {
     updateContent, setUpdateContent, 
     handleUpdate
@@ -24,7 +27,7 @@ export default function CommentCard({
 
   return (
     <>
-      {page === "info" && <InfoPage setPage={setPage} data={commentData} handleDelete={handleDelete} />}
+      {page === "info" && <InfoPage setPage={setPage} data={commentData} handleDelete={handleDelete} isCommentOwner={isCommentOwner} isLoggedIn={isLoggedIn}  />}
       {page === "modify" && (
         <ModifyPage
           setPage={setPage}
@@ -42,8 +45,10 @@ interface InfoPageProps {
   setPage: (page: string) => void;
   data: any; 
   handleDelete:(boardGuid:string, commentGuid:string) => void;
+  isCommentOwner : boolean;
+  isLoggedIn : boolean;
 }
-function InfoPage( {setPage, data, handleDelete} : InfoPageProps) {
+function InfoPage( {setPage, data, handleDelete, isCommentOwner, isLoggedIn} : InfoPageProps) {
 
   return (
     <div className="reply-box flex-col">
@@ -54,12 +59,14 @@ function InfoPage( {setPage, data, handleDelete} : InfoPageProps) {
       <div className="reply-content mt-4">
         <p dangerouslySetInnerHTML={{ __html: data.content}} />
       </div>
-      
-
       <div className="action-button-box align-center justify-end">
-        <Button size='small' color='warning' onClick={() => handleDelete(data.boardGuid, data.commentGuid)}>삭제</Button>
-        <Button size='small' onClick={()=>{setPage("modify");}}>수정하기</Button>
-        <Button size='small' color='warning' >신고하기</Button>
+      {isLoggedIn && isCommentOwner && (
+        <>
+          <Button size='small' color='warning' onClick={() => handleDelete(data.boardGuid, data.commentGuid)}>삭제</Button>
+          <Button size='small' onClick={()=>{setPage("modify");}}>수정하기</Button> 
+        </>
+      )}
+        {isLoggedIn && !isCommentOwner && <Button size='small' color='warning' >신고하기</Button>}
       </div>
 
       <Divider />
