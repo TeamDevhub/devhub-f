@@ -19,15 +19,7 @@ const PIE_LEGEND_SX = {
   color: 'rgba(0, 0, 0, 0.7)',
 };
 
-function SkillTrendsWrap({
-  title,
-  subText,
-  children,
-}: {
-  title?: string;
-  subText?: string;
-  children?: React.ReactNode;
-}) {
+function SkillTrendsWrap({ title, subText, children }: { title?: string; subText?: string; children?: React.ReactNode }) {
   return (
     <Paper className="flex-col flex-1" elevation={2}>
       <div className="flex-col gap-4">
@@ -40,15 +32,7 @@ function SkillTrendsWrap({
   );
 }
 
-function SkillBox({
-  ranking,
-  skillName,
-  popularityPercent,
-}: {
-  ranking: number;
-  skillName: string;
-  popularityPercent: number;
-}) {
+function SkillBox({ ranking, skillName, popularityPercent }: { ranking: number; skillName: string; popularityPercent: number }) {
   return (
     <div className="skill-box flex-col flex-1 wh-fit">
       <strong className="ranking">#{ranking}</strong>
@@ -106,10 +90,7 @@ export default function SkillTrendPage() {
   const startCounts = monthlyList.map((d) => d.startCount);
   const completedCounts = monthlyList.map((d) => d.completedCount);
 
-  const barColors = [
-    '#1E88E5', '#FDAC5B', '#FECB8D', '#85B58C', '#A8D4AE',
-    '#7B1FA2', '#BA68C8', '#7086FD', '#7086FD', '#7086FD',
-  ];
+  const barColors = ['#1E88E5', '#FDAC5B', '#FECB8D', '#85B58C', '#A8D4AE', '#7B1FA2', '#BA68C8', '#7086FD', '#7086FD', '#7086FD'];
 
   return (
     <div className="main-page skilltrends-page flex-col">
@@ -218,12 +199,7 @@ export default function SkillTrendPage() {
           {activeSkillGroup && (
             <Box className="skill-container w-100 align-center">
               {activeSkillGroup.skillList.map((skill) => (
-                <SkillBox
-                  key={skill.skillCode}
-                  ranking={skill.rank}
-                  skillName={skill.skillName}
-                  popularityPercent={skill.popularityPercent}
-                />
+                <SkillBox key={skill.skillCode} ranking={skill.rank} skillName={skill.skillName} popularityPercent={skill.popularityPercent} />
               ))}
             </Box>
           )}
@@ -241,12 +217,14 @@ export default function SkillTrendPage() {
               { data: startCounts, label: '프로젝트 시작', yAxisId: 'startProject', color: '#6FD195', curve: 'linear' },
               { data: completedCounts, label: '모집 완료', yAxisId: 'recruitmentCompleted', color: '#7086FD', curve: 'linear' },
             ]}
-            xAxis={[{
-              scaleType: 'point',
-              data: xLabels,
-              disableTicks: true,
-              tickLabelStyle: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.7)' },
-            }]}
+            xAxis={[
+              {
+                scaleType: 'point',
+                data: xLabels,
+                disableTicks: true,
+                tickLabelStyle: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.7)' },
+              },
+            ]}
             yAxis={[
               { id: 'postRecruitment', disableTicks: true, tickLabelStyle: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.7)' } },
               { id: 'startProject', disableTicks: true, tickLabelStyle: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.7)' } },
