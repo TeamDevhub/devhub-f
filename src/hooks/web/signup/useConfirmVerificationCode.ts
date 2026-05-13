@@ -5,19 +5,22 @@ import type { ConfrimVerificationCodeRequest } from '@/types/type.signup';
 import { Validators } from '@/utils/util._common';
 import useFormState from '@/hooks/_common/useFormState.ts';
 import { useModal } from '@/hooks/_common/useModal';
+import { ERROR_MESSAGES } from '@/constants/errorMessages';
+import { SUCCESS_MESSAGES } from '@/constants/successMessages';
 
 export default function useConfirmVerificationCode(emailAddress: string, onVerified?: (email: string) => void) {
   const { alert } = useModal();
   const validations = { verificationCode: [Validators.required()] };
   const { state: verificationCode, setState: setVerificationCode, checkError } = useFormState({ verificationCode: '' }, { validations });
 
-  const handleSuccessVerification = (res: ApiResponse<void>) => {
-    alert(res.code);
+  const handleSuccessVerification = () => {
+    alert(SUCCESS_MESSAGES.CONFIRM_VERIFICATION_COMPLETE);
     onVerified?.(emailAddress);
   };
 
   const handleFailVerification = (res: ApiResponse<void>) => {
-    alert(res.code);
+    console.error('confirm verification failed', res.code);
+    alert(ERROR_MESSAGES.CONFIRM_VERIFICATION_FAILED);
   };
 
   const { mutate: confirmVerification, loading: verifying } = useMutation<ConfrimVerificationCodeRequest, void>(

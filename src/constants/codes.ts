@@ -44,6 +44,15 @@ export const COMMON_CODE = {
   APPLICATION_FORM_TYPE: "APPLICATION_FORM_TYPE"
 } as const;
 
+export const USER_STATUS_FILTER = {
+  ALL:     { VALUE: '' as const,        LABEL: '전체' },
+  ACTIVE:  { VALUE: 'active' as const,  LABEL: '정상' },
+  BLOCKED: { VALUE: 'blocked' as const, LABEL: '정지됨' },
+  DELETED: { VALUE: 'deleted' as const, LABEL: '탈퇴' },
+} as const;
+
+export type UserStatusFilter = typeof USER_STATUS_FILTER[keyof typeof USER_STATUS_FILTER]['VALUE'];
+
 export const ERROR_CODE = {
   INVALID_INPUT_VALUE: 'ERR.DVH.0001', // 400
   NOT_FOUND_API_KEY: 'ERR.DVH.0005', //400

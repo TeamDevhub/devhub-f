@@ -1,26 +1,7 @@
-import { COMMON_CODE } from '@/constants/codes';
 import { Chip } from '@mui/material';
-import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
-export const UserStatusChip = ({ statusCd }: { statusCd: string }) => {
-    const { getCodeName } = useCodes();
-    const statusName = getCodeName(COMMON_CODE.USER_STATUS, statusCd);
-
-    const getStatusColor = (code: string): "default" | "error" | "success" | "warning" => {
-        switch (code) {
-            case '7001': return 'success'; 
-            case '7002': return 'warning'; 
-            case '7003': return 'error';   
-            default: return 'success';
-        }
-    };
-
-    return (
-        <Chip 
-            label={statusName} 
-            color={getStatusColor(statusCd)} 
-            size="small" 
-            variant="outlined" 
-        />
-    );
+export const UserStatusChip = ({ blocked, deleted }: { blocked: boolean; deleted: boolean }) => {
+  if (deleted) return <Chip label="탈퇴" color="error" size="small" variant="outlined" />;
+  if (blocked) return <Chip label="정지" color="warning" size="small" variant="outlined" />;
+  return <Chip label="정상" color="success" size="small" variant="outlined" />;
 };

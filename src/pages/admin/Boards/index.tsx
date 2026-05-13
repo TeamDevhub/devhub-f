@@ -141,7 +141,7 @@ export default function BoardManagementPage(){
                     <TableCell align="center"><BoardCategoryChip categoryCd={row.boardBasicResponseDto.categoryCd}></BoardCategoryChip></TableCell>
                     <TableCell align="left"><Typography noWrap>{row.boardBasicResponseDto.title}</Typography></TableCell>
                     <TableCell align="center">
-                      <UserStatusChip statusCd={row.userstatus}></UserStatusChip>
+                      <UserStatusChip blocked={row.userstatus === '7002'} deleted={row.userstatus === '7003'} />
                     </TableCell>
                     <TableCell align="center">{row.reportCount}회</TableCell>
                     <TableCell align="center">{row.boardBasicResponseDto.userName}</TableCell>

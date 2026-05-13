@@ -28,7 +28,8 @@ import MyProfileHome from '@/pages/web/profile/home';
 import MyProfileUpdateWrapper from '@/pages/web/profile/update';
 import MyProfileProjectListPage from '@/pages/web/profile/projects';
 import MyProfileBoardList from '@/pages/web/profile/boards';
-import MainPage from '@/pages/web/MainPage';
+import HomePage from '@/pages/web/Home';
+import SkillTrendPage from '@/pages/web/SkillTrend';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
@@ -47,6 +48,11 @@ import BannerManagementPage from '@/pages/_design/admin/banner/BannerManagementP
 import TermsManagementPage from '@/pages/_design/admin/terms/TermsManagementPage';
 import Banner from '@/pages/admin/Banner';
 import BoardAdmin from '@/pages/admin/Boards';
+import AdminUserList from '@/pages/admin/Users/UserList';
+import AdminUserDetail from '@/pages/admin/Users/UserDetail';
+import AdminProjectList from '@/pages/admin/Projects/List';
+import AdminProjectDetail from '@/pages/admin/Projects/Detail';
+import AdminReportList from '@/pages/admin/Reports/ReportList';
 import ProjectListAdmin from '@/pages/admin/Projects/ProjectList';
 import ProjectDetailAdmin from '@/pages/admin/Projects/ProjectDetail';
 import DesignMainPage from '@/pages/_design/web/main/DesignMainPage';
@@ -62,7 +68,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MainPage />,
+        element: <HomePage />,
+      },
+      {
+        path: 'skill-trends',
+        element: <SkillTrendPage />,
       },
       {
         path: 'profile',
@@ -162,6 +172,26 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: 'users',
+        children: [
+          {
+            index: true,
+            element: <AdminUserList />,
+          },
+          {
+            path: ':userGuid',
+            element: <AdminUserDetail />,
+          },
+        ],
+      },
+      {
+        path: 'reports',
+        children: [
+          {
+            index: true,
+            element: <AdminReportList />,
+          },
+        ],
         path: 'codes',
         children: [
           {
@@ -183,6 +213,12 @@ const router = createBrowserRouter([
         path: 'projects',
         children: [
           {
+            index: true,
+            element: <AdminProjectList />,
+          },
+          {
+            path: ':projectGuid',
+            element: <AdminProjectDetail />,
             path: 'list',
             index: true,
             element: <ProjectListAdmin />,

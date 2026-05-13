@@ -6,6 +6,8 @@ import { Validators } from '@/utils/util._common';
 import { useState } from 'react';
 import useFormState from '@/hooks/_common/useFormState.ts';
 import { useModal } from '@/hooks/_common/useModal';
+import { ERROR_MESSAGES } from '@/constants/errorMessages';
+import { SUCCESS_MESSAGES } from '@/constants/successMessages';
 
 export default function useSendVerificationCode() {
   const { alert } = useModal();
@@ -22,13 +24,14 @@ export default function useSendVerificationCode() {
     setEmailAddress((prev) => ({ ...prev, emailHost: value }));
   };
 
-  const handleSuccessSendVerificationCode = (res: ApiResponse<void>) => {
+  const handleSuccessSendVerificationCode = () => {
     setIsVerificationCodeSent(true);
-    alert(res.code);
+    alert(SUCCESS_MESSAGES.SEND_VERIFICATION_COMPLETE);
   };
 
   const handleFailSendVerificationCode = (res: ApiResponse<void>) => {
-    alert(res.code);
+    console.error('send verification failed', res.code);
+    alert(ERROR_MESSAGES.SEND_VERIFICATION_FAILED);
   };
 
   const { mutate: sendVerification } = useMutation<SendVerificationCodeRequest, void>(
