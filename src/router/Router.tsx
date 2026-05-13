@@ -71,7 +71,7 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: 'skill-trends',
+        path: 'skilltrend',
         element: <SkillTrendPage />,
       },
       {
@@ -206,8 +206,8 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <FormsPage />,
-          }
-        ]
+          },
+        ],
       },
       {
         path: 'projects',
@@ -351,7 +351,7 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: 'skilltrends',
+            path: 'skilltrend',
             children: [
               {
                 index: true,

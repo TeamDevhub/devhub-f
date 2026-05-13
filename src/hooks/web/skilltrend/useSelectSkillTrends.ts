@@ -4,12 +4,15 @@ import { useSelect } from '@/hooks/_common/api.hook';
 import { MOCK_TREND } from './mock.skilltrend';
 
 export default function useSelectSkillTrends() {
-  const options = useMemo(() => ({
-    apiFn: getSkillTrends,
-    req: {},
-    cacheKey: 'skill-trends',
-    enabled: false, // TODO: API 연결 후 제거
-  }), []);
+  const options = useMemo(
+    () => ({
+      apiFn: getSkillTrends,
+      req: {},
+      cacheKey: 'skilltrend',
+      enabled: false,
+    }),
+    [],
+  );
 
   const { res, loading } = useSelect(options);
 
