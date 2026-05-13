@@ -1,4 +1,4 @@
-import type { COMMON_CODE, PROJECT_RECRUIT_STATUS, PROJECT_PROGRESS_TYPE, PROJECT_APPROVAL_STATUS } from "./const";
+import type { COMMON_CODE, PROJECT_RECRUIT_STATUS, PROJECT_APPROVAL_STATUS } from "@/constants/codes";
 
 export interface CommonCodeItem {
   code: string;

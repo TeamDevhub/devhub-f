@@ -1,39 +1,143 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import WebPopup from '@/components/_common/popup/WebPopup';
 import FieldGroup from '@/components/_design/FieldGroup';
 import FormField from '@/components/_design/FormField';
-import LeftMenuBar from '@/components/_design/LeftMenuBar'
-import { Clear } from '@mui/icons-material';
-import { Button, Chip, Divider, FormControl, FormControlLabel, IconButton, MenuItem, Paper, Radio, RadioGroup, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, type SelectChangeEvent } from '@mui/material'
-import React, { useState } from 'react'
+import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, MenuItem, Paper, Radio, RadioGroup, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { useState } from 'react';
 import useDisclosure from "@/hooks/_common/useDisclosure.ts";
 import useForms from "@/hooks/admin/form/useForms.ts";
+import useDeleteForm from "@/hooks/admin/form/useDeleteForm.ts";
+import FormPopup from "@/components/admin/form/FormPopup.tsx";
+import type { FormItem } from "@/types/type.forms.ts";
 
-export default function FormManagementPage(){
+function getStatusColor(usedYn: 'Y' | 'N'): 'primary' | 'error' {
+    return usedYn === 'Y' ? 'primary' : 'error';
+}
+
+function FormPreview({ item }: { item: FormItem | null }) {
+    const [radioValue, setRadioValue] = useState('');
+    const [selectValue, setSelectValue] = useState('');
+    const [checkedValues, setCheckedValues] = useState<string[]>([]);
+
+    if (!item) {
+        return (
+            <div style={{ color: 'rgba(0,0,0,0.38)', padding: '2rem', textAlign: 'center' }}>
+                항목을 선택하면 미리보기가 표시됩니다.
+            </div>
+        );
+    }
+
+    const helpText = item.helpYn === 'true' ? item.helpText : undefined;
+    const options = item.options ?? [];
+
+    const toggleCheckbox = (value: string) => {
+        setCheckedValues(prev =>
+            prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]
+        );
+    };
+
+    const renderInput = () => {
+        switch (item.type) {
+            case 'text':
+                return <CustomTextfield size='small' placeholder={item.fieldName} />;
+            case 'textarea':
+                return <CustomTextfield type='textarea' placeholder={item.fieldName} />;
+            case 'radio':
+                return (
+                    <FormControl>
+                        <RadioGroup value={radioValue} onChange={(e) => setRadioValue(e.target.value)}>
+                            {options.map((opt, idx) => (
+                                <FormControlLabel key={idx} value={opt} control={<Radio />} label={opt} />
+                            ))}
+                        </RadioGroup>
+                    </FormControl>
+                );
+            case 'select':
+                return (
+                    <Select
+                        size='small'
+                        displayEmpty
+                        value={selectValue}
+                        onChange={(e) => setSelectValue(e.target.value)}
+                        sx={{ width: '100%', '& legend': { display: 'none' }, '& fieldset': { top: 0 } }}
+                    >
+                        <MenuItem value=''>선택하세요</MenuItem>
+                        {options.map((opt, idx) => (
+                            <MenuItem key={idx} value={opt}>{opt}</MenuItem>
+                        ))}
+                    </Select>
+                );
+            case 'checkbox':
+                return (
+                    <FormControl>
+                        {options.map((opt, idx) => (
+                            <FormControlLabel
+                                key={idx}
+                                control={<Checkbox checked={checkedValues.includes(opt)} onChange={() => toggleCheckbox(opt)} />}
+                                label={opt}
+                            />
+                        ))}
+                    </FormControl>
+                );
+        }
+    };
+
+    return (
+        <FormField label={item.fieldName} helpText={helpText}>
+            <FieldGroup>
+                {renderInput()}
+            </FieldGroup>
+        </FormField>
+    );
+}
+
+export default function FormManagementPage() {
 
     const { isOpen, open, close } = useDisclosure();
-    const {
-        res,
-        state,
-        handleChange,
-    } = useForms();
+    const [selectedRow, setSelectedRow] = useState<FormItem | null>(null);
+    const [popupItem, setPopupItem] = useState<FormItem | null>(null);
+
+    const { res, state, handleChange, refetch } = useForms();
+    const { handleDelete } = useDeleteForm(() => {
+        refetch();
+        setSelectedRow(null);
+    });
+
+    const openCreate = () => {
+        setPopupItem(null);
+        open();
+    };
+
+    const openEdit = () => {
+        if (!selectedRow) return;
+        setPopupItem(selectedRow);
+        open();
+    };
+
+    const handleClose = (saved: boolean) => {
+        if (saved) refetch();
+        close();
+    };
+
     return (
         <div className="content-box w-100 flex-col gap-32">
-            {/* 2-1. 타이틀 */}
             <strong className="title">신청 양식 관리</strong>
             <div className='w-100 h-100 flex gap-32'>
-                {/* 2-2. 왼쪽 영역(그리드) */}
+                {/* 왼쪽 영역(그리드) */}
                 <div className="left-section flex-col flex-1 flex-grow">
                     <div className="search-area align-center justify-between">
                         <Select
                             label='코드 명'
-                            id='category' value={state.codeName} onChange={(e)=>{handleChange("codeName",e.target.value)}} size='small' displayEmpty
-                            renderValue={(selected) => selected === '' ? '코드 네임' : selected }
+                            id='category'
+                            value={state.codeName}
+                            onChange={(e) => handleChange('codeName', e.target.value)}
+                            size='small'
+                            displayEmpty
+                            renderValue={(selected) => selected === '' ? '코드 네임' : selected}
                             sx={{ width: '30rem' }}
                         >
                             <MenuItem value=''>코드 네임</MenuItem>
                         </Select>
-                        <Button size='large' variant='contained' color='primary' onClick={open}>생성</Button>
+                        <Button size='large' variant='contained' color='primary' onClick={openCreate}>생성</Button>
                     </div>
                     <div className="grid-area flex-col flex-grow gap-8">
                         <Paper sx={{ width: '100%', overflow: 'hidden', border: '1px solid rgba(0, 0, 0, 0.2)' }} elevation={0}>
@@ -49,11 +153,11 @@ export default function FormManagementPage(){
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {res.map((row, index) => (
+                                        {res.map((row) => (
                                             <TableRow
-                                                key={index}
-                                                selected={selectedRow === index}
-                                                onClick={() => setSelectedRow(index)}
+                                                key={row.applicationFormGuid ?? String(row.classify)}
+                                                selected={selectedRow?.classify === row.classify}
+                                                onClick={() => setSelectedRow(row)}
                                                 sx={{ cursor: 'pointer' }}
                                             >
                                                 <TableCell align="center">{row.classify}</TableCell>
@@ -61,12 +165,12 @@ export default function FormManagementPage(){
                                                 <TableCell align="center">{row.type}</TableCell>
                                                 <TableCell align="center">
                                                     <Chip
-                                                        label={row.usedYn}
+                                                        label={row.usedYn === 'Y' ? '사용' : '미사용'}
                                                         color={getStatusColor(row.usedYn)}
                                                         size="small"
                                                     />
                                                 </TableCell>
-                                                <TableCell align="center">{row.defaultFieldYn}</TableCell>
+                                                <TableCell align="center">{row.defaultFieldYn === 'Y' ? '예' : '아니오'}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -74,32 +178,40 @@ export default function FormManagementPage(){
                             </TableContainer>
                         </Paper>
                         <div className="align-center gap-8 ml-a">
-                            <Button size='large' variant='outlined' color='primary'>삭제</Button>
-                            <Button size='large' variant='contained' color='primary'>수정</Button>
+                            <Button
+                                size='large'
+                                variant='outlined'
+                                color='primary'
+                                disabled={!selectedRow}
+                                onClick={() => selectedRow?.applicationFormGuid && handleDelete(selectedRow.applicationFormGuid)}
+                            >
+                                삭제
+                            </Button>
+                            <Button
+                                size='large'
+                                variant='contained'
+                                color='primary'
+                                disabled={!selectedRow}
+                                onClick={openEdit}
+                            >
+                                수정
+                            </Button>
                         </div>
                     </div>
                 </div>
-                {/* 2-3. 오른쪽 영역(미리보기) */}
+                {/* 오른쪽 영역(미리보기) */}
                 <div className="right-section flex-col flex-1">
                     <div className="title-area align-center">
                         <strong>미리보기</strong>
                         <Divider sx={{ flexGrow: 1 }} />
                     </div>
                     <div className="form-wrap flex-col">
-                        <FormField label='경험' helpText='지원자가 작성해야 하는 항목을 선택하세요.</br> 기본 양식을 선택하거나, 원하면 새로운 양식을 만들 수 있어요.(최대 3개)'>
-                            <FieldGroup>
-                                <CustomTextfield type='textarea' placeholder='경험을 입력해 주세요.' />
-                            </FieldGroup>
-                        </FormField>
-                        <FormField label='경험' helpText='지원자가 작성해야 하는 항목을 선택하세요.</br> 기본 양식을 선택하거나, 원하면 새로운 양식을 만들 수 있어요.(최대 3개)'>
-                            <FieldGroup>
-                                <CustomTextfield type='textarea' placeholder='경험을 입력해 주세요.' />
-                            </FieldGroup>
-                        </FormField>
+                        <FormPreview item={selectedRow} />
                     </div>
                 </div>
             </div>
-        </div>
-    )
-}
 
+            <FormPopup key={isOpen ? 'open' : 'close'} isOpen={isOpen} onClose={handleClose} item={popupItem} />
+        </div>
+    );
+}

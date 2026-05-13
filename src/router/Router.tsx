@@ -53,9 +53,12 @@ import AdminUserDetail from '@/pages/admin/Users/UserDetail';
 import AdminProjectList from '@/pages/admin/Projects/List';
 import AdminProjectDetail from '@/pages/admin/Projects/Detail';
 import AdminReportList from '@/pages/admin/Reports/ReportList';
+import ProjectListAdmin from '@/pages/admin/Projects/ProjectList';
+import ProjectDetailAdmin from '@/pages/admin/Projects/ProjectDetail';
 import DesignMainPage from '@/pages/_design/web/main/DesignMainPage';
 import AdminLayout from '@/layout/AdminLayout';
 import Codes from '@/pages/admin/Codes';
+import FormsPage from '@/pages/admin/Form';
 
 const router = createBrowserRouter([
   {
@@ -84,7 +87,7 @@ const router = createBrowserRouter([
             element: <MyProfileUpdateWrapper />,
           },
           {
-            path: 'projects',
+            path: 'projects/:paramTabValue?',
             element: <MyProfileProjectListPage />,
           },
           // {
@@ -189,6 +192,22 @@ const router = createBrowserRouter([
             element: <AdminReportList />,
           },
         ],
+        path: 'codes',
+        children: [
+          {
+            index: true,
+            element: <Codes />,
+          },
+        ],
+      },
+      {
+        path: 'forms',
+        children: [
+          {
+            index: true,
+            element: <FormsPage />,
+          }
+        ]
       },
       {
         path: 'projects',
@@ -200,6 +219,14 @@ const router = createBrowserRouter([
           {
             path: ':projectGuid',
             element: <AdminProjectDetail />,
+            path: 'list',
+            index: true,
+            element: <ProjectListAdmin />,
+          },
+          {
+            path: 'detail',
+            index: true,
+            element: <ProjectDetailAdmin />,
           },
         ],
       },
