@@ -4,14 +4,31 @@ import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import { Create, Person, Visibility } from '@mui/icons-material'
 import { Button, Divider, Paper } from '@mui/material'
 import { useLocation } from 'react-router-dom'
+import { useState } from 'react';
 import useSelectBoardDetail from '@/hooks/web/boards/useSelectBoardDetail';
 import useCreateComment from '@/hooks/web/comments/useCreateComment';
 import { BoardCategoryChip } from '@/components/web/boards/BoardChips';
 import CommentCard from '@/components/web/boards/CommentCard';
 import useMutationBoards from '@/hooks/web/boards/useMutationBoards';
 import { useAuth } from '@/contexts/AuthContext';
+import useDisclosure from '@/hooks/_common/useDisclosure';
+import ReportPopup from '@/components/_common/popup/ReportPopup';
 
 export default function BoardDetail(){
+
+  const reportPopup = useDisclosure();
+  // 어떤 대상을 신고하는지 데이터 저장이 필요함
+  const [reportTarget, setReportTarget] = useState<{ boardGuid: string; commentGuid: string | null } | null>(null);
+
+  const handleOpenReport = (boardGuid: string, commentGuid: string | null = null) => {
+    setReportTarget({ boardGuid, commentGuid });
+    reportPopup.open();
+  };
+
+  const handleCloseReport = () => {
+    reportPopup.close();
+    setReportTarget(null);
+  };
 
   const {state} = useLocation();
   const {res} = useSelectBoardDetail(state?.boardGuid);
@@ -74,7 +91,16 @@ export default function BoardDetail(){
             <p>{res?.data?.boardSummaryResponseDto.boardBasicResponseDto.content}</p>
           </div>
           <Divider flexItem />
-          {isLoggedIn && !isBoardOwner && <Button size='small' color='warning' className='ml-a'>신고하기</Button>}
+          {isLoggedIn && !isBoardOwner && (
+            <Button
+              size='small'
+              color='warning'
+              className='ml-a'
+              onClick={() => handleOpenReport(res?.data?.boardSummaryResponseDto.boardBasicResponseDto.boardGuid || '', null)}
+            >
+              신고하기
+            </Button>
+          )}
           {isLoggedIn && <div className="write-reply flex-col">
             <strong>댓글</strong>
             <div className="align-stretch">
@@ -87,10 +113,12 @@ export default function BoardDetail(){
         {/* 3. board reply */}
         <div className="board-reply flex-col">
           {res?.data?.commentList?.map((item, index) => {
-            return <CommentCard key={index} commentData={item} currentUserGuid={currentUserGuid} isLoggedIn={isLoggedIn}></CommentCard>
+            return <CommentCard key={index} commentData={item} onClickReport={handleOpenReport} currentUserGuid={currentUserGuid} isLoggedIn={isLoggedIn}></CommentCard>
           })}
         </div>
       </Paper>
+
+      {reportTarget && <ReportPopup isOpen={reportPopup.isOpen} onClose={handleCloseReport} boardGuid={reportTarget.boardGuid} commentGuid={reportTarget.commentGuid}/> }
     </div>
   )
 }
