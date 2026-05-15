@@ -1,7 +1,7 @@
 import { Store } from './Store';
 import { getUserProfile } from '@/api/web/api.profile';
 import { reissue } from '@/api/web/api.auth';
-import { setSessionStorage } from '@/utils/util._common';
+import { tokenStorage } from '@/utils/auth.token';
 import type { UserBasicResponse } from '@/types/type.user';
 import axios from 'axios';
 
@@ -21,7 +21,7 @@ class AuthStore extends Store<AuthState> {
       const res = await reissue();
       const token = res?.data?.accessToken;
       if (!token) return null;
-      setSessionStorage('accessToken', token);
+      tokenStorage.set(token);
       return token;
     } catch {
       return null;
@@ -51,7 +51,7 @@ class AuthStore extends Store<AuthState> {
   };
 
   init = async (): Promise<void> => {
-    let token = sessionStorage.getItem('accessToken');
+    let token = tokenStorage.get();
     if (!token) {
       token = await this._tryReissue();
       if (!token) {
@@ -66,13 +66,13 @@ class AuthStore extends Store<AuthState> {
 
   login = async (token?: string): Promise<void> => {
     if (!token) return;
-    setSessionStorage('accessToken', token);
+    tokenStorage.set(token);
     this._setState({ isLoggedIn: true });
     await this._fetchUserWithRetry();
   };
 
   logout = (): void => {
-    sessionStorage.removeItem('accessToken');
+    tokenStorage.clear();
     this._setState({ user: undefined, isLoggedIn: false });
   };
 

@@ -91,6 +91,7 @@ export interface ProjectSearchRequest {
   recruitmentStartDate?: DateType;
   recruitmentEndDate?: DateType;
   progressStartDate?: DateType;
+  progressEndDate?: DateType;
 }
 
 export interface ProjectFileMetaData {

@@ -28,7 +28,8 @@ import MyProfileHome from '@/pages/web/profile/home';
 import MyProfileUpdateWrapper from '@/pages/web/profile/update';
 import MyProfileProjectListPage from '@/pages/web/profile/projects';
 import MyProfileBoardList from '@/pages/web/profile/boards';
-import MainPage from '@/pages/web/MainPage';
+import HomePage from '@/pages/web/Home';
+import SkillTrendPage from '@/pages/web/SkillTrend';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
@@ -47,9 +48,17 @@ import BannerManagementPage from '@/pages/_design/admin/banner/BannerManagementP
 import TermsManagementPage from '@/pages/_design/admin/terms/TermsManagementPage';
 import Banner from '@/pages/admin/Banner';
 import BoardAdmin from '@/pages/admin/Boards';
+import AdminUserList from '@/pages/admin/Users/UserList';
+import AdminUserDetail from '@/pages/admin/Users/UserDetail';
+import AdminProjectList from '@/pages/admin/Projects/List';
+import AdminProjectDetail from '@/pages/admin/Projects/Detail';
+import AdminReportList from '@/pages/admin/Reports/ReportList';
+import ProjectListAdmin from '@/pages/admin/Projects/ProjectList';
+import ProjectDetailAdmin from '@/pages/admin/Projects/ProjectDetail';
 import DesignMainPage from '@/pages/_design/web/main/DesignMainPage';
 import AdminLayout from '@/layout/AdminLayout';
 import Codes from '@/pages/admin/Codes';
+import FormsPage from '@/pages/admin/Form';
 
 const router = createBrowserRouter([
   {
@@ -59,7 +68,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MainPage />,
+        element: <HomePage />,
+      },
+      {
+        path: 'skilltrend',
+        element: <SkillTrendPage />,
       },
       {
         path: 'profile',
@@ -155,6 +168,65 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <BoardAdmin />,
+          },
+        ],
+      },
+      {
+        path: 'users',
+        children: [
+          {
+            index: true,
+            element: <AdminUserList />,
+          },
+          {
+            path: ':userGuid',
+            element: <AdminUserDetail />,
+          },
+        ],
+      },
+      {
+        path: 'reports',
+        children: [
+          {
+            index: true,
+            element: <AdminReportList />,
+          },
+        ],
+        path: 'codes',
+        children: [
+          {
+            index: true,
+            element: <Codes />,
+          },
+        ],
+      },
+      {
+        path: 'forms',
+        children: [
+          {
+            index: true,
+            element: <FormsPage />,
+          },
+        ],
+      },
+      {
+        path: 'projects',
+        children: [
+          {
+            index: true,
+            element: <AdminProjectList />,
+          },
+          {
+            path: ':projectGuid',
+            element: <AdminProjectDetail />,
+            path: 'list',
+            index: true,
+            element: <ProjectListAdmin />,
+          },
+          {
+            path: 'detail',
+            index: true,
+            element: <ProjectDetailAdmin />,
           },
         ],
       },
@@ -279,7 +351,7 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: 'skilltrends',
+            path: 'skilltrend',
             children: [
               {
                 index: true,

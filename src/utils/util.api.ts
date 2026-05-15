@@ -1,6 +1,6 @@
 import type { ApiResponse } from '@/types/type.api';
 import { ERROR_CODE } from '@/constants/codes';
-import { getSessionStorage } from '@/utils/util._common';
+import { tokenStorage } from '@/utils/auth.token';
 import axios, { AxiosError, HttpStatusCode, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig, type Method } from 'axios';
 import dayjs from 'dayjs';
 
@@ -86,17 +86,52 @@ const handleRequestEnd = () => {
 /////////////////////////////////////////////////////
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   skipErrorHandling?: boolean;
+  _retry?: boolean;
 }
+
+// 동시 401 시 reissue 한 번만 호출하기 위한 단일 promise 큐
+let reissuePromise: Promise<string | null> | null = null;
+
+const triggerReissue = (): Promise<string | null> => {
+  if (reissuePromise) return reissuePromise;
+
+  reissuePromise = (async (): Promise<string | null> => {
+    try {
+      // 순환 import 회피를 위한 dynamic import
+      const { reissue } = await import('@/api/web/api.auth');
+      const res = await reissue();
+      const token = res?.data?.accessToken;
+      if (!token) return null;
+      tokenStorage.set(token);
+      return token;
+    } catch {
+      return null;
+    } finally {
+      // 다음 만료 사이클을 위해 비움
+      setTimeout(() => { reissuePromise = null; }, 0);
+    }
+  })();
+
+  return reissuePromise;
+};
+
+const handleAuthFailure = (): void => {
+  tokenStorage.clear();
+  if (typeof window === 'undefined') return;
+  // 인증 페이지에서의 401(로그인 실패 등)은 redirect 루프 방지를 위해 그대로 둔다
+  if (window.location.pathname.startsWith('/auth/')) return;
+  window.location.href = '/auth/login';
+};
+
 /**
  * 요청 성공 처리
  */
 const requestSuccessInterceptor = async (request: InternalAxiosRequestConfig<unknown>) => {
-  const accessToken = getSessionStorage('accessToken');
+  const accessToken = tokenStorage.get();
   if (accessToken) request.headers['Authorization'] = `Bearer ${accessToken}`;
 
   return request;
 };
-//bearer basic digest hoba ..
 
 /**
  * 응답 성공 처리
@@ -104,36 +139,41 @@ const requestSuccessInterceptor = async (request: InternalAxiosRequestConfig<unk
 const responseSuccessInterceptor = async (response: AxiosResponse<unknown>) => {
   return response;
 };
+
 /**
- * 에러 처리
+ * 에러 처리 — 401에 대한 silent refresh + 재시도 포함
  */
 const responseErrorInterceptor = async (err: unknown) => {
   const error = err as AxiosError<CommonError>;
-
-  console.log('responseErrorInterceptor', error.response?.data?.error?.code);
+  const config = error.config as CustomAxiosRequestConfig | undefined;
 
   const errorCode = error.response?.data?.error?.code ?? '';
   const status = error.response?.status;
 
-  //에러 인터페이스에 따라 처리 추후 추가
-  if (status === 401) {
-    if (errorCode === ERROR_CODE.EXPIRE_ACCESS_TOKEN) {
-      // 리프레쉬토큰 발급
-    } else if (errorCode === ERROR_CODE.DUP_LOGIN) {
-      //
-    } else if (errorCode === ERROR_CODE.SIGNATURE_ERROR_ACCESS_TOKEN) {
-      //
-    } else {
-      try {
-        // signOut();
-        return;
-      } catch (error) {
-        console.error(error);
+  if (status === 401 && !config?.skipErrorHandling) {
+    const isReissueCall = (config?.url ?? '').includes('/auth/reissue');
+    const canRetry = !!config && !config._retry && !isReissueCall;
+
+    if (errorCode === ERROR_CODE.EXPIRE_ACCESS_TOKEN && canRetry) {
+      const newToken = await triggerReissue();
+      if (newToken) {
+        config._retry = true;
+        config.headers = {
+          ...(config.headers ?? {}),
+          Authorization: `Bearer ${newToken}`,
+        } as typeof config.headers;
+        return axiosInstance.request(config);
       }
+      handleAuthFailure();
+      return Promise.reject(error);
     }
+
+    // DUP_LOGIN, SIGNATURE_ERROR_ACCESS_TOKEN, INVALID_ACCESS_TOKEN, reissue 자체 실패 등
+    handleAuthFailure();
+    return Promise.reject(error);
   }
 
-  if (!(error?.config as CustomAxiosRequestConfig)?.skipErrorHandling) {
+  if (!config?.skipErrorHandling) {
     return Promise.reject(error);
   }
 };
