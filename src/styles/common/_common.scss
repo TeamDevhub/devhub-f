@@ -382,6 +382,31 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
     }
   }
 }
+
+.report-popup-form {
+  dl {
+    align-items: flex-start;
+  }
+  dt {
+    padding-top: 1rem;
+    min-width: 8rem;
+  }
+  dd {
+    flex: 1;
+  }
+  .report-field-box {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    border-radius: 0.4rem;
+    &.is-error {
+      border-color: var(--error-main);
+    }
+  }
+  .report-reason-field {
+    min-width: 56rem;
+  }
+}
 .required {
   font-size: 1.6rem;
   font-weight: 500;
