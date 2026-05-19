@@ -3,7 +3,7 @@ import LeftMenuBar from '@/components/_design/LeftMenuBar'
 import { Button, Checkbox, Chip, Divider, MenuItem, Pagination, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, type SelectChangeEvent } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers';
 import React, { useState } from 'react'
-import useSelectProjects from '@/hooks/web/projects/useSelectProjects';
+import useSelectAdminProjects from "@/hooks/admin/projects/useSelectAdminProjects"
 import {COMMON_CODE} from "@/constants/codes.ts";
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 import {getDateStr} from "@/utils/util.date";
@@ -11,19 +11,16 @@ import {getDateStr} from "@/utils/util.date";
 export default function ProjectListPage(){
   const {
       res,
-      filters,
-      resetFilters,
-      createToggle,
-      setFilter,
-      createFilterHandler,
-      applyFilter,
-      applySearch,
+      loading,
+      state,
       request,
-      setRequest,
-      keyword, setKeyword,
-      setOrder, setPage,
-      toggleLike
-  } = useSelectProjects();
+      setPage,
+      projectSearch,
+      handleDetail,
+      reset,
+      handleChange,
+      refetch
+  } = useSelectAdminProjects();
 
   const { getCodesByGroup, getCodeName } = useCodes();
   const progressType = getCodesByGroup(COMMON_CODE.PROJECT_PROGRESS_TYPE);
@@ -54,7 +51,7 @@ export default function ProjectListPage(){
   };
 
   // table checkbox
-  const [selected, setSelected] = React.useState<string[]>([]);
+  const [selected, setSelected] = useState<string[]>([]);
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -78,15 +75,6 @@ export default function ProjectListPage(){
     setSelected(newSelected);
   };
 
-  const handleSearch = () => {
-    setRequest((prev) => ({
-      ...prev,
-      ...filters,
-      keyword,
-      page: 0
-    }));
-  }
-
   return (
     <div className='admin-page flex'>
       {/* 1. left area */}
@@ -101,8 +89,8 @@ export default function ProjectListPage(){
             <Select 
               label='모집 구분'
               id='category' 
-              value={filters.projectRecruitTypeList?.[0] || ''} 
-              onChange={(e)=>{setFilter("projectRecruitTypeList", e.target.value ? [e.target.value] : [])}} 
+              value={state.recruitmentTypeCd || ''} 
+              onChange={(e)=>{handleChange("projectRecruitTypeList", e.target.value ? [e.target.value] : [])}} 
               size='small' displayEmpty
               sx={{ width: '20rem' }}
             >
@@ -114,8 +102,8 @@ export default function ProjectListPage(){
             <Select 
               label='모집 상태'
               id='category'
-              value={filters.projectRecruitStatusList?.[0] || ''} 
-              onChange={(e)=>{setFilter("projectRecruitStatusList", e.target.value ? [e.target.value] : [])}} 
+              value={state.recruitStatusCd || ''} 
+              onChange={(e)=>{handleChange("projectRecruitStatusList", e.target.value ? [e.target.value] : [])}} 
               size='small' displayEmpty
               sx={{ width: '20rem' }}
             >
@@ -135,7 +123,7 @@ export default function ProjectListPage(){
                     }
                   },
                 }}
-                onChange={(e)=>{setFilter("recruitmentStartDate", e)}}
+                onChange={(e)=>{handleChange("recruitmentStartDate", e)}}
                 sx={{ maxWidth: '20rem' }}
               />
               <p className='seperator'>~</p>
@@ -148,7 +136,7 @@ export default function ProjectListPage(){
                     }
                   },
                 }}
-                onChange={(e)=>{setFilter("recruitmentEndDate", e)}}
+                onChange={(e)=>{handleChange("recruitmentEndDate", e)}}
                 sx={{
                   '& legend': { display: 'none' },
                   '& fieldset': { top: 0 },
@@ -161,8 +149,8 @@ export default function ProjectListPage(){
             <Select 
               label='진행 방식'
               id='category'
-              value={filters.projectProgressTypeList?.[0] || ''}
-              onChange={(e)=>{setFilter("projectProgressTypeList", e.target.value ? [e.target.value] : [])}}
+              value={state.progressTypeCd || ''}
+              onChange={(e)=>{handleChange("projectProgressTypeList", e.target.value ? [e.target.value] : [])}}
               size='small'
               displayEmpty
               sx={{ width: '20rem' }}
@@ -175,8 +163,8 @@ export default function ProjectListPage(){
             <Select 
               label='진행 지역'
               id='category'
-              value={filters.regionCodeList?.[0] || ''}
-              onChange={(e)=>{setFilter("regionCodeList", e.target.value ? [e.target.value] : [])}}
+              value={state.progressRegionCd || ''}
+              onChange={(e)=>{handleChange("regionCodeList", e.target.value ? [e.target.value] : [])}}
               size='small' displayEmpty
               sx={{ width: '20rem' }}
             >
@@ -196,7 +184,7 @@ export default function ProjectListPage(){
                     }
                   },
                 }}
-                onChange={(e)=>{setFilter("progressStartDate", e)}}
+                onChange={(e)=>{handleChange("progressStartDate", e)}}
                 sx={{ maxWidth: '20rem' }}
               />
               <p className='seperator'>~</p>
@@ -209,7 +197,7 @@ export default function ProjectListPage(){
                     }
                   },
                 }}
-                onChange={(e)=>{setFilter("progressEndDate", e)}}
+                onChange={(e)=>{handleChange("progressEndDate", e)}}
                 sx={{
                   '& legend': { display: 'none' },
                   '& fieldset': { top: 0 },
@@ -218,8 +206,8 @@ export default function ProjectListPage(){
               />
             </div>
           </div>
-          <CustomTextfield size='small' placeholder='' sx={{ width: '41.6rem' }} value={keyword} onChange={(e) => { setKeyword(e.target.value) }} />
-          <Button size='medium' variant='contained' className='ml-a' onClick={()=>{handleSearch()}}>조회</Button>
+          <CustomTextfield size='small' placeholder='' sx={{ width: '41.6rem' }} value={state.keyword} onChange={(e) => { handleChange('keyword', e.target.value) }} />
+          <Button size='medium' variant='contained' className='ml-a' onClick={projectSearch}>조회</Button>
         </div>
         {/* 2-3. 그리드 영역 */}
         <div className="grid-section flex-col gap-16">
@@ -267,7 +255,7 @@ export default function ProjectListPage(){
                     </TableCell>
                     <TableCell align="center">{index + 1}</TableCell>
                     <TableCell align="left"><Typography noWrap>{row.title}</Typography></TableCell>
-                    <TableCell align="center">{row.registrantGuid}</TableCell>
+                    <TableCell align="center">{row.username}</TableCell>
                     <TableCell align="center">
                       <Chip
                         label={getCodeName(COMMON_CODE.PROJECT_RECRUIT_TYPE, row.recruitmentTypeCd)}
@@ -277,8 +265,8 @@ export default function ProjectListPage(){
                     </TableCell>
                     <TableCell align="center">
                       <Chip
-                        label={getCodeName(COMMON_CODE.PROJECT_RECRUIT_STATUS, row.recruitStatus)}
-                        color={getRecruitmentStatusColor(row.recruitStatus)}
+                        label={getCodeName(COMMON_CODE.PROJECT_RECRUIT_STATUS, row.recruitStatusCd)}
+                        color={getRecruitmentStatusColor(row.recruitStatusCd)}
                         size="small"
                       />
                     </TableCell>
@@ -291,7 +279,7 @@ export default function ProjectListPage(){
             </Table>
           </TableContainer>
           <div className="align-center">
-            <Pagination count={res?.pagination?.totalPages} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
+            <Pagination count={res?.pagination?.totalPages} showFirstButton showLastButton color='primary' className='w-100 flex-center'/>
             <Button size='medium' variant='outlined' color='primary' className='ml-a'>삭제</Button>
           </div>
         </div>
