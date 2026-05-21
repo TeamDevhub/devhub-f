@@ -8,11 +8,15 @@ import useDeleteComment from '@/hooks/web/comments/useDeleteComment';
 
 interface CommentCardProps {
   commentData :  comment;
+  currentUserGuid? : string;
+  isLoggedIn : boolean;
+  onClickReport:(boardGuid:string, commentGuid:string) => void;
 }
 export default function CommentCard({
-  commentData
+  commentData, currentUserGuid, isLoggedIn, onClickReport
 } : CommentCardProps){
 
+  const isCommentOwner = !!currentUserGuid && currentUserGuid === commentData.userGuid
   const {
     updateContent, setUpdateContent, 
     handleUpdate
@@ -24,7 +28,7 @@ export default function CommentCard({
 
   return (
     <>
-      {page === "info" && <InfoPage setPage={setPage} data={commentData} handleDelete={handleDelete} />}
+      {page === "info" && <InfoPage setPage={setPage} data={commentData} onClickReport={onClickReport} handleDelete={handleDelete} isCommentOwner={isCommentOwner} isLoggedIn={isLoggedIn}  />}
       {page === "modify" && (
         <ModifyPage
           setPage={setPage}
@@ -40,10 +44,13 @@ export default function CommentCard({
 
 interface InfoPageProps {
   setPage: (page: string) => void;
-  data: any; 
+  data: comment; 
   handleDelete:(boardGuid:string, commentGuid:string) => void;
+  isCommentOwner : boolean;
+  isLoggedIn : boolean;
+  onClickReport:(boardGuid:string, commentGuid:string) => void;
 }
-function InfoPage( {setPage, data, handleDelete} : InfoPageProps) {
+function InfoPage( {setPage, data, handleDelete, isCommentOwner, isLoggedIn, onClickReport} : InfoPageProps) {
 
   return (
     <div className="reply-box flex-col">
@@ -52,14 +59,16 @@ function InfoPage( {setPage, data, handleDelete} : InfoPageProps) {
         <p className='comment-time'>{elapsedTime(data.auditInfo.registeredDate)}</p>
       </div>
       <div className="reply-content mt-4">
-        <p dangerouslySetInnerHTML={{ __html: data.content}} />
+        <p style={{ whiteSpace: 'pre-wrap' }}>{data.content}</p>
       </div>
-      
-
       <div className="action-button-box align-center justify-end">
-        <Button size='small' color='warning' onClick={() => handleDelete(data.boardGuid, data.commentGuid)}>삭제</Button>
-        <Button size='small' onClick={()=>{setPage("modify");}}>수정하기</Button>
-        <Button size='small' color='warning' >신고하기</Button>
+      {isLoggedIn && isCommentOwner && (
+        <>
+          <Button size='small' color='warning' onClick={() => handleDelete(data.boardGuid, data.commentGuid)}>삭제</Button>
+          <Button size='small' onClick={()=>{setPage("modify");}}>수정하기</Button> 
+        </>
+      )}
+        {isLoggedIn && !isCommentOwner && <Button size='small' color='warning' onClick={() => onClickReport(data.boardGuid, data.commentGuid)}>신고하기</Button>}
       </div>
 
       <Divider />
@@ -69,7 +78,7 @@ function InfoPage( {setPage, data, handleDelete} : InfoPageProps) {
 
 interface ModiPageProps {
   setPage: (page: string) => void;
-  data: any; 
+  data: comment; 
   updateContent:string;
   setUpdateContent: (value:string) => void;
   handleUpdate: () => void;
