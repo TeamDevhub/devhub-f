@@ -192,6 +192,8 @@ const router = createBrowserRouter([
             element: <AdminReportList />,
           },
         ],
+      },
+      {
         path: 'codes',
         children: [
           {
@@ -219,13 +221,13 @@ const router = createBrowserRouter([
           {
             path: ':projectGuid',
             element: <AdminProjectDetail />,
+          },
+          {
             path: 'list',
-            index: true,
             element: <ProjectListAdmin />,
           },
           {
             path: 'detail',
-            index: true,
             element: <ProjectDetailAdmin />,
           },
         ],
