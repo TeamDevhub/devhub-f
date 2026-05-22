@@ -32,7 +32,7 @@ export default function MyInfoBox({ selectedKey, onChange }: MyPageNavProps) {
           />
           <div className="flex-col align-center" style={{ padding: '0.4rem 0' }}>
             <p className="user-nickname">{user?.username ?? '닉네임'}</p>
-            <p className="user-email">{user?.email ?? '-'}</p>
+            <p className="user-email">-</p>
           </div>
         </div>
         <div className="manner-box flex-col">

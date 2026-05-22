@@ -1,7 +1,7 @@
 import { LockOutline, MailOutline, PersonOutlined } from '@mui/icons-material';
 import React from 'react';
 
-type fieldLabel = '이메일 인증' | '이메일' | '비밀번호' | '비밀번호 설정' | '내 정보' | '관심 포지션' | '보유 스킬';
+type fieldLabel = '이메일 인증' | '이메일' | '비밀번호' | '비밀번호 설정' | '내 정보' | '관심 포지션' | '보유 스킬' | '프로필';
 
 type FormField2Props = {
   type?: 1 | 2;

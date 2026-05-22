@@ -50,7 +50,7 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
               <CustomTextfield
                 type="textarea"
                 rows={1}
-                value={userInfo.introduction}
+                value={userInfo.introduction ?? ''}
                 onChange={(e) => handleChange('introduction', e.target.value)}
                 placeholder="자기소개"
               />

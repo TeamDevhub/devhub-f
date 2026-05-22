@@ -186,7 +186,7 @@ export default function ProjectDetail() {
               elevation={5}
               sx={{ cursor: 'pointer' }}
             >
-              <HeartButton likeCount={res?.data?.likeCount} onClick={() => { toggleLike(res.data.projectGuid) }} defaultLiked={res?.data.projectLiked} />
+              <HeartButton likeCount={res?.data?.likeCount} onClick={() => { toggleLike(res.data!.projectGuid) }} defaultLiked={res?.data.projectLiked} />
             </Paper>
           </Tooltip> : null}
         <Tooltip arrow placement='right' title='지원하기'>

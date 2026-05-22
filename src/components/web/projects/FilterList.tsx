@@ -8,6 +8,12 @@ import { useCodes } from "@/contexts/CommonCodeContext.ts";
 
 export type ListFilterData = Omit<FilterData, 'recruitmentStartDate' | 'recruitmentEndDate' | 'progressStartDate'>;
 
+type FilterArrayKey = Extract<{
+  [K in keyof FilterData]-?: NonNullable<FilterData[K]> extends unknown[] ? K : never
+}[keyof FilterData], keyof FilterData>;
+type FilterArrayElement<K extends keyof FilterData> =
+  NonNullable<FilterData[K]> extends (infer U)[] ? U : never;
+
 export default function FilterList({
   filterData,
   createToggle,
@@ -17,7 +23,7 @@ export default function FilterList({
 }: {
   filterData: ListFilterData;
   setFilter: <K extends keyof ListFilterData>(key: K, value: ListFilterData[K]) => void;
-  createToggle: (key: keyof ListFilterData) => (v: string) => void;
+  createToggle: <K extends FilterArrayKey>(key: K) => (v: FilterArrayElement<K>) => void;
   handleResetFilter: () => void;
   clickOpenSkillPopup: () => void;
 }) {
