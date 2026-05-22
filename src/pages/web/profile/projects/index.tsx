@@ -14,7 +14,7 @@ export default function MyProfileProjectListPage() {
   const { paramTabValue } = useParams<{ paramTabValue: string }>();
   const tab = Number(paramTabValue) as TabType;
   const [tabValue, setTabValue] = useState<TabType>(tab || 0);
-  const handleTabChange = (event: React.SyntheticEvent<Element, Event>, value: TabType) => {
+  const handleTabChange = (_event: React.SyntheticEvent<Element, Event>, value: TabType) => {
     setTabValue(value);
   }
   const { res: myRes, setPage: setMyPage } = useSelectMyProjects();

@@ -56,7 +56,7 @@ export default function BoardDetail(){
               </strong>
             </div>
             {isLoggedIn ? <div className="right-area flex-col">
-              <HeartButton onClick={(e) => handleLike(res?.data?.boardSummaryResponseDto.boardBasicResponseDto.boardGuid)} likeCount={res?.data?.boardSummaryResponseDto.likeCount} defaultLiked={res?.data?.isLiked}/> 
+              <HeartButton onClick={() => handleLike(res?.data?.boardSummaryResponseDto.boardBasicResponseDto.boardGuid)} likeCount={res?.data?.boardSummaryResponseDto.likeCount} defaultLiked={res?.data?.isLiked}/>
             </div> : null }
           </div>
           <div className="bottom w-100 align-end justify-between">

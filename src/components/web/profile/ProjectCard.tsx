@@ -59,7 +59,7 @@ export default function ProjectCard({
     setOpenEvaluatePopup(true);
   }
 
-  const onClickHeartButton = (e: React.MouseEvent<HTMLButtonElement>, liked: boolean) => {
+  const onClickHeartButton = (_e: React.MouseEvent<HTMLButtonElement>, liked: boolean) => {
     toggleLike(projectGuid, liked);
   }
 

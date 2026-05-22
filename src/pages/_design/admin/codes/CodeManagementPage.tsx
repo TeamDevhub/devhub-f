@@ -3,7 +3,7 @@ import WebPopup from '@/components/_common/popup/WebPopup';
 import LeftMenuBar from '@/components/_design/LeftMenuBar'
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import { Button, Chip, IconButton, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, type SelectChangeEvent } from '@mui/material'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export default function CodeManagementPage(){
   // 상태 select

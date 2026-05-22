@@ -12,10 +12,10 @@ export default function ProjectListPage(){
   };
 
   // 모집 상태 select
-  const [recruitStatus, setRecruitStatus] = useState('');
-  const handleChange2 = (event: SelectChangeEvent) => {
-    setRecruitStatus(event.target.value);
-  };
+  // const [recruitStatus, setRecruitStatus] = useState('');
+  // const handleChange2 = (event: SelectChangeEvent) => {
+  //   setRecruitStatus(event.target.value);
+  // };
 
   // 진행 방식 select
   const [progress, setProgress] = useState('');
