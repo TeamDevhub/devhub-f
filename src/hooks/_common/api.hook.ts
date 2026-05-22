@@ -28,7 +28,6 @@ export const useSelect = <TRes, TReq>({
   reqRef.current = req;
 
   // req는 객체라 매 렌더마다 새 참조가 올 수 있으므로 stringify로 deep compare
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const reqKey = JSON.stringify(req);
 
   const fetchData = useCallback(async () => {
@@ -72,7 +71,7 @@ export default useSelect
 
 export const useMutation = <TReq, TRes>(
   mutationFn: (req: TReq) => Promise<ApiResponse<TRes>>,
-  onSuccess?: (res: ApiResponse<TRes>) => void,
+  onSuccess?: (res: ApiResponse<TRes>) => void | Promise<void>,
   onFail?: (res: ApiResponse<TRes>) => void,
   options?: { invalidateKeys?: string[] }
 ) => {
@@ -87,7 +86,7 @@ export const useMutation = <TReq, TRes>(
 
       if (res.success) {
         options?.invalidateKeys?.forEach((key) => cacheStore.delete(key));
-        onSuccess?.(res);
+        await onSuccess?.(res);
       } else {
         onFail?.(res);
       }
