@@ -68,8 +68,8 @@ export default function AdminProjectDetail() {
   const positionCodes = getCodesByGroup(COMMON_CODE.POSITION_CODE);
   const levelCodes = getCodesByGroup(COMMON_CODE.POSITION_LEVEL_CODE);
 
-  const applicantRows = applicantRes?.dataList ?? [];
-  const applicantTotal = applicantRes?.pagination?.totalElements ?? 0;
+  const applicantRows = applicantRes?.data?.applicantList ?? [];
+  const applicantTotal = applicantRes?.data?.pagination?.totalElements ?? 0;
 
   return (
     <div className="content-box w-100 flex-col gap-32">
@@ -229,7 +229,7 @@ export default function AdminProjectDetail() {
             <dl className="align-center flex-1 gap-4">
               <dt>작성자</dt>
               <dd className="w-100 align-center gap-4">
-                {detail?.email ?? '-'}
+                {detail?.username ?? '-'}
                 <Button
                   size="small"
                   variant="outlined"

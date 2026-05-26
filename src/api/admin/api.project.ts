@@ -4,7 +4,7 @@ import type {
   AdminProjectDetail,
   AdminProjectSearchRequest,
   UpdateAdminProjectRequest,
-  AdminApplicantSummary,
+  AdminApplicantSummaryResponse,
   AdminApplicantSearchRequest,
   UpdateApplicantStatusRequest,
 } from '@/types/type.project';
@@ -26,7 +26,7 @@ export const deleteAdminProject = (projectGuid: string) =>
   fetcher<void>(`/admin/projects/${projectGuid}`, undefined, { method: 'delete' });
 
 export const getAdminApplicants = (req: AdminApplicantSearchRequest) =>
-  fetcher<AdminApplicantSummary, Omit<AdminApplicantSearchRequest, 'projectGuid'>>(
+  fetcher<AdminApplicantSummaryResponse, Omit<AdminApplicantSearchRequest, 'projectGuid'>>(
     `/admin/projects/${req.projectGuid}/applicants`,
     req,
     { method: 'get' },
