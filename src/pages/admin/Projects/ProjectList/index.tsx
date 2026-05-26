@@ -1,6 +1,6 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import LeftMenuBar from '@/components/_design/LeftMenuBar'
-import { Button, Checkbox, Chip, Divider, MenuItem, Pagination, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, type SelectChangeEvent } from '@mui/material'
+import { Button, Checkbox, Chip, Divider, MenuItem, Pagination, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers';
 import React, { useState } from 'react'
 import useSelectAdminProjects from "@/hooks/admin/projects/useSelectAdminProjects"
@@ -224,10 +224,10 @@ export default function ProjectListPage(){
                       size='large'
                       color="primary"
                       indeterminate={
-                        selected.length > 0 && selected.length < res?.dataList?.length
+                        selected.length > 0 && selected.length < (res?.dataList?.length ?? 0)
                       }
                       checked={
-                        res?.dataList?.length > 0 && selected.length === res?.dataList?.length
+                        (res?.dataList?.length ?? 0) > 0 && selected.length === res?.dataList?.length
                       }
                       onChange={handleSelectAllClick}
                     />

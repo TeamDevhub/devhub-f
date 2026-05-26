@@ -56,7 +56,7 @@ export default function EvaluateCard({
       <div className="rating-box flex-col">
         {!completeRating ? (
           <>
-            <Rating name="team-rating" value={_score} precision={0.5} onChange={(event, newValue) => { setScore(newValue || 0); }} />
+            <Rating name="team-rating" value={_score} precision={0.5} onChange={(_event, newValue) => { setScore(newValue || 0); }} />
             <Button size='small' variant='contained' color='primary' onClick={() => onClickReview(applicantGuid, _score)}>평가</Button>
           </>
         ) : (

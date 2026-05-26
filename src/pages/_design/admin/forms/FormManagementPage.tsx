@@ -5,7 +5,7 @@ import FormField from '@/components/_design/FormField';
 import LeftMenuBar from '@/components/_design/LeftMenuBar'
 import { Clear } from '@mui/icons-material';
 import { Button, Chip, Divider, FormControl, FormControlLabel, IconButton, MenuItem, Paper, Radio, RadioGroup, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, type SelectChangeEvent } from '@mui/material'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export default function FormManagementPage(){
   // 코드 명 select
@@ -15,7 +15,7 @@ export default function FormManagementPage(){
   };
 
   // 타입 select
-  const [type, setType] = useState('');
+  const [type] = useState('');
   const handleChange2 = (event: SelectChangeEvent) => {
     setCodeName(event.target.value);
   };

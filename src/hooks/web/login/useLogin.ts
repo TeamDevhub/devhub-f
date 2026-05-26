@@ -34,8 +34,8 @@ export default function useLogin() {
     setLoginInfo((prev) => ({ ...prev, password: value }));
   };
 
-  const handleSuccessLogin = (res: ApiResponse<TokenResponseDto>) => {
-    _login?.(res.data?.accessToken);
+  const handleSuccessLogin = async (res: ApiResponse<TokenResponseDto>) => {
+    await _login?.(res.data?.accessToken);
     navigate('/');
   };
 

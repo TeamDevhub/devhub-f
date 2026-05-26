@@ -1,6 +1,6 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import LeftMenuBar from '@/components/_design/LeftMenuBar'
-import { Button, Checkbox, Divider, MenuItem, Pagination, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, type SelectChangeEvent } from '@mui/material'
+import { Button, Checkbox, Divider, MenuItem, Pagination, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import useSelectAdminBoards from '@/hooks/admin/boards/useSelectAdminBoards';
 import type {AdminBoard} from "@/types/type.boards.ts";
 import { BoardCategoryChip } from '@/components/web/boards/BoardChips';

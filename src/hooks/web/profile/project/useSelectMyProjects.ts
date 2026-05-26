@@ -14,7 +14,7 @@ export default function useSelectMyProjects() {
     apiFn: getUserProjects,
     req: request,
   }
-  const { res, loading, error } = useSelect<MyProject, SearchUserData>(options);
+  const { res } = useSelect<MyProject, SearchUserData>(options);
 
   const setPage = (page: number) => {
     setRequest((prev) => ({ ...prev, page: page }));

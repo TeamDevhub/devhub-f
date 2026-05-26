@@ -168,14 +168,16 @@ const responseErrorInterceptor = async (err: unknown) => {
       return Promise.reject(error);
     }
 
-    // DUP_LOGIN, SIGNATURE_ERROR_ACCESS_TOKEN, INVALID_ACCESS_TOKEN, reissue 자체 실패 등
-    handleAuthFailure();
+    // reissue 엔드포인트 자체 실패는 handleAuthFailure 없이 reject만
+    // (init()의 조용한 토큰 복구 시도가 불필요한 redirect를 유발하지 않도록)
+    if (!isReissueCall) {
+      handleAuthFailure();
+    }
     return Promise.reject(error);
   }
 
-  if (!config?.skipErrorHandling) {
-    return Promise.reject(error);
-  }
+  // skipErrorHandling 여부와 무관하게 항상 reject — 호출자가 직접 처리하도록
+  return Promise.reject(error);
 };
 
 /////////////////////////////////////////////////////

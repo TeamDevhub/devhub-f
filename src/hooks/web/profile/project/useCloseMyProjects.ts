@@ -1,7 +1,5 @@
 import { closeProject } from "@/api/web/api.projects";
-import useFormState from '@/hooks/_common/useFormState.ts';
-import type { FilterData, ProjectExtra, ProjectSearchRequest, SearchData } from "@/types/type.projects";
-import { useSelect, useMutation } from "@/hooks/_common/api.hook";
+import { useMutation } from "@/hooks/_common/api.hook";
 
 export default function useCloseMyProjects(
 ) {
