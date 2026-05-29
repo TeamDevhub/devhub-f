@@ -11,10 +11,11 @@ export default function useSelectBoards(
         req: { page: page - 1 }             
     }), [page]);
 
-    const {res} = useSelect(options);
+    const {res, refetch} = useSelect(options);
 
     return{
         res, 
-        page, setPage
+        page, setPage,
+        refetch
     };
 }

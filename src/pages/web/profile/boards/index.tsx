@@ -7,9 +7,10 @@ export default function MyProfileBoardList(){
   const {
     res, 
     page, setPage, 
+    refetch,
   } = useSelectBoards();
 
-  const { handleDelete } = useDeleteBoard();
+  const { handleDelete } = useDeleteBoard(refetch);
   
   return (
     <Paper className='mypage-box flex-col flex-grow flex-1' elevation={4}>

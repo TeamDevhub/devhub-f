@@ -1,32 +1,24 @@
 import { useMutation } from '@/hooks/_common/api.hook';
 import { useModal } from '@/hooks/_common/useModal';
-import {deleteBoard} from '@/api/web/api.boards';
+import { deleteBoard } from '@/api/web/api.boards';
 
-export default function useDeleteBoard(onSuccessAdminBoardDelete?: () => void) {
+export default function useDeleteBoard(onDeleted?: () => void) {
 
-    const { alert, confirm, closeModal} = useModal();
+    const { alert, confirm } = useModal();
     const onSuccess = () => {
-        if(onSuccessAdminBoardDelete) {
-            onSuccessAdminBoardDelete();
-        } else {
-            location.reload();
-        }
+        alert("게시글이 삭제되었습니다.");
+        onDeleted?.();
     }
     const onFail = () => {
         alert("게시글 삭제에 실패했습니다.");
     }
 
-    const { mutate } = useMutation<string[], void>(deleteBoard, onSuccess, onFail);
+    const { mutate } = useMutation<string, void>(deleteBoard, onSuccess, onFail);
     
-    const handleDelete = async (boardGuids:string | string[]) => {
-        const requestData = Array.isArray(boardGuids) ? boardGuids : [boardGuids];
+    const handleDelete = async (boardGuid:string) => {
         const isConfirmed = await confirm("게시글을 삭제하시겠습니까?");
-        if(!isConfirmed) {
-            closeModal?.();
-            return; 
-        }
-        closeModal?.();
-        await mutate(requestData);
+        if(!isConfirmed) return;
+        await mutate(boardGuid);
     }
 
     return {
