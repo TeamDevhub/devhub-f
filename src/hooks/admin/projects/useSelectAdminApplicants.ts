@@ -29,7 +29,7 @@ export default function useSelectAdminApplicants(projectGuid: string | undefined
     const searchParams = { ...state, page: 0 };
     setRequest(searchParams);
     setState(searchParams);
-    refetch();
+    // refetch();
   };
 
   const setPage = (page: number) => {

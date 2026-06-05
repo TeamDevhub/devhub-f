@@ -18,7 +18,6 @@ export default function ProjectDetail() {
 
   if (!projectGuid) {
     navigate('/projects');
-    return;
   }
 
   const { getCodeName } = useCodes();
@@ -77,7 +76,7 @@ export default function ProjectDetail() {
                 <Visibility sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.3)' }} />
                 <p>{res?.data?.viewCount}</p>
               </div>
-              <p className="post-date"> {dayjs(res?.data?.registeredDate).format('YYYY.MM.DD')}</p>
+              <p className="post-date"> {dayjs(res.data.registeredDate).format('YYYY.MM.DD')}</p>
             </div>
           </div>
         </div>
@@ -91,7 +90,7 @@ export default function ProjectDetail() {
                   <AccessTime sx={{ fontSize: 24, color: 'var(--primary-main)' }} />
                   <strong>모집기간</strong>
                 </div>
-                <div className="group-value align-center">{dayjs(res?.data?.recruitmentStartDate).format('YYYY.MM.DD')} ~ {dayjs(res?.data?.recruitmentEndDate).format('YYYY.MM.DD')}</div>
+                <div className="group-value align-center">{dayjs(res.data.recruitmentStartDate).format('YYYY.MM.DD')} ~ {dayjs(res.data.recruitmentEndDate).format('YYYY.MM.DD')}</div>
               </div>
               <div className="detail-group align-center">
                 <div className='group-label align-center'>
@@ -99,8 +98,8 @@ export default function ProjectDetail() {
                   <strong>프로젝트 기간</strong>
                 </div>
                 <div className="group-value align-center">
-                  {res?.data?.progressStartDate &&
-                    res?.data?.progressEndDate && (
+                  {res.data.progressStartDate &&
+                    res.data.progressEndDate && (
                       <>
                         {dayjs(res.data.progressStartDate).format('YYYY.MM.DD')} ~{' '}
                         {dayjs(res.data.progressEndDate).format('YYYY.MM.DD')} (
@@ -121,7 +120,7 @@ export default function ProjectDetail() {
                   <strong>진행방식</strong>
                 </div>
                 <div className="group-value align-center">
-                  {res?.data?.progressTypeCd &&
+                  {res.data.progressTypeCd &&
                     getCodeName(
                       COMMON_CODE.PROJECT_PROGRESS_TYPE,
                       res.data.progressTypeCd
@@ -134,7 +133,7 @@ export default function ProjectDetail() {
                   <strong>지역</strong>
                 </div>
                 <p className="group-value align-center">
-                  {res?.data?.progressRegionCd &&
+                  {res.data.progressRegionCd &&
                     getCodeName(
                       COMMON_CODE.REGION_CODE,
                       res.data.progressRegionCd
@@ -149,7 +148,7 @@ export default function ProjectDetail() {
                   <strong>사용기술</strong>
                 </div>
                 <div className="group-value align-center">
-                  {SkillChips(res?.data?.skillList)}
+                  {<SkillChips skillList={res.data.skillList} />}
                 </div>
               </div>
             </div>
@@ -160,7 +159,7 @@ export default function ProjectDetail() {
                   <strong>모집 포지션</strong>
                 </div>
                 <div className="group-value flex-col">
-                  {PositionChips(res?.data?.positionList)}
+                  {<PositionChips positionList={res.data.positionList} />}
                 </div>
               </div>
             </div>
@@ -170,9 +169,9 @@ export default function ProjectDetail() {
         <div className="project-detail flex-col">
           <strong className='detail-title'>프로젝트 상세</strong>
           <div className="detail-content">
-            {res?.data?.content}
+            {res.data.content}
             <div>
-              {res?.data?.imageFileGuid && <img src={`${import.meta.env.VITE_API_URL}/files/${res.data.imageFileGuid}`} />}
+              {res.data.imageFileGuid && <img src={`${import.meta.env.VITE_API_URL}/files/${res.data.imageFileGuid}`} />}
             </div>
           </div>
         </div>
@@ -186,7 +185,7 @@ export default function ProjectDetail() {
               elevation={5}
               sx={{ cursor: 'pointer' }}
             >
-              <HeartButton likeCount={res?.data?.likeCount} onClick={() => { toggleLike(res.data!.projectGuid) }} defaultLiked={res?.data.projectLiked} />
+              <HeartButton likeCount={res.data.likeCount} onClick={() => { toggleLike(res.data!.projectGuid) }} defaultLiked={res.data.projectLiked} />
             </Paper>
           </Tooltip> : null}
         <Tooltip arrow placement='right' title='지원하기'>

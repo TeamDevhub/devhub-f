@@ -63,7 +63,7 @@ export default function AdminProjectDetail() {
   const { getCodesByGroup, getCodeName } = useCodes();
   const recruitTypeCodes = getCodesByGroup(COMMON_CODE.PROJECT_RECRUIT_TYPE);
   const progressTypeCodes = getCodesByGroup(COMMON_CODE.PROJECT_PROGRESS_TYPE);
-  const regionCodes = getCodesByGroup(COMMON_CODE.REGION_CODE);
+  const regionCodes = getCodesByGroup(COMMON_CODE.REGION_CODE).flatMap(c => c?.children ?? []);
   const approvalStatusCodes = getCodesByGroup(COMMON_CODE.PROJECT_APPROVAL_STATUS);
   const positionCodes = getCodesByGroup(COMMON_CODE.POSITION_CODE);
   const levelCodes = getCodesByGroup(COMMON_CODE.POSITION_LEVEL_CODE);
@@ -343,7 +343,7 @@ export default function AdminProjectDetail() {
               {applicantRows.map((row: AdminApplicantSummary, index: number) => (
                 <TableRow key={row.applicantGuid}>
                   <TableCell align="center">{applicantTotal - applicantRequest.page * 10 - index}</TableCell>
-                  <TableCell align="left">{row.email}</TableCell>
+                  <TableCell align="left">{row.userGuid}</TableCell>
                   <TableCell align="center">
                     {getCodeName(COMMON_CODE.POSITION_CODE, row.positionCd)}
                   </TableCell>
