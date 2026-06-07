@@ -59,7 +59,15 @@ export default function useLogin() {
   };
 
   const oauthLogin = (provider: 'google' | 'github' | 'kakao') => {
-    window.location.href = `${import.meta.env.VITE_API_URL}/auth/oauth/${provider}`;
+    const apiUrl = import.meta.env.VITE_API_URL;
+
+    console.log('VITE_API_URL =', apiUrl);
+
+    if (!apiUrl) {
+      throw new Error('VITE_API_URL is not configured');
+    }
+
+    window.location.href = `${apiUrl}/auth/oauth/${provider}`;
   };
 
   return {
