@@ -1,5 +1,4 @@
 import type { ApiResponse } from '@/types/type.api';
-import { ERROR_CODE } from '@/constants/codes';
 import { tokenStorage } from '@/utils/auth.token';
 import axios, { AxiosError, HttpStatusCode, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig, type Method } from 'axios';
 import dayjs from 'dayjs';
@@ -142,19 +141,21 @@ const responseSuccessInterceptor = async (response: AxiosResponse<unknown>) => {
 
 /**
  * 에러 처리 — 401에 대한 silent refresh + 재시도 포함
+ * 만료/무효 등 구체 에러코드와 무관하게 401이면 재발급을 1회 시도한다.
+ * (백엔드 에러코드 변경에 깨지지 않도록 코드 문자열에 의존하지 않음)
  */
 const responseErrorInterceptor = async (err: unknown) => {
   const error = err as AxiosError<CommonError>;
   const config = error.config as CustomAxiosRequestConfig | undefined;
 
-  const errorCode = error.response?.data?.error?.code ?? '';
   const status = error.response?.status;
 
   if (status === 401 && !config?.skipErrorHandling) {
-    const isReissueCall = (config?.url ?? '').includes('/auth/reissue');
-    const canRetry = !!config && !config._retry && !isReissueCall;
+    // /auth/login·/auth/reissue 등 인증 엔드포인트 자체의 401은 재발급 대상이 아니다
+    const isAuthEndpoint = (config?.url ?? '').includes('/auth/');
+    const canRetry = !!config && !config._retry && !isAuthEndpoint;
 
-    if (errorCode === ERROR_CODE.EXPIRE_ACCESS_TOKEN && canRetry) {
+    if (canRetry) {
       const newToken = await triggerReissue();
       if (newToken) {
         config._retry = true;
@@ -164,13 +165,12 @@ const responseErrorInterceptor = async (err: unknown) => {
         } as typeof config.headers;
         return axiosInstance.request(config);
       }
-      handleAuthFailure();
-      return Promise.reject(error);
     }
 
-    // reissue 엔드포인트 자체 실패는 handleAuthFailure 없이 reject만
+    // 재발급 불가/실패 → 인증 실패 처리
+    // 인증 엔드포인트(reissue/login) 자체 실패는 redirect 하지 않는다
     // (init()의 조용한 토큰 복구 시도가 불필요한 redirect를 유발하지 않도록)
-    if (!isReissueCall) {
+    if (!isAuthEndpoint) {
       handleAuthFailure();
     }
     return Promise.reject(error);
