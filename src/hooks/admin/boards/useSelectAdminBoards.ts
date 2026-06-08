@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { getAdminBoards } from "@/api/web/api.boards";
+import { getAdminBoards } from "@/api/admin/api.boards";
 import { useSelect } from "@/hooks/_common/api.hook";
 import type { AdminBoardSearchRequest } from "@/types/type.boards";
 import { useNavigate } from 'react-router-dom';
 import useFormState from "@/hooks/_common/useFormState.ts";
-import useDeleteBoard from '@/hooks/web/boards/useDeleteBoard';
+import useDeleteAdminBoard from '@/hooks/admin/boards/useDeleteAdminBoard';
 
 const initData : AdminBoardSearchRequest = {
     page : 0,
@@ -26,7 +26,7 @@ export default function useSelectAdminBoards(
         req: request
     };
 
-    const {res} = useSelect(options);
+    const {res, refetch} = useSelect(options);
 
     const navigate = useNavigate();
     const handleDetail = (boardGuid:string) => {
@@ -44,9 +44,9 @@ export default function useSelectAdminBoards(
         setRequest((prev) => ({ ...prev, page: page - 1 }));
     }
 
-    const { handleDelete } = useDeleteBoard(() => {
+    const { handleDelete } = useDeleteAdminBoard(async () => {
         setSelectedGuids([]); 
-        boardSearch();       
+        await refetch();       
     });
     
     const handleSelectionChange = (guid: string, checked: boolean) => {

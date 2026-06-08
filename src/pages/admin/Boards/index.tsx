@@ -134,6 +134,7 @@ export default function BoardManagementPage(){
                         size='large'
                         color="primary"
                         checked={selectedGuids.includes(row.boardBasicResponseDto.boardGuid)}
+                        onClick={(e) => e.stopPropagation()}
                         onChange={(e) => handleSelectionChange(row.boardBasicResponseDto.boardGuid, e.target.checked)}
                       />
                     </TableCell>
