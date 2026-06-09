@@ -1,6 +1,6 @@
 import type { DateType } from "@/types/type.api";
-import type { ApplicationFormType } from "@/types/const.projectCreate.ts"
-import type { ProjectRecruitStatusCode } from '@/types/type._common';
+import type { ApplicationFormType } from "@/constants/projectCreate"
+import type { ProjectRecruitStatusCode, ProjectApprovalStatusCode } from '@/types/type._common';
 
 export interface ProjectBasic {
   projectGuid: string;
@@ -110,6 +110,7 @@ export interface ProjectSearchRequest {
   recruitmentStartDate?: DateType;
   recruitmentEndDate?: DateType;
   progressStartDate?: DateType;
+  progressEndDate?: DateType;
 }
 
 export interface ProjectFileMetaData {
@@ -208,20 +209,33 @@ export interface CreateApplicationRequest {
 
 // Profile
 export type MyProjectListCardVariant = 'register' | 'apply' | 'favorite' | 'participate';
-export type ApprovalStateType = '승인 대기중' | '참가 승인' | '참가 거절';
-export type ProgressStateType = '진행중' | '진행완료';
+export type ProgressStateType = 'ing' | 'end';
+
+export interface MyApplication {
+  applicantGuid: string;
+  userName: string;
+  email: string;
+  score: number;
+  mannerDegree: string;
+}
+
 export interface MyProject {
   variant?: MyProjectListCardVariant;
+  projectGuid: string;
   title?: string;
   recruitmentStartDate?: string;
   recruitmentEndDate?: string;
   progressStartDate?: string;
   progressEndDate?: string;
+  progressRegionCd?: string;
+  recruitmentTypeCd?: string;
   currentRecriutNumber?: string;
   totalRecriutNumber?: string;
   applicantNumber?: string;
   approvalNumber?: string;
-  approvalState?: ApprovalStateType;
+  approvalState?: ProjectApprovalStatusCode;
   progressState?: ProgressStateType;
+  recruitStatus: ProjectRecruitStatusCode;
+  applicationList?: MyApplication[];
   children?: React.ReactNode;
 }

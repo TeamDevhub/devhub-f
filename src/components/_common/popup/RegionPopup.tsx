@@ -2,7 +2,7 @@ import {Checkbox, Chip, List, ListItemButton, ListItemIcon, ListItemText, Tab, T
 import React, {useMemo, useRef, useState} from 'react';
 import WebPopup from './WebPopup';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
-import {COMMON_CODE} from "@/types/const.ts";
+import {COMMON_CODE} from "@/constants/codes.ts";
 
 export interface RegionPopupProps{
   isOpen:boolean;

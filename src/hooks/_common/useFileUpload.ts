@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { UploadResponse } from '@/types/type.api.ts';
-import { ERROR_MESSAGES } from '@/types/const.errorMessages.ts';
+import { ERROR_MESSAGES } from '@/constants/errorMessages';
 import fetcher from '@/utils/util.api.ts';
-import { useLoading } from '@/contexts/LoadingContext.ts';
+import { loadingStore } from '@/stores/loading.store';
 
 interface FileState {
   file: File | null;
@@ -21,11 +21,17 @@ const useFileUpload = () => {
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
   const [errors, setErrors] = useState<Record<string, string | null>>({});
   const [fileStates, setFileStates] = useState<Record<string, FileState>>({});
-  const { show, hide } = useLoading();
+  const { show, hide } = loadingStore;
+
+  // 언마운트 시 클린업에서 최신 fileStates에 접근하기 위한 ref
+  const fileStatesRef = useRef(fileStates);
+  useEffect(() => {
+    fileStatesRef.current = fileStates;
+  });
 
   useEffect(() => {
     return () => {
-      Object.values(fileStates).forEach((state) => {
+      Object.values(fileStatesRef.current).forEach((state) => {
         if (state.previewUrl) {
           URL.revokeObjectURL(state.previewUrl);
         }

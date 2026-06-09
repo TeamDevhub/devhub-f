@@ -1,11 +1,11 @@
 import useFormState from "@/hooks/_common/useFormState.ts";
 import type {Banner} from "@/types/type.banner.ts";
 import useSelect, {useMutation} from "@/hooks/_common/api.hook.ts";
-import {deleteBanner, saveBanner} from "@/api/admin/banner/banner.api.ts";
+import {deleteBanner, saveBanner} from "@/api/admin/api.banner.ts";
 import useFileUpload from "@/hooks/_common/useFileUpload.ts";
 import {useModal} from "@/hooks/_common/useModal.ts";
 import { Validators } from "@/utils/util._common";
-import {selectFile} from "@/api/file/file.api.ts";
+import {selectFile} from "@/api/web/api.file.ts";
 
 export default function useBannerPopup( initData: Banner | null, onClose: (isUpdate?:boolean) => void) {
     let _init = {

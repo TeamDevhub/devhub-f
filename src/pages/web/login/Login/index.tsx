@@ -2,25 +2,13 @@ import logo from '@/assets/images/devHub-logo.png';
 import googleIcon from '@/assets/images/google-icon.svg';
 import kakaoIcon from '@/assets/images/kakao-icon.png';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import useLogin from '@/hooks/login/useLogin';
+import useLogin from '@/hooks/web/login/useLogin';
 import { GitHub } from '@mui/icons-material';
 import { Button, Divider, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export default function Login() {
-  const { loginInfo, changeId, changePassword, applyLogin } = useLogin();
-
-  const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8080/auth/oauth/google';
-  };
-
-  const handleGithubLogin = () => {
-    window.location.href = 'http://localhost:8080/auth/oauth/github';
-  };
-
-  const handleKakaoLogin = () => {
-    window.location.href = 'http://localhost:8080/auth/oauth/kakao';
-  };
+  const { loginInfo, changeId, changePassword, applyLogin, oauthLogin } = useLogin();
 
   return (
     <div className="auth-page flex-center">
@@ -68,7 +56,7 @@ export default function Login() {
           </div>
           <Divider />
           <div className="button-box flex-col">
-            <Button fullWidth size="medium" variant="outlined" color="primary" onClick={handleGoogleLogin}>
+            <Button fullWidth size="medium" variant="outlined" color="primary" onClick={() => oauthLogin('google')}>
               <img src={googleIcon} alt="google icon" className="button-icon" />
               Google로 로그인
             </Button>
@@ -78,7 +66,7 @@ export default function Login() {
               size="medium"
               variant="outlined"
               color="primary"
-              onClick={handleGithubLogin}
+              onClick={() => oauthLogin('github')}
               startIcon={<GitHub sx={{ fontSize: '2rem' }} />}
               sx={{ color: 'text.primary', borderColor: 'text.primary' }}
             >
@@ -89,7 +77,7 @@ export default function Login() {
               fullWidth
               size="medium"
               variant="outlined"
-              onClick={handleKakaoLogin}
+              onClick={() => oauthLogin('kakao')}
               sx={{
                 borderColor: '#FEE500',
                 color: '#000',

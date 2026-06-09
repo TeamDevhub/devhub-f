@@ -1,5 +1,5 @@
 import type {ValidationRule} from "@/hooks/_common/useFormState.ts";
-import {ERROR_MESSAGES} from "@/types/const.errorMessages.ts";
+import {ERROR_MESSAGES} from "@/constants/errorMessages";
 
 //로컬 저장소 관련
 /**

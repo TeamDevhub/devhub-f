@@ -1,23 +1,17 @@
-import {LoadingBridge} from "@/contexts/LoadingContext";
-import {Outlet} from 'react-router-dom';
-import {CommonCodeProvider} from "@/contexts/CommonCodeProvider.tsx";
-import {LoadingProvider} from "@/contexts/LoadingProvider.tsx";
-import {AuthProvider} from "@/contexts/AuthProvider.tsx";
+import LoadingRenderer from '@/components/_common/layout/LoadingRenderer';
+import { LoadingBridge } from '@/contexts/LoadingContext';
+import { Outlet } from 'react-router-dom';
 
 export default function AuthLayout() {
-
   return (
-    <LoadingProvider>
-        <LoadingBridge/>
-        <AuthProvider>
-            <CommonCodeProvider>
-              <div id='devHub' className='wh-100'>
-                <main>
-                  <Outlet></Outlet>
-                </main>
-              </div>
-            </CommonCodeProvider>
-        </AuthProvider>
-    </LoadingProvider>
-  )
+    <>
+      <LoadingBridge />
+      <div id='devHub' className='wh-100'>
+        <main>
+          <Outlet />
+        </main>
+      </div>
+      <LoadingRenderer />
+    </>
+  );
 }

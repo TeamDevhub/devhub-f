@@ -4,18 +4,34 @@ import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import { Create, Person, Visibility } from '@mui/icons-material'
 import { Button, Divider, Paper } from '@mui/material'
 import { useLocation } from 'react-router-dom'
-import useSelectBoardDetail from '@/hooks/boards/useSelectBoardDetail';
-import useCreateComment from '@/hooks/comments/useCreateComment';
-import { BoardCategoryChip } from '@/components/boards/BoardChips';
-import CommentCard from '@/components/boards/boardDetail/CommentCard';
-import useMutationBoards from '@/hooks/boards/useMutationBoards';
+import { useState } from 'react';
+import useSelectBoardDetail from '@/hooks/web/boards/useSelectBoardDetail';
+import useCreateComment from '@/hooks/web/comments/useCreateComment';
+import { BoardCategoryChip } from '@/components/web/boards/BoardChips';
+import CommentCard from '@/components/web/boards/CommentCard';
+import useMutationBoards from '@/hooks/web/boards/useMutationBoards';
+import { useAuth } from '@/contexts/AuthContext';
+import useDisclosure from '@/hooks/_common/useDisclosure';
+import ReportPopup from '@/components/_common/popup/ReportPopup';
 
 export default function BoardDetail(){
 
+  const reportPopup = useDisclosure();
+  // 어떤 대상을 신고하는지 데이터 저장이 필요함
+  const [reportTarget, setReportTarget] = useState<{ boardGuid: string; commentGuid: string | null } | null>(null);
+
+  const handleOpenReport = (boardGuid: string, commentGuid: string | null = null) => {
+    setReportTarget({ boardGuid, commentGuid });
+    reportPopup.open();
+  };
+
+  const handleCloseReport = () => {
+    reportPopup.close();
+    setReportTarget(null);
+  };
+
   const {state} = useLocation();
-  const {
-    res
-  } = useSelectBoardDetail(state?.boardGuid);
+  const {res} = useSelectBoardDetail(state?.boardGuid);
 
   const {
     content, setContent,
@@ -23,6 +39,9 @@ export default function BoardDetail(){
   } = useCreateComment(state?.boardGuid)
 
   const { handleLike } = useMutationBoards();
+  const { isLoggedIn, user } = useAuth();
+  const currentUserGuid  = user?.userGuid;
+  const isBoardOwner = !!currentUserGuid && currentUserGuid === res?.data?.boardSummaryResponseDto.boardBasicResponseDto.userGuid
 
   return (
     <div className='main-page align-stretch' style={{ minHeight: 'calc(100vh - 7rem)' }}>
@@ -36,9 +55,9 @@ export default function BoardDetail(){
                 {res?.data?.boardSummaryResponseDto.boardBasicResponseDto.title}
               </strong>
             </div>
-            <div className="right-area flex-col">
-              <HeartButton onClick={(e) => handleLike(res?.data?.boardSummaryResponseDto.boardBasicResponseDto.boardGuid)} likeCount={res?.data?.boardSummaryResponseDto.likeCount} /> 
-            </div>
+            {isLoggedIn ? <div className="right-area flex-col">
+              <HeartButton onClick={() => handleLike(res?.data?.boardSummaryResponseDto.boardBasicResponseDto.boardGuid)} likeCount={res?.data?.boardSummaryResponseDto.likeCount} defaultLiked={res?.data?.isLiked}/>
+            </div> : null }
           </div>
           <div className="bottom w-100 align-end justify-between">
             <div className="user-info align-center">
@@ -72,23 +91,34 @@ export default function BoardDetail(){
             <p>{res?.data?.boardSummaryResponseDto.boardBasicResponseDto.content}</p>
           </div>
           <Divider flexItem />
-          <Button size='small' color='warning' className='ml-a'>신고하기</Button>
-          <div className="write-reply flex-col">
+          {isLoggedIn && !isBoardOwner && (
+            <Button
+              size='small'
+              color='warning'
+              className='ml-a'
+              onClick={() => handleOpenReport(res?.data?.boardSummaryResponseDto.boardBasicResponseDto.boardGuid || '', null)}
+            >
+              신고하기
+            </Button>
+          )}
+          {isLoggedIn && <div className="write-reply flex-col">
             <strong>댓글</strong>
             <div className="align-stretch">
               <CustomTextfield size='small' placeholder='댓글을 입력하세요.' value={content}
               onChange={(e)=>setContent(e.target.value)}/>
               <Button size='small' variant='contained' color='primary' onClick={onSubmit}>글쓰기</Button>
             </div>
-          </div>
+          </div>}
         </div>
         {/* 3. board reply */}
         <div className="board-reply flex-col">
           {res?.data?.commentList?.map((item, index) => {
-            return <CommentCard key={index} commentData={item}></CommentCard>
+            return <CommentCard key={index} commentData={item} onClickReport={handleOpenReport} currentUserGuid={currentUserGuid} isLoggedIn={isLoggedIn}></CommentCard>
           })}
         </div>
       </Paper>
+
+      {reportTarget && <ReportPopup isOpen={reportPopup.isOpen} onClose={handleCloseReport} boardGuid={reportTarget.boardGuid} commentGuid={reportTarget.commentGuid}/> }
     </div>
   )
 }

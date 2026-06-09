@@ -1,15 +1,16 @@
 import { Pagination, Paper } from '@mui/material'
-import useSelectBoards from '@/hooks/profile/boards/useSelectBoards';
-import MyInfoBoardCard from '@/components/profile/MyInfoBoardCard';
-import useDeleteBoard from '@/hooks/boards/useDeleteBoard';
+import useSelectBoards from '@/hooks/web/profile/boards/useSelectBoards';
+import MyInfoBoardCard from '@/components/web/profile/MyInfoBoardCard';
+import useDeleteBoard from '@/hooks/web/boards/useDeleteBoard';
 
 export default function MyProfileBoardList(){
   const {
     res, 
     page, setPage, 
+    refetch,
   } = useSelectBoards();
 
-  const { handleDelete } = useDeleteBoard();
+  const { handleDelete } = useDeleteBoard(refetch);
   
   return (
     <Paper className='mypage-box flex-col flex-grow flex-1' elevation={4}>

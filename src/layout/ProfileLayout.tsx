@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import MyInfoBox from '@/components/profile/MyInfoBox';
+import MyInfoBox from '@/components/web/profile/MyInfoBox';
 
 type MyPageNavKey = 'home' | 'projects' | 'boards';
 

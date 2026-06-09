@@ -23,7 +23,6 @@ export interface SignupRequest {
 
 export interface OauthSignupRequest {
   tempToken: string;
-  password: string;
   username: string;
   introduction: string;
   skillList: string[];

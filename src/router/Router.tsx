@@ -1,22 +1,22 @@
 import AuthLayout from '@/layout/AuthLayout';
 import MainLayout from '@/layout/MainLayout';
-import BoardCreatePage from '@/pages/design/web/boards/BoardCreatePage';
-import BoardDetailPage from '@/pages/design/web/boards/BoardDetailPage';
-import BoardListPage from '@/pages/design/web/boards/BoardListPage';
-import BoardModifyPage from '@/pages/design/web/boards/BoardModifyPage';
-import LoginPage from '@/pages/design/web/login/LoginPage';
-import MyBoardPage from '@/pages/design/web/mypage/boards/MyBoardPage';
-import MyHomeModifyPage from '@/pages/design/web/mypage/home/MyHomeModifyPage';
-import MyHomePage from '@/pages/design/web/mypage/home/MyHomePage';
-import MyProjectApplicantPage from '@/pages/design/web/mypage/projects/MyProjectApplicantPage';
-import MyProjectListPage from '@/pages/design/web/mypage/projects/MyProjectListPage';
-import ProjectApplyPage from '@/pages/design/web/projects/ProjectApplyPage';
-import ProjectCreatePage from '@/pages/design/web/projects/ProjectCreatePage';
-import ProjectDetailPage from '@/pages/design/web/projects/ProjectDetailPage';
-// import ProjectListPage from '@/pages/design/web/projects/ProjectListPage';
-import SignupPage from '@/pages/design/web/signup/SignInPage1';
-import SignInPage2 from '@/pages/design/web/signup/SignInPage2';
-import SkillTrendsPage from '@/pages/design/web/skilltrends/SkillTrendsPage';
+import BoardCreatePage from '@/pages/_design/web/boards/BoardCreatePage';
+import BoardDetailPage from '@/pages/_design/web/boards/BoardDetailPage';
+import BoardListPage from '@/pages/_design/web/boards/BoardListPage';
+import BoardModifyPage from '@/pages/_design/web/boards/BoardModifyPage';
+import LoginPage from '@/pages/_design/web/login/LoginPage';
+import MyBoardPage from '@/pages/_design/web/mypage/boards/MyBoardPage';
+import MyHomeModifyPage from '@/pages/_design/web/mypage/home/MyHomeModifyPage';
+import MyHomePage from '@/pages/_design/web/mypage/home/MyHomePage';
+import MyProjectApplicantPage from '@/pages/_design/web/mypage/projects/MyProjectApplicantPage';
+import MyProjectListPage from '@/pages/_design/web/mypage/projects/MyProjectListPage';
+import ProjectApplyPage from '@/pages/_design/web/projects/ProjectApplyPage';
+import ProjectCreatePage from '@/pages/_design/web/projects/ProjectCreatePage';
+import ProjectDetailPage from '@/pages/_design/web/projects/ProjectDetailPage';
+// import ProjectListPage from '@/pages/_design/web/projects/ProjectListPage';
+import SignupPage from '@/pages/_design/web/signup/SignInPage1';
+import SignInPage2 from '@/pages/_design/web/signup/SignInPage2';
+import SkillTrendsPage from '@/pages/_design/web/skilltrends/SkillTrendsPage';
 import ErrorPage from '@/pages/ErrorPage';
 import BoardList from '@/pages/web/boards/BoardList';
 import BoardCreate from '@/pages/web/boards/BoardCreate';
@@ -28,28 +28,37 @@ import MyProfileHome from '@/pages/web/profile/home';
 import MyProfileUpdateWrapper from '@/pages/web/profile/update';
 import MyProfileProjectListPage from '@/pages/web/profile/projects';
 import MyProfileBoardList from '@/pages/web/profile/boards';
-import MainPage from '@/pages/web/MainPage';
+import HomePage from '@/pages/web/Home';
+import SkillTrendPage from '@/pages/web/SkillTrend';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import ProjectUpdate from '@/pages/web/projects/ProjectUpdate';
 import Signup from '@/pages/web/signup/Signup';
 import { createBrowserRouter } from 'react-router-dom';
-import UserListPage from '@/pages/design/admin/users/UserListPage';
-import UserReportPage from '@/pages/design/admin/users/UserReportPage';
-import UserDetailPage from '@/pages/design/admin/users/UserDetailPage';
-import ProjectListPage2 from '@/pages/design/admin/projects/ProjectListPage';
-import ProjectDetailPage2 from '@/pages/design/admin/projects/ProjectDetailPage';
-import CodeManagementPage from '@/pages/design/admin/codes/CodeManagementPage';
-import FormManagementPage from '@/pages/design/admin/forms/FormManagementPage';
-import BoardManagementPage from '@/pages/design/admin/boards/BoardManagementPage';
-import BannerManagementPage from '@/pages/design/admin/banner/BannerManagementPage';
-import TermsManagementPage from '@/pages/design/admin/terms/TermsManagementPage';
-import DesignMainPage from '@/pages/design/web/main/DesignMainPage';
-import OauthCallback from '@/pages/web/login/Login';
-import AdminLayout from '@/layout/AdminLayout';
+import UserListPage from '@/pages/_design/admin/users/UserListPage';
+import UserReportPage from '@/pages/_design/admin/users/UserReportPage';
+import UserDetailPage from '@/pages/_design/admin/users/UserDetailPage';
+import ProjectListPage2 from '@/pages/_design/admin/projects/ProjectListPage';
+import ProjectDetailPage2 from '@/pages/_design/admin/projects/ProjectDetailPage';
+import CodeManagementPage from '@/pages/_design/admin/codes/CodeManagementPage';
+import FormManagementPage from '@/pages/_design/admin/forms/FormManagementPage';
+import BoardManagementPage from '@/pages/_design/admin/boards/BoardManagementPage';
+import BannerManagementPage from '@/pages/_design/admin/banner/BannerManagementPage';
+import TermsManagementPage from '@/pages/_design/admin/terms/TermsManagementPage';
 import Banner from '@/pages/admin/Banner';
+import BoardAdmin from '@/pages/admin/Boards';
+import AdminUserList from '@/pages/admin/Users/UserList';
+import AdminUserDetail from '@/pages/admin/Users/UserDetail';
+import AdminProjectList from '@/pages/admin/Projects/List';
+import AdminProjectDetail from '@/pages/admin/Projects/Detail';
+import AdminReportList from '@/pages/admin/Reports/ReportList';
+import ProjectListAdmin from '@/pages/admin/Projects/ProjectList';
+import ProjectDetailAdmin from '@/pages/admin/Projects/ProjectDetail';
+import DesignMainPage from '@/pages/_design/web/main/DesignMainPage';
+import AdminLayout from '@/layout/AdminLayout';
 import Codes from '@/pages/admin/Codes';
+import FormsPage from '@/pages/admin/Form';
 
 import ProjectApplyList from '@/pages/web/projects/ProjectApplyList';
 import ProjectApply from '@/pages/web/projects/ProjectApply';
@@ -62,7 +71,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MainPage />,
+        element: <HomePage />,
+      },
+      {
+        path: 'skilltrend',
+        element: <SkillTrendPage />,
       },
       {
         path: 'profile',
@@ -77,7 +90,7 @@ const router = createBrowserRouter([
             element: <MyProfileUpdateWrapper />,
           },
           {
-            path: 'projects',
+            path: 'projects/:paramTabValue?',
             element: <MyProfileProjectListPage />,
           },
           // {
@@ -160,8 +173,36 @@ const router = createBrowserRouter([
           },
         ],
       },
-          }
-        ]
+      {
+        path: 'boards',
+        children: [
+          {
+            index: true,
+            element: <BoardAdmin />,
+          },
+        ],
+      },
+      {
+        path: 'users',
+        children: [
+          {
+            index: true,
+            element: <AdminUserList />,
+          },
+          {
+            path: ':userGuid',
+            element: <AdminUserDetail />,
+          },
+        ],
+      },
+      {
+        path: 'reports',
+        children: [
+          {
+            index: true,
+            element: <AdminReportList />,
+          },
+        ],
       },
       {
         path: 'codes',
@@ -169,9 +210,39 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Codes />,
-          }
-        ]
-      }
+          },
+        ],
+      },
+      {
+        path: 'forms',
+        children: [
+          {
+            index: true,
+            element: <FormsPage />,
+          },
+        ],
+      },
+      {
+        path: 'projects',
+        children: [
+          {
+            index: true,
+            element: <AdminProjectList />,
+          },
+          {
+            path: ':projectGuid',
+            element: <AdminProjectDetail />,
+          },
+          {
+            path: 'list',
+            element: <ProjectListAdmin />,
+          },
+          {
+            path: 'detail',
+            element: <ProjectDetailAdmin />,
+          },
+        ],
+      },
     ],
   },
   {
@@ -194,22 +265,6 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Signup />,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: '/oauth',
-    element: <AuthLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: 'callback',
-        children: [
-          {
-            index: true,
-            element: <OauthCallback />,
           },
         ],
       },
@@ -309,7 +364,7 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: 'skilltrends',
+            path: 'skilltrend',
             children: [
               {
                 index: true,

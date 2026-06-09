@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom'
-import useSelectBoardDetail from '@/hooks/boards/useSelectBoardDetail';
-import BoardUpdateForm from '@/components/boards/boardUpdate/BoardUpdateForm'
+import useSelectBoardDetail from '@/hooks/web/boards/useSelectBoardDetail';
+import BoardUpdateForm from '@/components/web/boards/BoardUpdateForm'
 export default function BoardUpdate() {
 
   const {state} = useLocation();

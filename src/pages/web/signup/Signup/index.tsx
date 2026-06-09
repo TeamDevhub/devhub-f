@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
-import UserInfoPage from '@/components/signup/UserInfoPage';
-import VerificationPage from '@/components/signup/VerificationPage';
+import UserInfoPage from '@/components/web/signup/UserInfoPage';
+import VerificationPage from '@/components/web/signup/VerificationPage';
 import { useState } from 'react';
 
 export default function Signup() {

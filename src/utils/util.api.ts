@@ -1,6 +1,5 @@
 import type { ApiResponse } from '@/types/type.api';
-import { ERROR_CODE } from '@/types/const';
-import { getSessionStorage } from '@/utils/util._common';
+import { tokenStorage } from '@/utils/auth.token';
 import axios, { AxiosError, HttpStatusCode, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig, type Method } from 'axios';
 import dayjs from 'dayjs';
 
@@ -86,17 +85,52 @@ const handleRequestEnd = () => {
 /////////////////////////////////////////////////////
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   skipErrorHandling?: boolean;
+  _retry?: boolean;
 }
+
+// 동시 401 시 reissue 한 번만 호출하기 위한 단일 promise 큐
+let reissuePromise: Promise<string | null> | null = null;
+
+const triggerReissue = (): Promise<string | null> => {
+  if (reissuePromise) return reissuePromise;
+
+  reissuePromise = (async (): Promise<string | null> => {
+    try {
+      // 순환 import 회피를 위한 dynamic import
+      const { reissue } = await import('@/api/web/api.auth');
+      const res = await reissue();
+      const token = res?.data?.accessToken;
+      if (!token) return null;
+      tokenStorage.set(token);
+      return token;
+    } catch {
+      return null;
+    } finally {
+      // 다음 만료 사이클을 위해 비움
+      setTimeout(() => { reissuePromise = null; }, 0);
+    }
+  })();
+
+  return reissuePromise;
+};
+
+const handleAuthFailure = (): void => {
+  tokenStorage.clear();
+  if (typeof window === 'undefined') return;
+  // 인증 페이지에서의 401(로그인 실패 등)은 redirect 루프 방지를 위해 그대로 둔다
+  if (window.location.pathname.startsWith('/auth/')) return;
+  window.location.href = '/auth/login';
+};
+
 /**
  * 요청 성공 처리
  */
 const requestSuccessInterceptor = async (request: InternalAxiosRequestConfig<unknown>) => {
-  const accessToken = getSessionStorage('accessToken');
+  const accessToken = tokenStorage.get();
   if (accessToken) request.headers['Authorization'] = `Bearer ${accessToken}`;
 
   return request;
 };
-//bearer basic digest hoba ..
 
 /**
  * 응답 성공 처리
@@ -104,38 +138,46 @@ const requestSuccessInterceptor = async (request: InternalAxiosRequestConfig<unk
 const responseSuccessInterceptor = async (response: AxiosResponse<unknown>) => {
   return response;
 };
+
 /**
- * 에러 처리
+ * 에러 처리 — 401에 대한 silent refresh + 재시도 포함
+ * 만료/무효 등 구체 에러코드와 무관하게 401이면 재발급을 1회 시도한다.
+ * (백엔드 에러코드 변경에 깨지지 않도록 코드 문자열에 의존하지 않음)
  */
 const responseErrorInterceptor = async (err: unknown) => {
   const error = err as AxiosError<CommonError>;
+  const config = error.config as CustomAxiosRequestConfig | undefined;
 
-  console.log('responseErrorInterceptor', error.response?.data?.error?.code);
-
-  const errorCode = error.response?.data?.error?.code ?? '';
   const status = error.response?.status;
 
-  //에러 인터페이스에 따라 처리 추후 추가
-  if (status === 401) {
-    if (errorCode === ERROR_CODE.EXPIRE_ACCESS_TOKEN) {
-      // 리프레쉬토큰 발급
-    } else if (errorCode === ERROR_CODE.DUP_LOGIN) {
-      //
-    } else if (errorCode === ERROR_CODE.SIGNATURE_ERROR_ACCESS_TOKEN) {
-      //
-    } else {
-      try {
-        // signOut();
-        return;
-      } catch (error) {
-        console.error(error);
+  if (status === 401 && !config?.skipErrorHandling) {
+    // /auth/login·/auth/reissue 등 인증 엔드포인트 자체의 401은 재발급 대상이 아니다
+    const isAuthEndpoint = (config?.url ?? '').includes('/auth/');
+    const canRetry = !!config && !config._retry && !isAuthEndpoint;
+
+    if (canRetry) {
+      const newToken = await triggerReissue();
+      if (newToken) {
+        config._retry = true;
+        config.headers = {
+          ...(config.headers ?? {}),
+          Authorization: `Bearer ${newToken}`,
+        } as typeof config.headers;
+        return axiosInstance.request(config);
       }
     }
-  }
 
-  if (!(error?.config as CustomAxiosRequestConfig)?.skipErrorHandling) {
+    // 재발급 불가/실패 → 인증 실패 처리
+    // 인증 엔드포인트(reissue/login) 자체 실패는 redirect 하지 않는다
+    // (init()의 조용한 토큰 복구 시도가 불필요한 redirect를 유발하지 않도록)
+    if (!isAuthEndpoint) {
+      handleAuthFailure();
+    }
     return Promise.reject(error);
   }
+
+  // skipErrorHandling 여부와 무관하게 항상 reject — 호출자가 직접 처리하도록
+  return Promise.reject(error);
 };
 
 /////////////////////////////////////////////////////

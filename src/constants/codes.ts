@@ -1,0 +1,81 @@
+export const PROJECT_RECRUIT_TYPE = {
+  GENERAL: { CODE: '3001', NAME: '일반 모집' },
+  ADDITIONAL: { CODE: '3002', NAME: '추가 모집' },
+} as const;
+
+export const PROJECT_RECRUIT_STATUS = {
+  RECRUITING: { CODE: '3201', NAME: '모집중' },
+  COMPLETED: { CODE: '3202', NAME: '모집완료' },
+  WAITING: { CODE: '3203', NAME: '모집대기' },
+} as const;
+
+export const PROJECT_PROGRESS_TYPE = {
+  WAITING: { CODE: '3101', NAME: '모집중' },
+  COMPLETE: { CODE: '3102', NAME: '모집완료' },
+  REJECT: { CODE: '3103', NAME: '승인거절' },
+} as const;
+
+export const PROJECT_APPROVAL_STATUS = {
+  WAITING: { CODE: '3301', NAME: '승인대기' },
+  COMPLETE: { CODE: '3302', NAME: '승인완료' },
+  REJECT: { CODE: '3303', NAME: '승인거절' },
+} as const;
+
+export const BOARD_CATEGORY = {
+  FREE: { CODE: '4001', NAME: '자유게시판' },
+  QNA: { CODE: '4002', NAME: '질문게시판' },
+  NOTICE: { CODE: '4003', NAME: '공지사항' },
+} as const;
+
+export const COMMON_CODE = {
+  SKILL_CODE: "SKILL_CODE",
+  POSITION_CODE: "POSITION_CODE",
+  POSITION_LEVEL_CODE: "POSITION_LEVEL_CODE",
+  PROJECT_RECRUIT_TYPE: "PROJECT_RECRUIT_TYPE",
+  PROJECT_PROGRESS_TYPE: "PROJECT_PROGRESS_TYPE",
+  PROJECT_RECRUIT_STATUS: "PROJECT_RECRUIT_STATUS",
+  PROJECT_APPROVAL_STATUS: "PROJECT_APPROVAL_STATUS",
+  POST_CATEGORY: "POST_CATEGORY",
+  REPORT_TYPE: "REPORT_TYPE",
+  NOTIFICATION_TYPE: "NOTIFICATION_TYPE",
+  REGION_CODE: "REGION_CODE",
+  BOARD_CATEGORY: "BOARD_CATEGORY",
+  USER_STATUS: "USER_STATUS",
+  APPLICATION_FORM_TYPE: "APPLICATION_FORM_TYPE"
+} as const;
+
+export const USER_STATUS_FILTER = {
+  ALL:     { VALUE: '' as const,        LABEL: '전체' },
+  ACTIVE:  { VALUE: 'active' as const,  LABEL: '정상' },
+  BLOCKED: { VALUE: 'blocked' as const, LABEL: '정지됨' },
+  DELETED: { VALUE: 'deleted' as const, LABEL: '탈퇴' },
+} as const;
+
+export type UserStatusFilter = typeof USER_STATUS_FILTER[keyof typeof USER_STATUS_FILTER]['VALUE'];
+
+export const ERROR_CODE = {
+  INVALID_INPUT_VALUE: 'ERR.DVH.0001', // 400
+  NOT_FOUND_API_KEY: 'ERR.DVH.0005', //400
+
+  // //FORBIDDEN
+  // HANDLE_ACCESS_DENIED : 'ERR.DVH.0004', // 403
+  // NOT_ALLOW_SERVICE: 'ERR.DVH.2004', //403
+
+  // METHOD_NOT_ALLOWED : 'ERR.DVH.0002' , // 405
+
+  // API_NOT_FOUND : 'ERR.DVH.0011', //404 DVH에 API가 등록되지 않았습니다.
+
+  // INVALID_QUERY_STRING : 'ERR.DVH.0003', // 500
+  // DB_CONNECTION_ERROR : 'ERR.DVH.1000', //500
+  // DB_ACCESS_ERROR : 'ERR.DVH.1001', //500
+  // UNKNOWN_HOST : 'ERR.DVH.2002', //500
+  // PROXY_SERVICE_NOT_CONNECT : 'ERR.DVH.2000', //500
+  // PROXY_SERVICE_READ_TIMEOUT : 'ERR.DVH.2001', //500
+
+  // UNAUTHORIZED (401) — 백엔드 ErrorCode enum 기준
+  // 참고: 인터셉터는 더 이상 코드 문자열에 의존하지 않고 401이면 재발급을 시도한다.
+  EXPIRE_ACCESS_TOKEN: 'ERR.DVH.0010', // 토큰 만료
+  INVALID_ACCESS_TOKEN: 'ERR.DVH.0011', // 유효하지 않은 토큰
+  AUTH_INVALID: 'ERR.DVH.0016', // 유효하지 않은 인증 정보
+
+} as const;
