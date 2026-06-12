@@ -80,29 +80,33 @@ export const DDayChip = ({
 	);
 };
 
+interface SkillChipsProps {
+	skillList?: string[];
+}
 export const SkillChips = (
-	skillList?: string[]
+	{ skillList }: SkillChipsProps
 ) => {
 	const { getCodeName } = useCodes();
 	if (!skillList || skillList.length === 0) return null;
 
 	return skillList.map((skillCd) => {
-		const label = getCodeName(COMMON_CODE.SKILL_CODE, skillCd);
-
 		return (
 			<Chip
 				key={skillCd}
 				size="small"
 				variant="outlined"
-				label={label}
+				label={getCodeName(COMMON_CODE.SKILL_CODE, skillCd)}
 				color="secondary"
 			/>
 		);
 	});
 };
 
+interface PositionChipsProps {
+	positionList?: Position[];
+}
 export const PositionChips = (
-	positionList?: Position[]
+	{ positionList }: PositionChipsProps
 ) => {
 	const { getCodeName } = useCodes();
 	if (!positionList || positionList.length === 0) return null;

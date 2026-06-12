@@ -53,8 +53,6 @@ import AdminUserDetail from '@/pages/admin/Users/UserDetail';
 import AdminProjectList from '@/pages/admin/Projects/List';
 import AdminProjectDetail from '@/pages/admin/Projects/Detail';
 import AdminReportList from '@/pages/admin/Reports/ReportList';
-import ProjectListAdmin from '@/pages/admin/Projects/ProjectList';
-import ProjectDetailAdmin from '@/pages/admin/Projects/ProjectDetail';
 import DesignMainPage from '@/pages/_design/web/main/DesignMainPage';
 import AdminLayout from '@/layout/AdminLayout';
 import Codes from '@/pages/admin/Codes';
@@ -221,14 +219,6 @@ const router = createBrowserRouter([
           {
             path: ':projectGuid',
             element: <AdminProjectDetail />,
-          },
-          {
-            path: 'list',
-            element: <ProjectListAdmin />,
-          },
-          {
-            path: 'detail',
-            element: <ProjectDetailAdmin />,
           },
         ],
       },

@@ -8,6 +8,7 @@ import type { DateType } from '@/types/type.api';
 
 const initData: AdminProjectSearchRequest = {
   page: 0,
+  size: 10,
   keyword: '',
   recruitmentTypeCd: '',
   recruitStatusCd: '',
@@ -26,7 +27,6 @@ export default function useSelectAdminProjects() {
   const { res, loading, refetch } = useSelect({
     apiFn: getAdminProjects,
     req: request,
-    cacheKey: 'admin-projects-list',
   });
 
   const navigate = useNavigate();
