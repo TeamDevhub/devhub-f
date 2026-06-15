@@ -14,7 +14,7 @@ export default function Header() {
           <h1 className="logo-box">
             <Link to={'/'} className="align-center">
               <img src={logo} alt="devHub logo icon" className="logo-icon" />
-              <span className="logo-text">DevHub</span>
+              <span className="logo-text">DevHub Test</span>
             </Link>
           </h1>
           <nav className="menu-box">
