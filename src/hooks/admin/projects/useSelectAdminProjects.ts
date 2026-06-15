@@ -54,7 +54,7 @@ export default function useSelectAdminProjects() {
     projectSearch,
     handleDetail,
     handleReset: reset,
-    onHandleEvent: handleChange,
+    handleChange,
     refetch,
   };
 }

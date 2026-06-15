@@ -22,7 +22,7 @@ export default function ProjectDetail() {
 
   const { getCodeName } = useCodes();
   const { res, toggleLike } = useSelectProjectDetail(projectGuid);
-  const { onDeleteProject } = useDeleteProject(projectGuid);
+  const { onDeleteProject } = useDeleteProject(projectGuid || "");
   const { isLoggedIn, user } = useAuth();
 
   //[수정필요]

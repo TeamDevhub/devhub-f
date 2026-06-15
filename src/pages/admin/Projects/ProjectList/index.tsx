@@ -11,15 +11,9 @@ import {getDateStr} from "@/utils/util.date";
 export default function ProjectListPage(){
   const {
       res,
-      loading,
       state,
-      request,
-      setPage,
       projectSearch,
-      handleDetail,
-      reset,
       handleChange,
-      refetch
   } = useSelectAdminProjects();
 
   const { getCodesByGroup, getCodeName } = useCodes();
@@ -90,7 +84,7 @@ export default function ProjectListPage(){
               label='모집 구분'
               id='category' 
               value={state.recruitmentTypeCd || ''} 
-              onChange={(e)=>{handleChange("projectRecruitTypeList", e.target.value ? [e.target.value] : [])}} 
+              onChange={(e)=>{handleChange("recruitmentTypeCd", e.target.value ? e.target.value : "")}} 
               size='small' displayEmpty
               sx={{ width: '20rem' }}
             >
@@ -103,7 +97,7 @@ export default function ProjectListPage(){
               label='모집 상태'
               id='category'
               value={state.recruitStatusCd || ''} 
-              onChange={(e)=>{handleChange("projectRecruitStatusList", e.target.value ? [e.target.value] : [])}} 
+              onChange={(e)=>{handleChange("recruitStatusCd", e.target.value ? e.target.value : "")}} 
               size='small' displayEmpty
               sx={{ width: '20rem' }}
             >
@@ -150,7 +144,7 @@ export default function ProjectListPage(){
               label='진행 방식'
               id='category'
               value={state.progressTypeCd || ''}
-              onChange={(e)=>{handleChange("projectProgressTypeList", e.target.value ? [e.target.value] : [])}}
+              onChange={(e)=>{handleChange("progressTypeCd", e.target.value ? e.target.value : "")}}
               size='small'
               displayEmpty
               sx={{ width: '20rem' }}
@@ -164,7 +158,7 @@ export default function ProjectListPage(){
               label='진행 지역'
               id='category'
               value={state.progressRegionCd || ''}
-              onChange={(e)=>{handleChange("regionCodeList", e.target.value ? [e.target.value] : [])}}
+              onChange={(e)=>{handleChange("progressRegionCd", e.target.value ? e.target.value :"" )}}
               size='small' displayEmpty
               sx={{ width: '20rem' }}
             >
@@ -208,9 +202,7 @@ export default function ProjectListPage(){
           </div>
           <CustomTextfield size='small' placeholder='' sx={{ width: '41.6rem' }} value={state.keyword} onChange={(e) => { handleChange('keyword', e.target.value) }} />
           <Button size='medium' variant='contained' className='ml-a' onClick={projectSearch}>조회</Button>
-        </div>
         {/* 2-3. 그리드 영역 */}
-        <div className="grid-section flex-col gap-16">
           <div className="grid-summary align-center gap-16">
             <Divider sx={{ flexGrow: 1 }} />
             <strong className='total-count'>총 <em>{res?.pagination?.totalElements}</em>개</strong>
