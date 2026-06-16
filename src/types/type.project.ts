@@ -7,7 +7,7 @@ export interface AdminProjectSummary {
   email: string;
   username: string;
   recruitmentTypeCd: string;
-  recruitStatusCd: string;
+  recruitStatus: string;
   progressTypeCd: string;
   progressRegionCd: string;
   registeredDate: string;

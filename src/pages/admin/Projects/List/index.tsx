@@ -244,8 +244,8 @@ export default function AdminProjectList() {
                   </TableCell>
                   <TableCell align="center">
                     <Chip
-                      label={getCodeName(COMMON_CODE.PROJECT_RECRUIT_STATUS, row.recruitStatusCd)}
-                      color={RECRUIT_STATUS_COLOR[row.recruitStatusCd] ?? 'default'}
+                      label={getCodeName(COMMON_CODE.PROJECT_RECRUIT_STATUS, row.recruitStatus)}
+                      color={RECRUIT_STATUS_COLOR[row.recruitStatus] ?? 'default'}
                       size="small"
                     />
                   </TableCell>
