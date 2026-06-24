@@ -5,7 +5,7 @@ import { COMMON_CODE } from '@/constants/codes';
 import useSelectAdminUserDetail from '@/hooks/admin/users/useSelectAdminUserDetail';
 import useUpdateUserStatus from '@/hooks/admin/users/useUpdateUserStatus';
 import useSelectAdminUserProjects from '@/hooks/admin/users/useSelectAdminUserProjects';
-import useSelectAdminUserApplyProjects from '@/hooks/admin/users/useSelectAdminUserApplyProjects copy';
+import useSelectAdminUserApplyProjects from '@/hooks/admin/users/useSelectAdminUserApplyProjects';
 import { convertString } from '@/utils/util.date';
 import type { DateType } from '@/types/type.api';
 import { Box, Button, Chip, Divider, Pagination, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@mui/material'
