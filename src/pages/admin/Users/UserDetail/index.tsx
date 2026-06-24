@@ -1,22 +1,56 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Chip, Divider, Paper, Tab, Tabs } from '@mui/material';
 import { UserStatusChip } from '@/components/admin/UserStatusChips';
 import { useCodes } from '@/hooks/_common/useCodes';
 import { COMMON_CODE } from '@/constants/codes';
 import useSelectAdminUserDetail from '@/hooks/admin/users/useSelectAdminUserDetail';
 import useUpdateUserStatus from '@/hooks/admin/users/useUpdateUserStatus';
+import useSelectAdminUserProjects from '@/hooks/admin/users/useSelectAdminUserProjects';
+import useSelectAdminUserApplyProjects from '@/hooks/admin/users/useSelectAdminUserApplyProjects copy';
 import { convertString } from '@/utils/util.date';
 import type { DateType } from '@/types/type.api';
+import { Box, Button, Chip, Divider, Pagination, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tabs, Typography } from '@mui/material'
 import { useState } from 'react';
+import { RecruitStatusChip } from "@/components/web/projects/ProjectChips";
 
+function TabPanel({ value, index, className, children }: {
+  value: number
+  index: number
+  className?: string
+  children: React.ReactNode
+}) {
+  if (value !== index) return null
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
+      className='w-100 flex flex-grow'
+    >
+      <div className='w-100 flex-grow'>
+        <Box className={className} sx={{ height: '100%' }}>{children}</Box>
+      </div>
+    </div>
+  )
+}
 export default function UserDetail() {
   const { userGuid } = useParams<{ userGuid: string }>();
   const navigate = useNavigate();
   const { res, refetch } = useSelectAdminUserDetail(userGuid);
   const { handleSuspend, handleActivate, loading } = useUpdateUserStatus(userGuid, () => refetch());
   const { getCodeName } = useCodes();
+  const { res:rows, setPage } = useSelectAdminUserProjects(userGuid);
+  const { res:rows2, setPage:setPage2 } = useSelectAdminUserApplyProjects(userGuid);
 
   const [tab, setTab] = useState(0);
+
+  const totalElements = rows?.pagination?.totalElements ?? 0;
+  const pageSize = rows?.pagination?.size ?? 0;
+  const currentPage = rows?.pagination?.page ?? 0;
+  const totalElements2 = rows2?.pagination?.totalElements ?? 0;
+  const pageSize2 = rows2?.pagination?.size ?? 0;
+  const currentPage2 = rows2?.pagination?.page ?? 0;
+
 
   const detail = res?.data;
   const isSuspended = detail?.blocked === true;
@@ -154,9 +188,90 @@ export default function UserDetail() {
         </Tabs>
 
         <Paper elevation={0} sx={{ padding: '2.4rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
-          {tab === 0
-            ? '회원 프로젝트 내역은 추후 제공될 예정입니다.'
-            : '회원 신고 내역은 신고 관리 메뉴를 이용해주세요.'}
+            <TabPanel value={tab} index={0} className='flex-col gap-28'>
+              <div className="register-project">
+                <div className="flex-col gap-4">
+                  <div className="table-summary align-center gap-16">
+                    <p className='summary-title'>등록한 프로젝트</p>
+                    <Divider sx={{ flexGrow: 1 }} />
+                    <p className='total-count'>총 <em>{totalElements}</em>개</p>
+                  </div>
+                  <TableContainer component={Paper}>
+                    <Table aria-label="user list table" sx={{ tableLayout: 'fixed', width: '100%', borderCollapse: 'separate' }}>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center" width={70}>번호</TableCell>
+                          <TableCell align="center" width={120}>모집 상태</TableCell>
+                          <TableCell align="center">프로젝트 제목</TableCell>
+                          <TableCell align="center" width={200}>모집 기간</TableCell>
+                          <TableCell align="center" width={120}>모집 현황</TableCell>
+                          <TableCell align="center" width={120}>신청 인원</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows?.dataList?.map((row, index) => (
+                          <TableRow>
+                            <TableCell align="center">{totalElements - currentPage * pageSize - index}</TableCell>
+                            <TableCell align="center"><RecruitStatusChip
+                                        recruitStatusCode={row.recruitStatus}
+                                      /></TableCell>
+                            <TableCell align="left">
+                              <Typography noWrap>
+                                {row.title}
+                              </Typography>
+                            </TableCell>
+                            <TableCell align="center">{row.recruitmentStartDate + '~' + row.recruitmentEndDate}</TableCell>
+                            <TableCell align="center">{row.currentRecriutNumber + '/' + row.totalRecriutNumber}</TableCell>
+                            <TableCell align="center">{row.applicantNumber + '명'}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                    </TableContainer>
+                    </div>
+                <Pagination size='small' count={rows?.pagination?.totalPages} onChange={(_, page) => setPage(page)} showFirstButton showLastButton color='primary' className='w-100 flex-center mt-20' />
+              </div>
+              <div className="apply-project">
+                <div className="flex-col gap-4">
+                  <div className="table-summary align-center gap-16">
+                    <p className='summary-title'>신청한 프로젝트</p>
+                    <Divider sx={{ flexGrow: 1 }} />
+                    <p className='total-count'>총 <em>{totalElements2}</em>개</p>
+                  </div>
+                  <TableContainer component={Paper}>
+                    <Table aria-label="user list table" sx={{ tableLayout: 'fixed', width: '100%', borderCollapse: 'separate' }}>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="center" width={70}>번호</TableCell>
+                          <TableCell align="center" width={120}>모집 상태</TableCell>
+                          <TableCell align="center">프로젝트 제목</TableCell>
+                          <TableCell align="center" width={200}>모집 기간</TableCell>
+                          <TableCell align="center" width={120}>신청일자</TableCell>
+                          <TableCell align="center" width={120}>상태</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows2?.dataList?.map((row, index) => (
+                          <TableRow>
+                            <TableCell align="center">{totalElements2 - currentPage2 * pageSize2 - index}</TableCell>
+                            <TableCell align="center">{row.recruitStatus}</TableCell>
+                            <TableCell align="left">
+                              <Typography noWrap>
+                                {row.title}
+                              </Typography>
+                            </TableCell>
+                            <TableCell align="center">{row.recruitmentStartDate + '~' + row.recruitmentEndDate}</TableCell>
+                            <TableCell align="center">{row.currentRecriutNumber + '/' + row.totalRecriutNumber}</TableCell>
+                            <TableCell align="center">{row.applicantNumber + '명'}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </div>
+                <Pagination size='small' count={rows2?.pagination?.totalPages} onChange={(_, page) => setPage(page)} showFirstButton showLastButton color='primary' className='w-100 flex-center mt-20' />
+              </div>
+            </TabPanel>
         </Paper>
       </div>
     </div>

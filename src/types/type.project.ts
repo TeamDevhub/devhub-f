@@ -91,3 +91,9 @@ export interface UpdateApplicantStatusRequest {
   applicantGuid: string;
   approvalStatusCd: string;
 }
+
+export interface AdminUserProjectsReqData {
+  page: number;
+  size?: number;
+  userGuid?: string;
+} 
