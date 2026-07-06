@@ -7,6 +7,7 @@ import type { AdminApplicantSearchRequest } from '@/types/type.project';
 const buildInitData = (projectGuid: string): AdminApplicantSearchRequest => ({
   projectGuid,
   page: 0,
+  size: 10,
   approvalStatusCd: '',
   positionCd: '',
   levelCd: '',
@@ -22,14 +23,13 @@ export default function useSelectAdminApplicants(projectGuid: string | undefined
   const { res, loading, refetch } = useSelect({
     apiFn: getAdminApplicants,
     req: request,
-    cacheKey: projectGuid ? `admin-applicants-${projectGuid}` : undefined,
-    enabled: !!projectGuid,
   });
 
   const applicantSearch = () => {
     const searchParams = { ...state, page: 0 };
     setRequest(searchParams);
     setState(searchParams);
+    // refetch();
   };
 
   const setPage = (page: number) => {
