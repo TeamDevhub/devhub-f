@@ -8,3 +8,9 @@ export const reissue = () =>
     method: 'post',
     withCredentials: true,
   });
+
+export const logout = () =>
+  fetcher<void, void>('/auth/logout', undefined, {
+    method: 'post',
+    withCredentials: true,
+  });

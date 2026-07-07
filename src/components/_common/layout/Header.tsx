@@ -1,11 +1,12 @@
 import logo from '@/assets/images/devHub-logo.png';
 import { Button, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext.ts';
+import { useAuth } from '@/hooks/_common/useAuth';
 import UserInfo from '@/components/_common/layout/UserInfo.tsx';
 
 export default function Header() {
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn } = useAuth();
+  console.log('Header', isLoggedIn);
 
   return (
     <header>
@@ -14,7 +15,7 @@ export default function Header() {
           <h1 className="logo-box">
             <Link to={'/'} className="align-center">
               <img src={logo} alt="devHub logo icon" className="logo-icon" />
-              <span className="logo-text">DevHub Test</span>
+              <span className="logo-text">DevHub</span>
             </Link>
           </h1>
           <nav className="menu-box">
@@ -36,21 +37,23 @@ export default function Header() {
           </nav>
         </div>
         <div className="header-right-box align-center">
-          {!isLoggedIn && (
+          {isLoggedIn ? (
+            <UserInfo />
+          ) : (
             <>
-              <Link to={'/auth/signup'}>
+              <Link to="/auth/signup">
                 <Button size="large" variant="text">
                   JOIN
                 </Button>
               </Link>
-              <Link to={'/auth/login'}>
+
+              <Link to="/auth/login">
                 <Button size="large" variant="text">
                   LOGIN
                 </Button>
               </Link>
             </>
           )}
-          {isLoggedIn && <UserInfo logout={logout} />}
         </div>
       </Paper>
     </header>
