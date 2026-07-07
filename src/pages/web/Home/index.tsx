@@ -1,239 +1,108 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowForwardIos, Visibility } from '@mui/icons-material';
-import { Button, Chip, Paper, Tab, Tabs } from '@mui/material';
+import { ArrowForwardIos } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import 'swiper/swiper.css';
 import useSelectHome from '@/hooks/web/home/useSelectHome';
-import { useCodes } from '@/hooks/_common/useCodes';
-import HeartButton from '@/components/_common/button/HeartButton';
-import { DDayChip, RecruitStatusChip } from '@/components/web/projects/ProjectChips';
-import { COMMON_CODE } from '@/constants/codes';
-import type { HomeProject, HomeBoard } from '@/types/type.home';
-import type { ProjectRecruitStatusCode } from '@/types/type._common';
-
-const API_URL = import.meta.env.VITE_FILE_API_URL;
-
-function chunkArray<T>(arr: T[], size: number): T[][] {
-  const result: T[][] = [];
-  for (let i = 0; i < arr.length; i += size) result.push(arr.slice(i, i + size));
-  return result;
-}
-
-function HomeProjectCard({ project }: { project: HomeProject }) {
-  const navigate = useNavigate();
-
-  return (
-    <div className="project-card flex-col gap-16" style={{ cursor: 'pointer' }} onClick={() => navigate(`/projects/detail/${project.projectGuid}`)}>
-      {project.imageFileGuid && (
-        <div className="project-thumb">
-          <img src={`${API_URL}${project.imageFileGuid}`} alt={project.title} />
-        </div>
-      )}
-      <div className="top flex-col gap-8">
-        <div className="chip-box align-center">
-          <RecruitStatusChip recruitStatusCode={project.recruitStatus as ProjectRecruitStatusCode} />
-          <DDayChip recruitmentEndDate={project.recruitmentEndDate} />
-        </div>
-        <strong className="main-text text-ellipsis">
-          {project.category ? `[${project.category}] ` : ''}
-          {project.title}
-        </strong>
-      </div>
-      <div className="bottom flex-col gap-8">
-        <div className="project-info align-center justify-between">
-          <p>{project.username}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function HomeBoardCard({ board }: { board: HomeBoard }) {
-  const navigate = useNavigate();
-  const { getCodeName } = useCodes();
-
-  return (
-    <Paper
-      className="board-box flex-col align-center"
-      elevation={4}
-      style={{ cursor: 'pointer' }}
-      onClick={() => navigate('/boards/detail', { state: { boardGuid: board.boardGuid } })}
-    >
-      <div className="top w-100 justify-between">
-        <div className="left-area flex-col align-start flex-1">
-          <Chip size="small" variant="outlined" color="primary" label={getCodeName(COMMON_CODE.BOARD_CATEGORY, board.categoryCd)} />
-          <strong className="main-text text-ellipsis">{board.title}</strong>
-        </div>
-        <div className="right-area flex-col">
-          <HeartButton likeCount={String(board.likeCount)} disabled />
-        </div>
-      </div>
-      <div className="bottom w-100 align-center justify-between">
-        <div className="left-area">
-          <p className="user-info">
-            {board.username} · {board.registeredDate}
-          </p>
-        </div>
-        <div className="right-area align-center">
-          <div className="view-count align-center">
-            <Visibility sx={{ fontSize: 20, color: 'rgba(0,0,0,0.3)' }} />
-            <p>{board.viewCount}</p>
-          </div>
-        </div>
-      </div>
-    </Paper>
-  );
-}
+import { useAuth } from '@/hooks/_common/useAuth';
+import BannerCard from '@/components/web/home/BannerCard';
+import ExternalBannerCard from '@/components/web/home/ExternalBannerCard';
+import ProjectCardGrid from '@/components/web/home/ProjectCardGrid';
+import BoardCardGrid from '@/components/web/home/BoardCardGrid';
+import HomeParticipationBanner from '@/components/web/home/HomeParticipationBanner';
+import { HOME_MAIN_BANNERS } from '@/constants/homeBanners';
+import { DEVELOPER_COMMUNITY_BANNERS } from '@/constants/developerCommunityBanners';
 
 export default function HomePage() {
   const { home } = useSelectHome();
+  const { user, isLoggedIn } = useAuth();
   const navigate = useNavigate();
-  const { getCodesByGroup } = useCodes();
-
-  const [tabIndex, setTabIndex] = useState(0);
-
-  const positionCodes = getCodesByGroup(COMMON_CODE.POSITION_CODE).slice(0, 4);
-
-  const filteredProjects = React.useMemo(() => {
-    return home?.projectDataList ?? [];
-  }, [home?.projectDataList]);
-
-  const projectSlides = chunkArray(filteredProjects, 2);
+  const projects = home?.projectDataList ?? [];
+  const boards = home?.boardDataList ?? [];
 
   return (
     <>
       <div className="main-container">
-        {/* 1. 메인 배너 */}
+        {/* 1. 메인 배너 (히어로) - 슬라이드마다 프로젝트/커뮤니티/기술 트렌드 등 서로 다른 기능의 진입점 */}
         <div className="main-banner-container">
           <Swiper
             observer
             observeParents
-            spaceBetween={0}
+            spaceBetween={16}
             slidesPerView={1}
             pagination={{ clickable: true }}
             className="main-banner-swiper"
             modules={[Pagination]}
           >
-            {(home?.mainBannerDataList ?? []).length > 0 ? (
-              (home?.mainBannerDataList ?? []).map((banner) => (
-                <SwiperSlide key={banner.bannerGuid}>
-                  {banner.imageFileGuid ? (
-                    <img src={`${API_URL}${banner.imageFileGuid}`} alt={banner.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  ) : (
-                    <p>{banner.title}</p>
-                  )}
-                </SwiperSlide>
-              ))
-            ) : (
-              <SwiperSlide>
-                <p>등록된 배너가 없습니다.</p>
+            {HOME_MAIN_BANNERS.map((banner) => (
+              <SwiperSlide key={banner.bannerGuid}>
+                <BannerCard banner={banner} size="main" />
               </SwiperSlide>
-            )}
+            ))}
           </Swiper>
         </div>
+
+        {/* 로그인 사용자 환영 인사 */}
+        {isLoggedIn && user && (
+          <div className="welcome-banner align-center gap-8">
+            <p>
+              환영합니다, <strong>{user.username}</strong>님<span aria-hidden="true"> 👋</span>
+            </p>
+          </div>
+        )}
 
         {/* 2. 프로젝트 목록 */}
-        <div className="main-project-tabs align-center justify-between" style={{ marginBottom: '-2.4rem' }}>
-          <Tabs
-            value={tabIndex}
-            variant="standard"
-            onChange={(_, v) => setTabIndex(v)}
-            textColor="primary"
-            indicatorColor="primary"
-            aria-label="project-position-tabs"
-          >
-            <Tab label="전체" />
-            {positionCodes.map((p) => (
-              <Tab key={p.code} label={p.name} />
-            ))}
-          </Tabs>
-          <Button size="small" color="primary" endIcon={<ArrowForwardIos />} onClick={() => navigate('/projects')}>
-            더보기
-          </Button>
+        <div className="project-list flex-col gap-8">
+          <div className="title-area align-center justify-between">
+            <div className="title-text flex-col gap-4">
+              <strong className="align-center gap-8">
+                <span aria-hidden="true">🚀</span>
+                프로젝트
+              </strong>
+              <p className="section-desc">함께 만들 프로젝트를 찾고 팀에 합류해보세요</p>
+            </div>
+            <Button size="small" color="primary" endIcon={<ArrowForwardIos />} onClick={() => navigate('/projects')}>
+              더보기
+            </Button>
+          </div>
+          <ProjectCardGrid projects={projects} />
         </div>
 
-        <div style={{ position: 'relative' }}>
-          <Swiper
-            key={tabIndex}
-            observer
-            observeParents
-            modules={[Navigation, Pagination]}
-            slidesPerView={3.7}
-            slidesOffsetBefore={0}
-            spaceBetween={16}
-            navigation={{ nextEl: '.next1', prevEl: '.prev1' }}
-            className="project-list-swiper"
-          >
-            {projectSlides.length > 0 ? (
-              projectSlides.map((pair, idx) => (
-                <SwiperSlide key={idx} className="flex-col gap-16">
-                  {pair.map((project) => (
-                    <HomeProjectCard key={project.projectGuid} project={project} />
-                  ))}
-                </SwiperSlide>
-              ))
-            ) : (
-              <SwiperSlide>
-                <p style={{ padding: '2rem', color: 'rgba(0,0,0,0.4)' }}>등록된 프로젝트가 없습니다.</p>
-              </SwiperSlide>
-            )}
-          </Swiper>
-          <div className="swiper-button-prev prev1" />
-          <div className="swiper-button-next next1" />
-        </div>
-
-        {/* 3. 서브 배너 */}
-        <div className="sub-banner-container">
-          <Swiper
-            observer
-            observeParents
-            spaceBetween={24}
-            slidesPerView={3}
-            navigation={{ nextEl: '.next2', prevEl: '.prev2' }}
-            className="sub-banner-swiper"
-            modules={[Navigation]}
-          >
-            {(home?.subBannerDataList ?? []).length > 0 ? (
-              (home?.subBannerDataList ?? []).map((banner) => (
-                <SwiperSlide key={banner.bannerGuid}>
-                  {banner.imageFileGuid ? (
-                    <img src={`${API_URL}${banner.imageFileGuid}`} alt={banner.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  ) : (
-                    <p>{banner.title}</p>
-                  )}
-                </SwiperSlide>
-              ))
-            ) : (
-              <>
-                <SwiperSlide>
-                  <p>서브 배너가 없습니다.</p>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <p />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <p />
-                </SwiperSlide>
-              </>
-            )}
-          </Swiper>
-          <div className="swiper-button-prev prev2" />
-          <div className="swiper-button-next next2" />
-        </div>
+        {/* 3. 참여 유도 CTA */}
+        <HomeParticipationBanner />
 
         {/* 4. 인기 게시글 */}
         <div className="popular-boards flex-col gap-8">
           <div className="title-area align-center justify-between">
-            <strong>인기 게시글</strong>
+            <div className="title-text flex-col gap-4">
+              <strong className="align-center gap-8">
+                <span aria-hidden="true">💬</span>
+                인기 게시글
+              </strong>
+              <p className="section-desc">지금 가장 뜨거운 개발자들의 이야기를 만나보세요</p>
+            </div>
             <Button size="small" color="primary" endIcon={<ArrowForwardIos />} onClick={() => navigate('/boards')}>
               더보기
             </Button>
           </div>
-          <div className="board-list">
-            {(home?.boardDataList ?? []).map((board) => (
-              <HomeBoardCard key={board.boardGuid} board={board} />
+          <BoardCardGrid boards={boards} />
+        </div>
+
+        {/* 5. 개발자 리소스 */}
+        <div className="developer-resources flex-col gap-8">
+          <div className="title-area align-center justify-between">
+            <div className="title-text flex-col gap-4">
+              <strong className="align-center gap-8">
+                <span aria-hidden="true">🧰</span>
+                개발자 리소스
+              </strong>
+              <p className="section-desc">개발에 도움이 되는 외부 도구와 커뮤니티를 모아봤어요</p>
+            </div>
+          </div>
+          <div className="resource-grid">
+            {DEVELOPER_COMMUNITY_BANNERS.map((banner) => (
+              <ExternalBannerCard key={banner.bannerGuid} banner={banner} />
             ))}
           </div>
         </div>

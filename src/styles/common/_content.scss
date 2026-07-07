@@ -4,9 +4,6 @@
 #devHub {
   min-height: 100vh;
   background: linear-gradient(180deg, rgba(66, 165, 245, 0.08) 0%, rgba(186, 104, 200, 0.06) 100%);
-  &:has(.main-container) {
-    background: #fff;
-  }
   main {
     min-height: calc(100vh - 7rem);
     /* main page */
@@ -17,12 +14,102 @@
       padding: 2.4rem 0.5rem 7rem 0;
       margin: 0 auto;
       flex-direction: column;
-      gap: 2.4rem;
+      gap: 4rem;
       > * {
         padding: 1rem;
       }
-      // 1. 메인 배너 슬라이드
+      // banner card (메인/서브 배너 공통)
+      .banner-card {
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        overflow: hidden;
+        text-decoration: none;
+
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.55) 100%);
+        }
+
+        .banner-card-illustration {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        .banner-card-text {
+          position: relative;
+          z-index: 1;
+          padding: 2.4rem;
+          color: #fff;
+        }
+
+        .banner-card-title {
+          display: block;
+          line-height: 130%;
+        }
+
+        .banner-card-desc {
+          font-weight: 400;
+          opacity: 0.9;
+        }
+      }
+
+      // 히어로 슬라이드 - 슬라이드마다 다른 기능(프로젝트/커뮤니티/기술 트렌드)의 진입점이므로 문구/CTA가 슬라이드별로 바뀐다
+      .banner-card-main {
+        &::after {
+          background: linear-gradient(115deg, rgba(15, 23, 42, 0.72) 0%, rgba(15, 23, 42, 0.4) 55%, rgba(15, 23, 42, 0.08) 100%);
+        }
+        .banner-card-text {
+          max-width: 52rem;
+          padding: 4rem 4.8rem;
+        }
+        .banner-card-eyebrow {
+          align-self: flex-start;
+          margin-bottom: -0.4rem;
+          padding: 0.4rem 1.2rem;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.16);
+          color: #fff;
+          font-size: 1.2rem;
+          font-weight: 700;
+        }
+        .banner-card-title {
+          font-size: 3.4rem;
+          font-weight: 800;
+        }
+        .banner-card-desc {
+          font-size: 1.5rem;
+          line-height: 150%;
+        }
+        .banner-card-cta {
+          align-self: flex-start;
+          margin-top: 0.8rem;
+        }
+      }
+
+      .banner-card-sub {
+        .banner-card-text {
+          padding: 1.6rem;
+        }
+        .banner-card-title {
+          font-size: 1.6rem;
+          font-weight: 700;
+        }
+        .banner-card-desc {
+          font-size: 1.2rem;
+        }
+      }
+
+      // 1. 메인 배너 슬라이드 (히어로) - 슬라이드별로 문구/CTA가 다르므로 오버레이는 BannerCard 내부에서 슬라이드마다 렌더링된다
       .main-banner-container {
+        position: relative;
+
         .main-banner-swiper {
           position: relative;
           width: 100%;
@@ -30,20 +117,9 @@
           .swiper-wrapper {
             .swiper-slide {
               overflow: hidden;
-              display: flex;
-              height: 21rem;
-              align-items: center;
-              justify-content: center;
+              height: 30rem;
               border-radius: 0.8rem;
               border: 1px solid #eee;
-              img {
-                width: 123rem;
-                object-fit: cover;
-              }
-              p {
-                font-size: 2rem;
-                font-weight: 500;
-              }
             }
           }
           .swiper-pagination {
@@ -60,16 +136,131 @@
               width: 1rem;
               height: 1rem;
               border-radius: 2rem;
-              background-color: #eee;
+              background-color: #9e9e9e;
               cursor: pointer;
               &.swiper-pagination-bullet-active {
-                background-color: #ccc;
+                background-color: #616161;
               }
             }
           }
         }
       }
-      // 2. 프로젝트 리스트
+      // 로그인 사용자 환영 인사
+      .welcome-banner {
+        padding: 1.2rem 1.6rem;
+        border-radius: 0.6rem;
+        background: rgba(79, 70, 229, 0.06);
+        p {
+          margin: 0;
+          font-size: 1.4rem;
+          color: rgba(0, 0, 0, 0.72);
+          strong {
+            font-weight: 700;
+            color: #000;
+          }
+        }
+      }
+
+      // 2 / 4 / 참여 CTA. 프로젝트·인기 게시판·참여 유도 공통 섹션 타이틀
+      .project-list,
+      .popular-boards,
+      .participation-banner {
+        .title-area {
+          strong {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 120%;
+            color: #000;
+          }
+          .section-desc {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 140%;
+            color: rgba(0, 0, 0, 0.56);
+          }
+        }
+      }
+
+      // 2. 프로젝트 리스트 - DevHub의 핵심 기능이므로 가장 강한 시각적 강조를 준다
+      .project-list {
+        padding: 3.2rem;
+        border-radius: 1.6rem;
+        background: linear-gradient(180deg, rgba(124, 58, 237, 0.05) 0%, rgba(124, 58, 237, 0.02) 100%);
+        border: 1px solid rgba(124, 58, 237, 0.12);
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+
+        .title-area strong {
+          font-size: 2.6rem;
+        }
+
+        // 그리드/스와이퍼 공통 카드 스타일 - 은은한 컨테이너 배경 위에서도 카드가 또렷하게 도드라지도록 흰 배경 사용
+        .project-card {
+          width: 100%;
+          min-width: 0;
+          padding: 2.4rem;
+          border-radius: 0.6rem;
+          background: #fff;
+          border: 1px solid rgba(0, 0, 0, 0.22);
+          cursor: pointer;
+          transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+
+          &:hover {
+            border-color: rgba(0, 0, 0, 0.34);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+          }
+
+          .project-thumb {
+            width: 100%;
+            height: 16rem;
+            border-radius: 0.4rem;
+            overflow: hidden;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+              transition: transform 0.25s ease;
+            }
+          }
+          &:hover .project-thumb img {
+            transform: scale(1.06);
+          }
+          .main-text {
+            display: -webkit-box;
+            width: 100%;
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 120%;
+            color: #000;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            white-space: wrap;
+          }
+          .project-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            p {
+              font-size: 1.2rem;
+              font-weight: 400;
+              color: rgba(0, 0, 0, 0.56);
+            }
+          }
+          .project-info {
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+          }
+          p {
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 100%;
+            color: rgba(0, 0, 0, 0.68);
+          }
+        }
+      }
+
       .slide-banner-tabpanel {
         padding: 2.2rem 2.4rem 2.4rem 2.4rem;
         .project-list-swiper {
@@ -140,65 +331,277 @@
           }
         }
       }
-      // 3. 서브 배너 슬라이드
-      .sub-banner-container {
-        position: relative;
-        .swiper-wrapper {
-          .swiper-slide {
-            display: flex;
-            height: 21rem;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.8rem;
-            border: 1px solid #eee;
-            p {
-              font-size: 1.4rem;
-              font-weight: 500;
+      // 4-1. 카드 그리드 (4개 이하) 레이아웃 - 인기 게시판
+      .board-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+        gap: 1.6rem;
+        margin-top: 2.2rem;
+      }
+
+      // 2-1. 프로젝트 카드 그리드 - 3열 고정 (슬라이드 내부에서도 동일하게 재사용)
+      .project-card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.6rem;
+        margin-top: 2.2rem;
+
+        @media (max-width: 1024px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        @media (max-width: 640px) {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      // 카드 스와이퍼 (4개 초과) 공통 레이아웃 - 프로젝트 · 인기 게시판
+      // 타이틀과의 간격은 margin으로 처리 - .carousel-viewport 내부 높이(버튼 중심 계산 기준)에 영향을 주지 않기 위함
+      .project-card-swiper,
+      .board-swiper {
+        margin-top: 2.2rem;
+
+        .swiper-slide {
+          height: auto;
+        }
+
+        // 스와이퍼 슬라이드 내부에서는 바깥 래퍼가 이미 여백을 주므로 그리드 자체의 top 여백은 제거
+        .project-card-grid {
+          margin-top: 0;
+        }
+      }
+
+      // 프로젝트 스와이퍼 전용 페이지네이션 dot
+      // dot는 카드 영역 바깥(음수 bottom)에 절대 위치로 배치해 .carousel-viewport의 높이 계산에 전혀 관여하지 않는다.
+      // 이렇게 하면 방향 버튼은 다른 캐러셀(인기 게시판 등)과 동일하게 top:50%만으로 정확히 중앙 정렬되어,
+      // 섹션별 top 보정값 같은 예외 처리가 필요 없다.
+      .project-card-swiper-inner {
+        .swiper-pagination {
+          position: absolute;
+          bottom: -2rem;
+          left: 0;
+          display: flex;
+          width: 100%;
+          justify-content: center;
+          gap: 0.8rem;
+
+          .swiper-pagination-bullet {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 2rem;
+            background-color: #9e9e9e;
+            cursor: pointer;
+            &.swiper-pagination-bullet-active {
+              background-color: #616161;
             }
+          }
+        }
+      }
+
+      // .project-list가 자체 배경/테두리를 가진 컨테이너가 되었으므로, 방향 버튼이 그 경계 밖으로 튀어나가지 않도록 오프셋을 좁힌다
+      .project-list .carousel-viewport {
+        .swiper-button-prev {
+          left: -1.2rem !important;
+        }
+        .swiper-button-next {
+          right: -1.2rem !important;
+        }
+      }
+
+      .project-card-grid-empty,
+      .board-list-empty {
+        padding: 2rem 0;
+        color: rgba(0, 0, 0, 0.4);
+      }
+
+      // 참여 유도 CTA - 프로젝트 생성 / 게시글 작성 / 스킬 관리로 사용자를 이끄는 액션 카드
+      // 다른 섹션과 같은 컨테이너 박스를 두르지 않고, 위아래 여백을 더 주어 독립된 전환 영역으로 느껴지게 한다
+      .participation-banner {
+        margin: 1.6rem 0;
+
+        .participation-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+          gap: 1.6rem;
+          margin-top: 2.2rem;
+        }
+        .participation-card {
+          width: 100%;
+          min-width: 0;
+          padding: 2.4rem;
+          border-radius: 0.6rem;
+          border: 1px solid rgba(0, 0, 0, 0.22);
+          cursor: pointer;
+          transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+
+          &:hover {
+            border-color: rgba(0, 0, 0, 0.34);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+          }
+
+          .participation-card-illustration {
+            width: 100%;
+            height: 12rem;
+            border-radius: 0.4rem;
+            overflow: hidden;
+            svg {
+              width: 100%;
+              height: 100%;
+              display: block;
+            }
+          }
+          .participation-card-body {
+            flex: 1;
+            .main-text {
+              display: block;
+              font-size: 1.8rem;
+              font-weight: 700;
+              line-height: 130%;
+              color: #000;
+            }
+            p {
+              font-size: 1.2rem;
+              font-weight: 400;
+              line-height: 145%;
+              color: rgba(0, 0, 0, 0.56);
+            }
+          }
+          .participation-card-cta {
+            width: 100%;
+            font-weight: 700;
+          }
+        }
+      }
+
+      // 개발자 리소스 - 홍보 배너가 아닌 유용한 도구 모음(라이브러리) 느낌의 옅은 회색 영역, 프로젝트보다 가벼운 무게
+      .developer-resources {
+        padding: 2.4rem 3.2rem;
+        border-radius: 1.2rem;
+        background: rgba(0, 0, 0, 0.025);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+
+        .title-area {
+          strong {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 120%;
+            color: rgba(0, 0, 0, 0.72);
+          }
+          .section-desc {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 400;
+            line-height: 140%;
+            color: rgba(0, 0, 0, 0.48);
+          }
+        }
+        .resource-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
+          gap: 1.2rem;
+          margin-top: 1.6rem;
+        }
+        .resource-item {
+          display: flex;
+          align-items: center;
+          gap: 1.6rem;
+          padding: 1.6rem;
+          border-radius: 0.6rem;
+          background: #fff;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          text-decoration: none;
+          color: inherit;
+          transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+
+          &:hover {
+            border-color: rgba(0, 0, 0, 0.28);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+          }
+
+          .resource-item-icon {
+            width: 4.4rem;
+            height: 4.4rem;
+            flex-shrink: 0;
+            border-radius: 0.6rem;
+            overflow: hidden;
+          }
+          .resource-item-text {
+            min-width: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+
+            .resource-item-title {
+              font-size: 1.4rem;
+              font-weight: 700;
+              color: rgba(0, 0, 0, 0.8);
+            }
+            .resource-item-desc {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              font-size: 1.1rem;
+              font-weight: 400;
+              color: rgba(0, 0, 0, 0.48);
+            }
+          }
+          .resource-item-arrow {
+            flex-shrink: 0;
+            color: rgba(0, 0, 0, 0.24);
+            transition: color 0.15s ease, transform 0.15s ease;
+          }
+          &:hover .resource-item-arrow {
+            color: rgba(0, 0, 0, 0.56);
+            transform: translate(2px, -2px);
+          }
+        }
+      }
+
+      // 캐러셀 뷰포트 공통 - 프로젝트 · 인기 게시판이 공유하는 방향 버튼 위치/크기
+      // Swiper와 버튼만 감싸므로 타이틀 영역이나 섹션 여백과 무관하게 콘텐츠 높이 기준 정중앙에 고정된다
+      .carousel-viewport {
+        position: relative;
+
+        .swiper-button-prev,
+        .swiper-button-next {
+          width: 3.4rem;
+          height: 3.4rem;
+          &.swiper-button-disabled {
+            display: none;
           }
         }
         .swiper-button-prev {
           left: -4rem !important;
-          &.swiper-button-disabled {
-            display: none;
-          }
         }
         .swiper-button-next {
           right: -4rem !important;
-          &.swiper-button-disabled {
-            display: none;
-          }
         }
       }
       // 4. 인기 게시판
       .popular-boards {
-        .title-area {
-          strong {
-            font-size: 2rem;
-            font-weight: 700;
-            line-height: 120%;
-            color: #000;
-          }
-        }
-
-        .board-list {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 2.4rem;
-          width: 100%;
-        }
-
         .board-box {
           width: 100%;
           min-width: 0;
 
           padding: 2rem;
+          border-radius: 0.6rem;
+          border: 1px solid rgba(0, 0, 0, 0.22);
+          cursor: pointer;
+          transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
 
           display: flex;
           flex-direction: column;
           gap: 1.6rem;
 
           box-sizing: border-box;
+
+          &:hover {
+            border-color: rgba(0, 0, 0, 0.34);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+          }
 
           .top {
             display: flex;
@@ -215,9 +618,12 @@
               gap: 1.2rem;
 
               .main-text {
+                display: -webkit-box;
+                width: 100%;
                 overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                white-space: wrap;
 
                 font-size: 2rem;
                 font-weight: 600;
@@ -238,6 +644,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
 
             .left-area {
               min-width: 0;
@@ -246,7 +654,7 @@
             .right-area {
               display: flex;
               align-items: center;
-              gap: 1.2rem;
+              gap: 0.8rem;
             }
 
             .view-count,
@@ -254,13 +662,16 @@
               display: flex;
               align-items: center;
               gap: 0.4rem;
+              padding: 0.3rem 0.8rem;
+              border-radius: 999px;
+              background: rgba(0, 0, 0, 0.04);
             }
 
             p {
-              font-size: 1rem;
-              font-weight: 300;
+              font-size: 1.2rem;
+              font-weight: 500;
               line-height: 100%;
-              color: #000;
+              color: rgba(0, 0, 0, 0.68);
             }
           }
         }
