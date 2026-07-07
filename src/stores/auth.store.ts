@@ -25,6 +25,7 @@ class AuthStore extends Store<AuthState> {
       tokenStorage.set(token);
       return token;
     } catch {
+      localStorage.removeItem('hasSession');
       return null;
     }
   };
@@ -44,6 +45,13 @@ class AuthStore extends Store<AuthState> {
     this.isInitializing = true;
 
     let token = tokenStorage.get();
+
+    const hasSession = localStorage.getItem('hasSession') === 'true';
+
+    if (!token && hasSession) {
+      token = await this._tryReissue();
+    }
+
     if (!token) {
       token = await this._tryReissue();
       if (!token) {
@@ -61,12 +69,14 @@ class AuthStore extends Store<AuthState> {
   login = async (token?: string): Promise<void> => {
     if (!token) return;
     tokenStorage.set(token);
+    localStorage.setItem('hasSession', 'true');
     this._setState({ isLoggedIn: true });
     await this._fetchUserWithRetry();
   };
 
   logout = (): void => {
     tokenStorage.clear();
+    localStorage.removeItem('hasSession');
     this._setState({ user: undefined, isLoggedIn: false });
   };
 
