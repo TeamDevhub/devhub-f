@@ -1,6 +1,6 @@
 import { Store } from './Store';
 import { getUserProfile } from '@/api/web/api.profile';
-import { reissue } from '@/api/web/api.auth';
+import { reissue, logout } from '@/api/web/api.auth';
 import { tokenStorage } from '@/utils/auth.token';
 import type { UserBasicResponse } from '@/types/type.user';
 
@@ -20,12 +20,15 @@ class AuthStore extends Store<AuthState> {
   private _tryReissue = async (): Promise<string | null> => {
     try {
       const res = await reissue();
+
       const token = res?.data?.accessToken;
+
       if (!token) return null;
+
       tokenStorage.set(token);
+
       return token;
     } catch {
-      localStorage.removeItem('hasSession');
       return null;
     }
   };
@@ -42,28 +45,43 @@ class AuthStore extends Store<AuthState> {
 
   init = async (): Promise<void> => {
     if (this.getSnapshot().initialized || this.isInitializing) return;
+
     this.isInitializing = true;
 
-    let token = tokenStorage.get();
+    try {
+      let token = tokenStorage.get();
 
-    const hasSession = localStorage.getItem('hasSession') === 'true';
+      const hasSession = localStorage.getItem('hasSession') === 'true';
 
-    if (!token && hasSession) {
-      token = await this._tryReissue();
-    }
-
-    if (!token) {
-      token = await this._tryReissue();
-      if (!token) {
-        this.logout();
-        this._setState({ initialized: true });
-        this.isInitializing = false;
+      // accessToken 있음
+      if (token) {
+        await this._fetchUserWithRetry();
         return;
       }
+
+      // OAuth 로그인 또는 기존 로그인 복구 대상
+      if (hasSession) {
+        token = await this._tryReissue();
+
+        if (token) {
+          await this._fetchUserWithRetry();
+        }
+
+        return;
+      }
+
+      // 완전 비로그인
+      this._setState({
+        user: undefined,
+        isLoggedIn: false,
+      });
+    } finally {
+      this._setState({
+        initialized: true,
+      });
+
+      this.isInitializing = false;
     }
-    await this._fetchUserWithRetry();
-    this._setState({ initialized: true });
-    this.isInitializing = false;
   };
 
   login = async (token?: string): Promise<void> => {
@@ -74,10 +92,20 @@ class AuthStore extends Store<AuthState> {
     await this._fetchUserWithRetry();
   };
 
-  logout = (): void => {
+  logout = async (): Promise<void> => {
+    try {
+      await logout();
+    } catch {
+      // API 실패해도 프론트는 로그아웃
+    }
+
     tokenStorage.clear();
     localStorage.removeItem('hasSession');
-    this._setState({ user: undefined, isLoggedIn: false });
+
+    this._setState({
+      user: undefined,
+      isLoggedIn: false,
+    });
   };
 
   refreshUser = async (): Promise<void> => {
