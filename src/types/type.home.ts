@@ -1,39 +1,35 @@
 export interface HomeBanner {
   bannerGuid: string;
-  title?: string;
-  description?: string;
-  link?: string;
-  imageUrl?: string;
+  title: string;
+  imageFileGuid: string;
+  linkUrl: string;
+  sortOrder: number;
 }
 
 export interface HomeProject {
   projectGuid: string;
   title: string;
-  recruitStatusCd: string;
-  recruitmentTypeCd: string;
-  progressRegionCd: string;
-  recruitmentEndDate?: string;
-  positionList: string[];
-  skillList: string[];
-  username?: string;
-  registeredDate?: string;
-  viewCount?: number;
+  category: string;
+  username: string;
+  imageFileGuid: string;
+  recruitmentStartDate: string;
+  recruitmentEndDate: string;
+  recruitStatus: string;
 }
 
 export interface HomeBoard {
   boardGuid: string;
-  categoryCd: string;
   title: string;
-  likeCount?: number;
-  viewCount?: number;
-  commentCount?: number;
-  username?: string;
-  registeredDate?: string;
+  categoryCd: string;
+  username: string;
+  viewCount: number;
+  likeCount: number;
+  registeredDate: string;
 }
 
 export interface HomeResponse {
-  mainBannerList: HomeBanner[];
-  projectList: HomeProject[];
-  subBannerList: HomeBanner[];
-  popularBoardList: HomeBoard[];
+  mainBannerDataList: HomeBanner[];
+  projectDataList: HomeProject[];
+  subBannerDataList: HomeBanner[];
+  boardDataList: HomeBoard[];
 }

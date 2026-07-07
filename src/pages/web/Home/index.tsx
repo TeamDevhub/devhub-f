@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowForwardIos, Create, Visibility } from '@mui/icons-material';
+import { ArrowForwardIos, Visibility } from '@mui/icons-material';
 import { Button, Chip, Paper, Tab, Tabs } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
@@ -8,15 +8,12 @@ import 'swiper/swiper.css';
 import useSelectHome from '@/hooks/web/home/useSelectHome';
 import { useCodes } from '@/hooks/_common/useCodes';
 import HeartButton from '@/components/_common/button/HeartButton';
-import {
-  DDayChip,
-  ProgressRegionChip,
-  RecruitmentChip,
-  RecruitStatusChip,
-} from '@/components/web/projects/ProjectChips';
+import { DDayChip, RecruitStatusChip } from '@/components/web/projects/ProjectChips';
 import { COMMON_CODE } from '@/constants/codes';
 import type { HomeProject, HomeBoard } from '@/types/type.home';
 import type { ProjectRecruitStatusCode } from '@/types/type._common';
+
+const API_URL = import.meta.env.VITE_FILE_API_URL;
 
 function chunkArray<T>(arr: T[], size: number): T[][] {
   const result: T[][] = [];
@@ -26,39 +23,27 @@ function chunkArray<T>(arr: T[], size: number): T[][] {
 
 function HomeProjectCard({ project }: { project: HomeProject }) {
   const navigate = useNavigate();
-  const { getCodeName } = useCodes();
 
   return (
-    <div
-      className="project-card flex-col gap-16"
-      style={{ cursor: 'pointer' }}
-      onClick={() => navigate(`/projects/detail/${project.projectGuid}`)}
-    >
+    <div className="project-card flex-col gap-16" style={{ cursor: 'pointer' }} onClick={() => navigate(`/projects/detail/${project.projectGuid}`)}>
+      {project.imageFileGuid && (
+        <div className="project-thumb">
+          <img src={`${API_URL}${project.imageFileGuid}`} alt={project.title} />
+        </div>
+      )}
       <div className="top flex-col gap-8">
         <div className="chip-box align-center">
-          <RecruitStatusChip recruitStatusCode={project.recruitStatusCd as ProjectRecruitStatusCode} />
-          <ProgressRegionChip regionCd={project.progressRegionCd} />
-          <RecruitmentChip recruitTypeCd={project.recruitmentTypeCd} />
+          <RecruitStatusChip recruitStatusCode={project.recruitStatus as ProjectRecruitStatusCode} />
           <DDayChip recruitmentEndDate={project.recruitmentEndDate} />
         </div>
-        <strong className="main-text text-ellipsis">{project.title}</strong>
+        <strong className="main-text text-ellipsis">
+          {project.category ? `[${project.category}] ` : ''}
+          {project.title}
+        </strong>
       </div>
       <div className="bottom flex-col gap-8">
-        <div className="chip-wrapper flex-col gap-4">
-          <div className="position-box align-center gap-4">
-            {project.positionList.slice(0, 3).map((code) => (
-              <Chip key={code} size="small" variant="outlined" color="primary" label={getCodeName(COMMON_CODE.POSITION_CODE, code)} />
-            ))}
-          </div>
-          <div className="skill-box align-center gap-4">
-            {project.skillList.slice(0, 3).map((code) => (
-              <Chip key={code} size="small" variant="outlined" color="secondary" label={getCodeName(COMMON_CODE.SKILL_CODE, code)} />
-            ))}
-          </div>
-        </div>
         <div className="project-info align-center justify-between">
-          <p>{project.username} · {project.registeredDate}</p>
-          <p>view {project.viewCount ?? 0}</p>
+          <p>{project.username}</p>
         </div>
       </div>
     </div>
@@ -82,21 +67,19 @@ function HomeBoardCard({ board }: { board: HomeBoard }) {
           <strong className="main-text text-ellipsis">{board.title}</strong>
         </div>
         <div className="right-area flex-col">
-          <HeartButton likeCount={String(board.likeCount ?? 0)} disabled />
+          <HeartButton likeCount={String(board.likeCount)} disabled />
         </div>
       </div>
       <div className="bottom w-100 align-center justify-between">
         <div className="left-area">
-          <p className="user-info">{board.username} · {board.registeredDate}</p>
+          <p className="user-info">
+            {board.username} · {board.registeredDate}
+          </p>
         </div>
         <div className="right-area align-center">
           <div className="view-count align-center">
             <Visibility sx={{ fontSize: 20, color: 'rgba(0,0,0,0.3)' }} />
-            <p>{board.viewCount ?? 0}</p>
-          </div>
-          <div className="reply-count align-center">
-            <Create sx={{ fontSize: 20, color: 'rgba(0,0,0,0.3)' }} />
-            <p>{board.commentCount ?? 0}</p>
+            <p>{board.viewCount}</p>
           </div>
         </div>
       </div>
@@ -114,11 +97,8 @@ export default function HomePage() {
   const positionCodes = getCodesByGroup(COMMON_CODE.POSITION_CODE).slice(0, 4);
 
   const filteredProjects = React.useMemo(() => {
-    const all = home?.projectList ?? [];
-    if (tabIndex === 0) return all;
-    const positionCode = positionCodes[tabIndex - 1]?.code ?? '';
-    return all.filter((p) => p.positionList.includes(positionCode));
-  }, [home?.projectList, tabIndex, positionCodes]);
+    return home?.projectDataList ?? [];
+  }, [home?.projectDataList]);
 
   const projectSlides = chunkArray(filteredProjects, 2);
 
@@ -136,18 +116,20 @@ export default function HomePage() {
             className="main-banner-swiper"
             modules={[Pagination]}
           >
-            {(home?.mainBannerList ?? []).length > 0 ? (
-              (home?.mainBannerList ?? []).map((banner) => (
+            {(home?.mainBannerDataList ?? []).length > 0 ? (
+              (home?.mainBannerDataList ?? []).map((banner) => (
                 <SwiperSlide key={banner.bannerGuid}>
-                  {banner.imageUrl ? (
-                    <img src={banner.imageUrl} alt={banner.title ?? ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  {banner.imageFileGuid ? (
+                    <img src={`${API_URL}${banner.imageFileGuid}`} alt={banner.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   ) : (
                     <p>{banner.title}</p>
                   )}
                 </SwiperSlide>
               ))
             ) : (
-              <SwiperSlide><p>등록된 배너가 없습니다.</p></SwiperSlide>
+              <SwiperSlide>
+                <p>등록된 배너가 없습니다.</p>
+              </SwiperSlide>
             )}
           </Swiper>
         </div>
@@ -213,11 +195,11 @@ export default function HomePage() {
             className="sub-banner-swiper"
             modules={[Navigation]}
           >
-            {(home?.subBannerList ?? []).length > 0 ? (
-              (home?.subBannerList ?? []).map((banner) => (
+            {(home?.subBannerDataList ?? []).length > 0 ? (
+              (home?.subBannerDataList ?? []).map((banner) => (
                 <SwiperSlide key={banner.bannerGuid}>
-                  {banner.imageUrl ? (
-                    <img src={banner.imageUrl} alt={banner.title ?? ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  {banner.imageFileGuid ? (
+                    <img src={`${API_URL}${banner.imageFileGuid}`} alt={banner.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   ) : (
                     <p>{banner.title}</p>
                   )}
@@ -225,9 +207,15 @@ export default function HomePage() {
               ))
             ) : (
               <>
-                <SwiperSlide><p>서브 배너가 없습니다.</p></SwiperSlide>
-                <SwiperSlide><p /></SwiperSlide>
-                <SwiperSlide><p /></SwiperSlide>
+                <SwiperSlide>
+                  <p>서브 배너가 없습니다.</p>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <p />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <p />
+                </SwiperSlide>
               </>
             )}
           </Swiper>
@@ -244,7 +232,7 @@ export default function HomePage() {
             </Button>
           </div>
           <div className="board-list">
-            {(home?.popularBoardList ?? []).map((board) => (
+            {(home?.boardDataList ?? []).map((board) => (
               <HomeBoardCard key={board.boardGuid} board={board} />
             ))}
           </div>
@@ -265,10 +253,18 @@ export default function HomePage() {
         <div className="right-section flex-1 justify-end">
           <nav>
             <ul className="align-center gap-24">
-              <li><a href="#">이용약관</a></li>
-              <li><a href="#">개인정보처리방침</a></li>
-              <li><a href="#">서비스소개</a></li>
-              <li><a href="#">고객센터</a></li>
+              <li>
+                <a href="#">이용약관</a>
+              </li>
+              <li>
+                <a href="#">개인정보처리방침</a>
+              </li>
+              <li>
+                <a href="#">서비스소개</a>
+              </li>
+              <li>
+                <a href="#">고객센터</a>
+              </li>
             </ul>
           </nav>
         </div>
