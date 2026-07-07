@@ -46,8 +46,8 @@ export default function HomePage() {
         {/* 로그인 사용자 환영 인사 */}
         {isLoggedIn && user && (
           <div className="welcome-banner align-center gap-8">
-            <p>
-              환영합니다, <strong>{user.username}</strong>님<span aria-hidden="true"> 👋</span>
+            <p style={{ fontSize: '1.2rem' }}>
+              환영합니다, <strong style={{ fontSize: '1.25rem' }}>{user.username}</strong>님!
             </p>
           </div>
         )}
@@ -62,7 +62,7 @@ export default function HomePage() {
               </strong>
               <p className="section-desc">함께 만들 프로젝트를 찾고 팀에 합류해보세요</p>
             </div>
-            <Button size="small" color="primary" endIcon={<ArrowForwardIos />} onClick={() => navigate('/projects')}>
+            <Button size="large" color="primary" endIcon={<ArrowForwardIos />} onClick={() => navigate('/projects')}>
               더보기
             </Button>
           </div>
@@ -82,7 +82,7 @@ export default function HomePage() {
               </strong>
               <p className="section-desc">지금 가장 뜨거운 개발자들의 이야기를 만나보세요</p>
             </div>
-            <Button size="small" color="primary" endIcon={<ArrowForwardIos />} onClick={() => navigate('/boards')}>
+            <Button size="large" color="primary" endIcon={<ArrowForwardIos />} onClick={() => navigate('/boards')}>
               더보기
             </Button>
           </div>
