@@ -229,7 +229,7 @@ export default function UserDetail() {
                     </Table>
                     </TableContainer>
                     </div>
-                <Pagination size='small' count={rows?.pagination?.totalPages} onChange={(_, page) => setPage(page)} showFirstButton showLastButton color='primary' className='w-100 flex-center mt-20' />
+                <Pagination size='small' count={rows?.pagination?.totalPages} page={currentPage + 1} onChange={(_, page) => setPage(page)} showFirstButton showLastButton color='primary' className='w-100 flex-center mt-20' />
               </div>
               <div className="apply-project">
                 <div className="flex-col gap-4">
@@ -269,7 +269,7 @@ export default function UserDetail() {
                     </Table>
                   </TableContainer>
                 </div>
-                <Pagination size='small' count={rows2?.pagination?.totalPages} onChange={(_, page) => setPage(page)} showFirstButton showLastButton color='primary' className='w-100 flex-center mt-20' />
+                <Pagination size='small' count={rows2?.pagination?.totalPages} page={currentPage2 + 1} onChange={(_, page) => setPage2(page)} showFirstButton showLastButton color='primary' className='w-100 flex-center mt-20' />
               </div>
             </TabPanel>
         </Paper>
