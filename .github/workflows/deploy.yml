@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - prd
+   workflow_dispatch:
 
 jobs:
   build:
