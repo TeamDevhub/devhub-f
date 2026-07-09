@@ -26,6 +26,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check env
+        run: |
+          echo $VITE_API_URL
+
       # 4. 빌드 (VITE 환경변수 주입 핵심)
       - name: Build project
         env:
