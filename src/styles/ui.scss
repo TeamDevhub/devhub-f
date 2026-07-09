@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+/* reset */
+@use "reset/reset";
+@use "reset/root";
+@use "reset/font";
+
+/* common */
+@use "common/utility";
+@use "common/common";
+@use "common/components";
+@use "common/content";

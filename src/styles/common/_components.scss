@@ -1,0 +1,160 @@
+@charset "utf-8";
+
+/*** MUI ***/
+/* 1. button */
+.MuiButton-root { min-width: 7rem !important; white-space: nowrap; text-transform: none !important;
+  // size
+  &.MuiButton-sizeSmall { font-size: 1.3rem; line-height: 2.2rem; letter-spacing: 0.46px; 
+    .MuiSvgIcon-root { font-size: 1.2rem !important; }
+  }
+  &.MuiButton-sizeMedium { font-size: 1.4rem; }
+  &.MuiButton-sizeLarge { padding: 0.8rem 1.1rem; font-size: 1.5rem; line-height: 2.6rem; letter-spacing: 0.46px; }
+}
+
+/* 2. chip */
+.MuiChip-root { 
+  .MuiChip-label { padding: 0.3rem 1rem; font-size: 1.3rem; line-height: 1.8rem; letter-spacing: 0.16px; }
+}
+
+/* 3. form */
+// 3-1. textfield
+.MuiTextField-root { width: 100%;
+  .MuiInputBase-root { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-primary); height: 100%;
+    .MuiInputBase-input { padding: 1.6rem 1.2rem; }
+    .MuiInputBase-inputSizeSmall { padding: 0.8rem 1.2rem; }
+    fieldset { top: 0; 
+      legend { display: none; }
+    }
+    textarea { padding: 0 !important; color: var(--text-primary); }
+  }
+}
+.MuiPickersTextField-root{ width: 100%;
+  .MuiPickersInputBase-root { padding: 1.6rem 1.2rem; 
+    .MuiPickersSectionList-root { padding: 0; font-size: 1.6rem; font-weight: 400; line-height: 120%; letter-spacing: 0.15px; color: var(--text-primary); }
+    .MuiSvgIcon-root { font-size: 2.4rem; }
+  }
+  &:has(.MuiPickersInputBase-inputSizeSmall) {
+    .MuiFormLabel-root { top: 0.3rem; line-height: 100% !important; letter-spacing: 0.15px !important; color: var(--text-secondary) !important; }
+    .MuiPickersInputBase-root { padding: 0.8rem 1.2rem !important; 
+      .MuiPickersSectionList-root { padding: 0; font-size: 1.6rem; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-disabled); }
+    }
+    .MuiSvgIcon-root { font-size: 2rem; }
+  }
+}
+
+.count-str { padding: 0.3rem 1.4rem; 
+  p { font-size: 1.2rem; line-height: 166%; letter-spacing: 0.4px; color: var(--text-secondary); text-align: right; }
+}
+// 3-2. select
+.MuiInputBase-root {
+  .MuiSelect-select { font-size: 1.6rem; font-weight: 400; line-height: 2.4rem; letter-spacing: 0.15px; color: var(--text-primary); }
+  fieldset { 
+    legend { 
+      span { font-size: 1.2rem; line-height: 100%; letter-spacing: 0.15px; color: var(--text-secondary); opacity: 1; }
+    }
+  }
+}
+// 3-3. radio
+.MuiFormControl-root { gap: 0 !important;
+  .MuiFormLabel-root { font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
+  .MuiRadioGroup-root {
+    span { font-size: 2.4rem; }
+    .MuiSvgIcon-root { font-size: 2.4rem; }
+    .MuiTypography-root { font-size: 1.6rem; font-weight: 400; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
+  }
+  
+}
+// 3-4. checkbox
+.MuiFormGroup-root {
+  .MuiCheckbox-root {
+    .MuiSvgIcon-root { font-size: 2.4rem; }
+  }
+  .MuiTypography-root { font-size: 1.6rem; font-weight: 400; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
+}
+
+/* 4. pagination */ 
+.MuiPaginationItem-root { font-size: 1.4rem !important; 
+  &.MuiPaginationItem-sizeSmall {
+    .MuiPaginationItem-icon { font-size: 1.8rem; }
+  }
+  .MuiPaginationItem-icon { font-size: 2rem; }
+}
+
+/* 5. tooltip */
+.MuiTooltip-tooltip { font-size: 1.2rem !important; font-weight: 400 !important; }
+
+/* 6. tabs */
+.MuiButtonBase-root {
+  &.MuiTab-root { padding: 0.9rem 1.6rem !important; font-size: 1.4rem; font-weight: 500; line-height: 2.4rem; letter-spacing: 0.4px; color: var(--text-secondary); }
+}
+
+/* 7. popup */
+.MuiDialog-paper { overflow-y: unset; max-width: none !important;
+  .MuiDialog-container {
+    padding: 120px 0;
+  }
+}
+
+/* 8. list */
+.MuiList-root { padding: 0 !important;
+  .MuiListItemButton-root { padding: 1.2rem 1.6rem; font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); 
+    &.MuiListItemButton-dense { padding: 0.4rem 1.6rem 0.4rem 7.2rem;  
+      .MuiListItemText-root { 
+        .MuiTypography-root { font-size: 1.4rem; line-height: 143%; letter-spacing: 0.17px; }
+      }
+    }
+    .MuiSvgIcon-root { width: 2.4rem; height: 2.4rem; }
+    .MuiListItemText-root {
+      .MuiTypography-root { font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
+    }
+  }
+  .MuiListItemButton-root:has(.MuiTypography-root) { margin: 0 0.8rem; border-radius: 0.4rem; 
+    &.Mui-selected { background-color: rgba(0, 0, 0, 0.04); }
+  }
+}
+
+/* 9. rating */
+.MuiRating-root { width: 100% !important; font-size: 3rem !important; align-items: center; justify-content: center; }
+
+/* 10. chart */
+.MuiChartsLegend-root { gap: 0 !important;
+  .MuiChartsLegend-item { padding: 0.4rem; }
+}
+.MuiChartsLabelMark-root { width: 0.8rem !important; height: 0.8rem !important; }
+
+/* 11. menu */
+.MuiMenuItem-root { padding: 0.6rem 1.6rem; gap: 1.2rem; 
+  p { font-size: 1.6rem; line-height: 150%; letter-spacing: 0.15px; color: var(--text-primary); }
+}
+
+/* 12. table */
+.MuiTableContainer-root { border-radius: 0 !important; box-shadow: none !important;
+  .MuiTableHead-root, .MuiTable-stickyHeader {
+    .MuiTableCell-root { font-size: 1.4rem; font-weight: 500; line-height: 2.4rem; letter-spacing: 0.17px; background-color: #fff; color: var(--text-primary); }
+    .MuiTableCell-head:has(.MuiCheckbox-root) { padding: 0 !important; }
+    .MuiCheckbox-root { padding: 1.6rem !important; }
+  }
+  .MuiTableBody-root {
+    .MuiTableCell-root { padding: 1.6rem; font-size: 1.4rem; letter-spacing: 0.17px; color: var(--text-primary); 
+      &:has(.MuiButtonBase-root, .MuiChip-root ) { padding: 0; }
+      .MuiTypography-root { font-size: 1.4rem; letter-spacing: 0.17px; color: var(--text-primary); }
+    }
+  }
+  .MuiTableRow-root {
+    &:hover {
+      .MuiTableCell-root { background-color: rgba(25, 118, 210, 0.06); }
+    }
+    &.Mui-selected {
+      .MuiTableCell-root { background-color: rgba(25, 118, 210, 0.06); }
+    }
+  }
+  .MuiTableCell-root { border-bottom: 1px solid #E5E7EB !important; 
+    .MuiCheckbox-root { padding: 0; }
+  }
+}
+
+/*** CUSTOM ***/
+// 1. heart button
+.heart-box { 
+  .heart-count { width: 3.4rem; font-size: 1.4rem; line-height: 166%; letter-spacing: 0.4px; color: var(--error-main); text-align: center; }
+}
