@@ -1,12 +1,34 @@
 import logo from '@/assets/images/devHub-logo.png';
-import { Button, Paper } from '@mui/material';
+import { Button, Drawer, IconButton, Paper } from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/_common/useAuth';
+import useDisclosure from '@/hooks/_common/useDisclosure';
 import UserInfo from '@/components/_common/layout/UserInfo.tsx';
 
 export default function Header() {
   const { isLoggedIn } = useAuth();
-  console.log('Header', isLoggedIn);
+  const mobileNav = useDisclosure();
+
+  const navLinks = (
+    <>
+      <Link to={'/projects'} onClick={mobileNav.close}>
+        <Button size="large" variant="text">
+          PROJECT
+        </Button>
+      </Link>
+      <Link to={'/boards'} onClick={mobileNav.close}>
+        <Button size="large" variant="text">
+          BOARD
+        </Button>
+      </Link>
+      <Link to={'/skilltrend'} onClick={mobileNav.close}>
+        <Button size="large" variant="text">
+          SKILL TRENDS
+        </Button>
+      </Link>
+    </>
+  );
 
   return (
     <header>
@@ -18,23 +40,7 @@ export default function Header() {
               <span className="logo-text">DevHub</span>
             </Link>
           </h1>
-          <nav className="menu-box">
-            <Link to={'/projects'}>
-              <Button size="large" variant="text">
-                PROJECT
-              </Button>
-            </Link>
-            <Link to={'/boards'}>
-              <Button size="large" variant="text">
-                BOARD
-              </Button>
-            </Link>
-            <Link to={'/skilltrend'}>
-              <Button size="large" variant="text">
-                SKILL TRENDS
-              </Button>
-            </Link>
-          </nav>
+          <nav className="menu-box">{navLinks}</nav>
         </div>
         <div className="header-right-box align-center">
           {isLoggedIn ? (
@@ -54,8 +60,17 @@ export default function Header() {
               </Link>
             </>
           )}
+          <IconButton className="menu-toggle-btn" onClick={mobileNav.open} aria-label="메뉴 열기">
+            <MenuIcon />
+          </IconButton>
         </div>
       </Paper>
+
+      <Drawer anchor="right" open={mobileNav.isOpen} onClose={mobileNav.close}>
+        <nav className="mobile-menu-box flex-col" role="presentation">
+          {navLinks}
+        </nav>
+      </Drawer>
     </header>
   );
 }

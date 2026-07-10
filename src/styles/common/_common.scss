@@ -1,6 +1,11 @@
 @charset "utf-8";
+@use "breakpoints" as bp;
 
 /* header */
+.menu-toggle-btn {
+  display: none;
+}
+
 .header {
   height: 7rem;
   padding: 1.2rem 3.2rem;
@@ -28,16 +33,54 @@
       cursor: pointer;
     }
   }
+
+  @include bp.tablet-down {
+    padding: 1.2rem 1.6rem;
+    .menu-box {
+      display: none;
+    }
+    .menu-toggle-btn {
+      display: inline-flex;
+    }
+  }
+}
+
+/* header 모바일 드로어 내부 메뉴 (Drawer는 header 밖에 포탈되므로 별도 스코프) */
+.mobile-menu-box {
+  min-width: 22rem;
+  padding: 2.4rem 1.6rem;
+  gap: 0.8rem;
+  a {
+    width: 100%;
+  }
+  button {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
 
 /* footer */
 footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg, rgba(66, 165, 245, 0.08) 0%, rgba(186, 104, 200, 0.06) 100%);
-  .left-section { width: 70%; 
+  .left-section { width: 70%;
     .footer-logo { font-size: 4rem; font-weight: bold; line-height: 120%; color: #626262; user-select: none; }
     .footer-info { font-size: 1.3rem; font-weight: 300; color: #626262; }
   }
   .right-section {
     a { font-size: 1.5rem; line-height: 100%; font-weight: 500; color: #626262; }
+  }
+
+  @include bp.tablet-down {
+    height: auto;
+    padding: 4rem 2.4rem;
+    flex-direction: column;
+    gap: 2.4rem;
+    .left-section { width: 100%; }
+    .right-section { justify-content: flex-start; }
+  }
+  @include bp.mobile {
+    padding: 3.2rem 1.6rem;
+    .left-section .footer-logo { font-size: 3rem; }
+    .right-section ul { flex-wrap: wrap; gap: 1.2rem !important; }
   }
 }
 
