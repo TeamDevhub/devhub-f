@@ -13,7 +13,7 @@ export default function ProfileLayout() {
   })();
 
   return (
-    <div className="main-page flex gap-24 align-stretch" style={{ minHeight: 'calc(100vh - 7rem)' }}>
+    <div className="main-page profile-layout flex gap-24 align-stretch" style={{ minHeight: 'calc(100vh - 7rem)' }}>
       <MyInfoBox selectedKey={selectedKey} />
       <div className="flex-1">
         <Outlet />

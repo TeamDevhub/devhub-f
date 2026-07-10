@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+// 기존 .project-card-grid(1024px/640px) 관례를 공식 브레이크포인트로 승격.
+// src/styles/theme.ts의 MUI breakpoints.values와 값을 맞춰서 사용한다.
+$bp-mobile: 640px;
+$bp-tablet: 1024px;
+
+@mixin mobile {
+  @media (max-width: $bp-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet-down {
+  @media (max-width: $bp-tablet) {
+    @content;
+  }
+}

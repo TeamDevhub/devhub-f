@@ -1,5 +1,5 @@
 import { Close } from '@mui/icons-material';
-import { Button, Dialog, IconButton, Paper } from '@mui/material';
+import { Button, Dialog, IconButton, Paper, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
 
 export interface WebPopupProps{
@@ -24,6 +24,8 @@ export default function WebPopup({
   size = 'small',
   closeOnSubmit = true
 }:WebPopupProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleClose = () => {
     onClose?.();
@@ -46,9 +48,10 @@ export default function WebPopup({
     case 'small' : _size = '400px'; break;
     case 'auto' : _size = 'auto'; break;
   }
+  if(isMobile && size !== 'auto') _size = '100%';
 
   return (
-    <Dialog open={isOpen} onClose={handleClose} scroll='body' disableRestoreFocus>
+    <Dialog open={isOpen} onClose={handleClose} scroll='body' disableRestoreFocus fullScreen={isMobile}>
       <Paper className='web-popup' elevation={4}>
         <div className='popup-title-box justify-between align-center'>
           <p className='popup-title'>{title}</p>
