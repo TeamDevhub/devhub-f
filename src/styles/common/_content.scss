@@ -10,7 +10,7 @@
     /* main page */
     .main-container {
       display: flex;
-      width: 123rem;
+      width: 100%;
       max-width: 123rem;
       padding: 2.4rem 0.5rem 7rem 0;
       margin: 0 auto;
@@ -18,6 +18,15 @@
       gap: 4rem;
       > * {
         padding: 1rem;
+      }
+
+      @include bp.tablet-down {
+        padding: 2rem 1.6rem 5rem;
+        gap: 3.2rem;
+      }
+      @include bp.mobile {
+        padding: 1.6rem 1.2rem 4rem;
+        gap: 2.4rem;
       }
       // banner card (메인/서브 배너 공통)
       .banner-card {
@@ -679,11 +688,18 @@
       }
     }
     .main-page {
-      width: 123rem;
+      width: 100%;
       max-width: 123rem;
       padding: 2.4rem 0.5rem 3.1rem 0;
       margin: 0 auto;
       gap: 1rem;
+
+      @include bp.tablet-down {
+        padding: 2rem 1.6rem 3rem;
+      }
+      @include bp.mobile {
+        padding: 1.6rem 1.2rem 2.4rem;
+      }
       /* 1. project */
       // 1-1. project list
       .project-list-box {
@@ -1434,7 +1450,7 @@
       }
       .bottom-section {
         .left-area {
-          width: 58rem;
+          width: 100%;
           max-width: 58rem;
         }
       }
