@@ -78,6 +78,10 @@
         .banner-card-text {
           max-width: 52rem;
           padding: 4rem 4.8rem;
+
+          @include bp.mobile {
+            padding: 1.6rem 2rem;
+          }
         }
         .banner-card-eyebrow {
           align-self: flex-start;
@@ -92,10 +96,18 @@
         .banner-card-title {
           font-size: 3.4rem;
           font-weight: 800;
+
+          @include bp.mobile {
+            font-size: 2.2rem;
+          }
         }
         .banner-card-desc {
           font-size: 1.5rem;
           line-height: 150%;
+
+          @include bp.mobile {
+            font-size: 1.3rem;
+          }
         }
         .banner-card-cta {
           align-self: flex-start;
@@ -130,6 +142,13 @@
               height: 30rem;
               border-radius: 0.8rem;
               border: 1px solid #eee;
+
+              @include bp.tablet-down {
+                height: 24rem;
+              }
+              @include bp.mobile {
+                height: 20rem;
+              }
             }
           }
           .swiper-pagination {
