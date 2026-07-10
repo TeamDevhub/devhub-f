@@ -373,6 +373,14 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
         }
       }
     }
+
+    @include bp.mobile {
+      flex-direction: column;
+      gap: 1.6rem;
+      .label-area {
+        width: 100%;
+      }
+    }
   }
 }
 // 2. 유저 기본 정보 폼
@@ -448,6 +456,17 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
   }
   .report-reason-field {
     min-width: 56rem;
+  }
+
+  @include bp.mobile {
+    dl {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .report-reason-field {
+      min-width: 0;
+      width: 100%;
+    }
   }
 }
 .required {

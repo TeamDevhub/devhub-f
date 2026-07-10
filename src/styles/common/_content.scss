@@ -1298,7 +1298,7 @@
       }
     }
     .auth-box {
-      width: 40rem;
+      width: min(40rem, calc(100vw - 3.2rem));
       padding: 1.5rem 2rem;
       gap: 1.6rem;
       > div {
@@ -1329,7 +1329,8 @@
       }
       // 2. signIn
       &:has(.text-box) {
-        min-width: 57.3rem;
+        width: min(57.3rem, calc(100vw - 3.2rem));
+        min-width: 0;
         gap: 1.6rem;
       }
       .text-box {
