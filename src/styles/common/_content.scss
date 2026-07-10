@@ -1479,6 +1479,11 @@ body:has(#devHub) {
       padding: 24px;
       gap: 10px;
     }
+
+    @include bp.mobile {
+      width: 100%;
+      max-width: 100%;
+    }
   }
 }
 
@@ -1504,6 +1509,11 @@ body:has(#devHubAdmin) {
     .popup-button-box {
       padding: 10px 24px 20px 24px;
       gap: 10px;
+    }
+
+    @include bp.mobile {
+      width: 100%;
+      max-width: 100%;
     }
   }
 }
