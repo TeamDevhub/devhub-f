@@ -1,5 +1,5 @@
 @charset "utf-8";
-@use "breakpoints" as bp;
+@use 'breakpoints' as bp;
 
 /** WEB **/
 #devHub {
@@ -96,17 +96,21 @@
         .banner-card-title {
           font-size: 3.4rem;
           font-weight: 800;
+          white-space: nowrap;
 
           @include bp.mobile {
             font-size: 2.2rem;
+            white-space: normal;
           }
         }
         .banner-card-desc {
           font-size: 1.5rem;
           line-height: 150%;
+          white-space: nowrap;
 
           @include bp.mobile {
             font-size: 1.3rem;
+            white-space: normal;
           }
         }
         .banner-card-cta {
@@ -232,7 +236,10 @@
           background: #fff;
           border: 1px solid rgba(0, 0, 0, 0.22);
           cursor: pointer;
-          transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+          transition:
+            box-shadow 0.15s ease,
+            transform 0.15s ease,
+            border-color 0.15s ease;
 
           &:hover {
             border-color: rgba(0, 0, 0, 0.34);
@@ -460,7 +467,10 @@
           border-radius: 0.6rem;
           border: 1px solid rgba(0, 0, 0, 0.22);
           cursor: pointer;
-          transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+          transition:
+            box-shadow 0.15s ease,
+            transform 0.15s ease,
+            border-color 0.15s ease;
 
           &:hover {
             border-color: rgba(0, 0, 0, 0.34);
@@ -540,7 +550,10 @@
           border: 1px solid rgba(0, 0, 0, 0.1);
           text-decoration: none;
           color: inherit;
-          transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+          transition:
+            box-shadow 0.15s ease,
+            transform 0.15s ease,
+            border-color 0.15s ease;
 
           &:hover {
             border-color: rgba(0, 0, 0, 0.28);
@@ -579,7 +592,9 @@
           .resource-item-arrow {
             flex-shrink: 0;
             color: rgba(0, 0, 0, 0.24);
-            transition: color 0.15s ease, transform 0.15s ease;
+            transition:
+              color 0.15s ease,
+              transform 0.15s ease;
           }
           &:hover .resource-item-arrow {
             color: rgba(0, 0, 0, 0.56);
@@ -618,7 +633,10 @@
           border-radius: 0.6rem;
           border: 1px solid rgba(0, 0, 0, 0.22);
           cursor: pointer;
-          transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+          transition:
+            box-shadow 0.15s ease,
+            transform 0.15s ease,
+            border-color 0.15s ease;
 
           display: flex;
           flex-direction: column;
