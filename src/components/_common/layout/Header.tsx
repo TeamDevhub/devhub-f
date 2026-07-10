@@ -1,10 +1,12 @@
 import logo from '@/assets/images/devHub-logo.png';
 import { Button, Drawer, IconButton, Paper } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '@/hooks/_common/useAuth';
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import UserInfo from '@/components/_common/layout/UserInfo.tsx';
+
+const getNavLinkClassName = ({ isActive }: { isActive: boolean }) => `nav-link${isActive ? ' active' : ''}`;
 
 export default function Header() {
   const { isLoggedIn } = useAuth();
@@ -12,27 +14,21 @@ export default function Header() {
 
   const navLinks = (
     <>
-      <Link to={'/projects'} onClick={mobileNav.close}>
-        <Button size="large" variant="text">
-          PROJECT
-        </Button>
-      </Link>
-      <Link to={'/boards'} onClick={mobileNav.close}>
-        <Button size="large" variant="text">
-          BOARD
-        </Button>
-      </Link>
-      <Link to={'/skilltrend'} onClick={mobileNav.close}>
-        <Button size="large" variant="text">
-          SKILL TRENDS
-        </Button>
-      </Link>
+      <NavLink to={'/projects'} className={getNavLinkClassName} onClick={mobileNav.close}>
+        PROJECT
+      </NavLink>
+      <NavLink to={'/boards'} className={getNavLinkClassName} onClick={mobileNav.close}>
+        BOARD
+      </NavLink>
+      <NavLink to={'/skilltrend'} className={getNavLinkClassName} onClick={mobileNav.close}>
+        SKILL TRENDS
+      </NavLink>
     </>
   );
 
   return (
     <header>
-      <Paper className="header w-100 align-center justify-between" elevation={1} sx={{ borderRadius: 0 }}>
+      <Paper className="header w-100 align-center justify-between" elevation={0} sx={{ borderRadius: 0 }}>
         <div className="header-left-box align-center">
           <h1 className="logo-box">
             <Link to={'/'} className="align-center">
@@ -40,25 +36,15 @@ export default function Header() {
               <span className="logo-text">DevHub</span>
             </Link>
           </h1>
-          <nav className="menu-box">{navLinks}</nav>
+          <nav className="menu-box align-center">{navLinks}</nav>
         </div>
         <div className="header-right-box align-center">
           {isLoggedIn ? (
             <UserInfo />
           ) : (
-            <>
-              <Link to="/auth/signup">
-                <Button size="large" variant="text">
-                  JOIN
-                </Button>
-              </Link>
-
-              <Link to="/auth/login">
-                <Button size="large" variant="text">
-                  LOGIN
-                </Button>
-              </Link>
-            </>
+            <Button className="auth-cta" variant="contained" color="primary" disableElevation component={Link} to="/auth/login">
+              로그인 / 회원가입
+            </Button>
           )}
           <IconButton className="menu-toggle-btn" onClick={mobileNav.open} aria-label="메뉴 열기">
             <MenuIcon />
