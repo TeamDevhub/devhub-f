@@ -29,7 +29,9 @@ export default function BoardList(){
         {/* 1. category tabs */}
         <Tabs
             value={request.categoryCd}
-            variant='standard'
+            variant='scrollable'
+            scrollButtons='auto'
+            allowScrollButtonsMobile
             onChange={(_, newValue)=>setTab(newValue)}
             textColor="primary"
             indicatorColor="primary"

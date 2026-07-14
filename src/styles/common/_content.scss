@@ -757,6 +757,14 @@
             padding: 1.6rem 2.4rem;
             gap: 1.2rem;
             cursor: pointer;
+
+            @include bp.mobile {
+              flex-direction: column;
+              .MuiDivider-root {
+                display: none;
+              }
+            }
+
             .left-area {
               min-width: 0;
               gap: 1.5rem;
@@ -771,6 +779,12 @@
                 gap: 0.8rem;
                 .top {
                   gap: 2.4rem;
+
+                  @include bp.mobile {
+                    flex-wrap: wrap;
+                    gap: 0.8rem 2.4rem;
+                  }
+
                   > div {
                     gap: 0.8rem;
                     .title,
@@ -812,7 +826,29 @@
                   white-space: nowrap;
                 }
               }
+
+              @include bp.mobile {
+                width: 100%;
+                min-width: 0;
+                .chip-box > div {
+                  overflow: visible;
+                  white-space: normal;
+                  flex-wrap: wrap;
+                }
+              }
             }
+          }
+        }
+      }
+      // 1-1-1. 목록 하단 (페이지네이션 + 글쓰기) - 프로젝트 · 게시글 목록 공통
+      .list-bottom-box {
+        @include bp.mobile {
+          flex-wrap: wrap;
+          gap: 1.2rem;
+
+          .MuiPagination-root {
+            width: 100%;
+            overflow-x: auto;
           }
         }
       }
@@ -1206,9 +1242,19 @@
         gap: 2.4rem;
         > div {
           gap: 2.4rem;
+
+          @include bp.tablet-down {
+            flex-wrap: wrap;
+          }
+
           > div {
             padding: 1.2rem;
             gap: 1rem;
+
+            @include bp.tablet-down {
+              flex: 1 1 22rem;
+            }
+
             .title {
               font-size: 2rem;
               font-weight: 700;
@@ -1235,10 +1281,22 @@
           }
           &.position-popular-skill-wrap,
           &.popular-skill-wrap {
+            @include bp.mobile {
+              > div {
+                flex: 1 1 100%;
+              }
+            }
+
             > div {
               padding: 1.2rem;
               .skill-container {
                 padding: 1.2rem 4.8rem;
+
+                @include bp.tablet-down {
+                  padding: 1.2rem 1.6rem;
+                  flex-wrap: wrap;
+                }
+
                 .skill-box {
                   overflow: hidden;
                   position: relative;
@@ -1246,6 +1304,11 @@
                   padding: 3.35rem;
                   gap: 1.6rem;
                   border-radius: 1.2rem;
+
+                  @include bp.tablet-down {
+                    flex: 1 1 16rem;
+                    max-width: 100%;
+                  }
                   border: 1.5px solid rgba(66, 165, 245, 0.2);
                   .ranking {
                     font-size: 4.8rem;
