@@ -1,10 +1,10 @@
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
-import NotificationItem from '@/components/_common/layout/NotificationItem';
+// import NotificationItem from '@/components/_common/layout/NotificationItem';
 import useMenu from '@/hooks/_common/useMenu';
 import { useAuth } from '@/hooks/_common/useAuth';
-import useCheckedNotification from '@/hooks/web/header/useCheckedNotification';
-import useNotificationList from '@/hooks/web/header/useNotificationList';
-import { Create, Inbox, Logout, Notifications, Person } from '@mui/icons-material';
+// import useCheckedNotification from '@/hooks/web/header/useCheckedNotification';
+// import useNotificationList from '@/hooks/web/header/useNotificationList';
+import { Create, Inbox, Logout, Person } from '@mui/icons-material';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -18,22 +18,20 @@ export default function UserInfo() {
     color: 'rgba(0, 0, 0, 0.56)',
   };
 
-  const { res: notifications, removeNotification, hasList } = useNotificationList();
-
-  const { checkedNotification } = useCheckedNotification();
-
-  const { anchorEl: notificationsEl, open: notificationsOpen, handleClick: notificationsClick, handleClose: notificationsClose } = useMenu();
+  // 알림 기능 임시 비활성화
+  // const { res: notifications, removeNotification, hasList } = useNotificationList();
+  // const { checkedNotification } = useCheckedNotification();
+  // const { anchorEl: notificationsEl, open: notificationsOpen, handleClick: notificationsClick, handleClose: notificationsClose } = useMenu();
+  // const handleClickNotification = (guid: string) => {
+  //   checkedNotification(guid).then();
+  //   removeNotification(guid);
+  // };
 
   const { anchorEl: userEl, open: userOpen, handleClick: userClick, handleClose: userClose } = useMenu();
 
-  const handleClickNotification = (guid: string) => {
-    checkedNotification(guid).then();
-    removeNotification(guid);
-  };
-
   return (
     <>
-      {/* 알림 */}
+      {/* 알림 아이콘 임시 주석 처리
       <div>
         <IconButton onClick={notificationsClick}>
           <CustomAvatar
@@ -62,6 +60,7 @@ export default function UserInfo() {
           ))}
         </Menu>
       </div>
+      */}
 
       {/* 사용자 메뉴 */}
       <div>
