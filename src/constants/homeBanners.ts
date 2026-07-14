@@ -27,7 +27,7 @@ export const HOME_MAIN_BANNERS: StaticBanner[] = [
   },
   {
     bannerGuid: 'main-skills',
-    title: '인기 기술과 개발자 트렌드를 확인하세요',
+    title: '인기 기술과 트렌드를 확인하세요',
     description: '인기 기술 스택과 프레임워크, 트렌드를 살펴보세요',
     ctaText: '기술 트렌드 보기',
     linkUrl: '/skilltrend',

@@ -6,6 +6,7 @@ import useSelectApplyProjects from '@/hooks/web/profile/project/useSelectApplyPr
 import useSelectMyProjects from '@/hooks/web/profile/project/useSelectMyProjects';
 import { COMMON_CODE } from '@/constants/codes';
 import { useCodes } from '@/contexts/CommonCodeContext';
+
 export default function MyProfileHome() {
   const { getCodeName } = useCodes();
   const { res } = useSelectUserProfile();
@@ -18,7 +19,6 @@ export default function MyProfileHome() {
       {/* 내 정보 */}
       <div className="top flex-col">
         <MyProfileBaseForm label="닉네임">{profile?.user.username}</MyProfileBaseForm>
-        {/* <MyProfileBaseForm label="이메일">{profile?.user.email}</MyProfileBaseForm> */}
         <MyProfileBaseForm label="내 소개">{profile?.user.introduction || '-'}</MyProfileBaseForm>
         <MyProfileBaseForm label="관심 포지션">
           <div className="recruit-chip-box align-center">
@@ -41,9 +41,13 @@ export default function MyProfileHome() {
 
       {/* 프로젝트 목록 */}
       <div className="bottom flex-col">
-        {(projectRes?.dataList?.length ?? 0) > 0 && <MyProfileListBox variant="register" listTitle="내가 등록한 프로젝트" items={projectRes?.dataList ?? []} />}
+        {(projectRes?.dataList?.length ?? 0) > 0 && (
+          <MyProfileListBox variant="register" listTitle="내가 등록한 프로젝트" items={projectRes?.dataList ?? []} />
+        )}
 
-        {(applyRes?.dataList?.length ?? 0) > 0 && <MyProfileListBox variant="apply" listTitle="내가 신청한 프로젝트" items={applyRes?.dataList ?? []} />}
+        {(applyRes?.dataList?.length ?? 0) > 0 && (
+          <MyProfileListBox variant="apply" listTitle="내가 신청한 프로젝트" items={applyRes?.dataList ?? []} />
+        )}
       </div>
     </Paper>
   );
