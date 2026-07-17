@@ -31,7 +31,7 @@ export default function useSelectAdminBoards(
     const navigate = useNavigate();
     const handleDetail = (boardGuid:string) => {
         if(!boardGuid) return;
-        navigate(`/boards/detail`, {state : {boardGuid}});
+        navigate(`/boards/detail/${boardGuid}`);
     }
 
     const boardSearch = () => {

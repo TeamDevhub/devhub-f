@@ -59,9 +59,7 @@ export default function ProjectCard({
     setOpenEvaluatePopup(true);
   }
 
-  const onClickHeartButton = (_e: React.MouseEvent<HTMLButtonElement>, liked: boolean) => {
-    toggleLike(projectGuid, liked);
-  }
+  const onClickHeartButton = (_e: React.MouseEvent<HTMLButtonElement>, liked: boolean) => toggleLike(projectGuid, liked);
 
   const onClickEvaluateButton = (userId: string, score: number) => {
     reviewMemberMutate({ projectGuid: projectGuid, userGuid: userId, score: score })

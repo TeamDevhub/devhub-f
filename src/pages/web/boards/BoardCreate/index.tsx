@@ -5,6 +5,7 @@ import FieldGroup from '@/components/_design/FieldGroup';
 import useCreateBoard from '@/hooks/web/boards/useCreateBoard';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 import {COMMON_CODE} from "@/constants/codes.ts";
+import { CONTENT_MAX_LENGTH } from '@/constants/contentLimits';
 import { FormHelperText} from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -61,11 +62,12 @@ export default function BoardCreate() {
           {/* 2-3. 내용 */}
           <FormField required label='내용'>
             <FieldGroup>
-              <CustomTextfield 
+              <CustomTextfield
                 error={!!errors.content}
-                helperText={errors.content ? errors.content : ''} 
-                onChange={(e) => onHandleEvent('content', e.target.value)} 
-                type='textarea' 
+                helperText={errors.content ? errors.content : ''}
+                onChange={(e) => onHandleEvent('content', e.target.value)}
+                type='textarea'
+                maxLength={CONTENT_MAX_LENGTH}
                 placeholder='내용을 입력해 주세요.'
                 value={values.content}
               />

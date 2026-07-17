@@ -8,7 +8,8 @@ import useSelectProjects from '@/hooks/web/projects/useSelectProjects';
 import { useNavigate } from 'react-router-dom';
 import type { FilterData } from '@/types/type.projects';
 import { FilterAlt } from '@mui/icons-material';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/hooks/_common/useAuth';
+import { useRequireAuth } from '@/hooks/_common/useRequireAuth';
 import { Button, FormControl, MenuItem, Pagination, Paper, Select } from '@mui/material';
 
 export default function ProjectList() {
@@ -17,6 +18,9 @@ export default function ProjectList() {
   const filterPopup = useDisclosure();
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
+  const { requireAuth } = useRequireAuth();
+
+  const handleCreateClick = () => requireAuth(() => navigate('/projects/create'));
 
   const handleApplyFilterPopup = (data: FilterData) => {
     filterPopup.close();
@@ -78,7 +82,7 @@ export default function ProjectList() {
           })}
           <div className='list-bottom-box w-100 align-center mt-a'>
             <Pagination page={request.page} count={res?.pagination?.totalPages} onChange={(_, v) => { setPage(v) }} color='primary' className='w-100 flex-center' showFirstButton showLastButton />
-            <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }} onClick={() => { navigate('/projects/create') }}>글쓰기</Button>
+            <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }} onClick={handleCreateClick}>글쓰기</Button>
           </div>
         </div>
       </div>

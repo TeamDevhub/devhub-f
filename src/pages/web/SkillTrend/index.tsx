@@ -5,6 +5,7 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import { LineChart, PieChart, type MarkElementProps } from '@mui/x-charts';
 import useSelectSkillTrends from '@/hooks/web/skilltrend/useSelectSkillTrends';
 import type { SkillShare } from '@/types/type.skilltrend';
+import InfoBanner from '@/components/_common/InfoBanner';
 
 const CHART_COLORS = ['#7086FD', '#6FD195', '#FFAE4C', '#07DBFA', '#988AFC', '#1F94FF', '#1E88E5', '#FDAC5B'];
 
@@ -94,6 +95,9 @@ export default function SkillTrendPage() {
 
   return (
     <div className="main-page skilltrends-page flex-col">
+      <InfoBanner>
+        이 페이지는 현재 샘플 데이터를 사용한 미리보기입니다. 실시간 트렌드 데이터와 추가 분석 기능은 추후 업데이트에서 제공될 예정입니다.
+      </InfoBanner>
       {/* 1. 통계 카드 */}
       <div className="project-info-wrap align-stretch">
         {(trendData?.statsCardList ?? []).map((card, i) => (

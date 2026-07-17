@@ -10,7 +10,7 @@ export default function ModalRenderer() {
 
   return (
     <WebPopup isOpen={isOpen} {...config}>
-      {config.content}
+      <p className="popup-message">{config.content}</p>
     </WebPopup>
   );
 }

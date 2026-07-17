@@ -4,10 +4,12 @@ import useFormState from '@/hooks/_common/useFormState.ts';
 import type { ProjectCreate, Position } from "@/types/type.projects";
 import { useMutation } from "@/hooks/_common/api.hook";
 import { useModal } from "@/hooks/_common/useModal"
+import { useRequireAuth } from "@/hooks/_common/useRequireAuth";
 import useFileUpload from "@/hooks/_common/useFileUpload.ts";
 import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
+import { CONTENT_MAX_LENGTH } from "@/constants/contentLimits";
 import { useState } from "react";
 
 export default function useCreateProject() {
@@ -45,7 +47,7 @@ export default function useCreateProject() {
     const validations = {
         title: [Validators.required()],
         category: [Validators.required()],
-        content: [Validators.required()],
+        content: [Validators.required(), Validators.maxLength(CONTENT_MAX_LENGTH)],
         recruitmentTypeCd: [Validators.required()],
         recruitmentStartDate: [Validators.required()],
         recruitmentEndDate: [Validators.required()],
@@ -63,6 +65,7 @@ export default function useCreateProject() {
     const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(initData, { validations, mode: 'manual' });
     const { fileStates, errors: fileErrors, upload, register } = useFileUpload();
     const { alert } = useModal();
+    const { requireAuth } = useRequireAuth();
     const [fileGuids, setFileGuids] = useState<string[]>([]);
     const { mutate: fileDeleteMutate } = useMutation<string, void>(deleteFile);
     const handleSuccessCreateProject = () => {
@@ -84,6 +87,9 @@ export default function useCreateProject() {
     const { mutate: projectMutate, loading, error } = useMutation<ProjectCreate, void>(createProject, handleSuccessCreateProject, handleFailCreateProject);
 
     const onSubmit = async () => {
+        const allowed = await requireAuth();
+        if (!allowed) return;
+
         let returnData;
         if (fileStates && Object.keys(fileStates).length > 0) {
             returnData = await upload();

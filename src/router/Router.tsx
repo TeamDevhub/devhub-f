@@ -17,7 +17,10 @@ import ProjectDetailPage from '@/pages/_design/web/projects/ProjectDetailPage';
 import SignupPage from '@/pages/_design/web/signup/SignInPage1';
 import SignInPage2 from '@/pages/_design/web/signup/SignInPage2';
 import SkillTrendsPage from '@/pages/_design/web/skilltrends/SkillTrendsPage';
-import ErrorPage from '@/pages/ErrorPage';
+import RouteErrorBoundary from '@/pages/error/RouteErrorBoundary';
+import NotFoundPage from '@/pages/error/NotFoundPage';
+import ComingSoonPage from '@/pages/error/ComingSoonPage';
+import RequireAuthRoute from '@/components/_common/auth/RequireAuthRoute';
 import BoardList from '@/pages/web/boards/BoardList';
 import BoardCreate from '@/pages/web/boards/BoardCreate';
 import BoardDetail from '@/pages/web/boards/BoardDetail';
@@ -62,7 +65,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
-    errorElement: <ErrorPage />,
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
         index: true,
@@ -74,31 +77,28 @@ const router = createBrowserRouter([
       },
       {
         path: 'profile',
-        element: <ProfileLayout />,
+        element: <RequireAuthRoute />,
         children: [
           {
-            index: true,
-            element: <MyProfileHome />,
-          },
-          {
-            path: 'update',
-            element: <MyProfileUpdateWrapper />,
-          },
-          {
-            path: 'projects/:paramTabValue?',
-            element: <MyProfileProjectListPage />,
-          },
-          // {
-          //   path: 'boards',
-          //   element: <MyProfileBoardList />,
-          // },
-          // {
-          //   path: 'projects',
-          //   element: <MyProfileProjectList />,
-          // },
-          {
-            path: 'boards',
-            element: <MyProfileBoardList />,
+            element: <ProfileLayout />,
+            children: [
+              {
+                index: true,
+                element: <MyProfileHome />,
+              },
+              {
+                path: 'update',
+                element: <MyProfileUpdateWrapper />,
+              },
+              {
+                path: 'projects/:paramTabValue?',
+                element: <MyProfileProjectListPage />,
+              },
+              {
+                path: 'boards',
+                element: <MyProfileBoardList />,
+              },
+            ],
           },
         ],
       },
@@ -112,6 +112,10 @@ const router = createBrowserRouter([
           {
             path: 'detail/:projectGuid',
             element: <ProjectDetail />,
+          },
+          {
+            path: 'apply',
+            element: <ComingSoonPage />,
           },
           {
             path: 'create',
@@ -135,21 +139,25 @@ const router = createBrowserRouter([
             element: <BoardCreate />,
           },
           {
-            path: 'detail',
+            path: 'detail/:boardGuid',
             element: <BoardDetail />,
           },
           {
-            path: 'update',
+            path: 'update/:boardGuid',
             element: <BoardUpdate />,
           },
         ],
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />,
       },
     ],
   },
   {
     path: '/admin',
     element: <AdminLayout />,
-    errorElement: <ErrorPage />,
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
         path: 'banner',
@@ -222,12 +230,16 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: '*',
+        element: <NotFoundPage />,
+      },
     ],
   },
   {
     path: '/auth',
     element: <AuthLayout />,
-    errorElement: <ErrorPage />,
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
         path: 'login',
@@ -247,11 +259,15 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: '*',
+        element: <NotFoundPage />,
+      },
     ],
   },
   {
     path: '/design',
-    errorElement: <ErrorPage />,
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
         path: 'auth',
@@ -433,6 +449,10 @@ const router = createBrowserRouter([
             ],
           },
         ],
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />,
       },
     ],
   },
