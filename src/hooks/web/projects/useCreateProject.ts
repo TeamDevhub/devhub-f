@@ -8,6 +8,7 @@ import useFileUpload from "@/hooks/_common/useFileUpload.ts";
 import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
+import { CONTENT_MAX_LENGTH } from "@/constants/contentLimits";
 import { useState } from "react";
 
 export default function useCreateProject() {
@@ -45,7 +46,7 @@ export default function useCreateProject() {
     const validations = {
         title: [Validators.required()],
         category: [Validators.required()],
-        content: [Validators.required()],
+        content: [Validators.required(), Validators.maxLength(CONTENT_MAX_LENGTH)],
         recruitmentTypeCd: [Validators.required()],
         recruitmentStartDate: [Validators.required()],
         recruitmentEndDate: [Validators.required()],

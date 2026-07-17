@@ -2,6 +2,7 @@ import type { BoardBasic } from "@/types/type.boards";
 import {updateBoard} from '@/api/web/api.boards';
 import { useMutation } from '@/hooks/_common/api.hook';
 import { Validators } from '@/utils/util._common';
+import { CONTENT_MAX_LENGTH } from '@/constants/contentLimits';
 import useFormState from "@/hooks/_common/useFormState.ts";
 import { useNavigate } from 'react-router-dom';
 import type { BoardDetail } from "@/types/type.boards";
@@ -16,7 +17,7 @@ export default function useUpdateBoard(boardData:BoardDetail) {
     };
     const validations = {
         title : [Validators.required()],
-        content : [Validators.required()],
+        content : [Validators.required(), Validators.maxLength(CONTENT_MAX_LENGTH)],
         categoryCd : [Validators.required()],
     }
     

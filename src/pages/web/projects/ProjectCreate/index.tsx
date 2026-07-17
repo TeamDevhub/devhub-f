@@ -9,6 +9,7 @@ import DragAndDropForm from '@/components/_common/DragAndDropForm'
 import useCreateProject from '@/hooks/web/projects/useCreateProject.ts'
 import useDisclosure from '@/hooks/_common/useDisclosure';
 import { COMMON_CODE } from '@/constants/codes';
+import { CONTENT_MAX_LENGTH } from '@/constants/contentLimits';
 import { type DateType } from '@/types/type.api';
 import type { Position, ApplicationFormCreate } from '@/types/type.projects';
 import { AddCircle, Remove, Search } from '@mui/icons-material';
@@ -184,7 +185,7 @@ export default function ProjectCreate() {
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <CustomTextfield type='textarea' placeholder='상세내용을 입력해 주세요.' onChange={(e) => onHandleEvent("content", e.target.value)} value={values.content} />
+                <CustomTextfield type='textarea' maxLength={CONTENT_MAX_LENGTH} placeholder='상세내용을 입력해 주세요.' onChange={(e) => onHandleEvent("content", e.target.value)} value={values.content} />
               </div>
             </div>
           </div>

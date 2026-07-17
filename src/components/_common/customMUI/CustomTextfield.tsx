@@ -51,19 +51,10 @@ export default function CustomTextfield({
 
   const valueLength = typeof value === 'string' ? value.length : 0;
 
-  const getByteSize = (str:string) => {
-    return new TextEncoder().encode(str).length;
-  };
-  const [byteSize, setByteSize] = useState(0);
-  
   const handleRealChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    const inputByteSize = getByteSize(value);
-
-    if (inputByteSize <= maxLength) {
-      setByteSize(inputByteSize);
+    if (e.target.value.length <= maxLength) {
       onChange?.(e);
-    } 
+    }
   };
 
   return (
@@ -112,7 +103,7 @@ export default function CustomTextfield({
       />
       {isTextarea && maxLength && !noCountStr && (
         <div className="count-str">
-          <p>{byteSize ? byteSize : valueLength}/{maxLength}</p>
+          <p>{valueLength}/{maxLength}</p>
         </div>
       )}
     </div>
