@@ -23,7 +23,7 @@ export default function useDeleteAdminProject(onDeleted?: () => void) {
       alert('삭제할 프로젝트를 선택해주세요.');
       return;
     }
-    if (!(await confirm(`선택한 ${projectGuids.length}개의 프로젝트를 삭제하시겠습니까?`))) return;
+    if (!(await confirm(`선택한 ${projectGuids.length}개의 프로젝트를 삭제하시겠습니까?`, { variant: 'warning' }))) return;
     for (const guid of projectGuids) {
       await mutate(guid);
     }

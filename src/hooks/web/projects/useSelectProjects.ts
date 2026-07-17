@@ -3,6 +3,7 @@ import useFormState from '@/hooks/_common/useFormState.ts';
 import type { FilterData, ProjectExtra, ProjectSearchRequest, SearchData } from "@/types/type.projects";
 import { useState } from "react";
 import { useSelect, useMutation } from "@/hooks/_common/api.hook";
+import { useRequireAuth } from "@/hooks/_common/useRequireAuth";
 
 const initData: SearchData = {
   page: 0,
@@ -56,6 +57,9 @@ export default function useSelectProjects(
   }
   const { res, loading } = useSelect<ProjectExtra, ProjectSearchRequest>(options);
   const { mutate: projectLikeMutate } = useMutation<string, void>(createProjectLike);
+  const { requireAuth } = useRequireAuth();
+
+  const toggleLike = (projectGuid: string) => requireAuth(() => projectLikeMutate(projectGuid));
 
   const setPage = (page: number) => {
     setRequest((prev) => ({ ...prev, page: page }));
@@ -102,6 +106,6 @@ export default function useSelectProjects(
     setPage, setOrder,
     res, loading,
     applySearch, applyFilter, resetAll,
-    toggleLike: projectLikeMutate
+    toggleLike
   };
 }

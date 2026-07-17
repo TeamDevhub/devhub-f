@@ -52,15 +52,20 @@ export const isBetween = (target: string, start: string, end: string): boolean =
     return target >= start && target <= end;
 };
 
-export const convertString = (target: DateType, format?:string): string => {
-    return dayjs(target).format(format ?? 'YYYY-MM-DD');
+// 값이 없거나 파싱할 수 없는 날짜는 화면에 "Invalid Date"로 노출되지 않도록 빈 문자열을 반환한다
+export const convertString = (target: DateType | string, format?:string): string => {
+    if (target === null || target === undefined || target === '') return '';
+    const parsed = dayjs(target);
+    return parsed.isValid() ? parsed.format(format ?? 'YYYY-MM-DD') : '';
 }
 
 /**
  * 몇분전
  */
-export const elapsedTime = (date: DateType): string => {
+export const elapsedTime = (date: DateType | string): string => {
+  if (date === null || date === undefined || date === '') return '';
   const start = dayjs(date);
+  if (!start.isValid()) return '';
 	const end = dayjs();
   
   const seconds = end.diff(start, 'second')

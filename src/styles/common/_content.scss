@@ -861,6 +861,9 @@
         .project-header {
           .top {
             gap: 1.6rem;
+            .header-main {
+              gap: 1.6rem;
+            }
           }
           .bottom {
             margin-top: 2rem;
@@ -868,6 +871,12 @@
               gap: 1.2rem;
               .user-info {
                 gap: 1.6rem;
+              }
+              // Like는 게시글 상세와 동일하게 참여 지표 라인에 나란히 놓는다
+              .project-like-button {
+                flex-direction: row;
+                align-items: center;
+                gap: 0.4rem;
               }
             }
           }
@@ -916,6 +925,23 @@
             font-size: 1.6rem;
             line-height: 2.6rem;
             color: #364153;
+
+            .detail-image-box {
+              display: flex;
+              justify-content: center;
+              width: 100%;
+              margin: 1.6rem 0;
+              overflow: hidden;
+            }
+            .detail-image {
+              display: block;
+              max-width: 100%;
+              width: auto;
+              height: auto;
+              max-height: 60rem;
+              border-radius: 0.8rem;
+              object-fit: contain;
+            }
           }
         }
       }
@@ -947,11 +973,59 @@
       }
 
       /* 2. board */
+      // 2-0. board/project 상세 헤더 - 제목이 시각적으로 가장 도드라지도록 공통 타이포그래피를 정의한다
+      .board-detail-box .board-header,
+      .project-detail-box .project-header {
+        .main-text {
+          font-size: 2.2rem;
+          font-weight: 800;
+          line-height: 132%;
+          letter-spacing: -0.2px;
+          color: var(--text-primary);
+        }
+        .user-nickname {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: var(--text-primary);
+        }
+        .user-email {
+          font-size: 1.3rem;
+          color: var(--text-secondary);
+        }
+        .view-count p,
+        .reply-count p,
+        .post-date {
+          font-size: 1.3rem;
+          color: var(--text-secondary);
+        }
+      }
       // 2-1. board detail
       .board-detail-box {
         padding: 2rem 2.4rem;
         gap: 2.8rem;
         cursor: default;
+        .board-header {
+          .top {
+            gap: 1.6rem;
+          }
+          .bottom {
+            margin-top: 0.4rem;
+            gap: 1.2rem;
+            .user-info {
+              gap: 1.6rem;
+            }
+            .board-info {
+              gap: 1.6rem;
+              // Like는 조회수·댓글수와 같은 참여 지표 라인에 나란히 놓이므로
+              // HeartButton 기본(아이콘 위 · 카운트 아래) 대신 좌우 나열로 맞춘다
+              .board-like-button {
+                flex-direction: row;
+                align-items: center;
+                gap: 0.4rem;
+              }
+            }
+          }
+        }
         .board-content-box {
           .board-content {
             min-height: 33rem;
@@ -1250,12 +1324,25 @@
           > div {
             padding: 1.2rem;
             gap: 1rem;
+            box-sizing: border-box;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
 
             @include bp.tablet-down {
               flex: 1 1 22rem;
             }
 
+            &:hover {
+              box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+              transform: translateY(-2px);
+            }
+
             .title {
+              // 카드 제목 길이가 달라도(예: "이번 달 신규 팀 매칭") 항상 2줄 높이를 확보해 카드 높이가 들쭉날쭉해지지 않게 한다
+              display: -webkit-box;
+              min-height: 6.64rem;
+              overflow: hidden;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
               font-size: 2rem;
               font-weight: 700;
               line-height: 166%;
@@ -1300,16 +1387,33 @@
                 .skill-box {
                   overflow: hidden;
                   position: relative;
-                  max-width: 20rem;
+                  box-sizing: border-box;
+                  // 스킬명 길이에 따라 카드 크기가 들쭉날쭉해지지 않도록 폭/높이를 고정한다
+                  width: 20rem;
+                  min-height: 21rem;
+                  flex: 0 0 20rem;
                   padding: 3.35rem;
                   gap: 1.6rem;
                   border-radius: 1.2rem;
+                  cursor: default;
+                  transition:
+                    box-shadow 0.2s ease,
+                    transform 0.2s ease,
+                    border-color 0.2s ease;
 
                   @include bp.tablet-down {
                     flex: 1 1 16rem;
+                    width: auto;
                     max-width: 100%;
                   }
                   border: 1.5px solid rgba(66, 165, 245, 0.2);
+
+                  &:hover {
+                    border-color: rgba(66, 165, 245, 0.5);
+                    box-shadow: 0 8px 20px rgba(66, 165, 245, 0.18);
+                    transform: translateY(-4px);
+                  }
+
                   .ranking {
                     font-size: 4.8rem;
                     font-weight: 900;
@@ -1317,9 +1421,16 @@
                     color: #42a5f5;
                   }
                   .skill-name {
+                    // 긴 스킬명(예: PostgreSQL)도 잘리지 않도록 2줄까지 허용하되,
+                    // 항상 2줄 높이를 예약해 카드마다 높이가 달라지지 않게 한다
+                    display: -webkit-box;
+                    min-height: 5.8rem;
+                    overflow: hidden;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
                     font-size: 2.4rem;
                     font-weight: 700;
-                    line-height: 100%;
+                    line-height: 120%;
                     color: #333;
                   }
                   .popularity-box {
@@ -1364,6 +1475,10 @@
                       height: 8rem;
                       border-radius: 50%;
                       background-color: rgba(255, 255, 255, 0.2);
+                    }
+
+                    &:hover {
+                      box-shadow: 0 10px 24px rgba(124, 58, 237, 0.28);
                     }
                   }
                 }
@@ -1581,62 +1696,68 @@
 }
 
 /* popup */
-// 1. web popup
-body:has(#devHub) {
-  .web-popup {
-    overflow: hidden;
-    position: relative;
-    width: fit-content;
-    .popup-title-box {
-      padding: 12px 24px;
-      background: linear-gradient(to right, rgba(66, 165, 245, 1) 0%, rgba(156, 39, 176, 0.3));
-      .popup-title {
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 100%;
-        color: #fff;
-      }
-    }
-    .popup-button-box {
-      padding: 24px;
-      gap: 10px;
+// 다이얼로그(WebPopup) - 사용자/관리자 화면 공통. 예전에는 배너(그라디언트/흰색)로 나뉘어 있었으나
+// "일관된 다이얼로그 UI"를 위해 하나의 스타일로 통일한다.
+.web-popup {
+  overflow: hidden;
+  position: relative;
+  width: fit-content;
+  border-radius: 1.6rem;
+  box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.22), 0 4px 16px rgba(15, 23, 42, 0.08);
+
+  // 상단 액센트 바 - 예전 그라디언트 헤더의 브랜드 아이덴티티를 가볍게 되살린다 (variant와 무관하게 항상 동일)
+  &::before {
+    content: '';
+    display: block;
+    height: 0.4rem;
+    background: linear-gradient(90deg, var(--primary-main) 0%, var(--secondary-main) 100%);
+  }
+
+  .popup-title-box {
+    // 위→아래로 옅어지던 그라디언트 대신, 헤더 영역 전체에 고르게 톤이 실리도록 대각선으로 은은하게 채운다
+    padding: 2rem 2rem 2rem 2.4rem;
+    background: linear-gradient(135deg, rgba(25, 118, 210, 0.08) 0%, rgba(156, 39, 176, 0.06) 100%);
+    border-bottom: 1px solid rgba(25, 118, 210, 0.08);
+
+    .popup-heading {
+      gap: 1.2rem;
     }
 
-    @include bp.mobile {
-      width: 100%;
-      max-width: 100%;
+    .popup-title {
+      font-size: 1.9rem;
+      font-weight: 800;
+      line-height: 130%;
+      color: var(--text-primary);
+    }
+
+    .popup-close-btn {
+      margin: -0.4rem -0.4rem 0 0;
+      color: var(--text-secondary);
     }
   }
-}
 
-// 2. admin popup
-body:has(#devHubAdmin) {
-  .web-popup {
-    overflow: hidden;
-    position: relative;
-    width: fit-content;
-    .popup-title-box {
-      padding: 20px 24px 10px 20px;
-      background: #fff;
-      .popup-title {
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 100%;
-        color: #000;
-      }
-      .MuiSvgIcon-root {
-        color: #000;
-      }
-    }
-    .popup-button-box {
-      padding: 10px 24px 20px 24px;
-      gap: 10px;
-    }
+  // alert/confirm 등 useModal 메시지 전용 - title 영역과 좌측이 맞도록 동일한 좌우 여백을 사용한다
+  .popup-message {
+    margin: 0;
+    padding: 1.6rem 2rem 0.4rem 2.4rem;
+    font-size: 1.5rem;
+    line-height: 160%;
+    letter-spacing: 0.15px;
+    color: var(--text-secondary);
+    white-space: pre-line;
+  }
 
-    @include bp.mobile {
-      width: 100%;
-      max-width: 100%;
-    }
+  .popup-button-box {
+    padding: 1.6rem 2.4rem 2.4rem;
+    gap: 1.2rem;
+    border-top: 1px solid var(--divider);
+    margin-top: 0.8rem;
+  }
+
+  @include bp.mobile {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 1.6rem 1.6rem 0 0;
   }
 }
 

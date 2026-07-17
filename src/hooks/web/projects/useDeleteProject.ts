@@ -16,7 +16,7 @@ export default function useDeleteProject(
 
   const { mutate } = useMutation<string, void>(deleteProject, onSuccess, onFail);
   const onDeleteProject = async () => {
-    const isConfirmed = await confirm("프로젝트를 삭제하시겠습니까?");
+    const isConfirmed = await confirm("프로젝트를 삭제하시겠습니까?", { variant: 'warning' });
     if(!isConfirmed) {
         closeModal?.();
         return; 

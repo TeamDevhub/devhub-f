@@ -18,7 +18,7 @@ export default function HomeBoardCard({ board }: HomeBoardCardProps) {
     <Paper
       className="board-box flex-col align-center"
       variant="outlined"
-      onClick={() => navigate('/boards/detail', { state: { boardGuid: board.boardGuid } })}
+      onClick={() => navigate(`/boards/detail/${board.boardGuid}`)}
     >
       <div className="top w-100 justify-between">
         <div className="left-area flex-col align-start flex-1">

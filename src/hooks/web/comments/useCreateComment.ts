@@ -1,21 +1,26 @@
 import { useState } from 'react';
 import type { CommentCreate } from "@/types/type.comments";
 import { useMutation } from '@/hooks/_common/api.hook';
-import {createComment} from '@/api/web/api.comments';
+import { useModal } from '@/hooks/_common/useModal';
+import { useRequireAuth } from '@/hooks/_common/useRequireAuth';
+import { createComment } from '@/api/web/api.comments';
 
 export default function useCreateComment(
     boardGuid:string,
     initialContent?:string,
+    onCreated?: () => void,
 ) {
-    
+    const { alert } = useModal();
+    const { requireAuth } = useRequireAuth();
+
     const handleSuccessCreate = () => {
-        alert('생성이 완료되었습니다.');
-        location.reload();
+        alert('댓글이 등록되었습니다.');
         setContent("");
+        onCreated?.();
     }
 
     const handleFailCreate = () => {
-        alert('생성이 실패되었습니다.');
+        alert('댓글 등록에 실패했습니다.');
     }
 
     const baseContent = initialContent ?? ""
@@ -25,14 +30,14 @@ export default function useCreateComment(
     //버튼
     const onSubmit = async () => {
         if(!content) return;
-        await requestCreateComment({
+        await requireAuth(() => requestCreateComment({
             boardGuid:boardGuid,
             content:content
-        })
+        }));
     }
 
     return{
         content, setContent,
         onSubmit
     };
-} 
+}

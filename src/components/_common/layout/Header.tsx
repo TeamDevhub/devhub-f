@@ -15,13 +15,13 @@ export default function Header() {
   const navLinks = (
     <>
       <NavLink to={'/projects'} className={getNavLinkClassName} onClick={mobileNav.close}>
-        PROJECT
+        프로젝트
       </NavLink>
       <NavLink to={'/boards'} className={getNavLinkClassName} onClick={mobileNav.close}>
-        BOARD
+        커뮤니티
       </NavLink>
       <NavLink to={'/skilltrend'} className={getNavLinkClassName} onClick={mobileNav.close}>
-        SKILL TRENDS
+        기술 트렌드
       </NavLink>
     </>
   );

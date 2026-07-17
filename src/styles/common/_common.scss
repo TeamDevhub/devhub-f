@@ -560,15 +560,27 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
   color: rgba(255, 0, 0, 0.87);
 }
 .help-text {
-  gap: 0.6rem;
-  font-size: 1.2rem;
-  line-height: 166%;
-  letter-spacing: 0.4px;
+  position: relative;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 170%;
+  letter-spacing: 0.2px;
   color: var(--text-secondary);
-  .dot {
+
+  // 앞에 점(.dot) 불릿이 있는 형태는 hanging indent로 정렬한다.
+  // (일부 용법은 <br/>로 여러 줄을 담고 있어 flex/gap을 쓰면 각 텍스트 조각이 별개 flex item으로 쪼개져 한 줄에 뭉쳐버린다 - absolute 배치로 우회)
+  &:has(.dot) {
     display: block;
-    width: 0.3rem;
-    height: 0.3rem;
+    padding-left: 1.1rem;
+  }
+
+  .dot {
+    position: absolute;
+    top: 0.75rem;
+    left: 0;
+    display: block;
+    width: 0.4rem;
+    height: 0.4rem;
     background-color: var(--text-secondary);
     border-radius: 50%;
   }
@@ -680,6 +692,69 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+/* icon badge - 톤이 있는 원형 아이콘 배지 (에러 페이지 / 다이얼로그 공용) */
+.icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+
+  &--medium {
+    width: 8.8rem;
+    height: 8.8rem;
+    svg { font-size: 4rem; }
+  }
+  &--small {
+    width: 4.4rem;
+    height: 4.4rem;
+    svg { font-size: 2.2rem; }
+  }
+
+  &--primary {
+    background: rgba(25, 118, 210, 0.12);
+    color: var(--primary-main);
+  }
+  &--secondary {
+    background: rgba(156, 39, 176, 0.12);
+    color: var(--secondary-main);
+  }
+  &--error {
+    background: rgba(211, 47, 47, 0.12);
+    color: var(--error-main);
+  }
+  &--warning {
+    background: rgba(239, 108, 0, 0.12);
+    color: var(--warning-main);
+  }
+  &--success {
+    background: rgba(46, 125, 50, 0.12);
+    color: var(--success-main);
+  }
+}
+
+/* info banner - 페이지 상단의 가벼운 안내 배너 (에러/경고 배지와 톤으로 구분) */
+.info-banner {
+  gap: 1rem;
+  padding: 1.2rem 1.6rem;
+  border-radius: 0.8rem;
+  background: rgba(25, 118, 210, 0.06);
+  border: 1px solid rgba(25, 118, 210, 0.14);
+
+  .info-banner-icon {
+    flex-shrink: 0;
+    font-size: 2rem;
+    color: var(--primary-main);
+  }
+
+  .info-banner-text {
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 160%;
+    color: var(--text-primary);
   }
 }
 

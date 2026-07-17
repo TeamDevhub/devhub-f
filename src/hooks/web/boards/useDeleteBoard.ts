@@ -16,7 +16,7 @@ export default function useDeleteBoard(onDeleted?: () => void) {
     const { mutate } = useMutation<string, void>(deleteBoard, onSuccess, onFail);
     
     const handleDelete = async (boardGuid:string) => {
-        const isConfirmed = await confirm("게시글을 삭제하시겠습니까?");
+        const isConfirmed = await confirm("게시글을 삭제하시겠습니까?", { variant: 'warning' });
         if(!isConfirmed) return;
         await mutate(boardGuid);
     }

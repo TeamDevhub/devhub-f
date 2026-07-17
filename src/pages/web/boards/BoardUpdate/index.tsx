@@ -1,15 +1,19 @@
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import useSelectBoardDetail from '@/hooks/web/boards/useSelectBoardDetail';
 import BoardUpdateForm from '@/components/web/boards/BoardUpdateForm'
+import Loading from '@/components/_common/layout/Loading';
+import NotFoundPage from '@/pages/error/NotFoundPage';
+
 export default function BoardUpdate() {
 
-  const {state} = useLocation();
-  const { res, loading, error } = useSelectBoardDetail(state?.boardGuid);
+  const { boardGuid } = useParams<{ boardGuid: string }>();
+  const { res, error } = useSelectBoardDetail(boardGuid);
 
-  if (loading) return null;
-  if (error || !res?.data) return null;
+  if (!boardGuid) return <NotFoundPage />;
+  if (!res && !error) return <Loading />;
+  if (error || !res?.data) return <NotFoundPage />;
 
-    return <BoardUpdateForm boardData={res.data} />;
+  return <BoardUpdateForm boardData={res.data} />;
 
 }
 
