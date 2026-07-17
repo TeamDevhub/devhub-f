@@ -4,6 +4,7 @@ import useFormState from '@/hooks/_common/useFormState.ts';
 import type { ProjectUpdate, Position } from "@/types/type.projects";
 import { useMutation } from "@/hooks/_common/api.hook";
 import { useModal } from "@/hooks/_common/useModal"
+import { useRequireAuth } from "@/hooks/_common/useRequireAuth";
 import useFileUpload from "@/hooks/_common/useFileUpload.ts";
 import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
@@ -36,6 +37,7 @@ export default function useUpdateProject(
     const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(data, { validations, mode: 'manual' });
     const { fileStates, errors: fileErrors, upload, register } = useFileUpload();
     const { alert } = useModal();
+    const { requireAuth } = useRequireAuth();
     const [fileGuids, setFileGuids] = useState<string[]>([]);
     const { mutate: fileDeleteMutate } = useMutation<string, void>(deleteFile);
     const handleSuccessUpdateProject = () => {
@@ -60,6 +62,9 @@ export default function useUpdateProject(
     }, void>(updateProject, handleSuccessUpdateProject, handleFailUpdateProject);
 
     const onSubmit = async () => {
+        const allowed = await requireAuth();
+        if (!allowed) return;
+
         let returnData;
         if (fileStates && Object.keys(fileStates).length > 0) {
             returnData = await upload();

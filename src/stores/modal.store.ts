@@ -1,8 +1,11 @@
 import { Store } from './Store';
+import type { DialogVariant } from '@/types/type.dialog';
 
 export interface ModalConfig {
   title: string;
   content?: string;
+  submitText?: string;
+  variant?: DialogVariant;
   onSubmit: () => void;
   onClose?: () => void;
 }

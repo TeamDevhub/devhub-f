@@ -4,13 +4,13 @@ import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from
 import { AccessTime } from "@mui/icons-material";
 import { Chip, Divider, Paper } from "@mui/material";
 import { COMMON_CODE } from "@/constants/codes";
-import { convertString } from "@/utils/util.date";
+import { convertString, elapsedTime } from "@/utils/util.date";
 import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import { useNavigate } from 'react-router-dom';
 
 interface ProjectCardProps {
   projectData: ProjectExtra;
-  toggleLike: (projectGuid: string) => void;
+  toggleLike: (projectGuid: string) => void | Promise<unknown>;
   isLoggedIn: boolean;
 }
 export default function ProjectCard({ projectData, toggleLike, isLoggedIn }: ProjectCardProps) {
@@ -37,9 +37,7 @@ export default function ProjectCard({ projectData, toggleLike, isLoggedIn }: Pro
   const { getCodeName } = useCodes();
   const navigate = useNavigate();
 
-  const onClickHeartBtn = () => {
-    toggleLike(projectGuid);
-  }
+  const onClickHeartBtn = () => toggleLike(projectGuid);
   return (
     <Paper className='project-box w-100 h-fit flex' elevation={4} onClick={() => { navigate(`/projects/detail/${projectGuid}`) }}>
       <div className='left-area flex-col flex-1'>
@@ -64,7 +62,7 @@ export default function ProjectCard({ projectData, toggleLike, isLoggedIn }: Pro
             </div>
           </div>
           <div className='bottom align-center justify-between'>
-            <p className='write-info'>{username} . {registeredDate}</p>
+            <p className='write-info'>{username} . {elapsedTime(registeredDate)}</p>
             <p className='view-count'>view {viewCount}</p>
           </div>
         </div>
@@ -72,7 +70,7 @@ export default function ProjectCard({ projectData, toggleLike, isLoggedIn }: Pro
       <Divider orientation='vertical' />
       <div className='right-area flex-col justify-between'>
         <div className='heart-box flex-col align-end'>
-          {isLoggedIn ? <HeartButton key={projectGuid} likeCount={likeCount} onClick={onClickHeartBtn} defaultLiked={projectLiked} /> : null}
+          <HeartButton key={projectGuid} likeCount={likeCount} onClick={onClickHeartBtn} onBeforeToggle={() => isLoggedIn} defaultLiked={projectLiked} />
         </div>
         <div className='chip-box flex-col'>
           <div className='recruit-chip-box align-center'>

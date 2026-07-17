@@ -20,35 +20,8 @@
   }
 }
 
-.error-icon-badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 8.8rem;
-  height: 8.8rem;
+.error-page-card .icon-badge {
   margin-bottom: 0.8rem;
-  border-radius: 50%;
-
-  svg {
-    font-size: 4rem;
-  }
-
-  &--primary {
-    background: rgba(25, 118, 210, 0.12);
-    color: var(--primary-main);
-  }
-  &--secondary {
-    background: rgba(156, 39, 176, 0.12);
-    color: var(--secondary-main);
-  }
-  &--error {
-    background: rgba(211, 47, 47, 0.12);
-    color: var(--error-main);
-  }
-  &--warning {
-    background: rgba(239, 108, 0, 0.12);
-    color: var(--warning-main);
-  }
 }
 
 .error-status-code {

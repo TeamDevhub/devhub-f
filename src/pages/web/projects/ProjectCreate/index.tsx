@@ -220,7 +220,7 @@ export default function ProjectCreate() {
               <div className="flex-col" style={{ gap: '0.4rem' }}>
                 <p className='label-text'>신청 양식</p>
                 <div className="help-text">
-                  <span></span>
+                  <span className='dot'></span>
                   지원자가 작성해야 하는 항목을 선택하세요.<br />
                   기본 양식을 선택하거나, 원하면 새로운 양식을 만들 수 있어요.(최대 3개)
                 </div>

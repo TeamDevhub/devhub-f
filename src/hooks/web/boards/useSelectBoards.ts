@@ -1,6 +1,8 @@
 import { useState, useMemo } from 'react';
-import { getBoards } from "@/api/web/api.boards";
-import { useSelect } from "@/hooks/_common/api.hook";
+import { getBoards, likeBoard } from "@/api/web/api.boards";
+import { useSelect, useMutation } from "@/hooks/_common/api.hook";
+import { useModal } from "@/hooks/_common/useModal";
+import { useRequireAuth } from "@/hooks/_common/useRequireAuth";
 import type { BoardSearchRequest, SearchData } from "@/types/type.boards";
 import { useNavigate } from 'react-router-dom';
 
@@ -29,10 +31,15 @@ export default function useSelectBoards(
 
     const {res} = useSelect(options);
 
+    const { alert } = useModal();
+    const { requireAuth } = useRequireAuth();
+    const { mutate: likeBoardMu } = useMutation(likeBoard, undefined, () => alert('좋아요 처리에 실패했습니다.'));
+    const toggleLike = (boardGuid: string) => requireAuth(() => likeBoardMu(boardGuid));
+
     const navigate = useNavigate();
     const handleDetail = (boardGuid:string) => {
         if(!boardGuid) return;
-        navigate(`/boards/detail`, {state : {boardGuid}});
+        navigate(`/boards/detail/${boardGuid}`);
     }
 
     //페이지
@@ -60,12 +67,13 @@ export default function useSelectBoards(
     }
 
     return{
-        res, 
+        res,
         request, setRequest,
-        setPage, 
-        setTab, 
+        setPage,
+        setTab,
         title, setTitle,
         handleSearchClick,
-        handleDetail
+        handleDetail,
+        toggleLike
     };
 }

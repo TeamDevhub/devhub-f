@@ -1,22 +1,24 @@
 import { useState } from 'react';
 import type { CommentUpdate } from "@/types/type.comments";
 import { useMutation } from '@/hooks/_common/api.hook';
+import { useModal } from '@/hooks/_common/useModal';
 import {updateComment} from '@/api/web/api.comments';
 
 export default function useUpdateComment(
     boardGuid:string,
     commentGuid:string,
     content:string,
+    onUpdated?: () => void,
 ) {
-    
+    const { alert } = useModal();
+
     const handleSuccessUpdate = () => {
-        alert('수정이 완료되었습니다.');
-        location.reload();
-        setUpdateContent("");
+        alert('댓글이 수정되었습니다.');
+        onUpdated?.();
     }
 
     const handleFailUpdate = () => {
-        alert('수정이 실패되었습니다.');
+        alert('댓글 수정에 실패했습니다.');
     }
 
     const [updateContent, setUpdateContent] = useState<string>(content);
@@ -36,4 +38,4 @@ export default function useUpdateComment(
         updateContent, setUpdateContent,
         handleUpdate
     };
-} 
+}

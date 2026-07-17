@@ -11,20 +11,24 @@ interface CommentCardProps {
   currentUserGuid? : string;
   isLoggedIn : boolean;
   onClickReport:(boardGuid:string, commentGuid:string) => void;
+  onChanged?: () => void;
 }
 export default function CommentCard({
-  commentData, currentUserGuid, isLoggedIn, onClickReport
+  commentData, currentUserGuid, isLoggedIn, onClickReport, onChanged
 } : CommentCardProps){
 
   const isCommentOwner = !!currentUserGuid && currentUserGuid === commentData.userGuid
-  const {
-    updateContent, setUpdateContent, 
-    handleUpdate
-  } = useUpdateComment(commentData.boardGuid, commentData.commentGuid, commentData.content);
-
-  const {handleDelete} = useDeleteComment();
-
   const [page, setPage] = useState("info");
+
+  const {
+    updateContent, setUpdateContent,
+    handleUpdate
+  } = useUpdateComment(commentData.boardGuid, commentData.commentGuid, commentData.content, () => {
+    setPage("info");
+    onChanged?.();
+  });
+
+  const {handleDelete} = useDeleteComment(onChanged);
 
   return (
     <>
@@ -68,7 +72,7 @@ function InfoPage( {setPage, data, handleDelete, isCommentOwner, isLoggedIn, onC
           <Button size='small' onClick={()=>{setPage("modify");}}>수정하기</Button> 
         </>
       )}
-        {isLoggedIn && !isCommentOwner && <Button size='small' color='warning' onClick={() => onClickReport(data.boardGuid, data.commentGuid)}>신고하기</Button>}
+        {!isCommentOwner && <Button size='small' color='warning' onClick={() => onClickReport(data.boardGuid, data.commentGuid)}>신고하기</Button>}
       </div>
 
       <Divider />
