@@ -1,7 +1,7 @@
 import HeartButton from '@/components/_common/button/HeartButton';
 import { BoardCategoryChip } from '@/components/web/boards/BoardChips';
 import type { BoardSummary } from '@/types/type.boards';
-import { Create, Visibility } from '@mui/icons-material';
+import { Create } from '@mui/icons-material';
 import { Paper } from '@mui/material';
 import { elapsedTime } from '@/utils/util.date.ts';
 
@@ -12,7 +12,7 @@ interface BoardCardProps {
   isLoggedIn: boolean;
 }
 export default function BoardCard({ boardData, toggleLike, handleDetail, isLoggedIn }: BoardCardProps) {
-  const { boardBasicResponseDto, likeCount, commentCount } = boardData;
+  const { boardBasicResponseDto, likeCount, commentCount, isLiked } = boardData;
 
   return (
     <Paper className="board-box w-100 flex-col align-center" elevation={4} onClick={() => handleDetail(boardBasicResponseDto.boardGuid)}>
@@ -23,7 +23,7 @@ export default function BoardCard({ boardData, toggleLike, handleDetail, isLogge
         </div>
         <div className="right-area flex-col">
           <div className="heart-box flex-col align-end">
-            <HeartButton likeCount={likeCount} onClick={() => toggleLike(boardBasicResponseDto.boardGuid)} onBeforeToggle={() => isLoggedIn} />
+            <HeartButton likeCount={likeCount} defaultLiked={isLiked} onClick={() => toggleLike(boardBasicResponseDto.boardGuid)} onBeforeToggle={() => isLoggedIn} />
           </div>
         </div>
       </div>

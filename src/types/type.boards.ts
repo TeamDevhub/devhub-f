@@ -34,6 +34,7 @@ export interface BoardSummary {
     boardBasicResponseDto:BoardBasic;
     likeCount?:string;
     commentCount?:string;
+    isLiked?:boolean;
 }
 
 export interface BoardDetail {
