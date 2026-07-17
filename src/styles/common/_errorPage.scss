@@ -1,0 +1,89 @@
+@charset "utf-8";
+@use 'breakpoints' as bp;
+
+.error-page-layout {
+  min-height: calc(100vh - 7rem);
+  padding: 4rem 1.6rem;
+}
+
+.error-page-card {
+  width: 100%;
+  max-width: 52rem;
+  padding: 4.8rem 4rem;
+  gap: 1.2rem;
+  border-radius: 1.6rem;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+  text-align: center;
+
+  @include bp.mobile {
+    padding: 3.2rem 2rem;
+  }
+}
+
+.error-icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8.8rem;
+  height: 8.8rem;
+  margin-bottom: 0.8rem;
+  border-radius: 50%;
+
+  svg {
+    font-size: 4rem;
+  }
+
+  &--primary {
+    background: rgba(25, 118, 210, 0.12);
+    color: var(--primary-main);
+  }
+  &--secondary {
+    background: rgba(156, 39, 176, 0.12);
+    color: var(--secondary-main);
+  }
+  &--error {
+    background: rgba(211, 47, 47, 0.12);
+    color: var(--error-main);
+  }
+  &--warning {
+    background: rgba(239, 108, 0, 0.12);
+    color: var(--warning-main);
+  }
+}
+
+.error-status-code {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.error-page-title {
+  margin: 0;
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 130%;
+  color: var(--text-primary);
+}
+
+.error-page-desc {
+  display: flex;
+  flex-direction: column;
+  max-width: 40rem;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 150%;
+  color: var(--text-secondary);
+}
+
+.error-page-actions {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 1.6rem;
+
+  @include bp.mobile {
+    flex-direction: column;
+  }
+}
