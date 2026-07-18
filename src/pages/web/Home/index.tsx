@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowForwardIos } from '@mui/icons-material';
 import { Button } from '@mui/material';
@@ -6,11 +7,14 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/swiper.css';
 import useSelectHome from '@/hooks/web/home/useSelectHome';
 import { useAuth } from '@/hooks/_common/useAuth';
+import useTerms from '@/hooks/web/terms/useTerms';
+import useDisclosure from '@/hooks/_common/useDisclosure';
 import BannerCard from '@/components/web/home/BannerCard';
 import ExternalBannerCard from '@/components/web/home/ExternalBannerCard';
 import ProjectCardGrid from '@/components/web/home/ProjectCardGrid';
 import BoardCardGrid from '@/components/web/home/BoardCardGrid';
 import HomeParticipationBanner from '@/components/web/home/HomeParticipationBanner';
+import TermsPopup from '@/components/_common/popup/TermsPopup';
 import { HOME_MAIN_BANNERS } from '@/constants/homeBanners';
 import { DEVELOPER_COMMUNITY_BANNERS } from '@/constants/developerCommunityBanners';
 
@@ -20,6 +24,18 @@ export default function HomePage() {
   const navigate = useNavigate();
   const projects = home?.projectDataList ?? [];
   const boards = home?.boardDataList ?? [];
+
+  const { terms } = useTerms();
+  const termsPopup = useDisclosure();
+  const serviceTerms = terms.find((t) => t.title.includes('이용약관')) ?? null;
+  const privacyTerms = terms.find((t) => t.title.includes('개인정보')) ?? null;
+  const [selectedTerms, setSelectedTerms] = useState<typeof serviceTerms>(null);
+
+  const openTermsPopup = (target: typeof serviceTerms) => {
+    if (!target) return;
+    setSelectedTerms(target);
+    termsPopup.open();
+  };
 
   return (
     <>
@@ -114,7 +130,7 @@ export default function HomePage() {
           <div className="footer-info">
             <div className="contact align-center gap-8">
               <p>Contact</p>
-              <address>teamDevHub@gmail.com</address>
+              <address>tlghks1217@gmail.com</address>
             </div>
             <div className="copyright">Copyright DevHub. All rights reserved</div>
           </div>
@@ -123,10 +139,10 @@ export default function HomePage() {
           <nav>
             <ul className="align-center gap-24">
               <li>
-                <a href="#">이용약관</a>
+                <a href="#" onClick={(e) => { e.preventDefault(); openTermsPopup(serviceTerms); }}>이용약관</a>
               </li>
               <li>
-                <a href="#">개인정보처리방침</a>
+                <a href="#" onClick={(e) => { e.preventDefault(); openTermsPopup(privacyTerms); }}>개인정보처리방침</a>
               </li>
               <li>
                 <a href="#">서비스소개</a>
@@ -138,6 +154,15 @@ export default function HomePage() {
           </nav>
         </div>
       </footer>
+
+      <TermsPopup
+        isOpen={termsPopup.isOpen}
+        terms={selectedTerms}
+        onClose={() => {
+          termsPopup.close();
+          setSelectedTerms(null);
+        }}
+      />
     </>
   );
 }

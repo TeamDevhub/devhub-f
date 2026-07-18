@@ -27,14 +27,14 @@ export default function useUpdatePassword(onClose?: () => void) {
 
   const { state: passwordInfo, handleChange, checkError, reset } = useFormState(initData, { validations });
 
-  const handleSuccessUpdatePassword = (res: ApiResponse<void>) => {
-    alert(res.code);
+  const handleSuccessUpdatePassword = () => {
+    alert('비밀번호가 변경되었습니다.');
     reset();
     onClose?.();
   };
 
   const handleFailUpdatePassword = (res: ApiResponse<void>) => {
-    alert(res.code);
+    alert(res.error?.message || '비밀번호 변경에 실패했습니다.');
   };
 
   const { mutate: requestUpdatePassword } = useMutation<UpdatePasswordRequest, void>(

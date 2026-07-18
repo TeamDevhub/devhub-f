@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Paper } from '@mui/material';
-import { CalendarMonth, Person } from '@mui/icons-material';
+import { CalendarMonth, Person, Groups } from '@mui/icons-material';
 import { DDayChip, RecruitStatusChip } from '@/components/web/projects/ProjectChips';
 import type { HomeProject } from '@/types/type.home';
 import type { ProjectRecruitStatusCode } from '@/types/type._common';
@@ -21,11 +21,15 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       variant="outlined"
       onClick={() => navigate(`/projects/detail/${project.projectGuid}`)}
     >
-      {project.imageFileGuid && (
-        <div className="project-thumb">
+      <div className="project-thumb">
+        {project.imageFileGuid ? (
           <img src={`${API_URL}${project.imageFileGuid}`} alt={project.title} />
-        </div>
-      )}
+        ) : (
+          <div className="project-thumb-empty">
+            <Groups sx={{ fontSize: 36, color: 'rgba(124, 58, 237, 0.4)' }} />
+          </div>
+        )}
+      </div>
       <div className="top flex-col gap-8">
         <div className="chip-box align-center">
           <RecruitStatusChip recruitStatusCode={project.recruitStatus as ProjectRecruitStatusCode} />

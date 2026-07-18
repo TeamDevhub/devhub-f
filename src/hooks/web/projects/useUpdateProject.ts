@@ -56,45 +56,54 @@ export default function useUpdateProject(
             console.log("file delete error");
         }
     }
-    const { mutate: projectMutate, loading } = useMutation<{
+    const { mutate: projectMutate, loading: mutateLoading } = useMutation<{
         projectId: string;
         data: ProjectUpdate;
     }, void>(updateProject, handleSuccessUpdateProject, handleFailUpdateProject);
+    // useMutation의 loading은 projectMutate 호출 구간만 반영해 파일 업로드 중에는 false다.
+    // 버튼 연타로 인한 중복 수정 요청을 막으려면 업로드~검증~수정 전 구간을 아우르는 별도 가드가 필요하다.
+    const [submitting, setSubmitting] = useState(false);
 
     const onSubmit = async () => {
-        const allowed = await requireAuth();
-        if (!allowed) return;
+        if (submitting) return;
+        setSubmitting(true);
+        try {
+            const allowed = await requireAuth();
+            if (!allowed) return;
 
-        let returnData;
-        if (fileStates && Object.keys(fileStates).length > 0) {
-            returnData = await upload();
-            if (!returnData.success) {
-                alert('파일 업로드에 실패했습니다.');
+            let returnData;
+            if (fileStates && Object.keys(fileStates).length > 0) {
+                returnData = await upload();
+                if (!returnData.success) {
+                    alert('파일 업로드에 실패했습니다.');
+                    return;
+                }
+            }
+            const imageFileGuid = returnData?.data?.fileGuids?.[IMAGE_NAME];
+            const attachmentFileGuid = returnData?.data?.fileGuids?.[ATTACHMENT_NAME];
+            setFileGuids(
+                [imageFileGuid, attachmentFileGuid].filter(
+                    (guid): guid is string => !!guid
+                )
+            );
+
+            checkError();
+            const error = Object.entries(validateErrors).find(([, value]) => !!value);
+            if (error) {
+                alert(`${error[0]}은/는 ${error[1]}`);
                 return;
             }
-        }
-        const imageFileGuid = returnData?.data?.fileGuids?.[IMAGE_NAME];
-        const attachmentFileGuid = returnData?.data?.fileGuids?.[ATTACHMENT_NAME];
-        setFileGuids(
-            [imageFileGuid, attachmentFileGuid].filter(
-                (guid): guid is string => !!guid
-            )
-        );
 
-        checkError();
-        const error = Object.entries(validateErrors).find(([, value]) => !!value);
-        if (error) {
-            alert(`${error[0]}은/는 ${error[1]}`);
-            return;
+            const jsonData = { ...state };
+            jsonData.imageFileGuid = imageFileGuid;
+            jsonData.attachmentFileGuid = attachmentFileGuid;
+            await projectMutate({
+                projectId: data.projectGuid as string,
+                data: jsonData
+            });
+        } finally {
+            setSubmitting(false);
         }
-
-        const jsonData = { ...state };
-        jsonData.imageFileGuid = imageFileGuid;
-        jsonData.attachmentFileGuid = attachmentFileGuid;
-        await projectMutate({
-            projectId: data.projectGuid as string,
-            data: jsonData
-        });
     }
 
     return {
@@ -102,7 +111,7 @@ export default function useUpdateProject(
         setValues: setState,
         onHandleEvent: handleChange,
         onSubmit: onSubmit,
-        loading,
+        loading: submitting || mutateLoading,
         error: checkError,
         fileStates,
         imageRef: register(IMAGE_NAME),

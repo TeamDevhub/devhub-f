@@ -6,13 +6,13 @@ import { useModal } from '@/hooks/_common/useModal';
 
 export default function useUpdateProfileImage(onSuccessCallback?: () => void) {
   const { alert } = useModal();
-  const handleSuccessUpdateProfileImage = (res: ApiResponse<void>) => {
-    alert(res.code);
+  const handleSuccessUpdateProfileImage = () => {
+    alert('프로필 이미지가 변경되었습니다.');
     onSuccessCallback?.();
   };
 
   const handleFailUpdateProfileImage = (res: ApiResponse<void>) => {
-    alert(res.code);
+    alert(res.error?.message || '프로필 이미지 변경에 실패했습니다.');
   };
 
   const { mutate: requestUpdateProfileImage } = useMutation<UpdateProfileImageRequest, void>(

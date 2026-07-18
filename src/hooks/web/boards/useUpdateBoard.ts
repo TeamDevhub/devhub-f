@@ -8,6 +8,7 @@ import { CONTENT_MAX_LENGTH } from '@/constants/contentLimits';
 import useFormState from "@/hooks/_common/useFormState.ts";
 import { useNavigate } from 'react-router-dom';
 import type { BoardDetail } from "@/types/type.boards";
+import { useState } from 'react';
 
 
 export default function useUpdateBoard(boardData:BoardDetail) {
@@ -36,11 +37,18 @@ export default function useUpdateBoard(boardData:BoardDetail) {
     }
 
     const {state, setState, handleChange, checkError, errors} = useFormState(initData, {validations, mode:'manual'});
-    const {mutate:requestCreateBoard} = useMutation<BoardBasic, void>(updateBoard, handleSuccessCreate, handleFailCreate);
+    const {mutate:requestCreateBoard, loading} = useMutation<BoardBasic, void>(updateBoard, handleSuccessCreate, handleFailCreate);
+    const [submitting, setSubmitting] = useState(false);
 
     const onSubmit = async () => {
+        if (submitting) return;
         if (checkError()) {return;}
-        await requireAuth(() => requestCreateBoard(state));
+        setSubmitting(true);
+        try {
+            await requireAuth(() => requestCreateBoard(state));
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return {
@@ -49,5 +57,6 @@ export default function useUpdateBoard(boardData:BoardDetail) {
         errors : errors,
         onHandleEvent : handleChange,
         onSubmit: onSubmit,
+        loading: submitting || loading,
     }
 }

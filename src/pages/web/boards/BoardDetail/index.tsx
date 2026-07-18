@@ -156,8 +156,8 @@ export default function BoardDetail(){
         </div>
         {/* 3. board reply */}
         <div className="board-reply flex-col">
-          {res.data.commentList?.map((item, index) => {
-            return <CommentCard key={index} commentData={item} onClickReport={handleOpenReport} currentUserGuid={currentUserGuid} isLoggedIn={isLoggedIn} onChanged={refetch}></CommentCard>
+          {res.data.commentList?.map((item) => {
+            return <CommentCard key={item.commentGuid} commentData={item} onClickReport={handleOpenReport} currentUserGuid={currentUserGuid} isLoggedIn={isLoggedIn} onChanged={refetch}></CommentCard>
           })}
         </div>
       </Paper>
