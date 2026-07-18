@@ -77,8 +77,8 @@ export default function ProjectList() {
         </Paper>
 
         <div className='project-list flex-col align-center'>
-          {res?.dataList?.map((item, index) => {
-            return <ProjectCard key={index} projectData={item} toggleLike={toggleLike} isLoggedIn={isLoggedIn ?? false}></ProjectCard>
+          {res?.dataList?.map((item) => {
+            return <ProjectCard key={item.projectGuid} projectData={item} toggleLike={toggleLike} isLoggedIn={isLoggedIn ?? false}></ProjectCard>
           })}
           <div className='list-bottom-box w-100 align-center mt-a'>
             <Pagination page={request.page} count={res?.pagination?.totalPages} onChange={(_, v) => { setPage(v) }} color='primary' className='w-100 flex-center' showFirstButton showLastButton />

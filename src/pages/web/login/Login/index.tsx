@@ -1,3 +1,4 @@
+import React from 'react';
 import logo from '@/assets/images/devHub-logo.png';
 import googleIcon from '@/assets/images/google-icon.svg';
 import kakaoIcon from '@/assets/images/kakao-icon.png';
@@ -10,9 +11,14 @@ import { Link } from 'react-router-dom';
 export default function Login() {
   const { loginInfo, changeId, changePassword, applyLogin, oauthLogin } = useLogin();
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    applyLogin();
+  };
+
   return (
     <div className="auth-page flex-center">
-      <form>
+      <form onSubmit={handleSubmit}>
         <Paper className="auth-box flex-col" elevation={4}>
           <div className="logo-box">
             <Link to={'/'} className="align-center">
@@ -38,7 +44,7 @@ export default function Login() {
             />
           </div>
           <div className="button-box flex-col">
-            <Button size="large" variant="contained" color="primary" onClick={applyLogin}>
+            <Button size="large" variant="contained" color="primary" type="submit">
               로그인
             </Button>
             <div className="w-100 align-center" style={{ gap: '1rem' }}>

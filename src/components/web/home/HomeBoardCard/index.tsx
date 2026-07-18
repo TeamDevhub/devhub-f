@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { Chip, Paper } from '@mui/material';
-import { Visibility } from '@mui/icons-material';
 import { useCodes } from '@/hooks/_common/useCodes';
 import HeartButton from '@/components/_common/button/HeartButton';
 import { COMMON_CODE } from '@/constants/codes';
@@ -15,11 +14,7 @@ export default function HomeBoardCard({ board }: HomeBoardCardProps) {
   const { getCodeName } = useCodes();
 
   return (
-    <Paper
-      className="board-box flex-col align-center"
-      variant="outlined"
-      onClick={() => navigate(`/boards/detail/${board.boardGuid}`)}
-    >
+    <Paper className="board-box flex-col align-center" variant="outlined" onClick={() => navigate(`/boards/detail/${board.boardGuid}`)}>
       <div className="top w-100 justify-between">
         <div className="left-area flex-col align-start flex-1">
           <Chip size="small" variant="outlined" color="primary" label={getCodeName(COMMON_CODE.BOARD_CATEGORY, board.categoryCd)} />
@@ -33,12 +28,12 @@ export default function HomeBoardCard({ board }: HomeBoardCardProps) {
         <div className="left-area">
           <p className="user-info">{board.username}</p>
         </div>
-        <div className="right-area align-center">
+        {/* <div className="right-area align-center">
           <div className="view-count align-center">
             <Visibility sx={{ fontSize: 20, color: 'rgba(0,0,0,0.3)' }} />
             <p>{board.viewCount}</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </Paper>
   );

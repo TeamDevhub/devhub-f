@@ -19,8 +19,8 @@ export default function MyProfileBoardList(){
         <p>총 {res?.pagination?.totalElements}건</p>
       </div>
       <div className="board-list flex-col">
-        {res?.dataList?.map((item, index) => {
-          return <MyInfoBoardCard key={index} boardData={item} handleDelete={handleDelete} ></MyInfoBoardCard>
+        {res?.dataList?.map((item) => {
+          return <MyInfoBoardCard key={item.boardBasicResponseDto.boardGuid} boardData={item} handleDelete={handleDelete} ></MyInfoBoardCard>
         })}
       </div>
       <Pagination count={res?.pagination?.totalPages} page={page} onChange={(_, page) => {setPage(page);}} showFirstButton showLastButton color='primary' className='w-100 flex-center' />

@@ -7,6 +7,7 @@ import { Validators } from '@/utils/util._common';
 import { CONTENT_MAX_LENGTH } from '@/constants/contentLimits';
 import useFormState from "@/hooks/_common/useFormState.ts";
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const initData : BoardCreate = {
     title:'',
@@ -36,11 +37,18 @@ export default function useCreateBoard() {
     }
 
     const {state, setState, handleChange, checkError, errors} = useFormState(initData, {validations, mode:'manual'});
-    const {mutate:requestCreateBoard} = useMutation<BoardCreate, void>(createBoard, handleSuccessCreate, handleFailCreate);
+    const {mutate:requestCreateBoard, loading} = useMutation<BoardCreate, void>(createBoard, handleSuccessCreate, handleFailCreate);
+    const [submitting, setSubmitting] = useState(false);
 
     const onSubmit = async () => {
+        if (submitting) return;
         if (checkError()) {return;}
-        await requireAuth(() => requestCreateBoard(state));
+        setSubmitting(true);
+        try {
+            await requireAuth(() => requestCreateBoard(state));
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return {
@@ -49,5 +57,6 @@ export default function useCreateBoard() {
         errors : errors,
         onHandleEvent : handleChange,
         onSubmit: onSubmit,
+        loading: submitting || loading,
     }
 }

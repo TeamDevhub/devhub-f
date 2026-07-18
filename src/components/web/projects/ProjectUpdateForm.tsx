@@ -35,6 +35,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
     onSubmit,
     imageRef,
     attachmentRef,
+    loading,
   } = useUpdateProject(data);
 
   return (
@@ -239,7 +240,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
         <div className="action-button-box align-center justify-end">
           <Button size='large' variant='outlined' onClick={()=>{history.back()}}>취소</Button>
           <Button size='large' variant='outlined'>양식 미리보기</Button>
-          <Button size='large' variant='contained' onClick={onSubmit}>등록</Button>
+          <Button size='large' variant='contained' onClick={onSubmit} disabled={loading}>등록</Button>
         </div>
       </Paper>
 

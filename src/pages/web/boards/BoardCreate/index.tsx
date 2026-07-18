@@ -12,10 +12,11 @@ import { Link } from 'react-router-dom';
 export default function BoardCreate() {
 
   const {
-    values, 
+    values,
     errors,
     onHandleEvent,
-    onSubmit
+    onSubmit,
+    loading,
   } = useCreateBoard();
 
   const { getCodesByGroup } = useCodes();
@@ -77,7 +78,7 @@ export default function BoardCreate() {
             <Link to={'/boards'}>
               <Button size='large' variant='outlined'>취소</Button>
             </Link>
-            <Button size='large' variant='contained' onClick={onSubmit}>등록</Button>
+            <Button size='large' variant='contained' onClick={onSubmit} disabled={loading}>등록</Button>
           </div>
         </div>
       </Paper>

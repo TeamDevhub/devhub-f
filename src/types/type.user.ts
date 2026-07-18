@@ -103,6 +103,7 @@ export interface UserDetailResponse {
   user: UserBasicResponse;
   positionList: string[];
   skillList: string[];
+  passwordLoginAvailable: boolean;
 }
 
 export interface UpdateProfileRequest {

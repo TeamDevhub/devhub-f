@@ -57,8 +57,8 @@ export default function BoardList(){
         </div>
         {/* 4. board list */}
         <div className="board-list flex-col" style={{ gap: '0.8rem' }}>
-            {res?.dataList?.map((item, index) => {
-                return <BoardCard key={index} boardData={item} toggleLike={toggleLike} handleDetail={()=>handleDetail(item.boardBasicResponseDto.boardGuid)} isLoggedIn={isLoggedIn ?? false}></BoardCard>
+            {res?.dataList?.map((item) => {
+                return <BoardCard key={item.boardBasicResponseDto.boardGuid} boardData={item} toggleLike={toggleLike} handleDetail={()=>handleDetail(item.boardBasicResponseDto.boardGuid)} isLoggedIn={isLoggedIn ?? false}></BoardCard>
             })}
             <div className='list-bottom-box w-100 align-center mt-14'>
                 <Pagination count={res?.pagination?.totalPages} page={request.page} onChange={(_, page) => {setPage(page);}} showFirstButton showLastButton color='primary' className='w-100 flex-center' />

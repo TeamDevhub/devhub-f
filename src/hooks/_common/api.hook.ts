@@ -2,7 +2,9 @@
 import type { ApiResponse } from "@/types/type.api";
 import {useCallback, useEffect, useRef, useState} from "react";
 
-const cacheStore = new Map<string, unknown>();
+// cacheKey는 동일 키로 서로 다른 req가 들어와도 구분해야 하므로 req를 함께 저장한다.
+// invalidateKeys는 여전히 cacheKey 문자열 그대로 삭제하므로 무효화 동작은 그대로 유지된다.
+const cacheStore = new Map<string, { reqKey: string; data: unknown }>();
 
 interface UseSelectOptions<TRes, TReq> {
   apiFn: (req: TReq) => Promise<ApiResponse<TRes>>;
@@ -30,28 +32,35 @@ export const useSelect = <TRes, TReq>({
   // req는 객체라 매 렌더마다 새 참조가 올 수 있으므로 stringify로 deep compare
   const reqKey = JSON.stringify(req);
 
+  // 페이지네이션/탭 전환을 빠르게 연속 클릭하면 이전 요청이 최신 요청보다 늦게 도착할 수 있다.
+  // 응답을 적용하기 전에 "여전히 가장 최근 요청인지"를 확인해 늦게 온 이전 응답이 최신 결과를 덮어쓰지 않도록 한다.
+  const requestIdRef = useRef(0);
+
   const fetchData = useCallback(async () => {
+    const requestId = ++requestIdRef.current;
     try {
       setLoading(true);
       setError(null);
 
-      if (cacheKey && cacheStore.has(cacheKey)) {
-        setData(cacheStore.get(cacheKey) as ApiResponse<TRes>);
+      const cached = cacheKey ? cacheStore.get(cacheKey) : undefined;
+      if (cached && cached.reqKey === reqKey) {
+        setData(cached.data as ApiResponse<TRes>);
         return;
       }
       const res = await apiFnRef.current(reqRef.current);
+      if (requestIdRef.current !== requestId) return;
       setData(res);
 
       if (cacheKey) {
-        cacheStore.set(cacheKey, res);
+        cacheStore.set(cacheKey, { reqKey, data: res });
       }
     } catch (e) {
+      if (requestIdRef.current !== requestId) return;
       setError(e as Error);
     } finally {
-      setLoading(false);
+      if (requestIdRef.current === requestId) setLoading(false);
     }
   // reqKey로 deep compare, apiFn은 ref로 접근하므로 의존성 제외
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reqKey, cacheKey]);
 
   useEffect(() => {

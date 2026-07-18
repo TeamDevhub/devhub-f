@@ -91,7 +91,8 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 // 동시 401 시 reissue 한 번만 호출하기 위한 단일 promise 큐
 let reissuePromise: Promise<string | null> | null = null;
 
-const triggerReissue = (): Promise<string | null> => {
+// authStore.init()에서도 이 큐를 공유해 토큰 재발급이 동시에 두 번 호출되지 않도록 한다.
+export const triggerReissue = (): Promise<string | null> => {
   if (reissuePromise) return reissuePromise;
 
   reissuePromise = (async (): Promise<string | null> => {
