@@ -259,6 +259,32 @@
               display: block;
               transition: transform 0.25s ease;
             }
+            .project-thumb-empty {
+              position: relative;
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              overflow: hidden;
+              background:
+                radial-gradient(circle at 18% 20%, rgba(25, 118, 210, 0.16) 0%, transparent 50%),
+                radial-gradient(circle at 82% 82%, rgba(124, 58, 237, 0.16) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(124, 58, 237, 0.06) 0%, rgba(25, 118, 210, 0.05) 100%);
+
+              &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background-image: radial-gradient(rgba(124, 58, 237, 0.16) 1px, transparent 1px);
+                background-size: 1.4rem 1.4rem;
+              }
+
+              svg {
+                position: relative;
+                z-index: 1;
+              }
+            }
           }
           &:hover .project-thumb img {
             transform: scale(1.06);
@@ -332,6 +358,32 @@
                   height: 100%;
                   object-fit: cover;
                   display: block;
+                }
+                .project-thumb-empty {
+                  position: relative;
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  overflow: hidden;
+                  background:
+                    radial-gradient(circle at 18% 20%, rgba(25, 118, 210, 0.16) 0%, transparent 50%),
+                    radial-gradient(circle at 82% 82%, rgba(124, 58, 237, 0.16) 0%, transparent 50%),
+                    linear-gradient(135deg, rgba(124, 58, 237, 0.06) 0%, rgba(25, 118, 210, 0.05) 100%);
+
+                  &::before {
+                    content: '';
+                    position: absolute;
+                    inset: 0;
+                    background-image: radial-gradient(rgba(124, 58, 237, 0.16) 1px, transparent 1px);
+                    background-size: 1.4rem 1.4rem;
+                  }
+
+                  svg {
+                    position: relative;
+                    z-index: 1;
+                  }
                 }
               }
               .main-text {
