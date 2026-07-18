@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import WebPopup from './WebPopup';
 import type { TermsResponse } from '@/types/type.terms';
 
@@ -15,7 +16,7 @@ export default function TermsPopup({ isOpen, terms, onClose }: TermsPopupProps) 
       <div style={{ padding: '0 20px', lineHeight: 1.6 }}>
         <div
           dangerouslySetInnerHTML={{
-            __html: terms.content || '',
+            __html: DOMPurify.sanitize(terms.content || ''),
           }}
         />
       </div>

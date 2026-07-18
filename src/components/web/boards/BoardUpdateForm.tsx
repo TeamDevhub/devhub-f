@@ -19,10 +19,11 @@ export default function BoardUpdateForm({ boardData } : BoardCardProps){
   const categoryCode = getCodesByGroup(COMMON_CODE.BOARD_CATEGORY);
 
   const {
-    values, 
+    values,
     errors,
     onHandleEvent,
-    onSubmit
+    onSubmit,
+    loading,
   } = useUpdateBoard(boardData);
 
 
@@ -82,7 +83,7 @@ export default function BoardUpdateForm({ boardData } : BoardCardProps){
             <Link to={'/profile/boards'}>
               <Button size='large' variant='outlined'>취소</Button>
             </Link>
-            <Button size='large' variant='contained' onClick={onSubmit}>등록</Button>
+            <Button size='large' variant='contained' onClick={onSubmit} disabled={loading}>등록</Button>
           </div>
         </div>
       </Paper>

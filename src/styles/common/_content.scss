@@ -977,6 +977,10 @@
             font-size: 1.6rem;
             line-height: 2.6rem;
             color: #364153;
+            min-width: 0;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            word-break: break-word;
 
             .detail-image-box {
               display: flex;
@@ -994,6 +998,28 @@
               border-radius: 0.8rem;
               object-fit: contain;
             }
+          }
+        }
+        // 모집기간/모집인원 등 라벨-값 쌍이 고정폭(40rem)이라 좁은 화면에서 카드 밖으로 넘친다
+        @include bp.tablet-down {
+          .summary-detail-box {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.8rem;
+          }
+          .detail-group {
+            min-width: 0;
+            width: 100%;
+          }
+        }
+        @include bp.mobile {
+          .detail-group {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.4rem;
+          }
+          .group-label {
+            width: auto;
           }
         }
       }
@@ -1014,6 +1040,18 @@
             .MuiSvgIcon-root {
               color: var(--primary-contrastText);
             }
+          }
+        }
+        // 데스크톱 레이아웃 기준 우측 여백(26rem)이라 좁은 화면에서는 뷰포트 밖으로 밀려난다
+        @include bp.tablet-down {
+          right: 1.6rem;
+        }
+        @include bp.mobile {
+          bottom: 2rem;
+          gap: 1.2rem;
+          .float-button {
+            width: 4.8rem;
+            height: 4.8rem;
           }
         }
       }
@@ -1081,8 +1119,13 @@
         .board-content-box {
           .board-content {
             min-height: 33rem;
+            min-width: 0;
             p {
               font-size: 1.4rem;
+              // 긴 URL/공백 없는 문자열도 흰 배경(카드) 밖으로 넘치지 않게 강제 줄바꿈
+              white-space: pre-wrap;
+              overflow-wrap: break-word;
+              word-break: break-word;
             }
           }
           .write-reply {
@@ -1168,6 +1211,10 @@
         min-width: 0;
         padding: 2.8rem 3.2rem;
         gap: 1.6rem;
+
+        @include bp.tablet-down {
+          padding: 2rem 1.6rem;
+        }
         // 3-1. home
         .top {
           gap: 0.4rem;
@@ -1188,6 +1235,16 @@
               padding: 0.8rem;
               gap: 0.4rem;
               font-size: 1.4rem;
+            }
+
+            // 라벨(16rem)+값이 한 줄이라 좁은 화면에서 값 영역이 지나치게 눌린다
+            @include bp.mobile {
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 0.4rem;
+              .label-area {
+                min-width: 0;
+              }
             }
           }
         }
@@ -1618,7 +1675,124 @@
           font-size: 1.2rem;
         }
       }
+
+      // 3. 이메일 인증 - 아이디 + @ + 도메인 + 인증버튼 한 줄 구성
+      // 좁은 화면에서 네 요소가 한 줄에 다 들어가지 못해 카드 밖으로 넘치므로 모바일에서는 세로로 쌓는다
+      .email-verify-row {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+
+        @include bp.mobile {
+          flex-wrap: wrap;
+
+          > .w-100,
+          > div {
+            flex: 1 1 auto;
+            min-width: 12rem;
+          }
+
+          button {
+            width: 100%;
+          }
+        }
+      }
+
+      // 3. 이메일 인증 - 도메인 셀렉트박스
+      .email-host-select {
+        .MuiOutlinedInput-root {
+          border-radius: 1rem;
+          background: rgba(25, 118, 210, 0.03);
+          transition:
+            border-color 0.15s ease,
+            background 0.15s ease,
+            box-shadow 0.15s ease;
+
+          .MuiOutlinedInput-notchedOutline {
+            border-color: rgba(0, 0, 0, 0.14);
+          }
+
+          &:hover .MuiOutlinedInput-notchedOutline {
+            border-color: rgba(25, 118, 210, 0.4);
+          }
+
+          &.Mui-focused {
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
+
+            .MuiOutlinedInput-notchedOutline {
+              border-color: var(--primary-main);
+              border-width: 1px;
+            }
+          }
+        }
+
+        .MuiSelect-select {
+          font-weight: 500;
+        }
+
+        .MuiSelect-icon {
+          color: var(--primary-main);
+          transition: transform 0.15s ease;
+        }
+
+        .MuiOutlinedInput-root.Mui-focused .MuiSelect-icon {
+          transform: rotate(180deg);
+        }
+      }
+
+      .email-host-custom {
+        .email-host-back-btn {
+          flex-shrink: 0;
+          width: 5.6rem;
+          height: 5.6rem;
+          border-radius: 1rem;
+          border: 1px solid rgba(0, 0, 0, 0.14);
+          color: var(--primary-main);
+          transition:
+            border-color 0.15s ease,
+            background 0.15s ease;
+
+          &:hover {
+            background: rgba(25, 118, 210, 0.06);
+            border-color: rgba(25, 118, 210, 0.4);
+          }
+        }
+      }
     }
+  }
+}
+
+// 이메일 도메인 셀렉트 드롭다운 - MUI Menu는 body에 포탈되므로 .auth-page 밖(top-level)에서 스타일링한다
+.email-host-menu-paper {
+  margin-top: 0.6rem;
+  border-radius: 1.2rem !important;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14) !important;
+  overflow: hidden;
+
+  .MuiMenuItem-root {
+    padding: 0.9rem 1.6rem;
+    font-size: 1.4rem;
+    transition: background 0.12s ease;
+
+    &:hover {
+      background: rgba(25, 118, 210, 0.08);
+    }
+
+    &.Mui-selected {
+      background: rgba(25, 118, 210, 0.12);
+      font-weight: 600;
+
+      &:hover {
+        background: rgba(25, 118, 210, 0.16);
+      }
+    }
+  }
+
+  .email-host-custom-option {
+    gap: 0.6rem;
+    color: var(--primary-main);
+    font-weight: 600;
   }
 }
 

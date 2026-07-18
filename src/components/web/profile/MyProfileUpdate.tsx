@@ -96,9 +96,11 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
 
         {/* 버튼 영역 */}
         <div className="button-box w-100 flex justify-end gap-12">
-          <Button size="medium" variant="outlined" color="primary" onClick={passwordChangePopup.open}>
-            비밀번호 변경
-          </Button>
+          {profile.passwordLoginAvailable && (
+            <Button size="medium" variant="outlined" color="primary" onClick={passwordChangePopup.open}>
+              비밀번호 변경
+            </Button>
+          )}
 
           <Button size="medium" variant="contained" sx={{ minWidth: 120 }} onClick={applyUpdateProfile} disabled={loading}>
             저장
@@ -106,8 +108,8 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
         </div>
       </Paper>
 
-      {/* 비밀번호 변경 팝업 */}
-      <PasswordChangePopup isOpen={passwordChangePopup.isOpen} onClose={passwordChangePopup.close} />
+      {/* 비밀번호 변경 팝업 - OAuth 전용 가입자는 비밀번호 로그인이 없어 노출하지 않는다 */}
+      {profile.passwordLoginAvailable && <PasswordChangePopup isOpen={passwordChangePopup.isOpen} onClose={passwordChangePopup.close} />}
     </>
   );
 }
