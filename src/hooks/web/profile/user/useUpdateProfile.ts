@@ -26,13 +26,13 @@ export default function useUpdateProfile(profile: UserDetailResponse) {
 
   const { state: userInfo, handleChange, createHandler, createToggle, checkError } = useFormState(initData, { validations });
 
-  const handleSuccessUpdateProfile = async (res: ApiResponse<void>) => {
+  const handleSuccessUpdateProfile = async () => {
     await refreshUser();
-    alert(res.code);
+    alert('프로필이 수정되었습니다.');
   };
 
   const handleFailUpdateProfile = (res: ApiResponse<void>) => {
-    alert(res.code);
+    alert(res.error?.message || '프로필 수정에 실패했습니다.');
   };
 
   const applyUpdateProfile = async () => {

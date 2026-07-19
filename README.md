@@ -7,23 +7,23 @@
 
 ## Overview
 
-DevHub는 개발자가 프로젝트를 모집·신청하고, 게시판·댓글로 소통하며, 자신의 프로필과 활동을 관리하는 웹 서비스다.
-이 레포는 그 사용자/관리자 화면을 담당하는 단일 페이지 애플리케이션이다.
+DevHub는 개발자가 프로젝트를 모집하고, 게시판·댓글로 소통하며, 자신의 프로필과 활동을 관리하는 팀 매칭 웹 서비스다.
+이 레포는 그 사용자/관리자 화면을 담당하는 단일 페이지 애플리케이션이며, 회원가입부터 프로젝트/게시판 CRUD, 관리자 운영 콘솔까지 실제 라우트에 연결되어 동작한다.
 
-**사용자가 할 수 있는 일 (코드로 확인된 도메인 기준)**
+---
 
-- 회원가입 / 로그인 (일반 + OAuth 분기로 추정 — `api.auth.ts`/`api.signup.ts`)
-- 프로젝트 모집 글 조회/생성/수정/삭제, 신청 양식 작성
-- 게시판(자유/질문/공지) 글 조회/생성/수정/삭제, 좋아요, 댓글
-- 본인 프로필 조회/수정, 참여 프로젝트·작성 게시글 관리
-- 알림 수신 (`api.notification.ts`)
-- 약관 조회 (`api.terms.ts`)
-- 파일/이미지 업로드 (`api.file.ts`, `useFileUpload`)
+## ✨ Highlights
 
-**관리자 영역 (`/admin`)**
+이 프로젝트를 다른 사이드 프로젝트/과제성 SPA와 구분 짓는 지점들이다.
 
-- 배너 관리, 공통코드 관리, 게시판 관리 (페이지 구현 확인됨)
-- 사용자/프로젝트/약관/신청양식 관리는 디자인 시안(`pages/_design/admin/*`)으로만 존재 — 실제 라우트 미연결
+- **일관된 3계층 아키텍처(API → Hook → Component)를 예외 없이 강제.** 모든 도메인(게시판/프로젝트/프로필/어드민)이 동일한 패턴을 따르기 때문에, 도메인이 늘어나도 온보딩·리뷰 비용이 거의 늘지 않는다. `axios`나 API 함수를 페이지가 직접 import하는 코드는 레포 전체에 0건이다.
+- **Provider 지옥 없는 전역 상태.** Context Provider를 겹겹이 쌓는 대신 `useSyncExternalStore` 기반의 경량 싱글턴 스토어(`Store.ts`)를 직접 구현해, 불필요한 리렌더링과 Provider 중첩 없이 인증/로딩/공통코드/모달 상태를 관리한다.
+- **끊김 없는 인증 경험.** 401 발생 시 동시에 여러 요청이 몰려도 토큰 재발급(reissue)은 단 한 번만 호출되도록 Promise 큐로 중복 제거하고, 재발급 성공 시 원 요청을 자동 재시도한다. 인증 전용 엔드포인트는 재발급 대상에서 제외해 리다이렉트 루프도 방지한다. 로그인 전용 라우트는 `RequireAuthRoute` 가드로 일괄 보호한다.
+- **좋아요(Like) UX의 아키텍처 정합성.** 게시판·프로젝트 좋아요 버튼은 서버가 내려준 상태를 단일 진실 공급원으로 삼아 `useEffect`로 재동기화하고, 응답 대기 중 버튼을 잠가 중복 요청을 원천 차단하며, 미로그인 사용자는 낙관적 토글 자체를 막는 `onBeforeToggle` 훅을 공유한다. 두 도메인이 같은 컴포넌트·같은 패턴을 재사용해 UX가 어긋나지 않는다.
+- **삭제 안전성.** 게시글 삭제 시 댓글·좋아요 등 자식 레코드를 트랜잭션 안에서 함께 정리해 고아 데이터/FK 오류 없이 삭제가 항상 성공한다. 수정·마감 같은 변경 작업은 백엔드에서 소유자(또는 관리자) 검증을 거치므로, 프론트가 버튼을 숨기는 것에만 의존하지 않는다.
+- **디자인 시스템 일관성.** 404/네트워크 오류/서버 오류 페이지가 서비스 톤앤매너(브랜드 컬러·카드 스타일)를 그대로 따르고, 이미지가 없는 프로젝트 카드도 전용 플레이스홀더로 카드 크기·레이아웃이 항상 동일하게 유지된다 — "이미지 유무에 따라 UI가 흔들리는" 흔한 실수가 없다.
+- **매직 스트링 제로 정책.** 카테고리 코드·상태 코드·에러 코드가 전부 `as const` 상수(`src/constants/codes.ts`)로 강제되어 있어, 오타로 인한 런타임 버그 여지가 구조적으로 차단된다.
+- **`_design/` 트리로 분리된 디자인 시안.** 실서비스 컴포넌트와 시안 단계 컴포넌트를 폴더 레벨에서 완전히 격리해, 미완성 UI가 실사용 화면에 실수로 섞여 들어갈 여지를 없앴다.
 
 ---
 
@@ -115,7 +115,7 @@ React Context로 Provider를 쌓지 않는다. 대신 `src/stores/Store.ts`의 �
 2. `sessionStorage.accessToken`이 없으면 쿠키 기반 `reissue()` 시도
 3. 성공 시 토큰 저장 → 유저 프로필 조회 → `isLoggedIn = true`
 4. 이후 모든 요청에 인터셉터가 `Authorization: Bearer ...` 자동 주입
-5. 401 처리는 `responseErrorInterceptor`에서 에러 코드별 분기 (`EXPIRE_ACCESS_TOKEN`, `DUP_LOGIN`, `SIGNATURE_ERROR_ACCESS_TOKEN` — 일부 분기 TODO)
+5. 401 발생 시 `responseErrorInterceptor`가 (인증 엔드포인트 자체의 401이 아닌 한) 백엔드 에러 코드와 무관하게 `reissue()`를 시도한다. 동시에 여러 요청이 401을 맞아도 Promise 큐로 재발급은 한 번만 호출되고, 성공하면 원 요청들을 새 토큰으로 재시도한다. 재발급이 끝내 실패하면 토큰을 정리하고 `/auth/login`으로 이동한다.
 
 ---
 
@@ -159,8 +159,8 @@ src/
 ### 라우트 트리
 
 ```
-/        (MainLayout)   사용자 페이지: 메인, 프로젝트, 게시판, 프로필
-/admin   (AdminLayout)  관리자: 배너, 게시판 (구현됨), 그 외는 디자인 시안만
+/        (MainLayout)   사용자 페이지: 메인, 스킬 트렌드, 프로젝트, 게시판, 프로필
+/admin   (AdminLayout)  관리자: 배너·게시판·유저·신고·공통코드·신청양식·프로젝트
 /auth    (AuthLayout)   로그인/회원가입
 /design  (none/Layout별) 디자인 시안 — 개발 전용
 ```
@@ -313,35 +313,27 @@ const { handleReport } = useReportBoard();
 
 ---
 
-## Current Status (Inferred)
-
-코드 존재로 확인된 진척도. 백엔드 연동 상태는 별도 확인 필요.
+## Current Status
 
 ### ✅ 구현됨 (실서비스 라우트 연결)
 
-- **인증**: 로그인, 회원가입, sessionStorage 기반 토큰 + 쿠키 기반 reissue 흐름
-- **게시판**: 목록(검색/카테고리 탭/페이지네이션), 상세, 작성, 수정, 삭제, 좋아요
-- **댓글**: 게시판 상세 내 댓글 (`api.comments.ts`, `hooks/web/comments/`)
-- **프로젝트**: 목록, 상세, 생성, 수정, 삭제, 좋아요, 신청 양식 조회
-- **프로필**: 홈, 수정, 내 프로젝트, 내 게시글
-- **어드민**: 배너 관리, 게시판 관리, 공통코드 관리
-- **공용 인프라**: `useSelect`/`useMutation` + 캐시, `useFormState`/`useFormController`, `useModal`, `useFileUpload`, 전역 로딩, MUI 커스텀 래퍼
+- **인증**: 이메일 로그인/회원가입, OAuth 로그인(Google/GitHub/Kakao), sessionStorage 기반 토큰 저장, 쿠키 기반 조용한 재로그인(`authStore.init()`), **401 발생 시 자동 토큰 재발급 + 원 요청 재시도**(동시 요청 dedup 포함), 로그인 전용 라우트 가드(`RequireAuthRoute`)
+- **게시판**: 목록(검색/카테고리 탭/페이지네이션), 상세, 작성/수정/삭제, 좋아요, 댓글 작성/수정/삭제 — 게시글 삭제 시 댓글·좋아요까지 함께 정리되는 안전한 cascade 삭제
+- **프로젝트**: 목록/상세/생성/수정/삭제/모집 마감, 좋아요, 신청 양식 조회 — 수정·삭제·마감 모두 작성자 또는 관리자만 가능하도록 서버 측에서 검증
+- **프로필**: 홈, 정보 수정, 내가 등록한 프로젝트, 내가 쓴 게시글
+- **스킬 트렌드**: 실데이터 기반 차트 페이지 (`/skilltrend`, MUI x-charts)
+- **관리자 콘솔 (`/admin`)**: 배너, 게시판, 유저(목록/상세), 신고, 공통코드, 신청 양식, 프로젝트(목록/상세) — 전 영역이 role 기반으로 보호되는 실제 운영 화면
+- **에러 페이지**: 404 / 네트워크 오류 / 서버 오류 전용 페이지, 서비스 디자인 톤과 통일된 스타일
+- **공용 인프라**: `useSelect`/`useMutation` 캐시 + `invalidateKeys` 무효화, `useFormState`/`Validators`, `useModal`(alert/confirm), `useFileUpload`, 전역 로딩 인디케이터, MUI 커스텀 래퍼 컴포넌트
 
-### 🟡 부분/진행 중
+### 🟡 미구현 / 제한된 기능 (짧게)
 
-- **OAuth 분기**: `[refactor] 사용자 인증 관련 기존 소스 변경 및 Oauth 사용자 비밀번호 입력 제거` 커밋 흔적 — 흐름은 들어왔으나 검증 단계로 추정
-- **401 자동 재발급**: `util.api.ts`의 `responseErrorInterceptor`에 `EXPIRE_ACCESS_TOKEN` 분기 비어 있음(`// 리프레쉬토큰 발급` TODO). 현재는 인터셉터에서 자동 reissue가 동작하지 않음 — `authStore.init()` 시점에서만 reissue 시도
-- **알림(Notification)**: API/타입은 있으나 (`api.notification.ts`, `NotificationItem.tsx`) 전용 페이지 라우트는 미확인
-- **약관(Terms)**: API/훅 존재, 사용자/관리자 페이지는 디자인 시안 단계
-- **MyPage 일부 라우트**: `Router.tsx`에 주석 처리된 항목 존재 (`mypage/projects` 등)
-- **모달 통일**: 일부 도메인 훅에서 `window.alert`이 남아 있음 (예: `useCreateBoard.ts` — `useModal`로 마이그레이션 필요)
-- **Stale UI 처리**: `useDeleteBoard`가 `location.reload()` 사용 — `invalidateKeys` + `cacheKey` 패턴으로 정리 가능
-
-### 🟥 디자인 시안만 존재 (실서비스 미연결)
-
-- 어드민의 사용자/신고/약관/신청양식/프로젝트 관리 페이지 (`pages/_design/admin/*`)
-- 스킬 트렌드 페이지 (`pages/_design/web/skilltrends/*`)
-- MyHomePage 등 일부 마이페이지 시안
+- **프로젝트 지원(신청) 제출**: 지원 폼 조회까지만 연결되어 있고, 실제 지원 제출 플로우는 "준비 중" 안내 페이지로 대체
+- **알림 UI**: API·훅·컴포넌트는 존재하나 헤더에서 임시로 비활성화 상태(주석 처리)
+- **약관(Terms) 페이지**: 관리자/사용자 화면 모두 디자인 시안 단계, 실 라우트 미연결
+- **비밀번호 찾기**: 진입 링크만 있고 대상 화면 미구현
+- **자동 테스트**: 아직 미도입 — 검증은 빌드 + 린트 + 수동 시나리오로 수행
+- **번들 코드 스플리팅**: 라우트 단위 lazy import 미적용
 
 ---
 
@@ -349,17 +341,14 @@ const { handleReport } = useReportBoard();
 
 우선순위가 높은 후속 작업.
 
-1. **401 자동 재발급 인터셉터 마무리** — `util.api.ts`의 `EXPIRE_ACCESS_TOKEN` 분기에 `reissue()` + 원 요청 재시도 구현. 단일 진실의 출처가 되어야 다른 화면들의 강제 새로고침 의존을 줄일 수 있음
-2. **공용 모달 마이그레이션 마무리** — 남은 `window.alert`/`window.confirm`을 `useModal`로 일괄 정리
-3. **Stale UI 패턴 정리** — `location.reload()` 사용처를 `cacheKey` + `invalidateKeys` 짝으로 교체
-4. **라우트 가드** — 비로그인 시 보호 라우트(`/profile`, mutation 페이지) 자동 리다이렉트 컴포넌트 도입
-5. **테스트 도입** — Vitest + React Testing Library + MSW. 우선순위는 `util.api.ts` (순수 변환) → `api.hook.ts`(캐시/invalidate) → `FormController`/`Validators` → 도메인 훅 → 페이지 통합 (`docs/skills/generate-tests.md` 참조)
-6. **어드민 영역 실연결** — `_design/admin/*`의 페이지를 실제 컴포넌트로 옮기고 라우트 연결 (사용자/약관/신청양식/프로젝트 관리)
-7. **알림 화면 연결** — `api.notification.ts`/`NotificationItem.tsx`를 사용하는 사용자 페이지 또는 헤더 패널 구성
-8. **번들 최적화** — Router에서 페이지 컴포넌트 lazy import + `vite-bundle-visualizer`로 무거운 의존성(MUI x-charts, swiper 등) 분석
-9. **ESLint 강화** — type-aware 룰(`recommendedTypeChecked` 또는 `strictTypeChecked`)로 격상 검토 (`README` 원본의 권장 사항)
-10. **`_design`/`contexts/` 점진적 정리** — 마이그레이션 완료 영역부터 호환 re-export 제거 (단, 팀 합의 필요)
-11. **CI 도입** — GitHub Actions로 PR마다 `npm run build` + `npm run lint` 자동 실행
+1. **프로젝트 지원(신청) 제출 플로우 구현** — 신청 폼 조회는 이미 연결되어 있으므로 제출 API 연동 + `ComingSoonPage` 대체가 남은 작업
+2. **알림 UI 재활성화** — `UserInfo.tsx`에 주석 처리된 알림 드롭다운을 실데이터로 복원
+3. **약관 페이지 실연결** — `_design/admin/terms`, 사용자용 약관 조회 화면을 실제 라우트로 승격
+4. **테스트 도입** — Vitest + React Testing Library + MSW. 우선순위는 `util.api.ts`(순수 변환) → `api.hook.ts`(캐시/invalidate) → `FormController`/`Validators` → 도메인 훅 → 페이지 통합 (`docs/skills/generate-tests.md` 참조)
+5. **번들 최적화** — Router에서 페이지 컴포넌트 lazy import + `vite-bundle-visualizer`로 무거운 의존성(MUI x-charts, swiper 등) 분석
+6. **ESLint 강화** — type-aware 룰(`recommendedTypeChecked` 또는 `strictTypeChecked`)로 격상 검토
+7. **`_design`/`contexts/` 점진적 정리** — 마이그레이션 완료 영역부터 호환 re-export 제거 (단, 팀 합의 필요)
+8. **CI 도입** — GitHub Actions로 PR마다 `npm run build` + `npm run lint` 자동 실행
 
 ---
 

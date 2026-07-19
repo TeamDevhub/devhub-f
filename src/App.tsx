@@ -9,6 +9,14 @@ import { RouterProvider } from 'react-router-dom';
 
 function App() {
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get('oauth') === 'true') {
+      localStorage.setItem('hasSession', 'true');
+
+      window.history.replaceState({}, '', '/');
+    }
+
     authStore.init();
     codesStore.init();
   }, []);

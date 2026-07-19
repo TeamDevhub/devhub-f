@@ -1,23 +1,26 @@
 import type { CommentDelete } from "@/types/type.comments";
 import { useMutation } from '@/hooks/_common/api.hook';
+import { useModal } from '@/hooks/_common/useModal';
 import {deleteComment} from '@/api/web/api.comments';
 
 export default function useDeleteComment(
+    onDeleted?: () => void,
 ) {
-    const handleSuccessCreate = () => {
-        alert('삭제가 완료되었습니다.');
-        location.reload();
+    const { alert } = useModal();
+
+    const handleSuccessDelete = () => {
+        alert('댓글이 삭제되었습니다.');
+        onDeleted?.();
     }
 
-    const handleFailCreate = () => {
-        alert('삭제가 실패되었습니다.');
+    const handleFailDelete = () => {
+        alert('댓글 삭제에 실패했습니다.');
     }
 
-    const {mutate:requestDeleteComment} = useMutation<CommentDelete, void>(deleteComment, handleSuccessCreate, handleFailCreate);
+    const {mutate:requestDeleteComment} = useMutation<CommentDelete, void>(deleteComment, handleSuccessDelete, handleFailDelete);
 
     //버튼
     const handleDelete = async (boardGuid:string, commentGuid:string) => {
-        console.log(boardGuid, commentGuid);
         if(!boardGuid || !commentGuid) return;
         await requestDeleteComment({
             boardGuid:boardGuid,
@@ -28,4 +31,4 @@ export default function useDeleteComment(
     return{
         handleDelete
     };
-} 
+}

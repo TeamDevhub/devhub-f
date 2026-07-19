@@ -46,7 +46,7 @@ export default function AdminProjectList() {
     projectSearch,
     handleDetail,
     handleReset,
-    onHandleEvent,
+    handleChange,
   } = useSelectAdminProjects();
 
   const { getCodesByGroup, getCodeName } = useCodes();
@@ -88,7 +88,7 @@ export default function AdminProjectList() {
             size="small"
             displayEmpty
             value={state.recruitmentTypeCd ?? ''}
-            onChange={(e) => onHandleEvent('recruitmentTypeCd', e.target.value)}
+            onChange={(e) => handleChange('recruitmentTypeCd', e.target.value)}
           >
             <MenuItem value="">모집 구분 전체</MenuItem>
             {recruitTypeCodes.map((c) => (
@@ -102,7 +102,7 @@ export default function AdminProjectList() {
             size="small"
             displayEmpty
             value={state.recruitStatusCd ?? ''}
-            onChange={(e) => onHandleEvent('recruitStatusCd', e.target.value)}
+            onChange={(e) => handleChange('recruitStatusCd', e.target.value)}
           >
             <MenuItem value="">모집 상태 전체</MenuItem>
             {recruitStatusCodes.map((c) => (
@@ -114,8 +114,8 @@ export default function AdminProjectList() {
             label="모집일"
             startDate={state.recruitmentStartDate as DateType}
             endDate={state.recruitmentEndDate as DateType}
-            onStartChange={(v: DateType) => onHandleEvent('recruitmentStartDate', v)}
-            onEndChange={(v: DateType) => onHandleEvent('recruitmentEndDate', v)}
+            onStartChange={(v: DateType) => handleChange('recruitmentStartDate', v)}
+            onEndChange={(v: DateType) => handleChange('recruitmentEndDate', v)}
           />
         </div>
 
@@ -126,7 +126,7 @@ export default function AdminProjectList() {
             size="small"
             displayEmpty
             value={state.progressTypeCd ?? ''}
-            onChange={(e) => onHandleEvent('progressTypeCd', e.target.value)}
+            onChange={(e) => handleChange('progressTypeCd', e.target.value)}
           >
             <MenuItem value="">진행 방식 전체</MenuItem>
             {progressTypeCodes.map((c) => (
@@ -140,7 +140,7 @@ export default function AdminProjectList() {
             size="small"
             displayEmpty
             value={state.progressRegionCd ?? ''}
-            onChange={(e) => onHandleEvent('progressRegionCd', e.target.value)}
+            onChange={(e) => handleChange('progressRegionCd', e.target.value)}
           >
             <MenuItem value="">진행 지역 전체</MenuItem>
             {regionCodes.map((c) => (
@@ -152,8 +152,8 @@ export default function AdminProjectList() {
             label="진행일"
             startDate={state.progressStartDate as DateType}
             endDate={state.progressEndDate as DateType}
-            onStartChange={(v: DateType) => onHandleEvent('progressStartDate', v)}
-            onEndChange={(v: DateType) => onHandleEvent('progressEndDate', v)}
+            onStartChange={(v: DateType) => handleChange('progressStartDate', v)}
+            onEndChange={(v: DateType) => handleChange('progressEndDate', v)}
           />
         </div>
 
@@ -163,7 +163,7 @@ export default function AdminProjectList() {
           type="search"
           placeholder="프로젝트 명을 입력해 주세요."
           value={state.keyword ?? ''}
-          onChange={(e) => onHandleEvent('keyword', e.target.value)}
+          onChange={(e) => handleChange('keyword', e.target.value)}
         />
 
         <div className="flex gap-8 ml-a">
@@ -244,8 +244,8 @@ export default function AdminProjectList() {
                   </TableCell>
                   <TableCell align="center">
                     <Chip
-                      label={getCodeName(COMMON_CODE.PROJECT_RECRUIT_STATUS, row.recruitStatusCd)}
-                      color={RECRUIT_STATUS_COLOR[row.recruitStatusCd] ?? 'default'}
+                      label={getCodeName(COMMON_CODE.PROJECT_RECRUIT_STATUS, row.recruitStatus)}
+                      color={RECRUIT_STATUS_COLOR[row.recruitStatus] ?? 'default'}
                       size="small"
                     />
                   </TableCell>

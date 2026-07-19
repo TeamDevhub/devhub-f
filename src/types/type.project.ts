@@ -1,4 +1,5 @@
 import type { DateType } from './type.api';
+import type { Pagination } from '@/types/type.api'
 
 export interface AdminProjectSummary {
   projectGuid: string;
@@ -6,7 +7,7 @@ export interface AdminProjectSummary {
   email: string;
   username: string;
   recruitmentTypeCd: string;
-  recruitStatusCd: string;
+  recruitStatus: string;
   progressTypeCd: string;
   progressRegionCd: string;
   registeredDate: string;
@@ -71,10 +72,15 @@ export interface AdminApplicantSummary {
   levelCd: string;
   approvalStatusCd: string;
 }
+export interface AdminApplicantSummaryResponse {
+  applicantList: AdminApplicantSummary[];
+  pagination: Pagination
+}
 
 export interface AdminApplicantSearchRequest {
   projectGuid: string;
   page: number;
+  size: number;
   approvalStatusCd?: string;
   positionCd?: string;
   levelCd?: string;
@@ -85,3 +91,9 @@ export interface UpdateApplicantStatusRequest {
   applicantGuid: string;
   approvalStatusCd: string;
 }
+
+export interface AdminUserProjectsReqData {
+  page: number;
+  size?: number;
+  userGuid?: string;
+} 

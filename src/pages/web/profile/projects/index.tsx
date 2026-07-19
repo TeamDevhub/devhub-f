@@ -39,8 +39,8 @@ export default function MyProfileProjectListPage() {
             총 <em>{myRes?.dataList?.length}</em>건
           </strong>
           <div className="list-box flex-col active">
-            {myRes?.dataList?.map((item, index) => {
-              return <ProjectCard key={index} {...item} variant={"register"} ></ProjectCard>
+            {myRes?.dataList?.map((item) => {
+              return <ProjectCard key={item.projectGuid} {...item} variant={"register"} ></ProjectCard>
             })}
           </div>
           {/* 2-4. pagination */}
@@ -53,8 +53,8 @@ export default function MyProfileProjectListPage() {
             총 <em>{applyRes?.dataList?.length}</em>건
           </strong>
           <div className="list-box flex-col">
-            {applyRes?.dataList?.map((item, index) => {
-              return <ProjectCard key={index} {...item} variant={"apply"} ></ProjectCard>
+            {applyRes?.dataList?.map((item) => {
+              return <ProjectCard key={item.projectGuid} {...item} variant={"apply"} ></ProjectCard>
             })}
           </div>
           {/* 2-4. pagination */}
@@ -66,8 +66,8 @@ export default function MyProfileProjectListPage() {
             총 <em>{likeRes?.dataList?.length}</em>건
           </strong>
           <div className="list-box flex-col">
-            {likeRes?.dataList?.map((item, index) => {
-              return <ProjectCard key={index} {...item} variant={"favorite"} ></ProjectCard>
+            {likeRes?.dataList?.map((item) => {
+              return <ProjectCard key={item.projectGuid} {...item} variant={"favorite"} ></ProjectCard>
             })}
           </div>
           {/* 2-4. pagination */}
@@ -79,8 +79,8 @@ export default function MyProfileProjectListPage() {
             총 <em>{participateRes?.dataList?.length}</em>건
           </strong>
           <div className="list-box flex-col">
-            {participateRes?.dataList?.map((item, index) => {
-              return <ProjectCard key={index} {...item} variant={"participate"} >
+            {participateRes?.dataList?.map((item) => {
+              return <ProjectCard key={item.projectGuid} {...item} variant={"participate"} >
 
               </ProjectCard>
             })}

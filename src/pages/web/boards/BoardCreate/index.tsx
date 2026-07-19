@@ -5,16 +5,18 @@ import FieldGroup from '@/components/_design/FieldGroup';
 import useCreateBoard from '@/hooks/web/boards/useCreateBoard';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 import {COMMON_CODE} from "@/constants/codes.ts";
+import { CONTENT_MAX_LENGTH } from '@/constants/contentLimits';
 import { FormHelperText} from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export default function BoardCreate() {
 
   const {
-    values, 
+    values,
     errors,
     onHandleEvent,
-    onSubmit
+    onSubmit,
+    loading,
   } = useCreateBoard();
 
   const { getCodesByGroup } = useCodes();
@@ -61,11 +63,12 @@ export default function BoardCreate() {
           {/* 2-3. 내용 */}
           <FormField required label='내용'>
             <FieldGroup>
-              <CustomTextfield 
+              <CustomTextfield
                 error={!!errors.content}
-                helperText={errors.content ? errors.content : ''} 
-                onChange={(e) => onHandleEvent('content', e.target.value)} 
-                type='textarea' 
+                helperText={errors.content ? errors.content : ''}
+                onChange={(e) => onHandleEvent('content', e.target.value)}
+                type='textarea'
+                maxLength={CONTENT_MAX_LENGTH}
                 placeholder='내용을 입력해 주세요.'
                 value={values.content}
               />
@@ -75,7 +78,7 @@ export default function BoardCreate() {
             <Link to={'/boards'}>
               <Button size='large' variant='outlined'>취소</Button>
             </Link>
-            <Button size='large' variant='contained' onClick={onSubmit}>등록</Button>
+            <Button size='large' variant='contained' onClick={onSubmit} disabled={loading}>등록</Button>
           </div>
         </div>
       </Paper>

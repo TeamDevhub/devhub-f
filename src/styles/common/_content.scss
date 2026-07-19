@@ -1,28 +1,141 @@
 @charset "utf-8";
+@use 'breakpoints' as bp;
 
 /** WEB **/
 #devHub {
   min-height: 100vh;
   background: linear-gradient(180deg, rgba(66, 165, 245, 0.08) 0%, rgba(186, 104, 200, 0.06) 100%);
-  &:has(.main-container) {
-    background: #fff;
-  }
   main {
     min-height: calc(100vh - 7rem);
     /* main page */
     .main-container {
       display: flex;
-      width: 123rem;
+      width: 100%;
       max-width: 123rem;
       padding: 2.4rem 0.5rem 7rem 0;
       margin: 0 auto;
       flex-direction: column;
-      gap: 2.4rem;
+      gap: 4rem;
       > * {
         padding: 1rem;
       }
-      // 1. 메인 배너 슬라이드
+
+      @include bp.tablet-down {
+        padding: 2rem 1.6rem 5rem;
+        gap: 3.2rem;
+      }
+      @include bp.mobile {
+        padding: 1.6rem 1.2rem 4rem;
+        gap: 2.4rem;
+      }
+      // banner card (메인/서브 배너 공통)
+      .banner-card {
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        overflow: hidden;
+        text-decoration: none;
+
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.55) 100%);
+        }
+
+        .banner-card-illustration {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        .banner-card-text {
+          position: relative;
+          z-index: 1;
+          padding: 2.4rem;
+          color: #fff;
+        }
+
+        .banner-card-title {
+          display: block;
+          line-height: 130%;
+        }
+
+        .banner-card-desc {
+          font-weight: 400;
+          opacity: 0.9;
+        }
+      }
+
+      // 히어로 슬라이드 - 슬라이드마다 다른 기능(프로젝트/커뮤니티/기술 트렌드)의 진입점이므로 문구/CTA가 슬라이드별로 바뀐다
+      .banner-card-main {
+        &::after {
+          background: linear-gradient(115deg, rgba(15, 23, 42, 0.72) 0%, rgba(15, 23, 42, 0.4) 55%, rgba(15, 23, 42, 0.08) 100%);
+        }
+        .banner-card-text {
+          max-width: 52rem;
+          padding: 4rem 4.8rem;
+
+          @include bp.mobile {
+            padding: 1.6rem 2rem;
+          }
+        }
+        .banner-card-eyebrow {
+          align-self: flex-start;
+          margin-bottom: -0.4rem;
+          padding: 0.4rem 1.2rem;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.16);
+          color: #fff;
+          font-size: 1.2rem;
+          font-weight: 700;
+        }
+        .banner-card-title {
+          font-size: 3.4rem;
+          font-weight: 800;
+          white-space: nowrap;
+
+          @include bp.mobile {
+            font-size: 2.2rem;
+            white-space: normal;
+          }
+        }
+        .banner-card-desc {
+          font-size: 1.5rem;
+          line-height: 150%;
+          white-space: nowrap;
+
+          @include bp.mobile {
+            font-size: 1.3rem;
+            white-space: normal;
+          }
+        }
+        .banner-card-cta {
+          align-self: flex-start;
+          margin-top: 0.8rem;
+        }
+      }
+
+      .banner-card-sub {
+        .banner-card-text {
+          padding: 1.6rem;
+        }
+        .banner-card-title {
+          font-size: 1.6rem;
+          font-weight: 700;
+        }
+        .banner-card-desc {
+          font-size: 1.2rem;
+        }
+      }
+
+      // 1. 메인 배너 슬라이드 (히어로) - 슬라이드별로 문구/CTA가 다르므로 오버레이는 BannerCard 내부에서 슬라이드마다 렌더링된다
       .main-banner-container {
+        position: relative;
+
         .main-banner-swiper {
           position: relative;
           width: 100%;
@@ -30,19 +143,15 @@
           .swiper-wrapper {
             .swiper-slide {
               overflow: hidden;
-              display: flex;
-              height: 21rem;
-              align-items: center;
-              justify-content: center;
+              height: 30rem;
               border-radius: 0.8rem;
               border: 1px solid #eee;
-              img {
-                width: 123rem;
-                object-fit: cover;
+
+              @include bp.tablet-down {
+                height: 24rem;
               }
-              p {
-                font-size: 2rem;
-                font-weight: 500;
+              @include bp.mobile {
+                height: 20rem;
               }
             }
           }
@@ -60,16 +169,160 @@
               width: 1rem;
               height: 1rem;
               border-radius: 2rem;
-              background-color: #eee;
+              background-color: #9e9e9e;
               cursor: pointer;
               &.swiper-pagination-bullet-active {
-                background-color: #ccc;
+                background-color: #616161;
               }
             }
           }
         }
       }
-      // 2. 프로젝트 리스트
+      // 로그인 사용자 환영 인사
+      .welcome-banner {
+        padding: 1.2rem 1.6rem;
+        border-radius: 0.6rem;
+        background: rgba(79, 70, 229, 0.06);
+        p {
+          margin: 0;
+          font-size: 1.4rem;
+          color: rgba(0, 0, 0, 0.72);
+          strong {
+            font-weight: 700;
+            color: #000;
+          }
+        }
+      }
+
+      // 2 / 4 / 참여 CTA. 프로젝트·인기 게시판·참여 유도 공통 섹션 타이틀
+      .project-list,
+      .popular-boards,
+      .participation-banner {
+        .title-area {
+          strong {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 120%;
+            color: #000;
+          }
+          .section-desc {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 140%;
+            color: rgba(0, 0, 0, 0.56);
+          }
+        }
+      }
+
+      // 2. 프로젝트 리스트 - DevHub의 핵심 기능이므로 가장 강한 시각적 강조를 준다
+      .project-list {
+        padding: 3.2rem;
+        border-radius: 1.6rem;
+        background: linear-gradient(180deg, rgba(124, 58, 237, 0.05) 0%, rgba(124, 58, 237, 0.02) 100%);
+        border: 1px solid rgba(124, 58, 237, 0.12);
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+
+        .title-area strong {
+          font-size: 2.6rem;
+        }
+
+        // 그리드/스와이퍼 공통 카드 스타일 - 은은한 컨테이너 배경 위에서도 카드가 또렷하게 도드라지도록 흰 배경 사용
+        .project-card {
+          width: 100%;
+          min-width: 0;
+          padding: 2.4rem;
+          border-radius: 0.6rem;
+          background: #fff;
+          border: 1px solid rgba(0, 0, 0, 0.22);
+          cursor: pointer;
+          transition:
+            box-shadow 0.15s ease,
+            transform 0.15s ease,
+            border-color 0.15s ease;
+
+          &:hover {
+            border-color: rgba(0, 0, 0, 0.34);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+          }
+
+          .project-thumb {
+            width: 100%;
+            height: 16rem;
+            border-radius: 0.4rem;
+            overflow: hidden;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+              transition: transform 0.25s ease;
+            }
+            .project-thumb-empty {
+              position: relative;
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              overflow: hidden;
+              background:
+                radial-gradient(circle at 18% 20%, rgba(25, 118, 210, 0.16) 0%, transparent 50%),
+                radial-gradient(circle at 82% 82%, rgba(124, 58, 237, 0.16) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(124, 58, 237, 0.06) 0%, rgba(25, 118, 210, 0.05) 100%);
+
+              &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background-image: radial-gradient(rgba(124, 58, 237, 0.16) 1px, transparent 1px);
+                background-size: 1.4rem 1.4rem;
+              }
+
+              svg {
+                position: relative;
+                z-index: 1;
+              }
+            }
+          }
+          &:hover .project-thumb img {
+            transform: scale(1.06);
+          }
+          .main-text {
+            display: -webkit-box;
+            width: 100%;
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 120%;
+            color: #000;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            white-space: wrap;
+          }
+          .project-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            p {
+              font-size: 1.2rem;
+              font-weight: 400;
+              color: rgba(0, 0, 0, 0.56);
+            }
+          }
+          .project-info {
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+          }
+          p {
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 100%;
+            color: rgba(0, 0, 0, 0.68);
+          }
+        }
+      }
+
       .slide-banner-tabpanel {
         padding: 2.2rem 2.4rem 2.4rem 2.4rem;
         .project-list-swiper {
@@ -95,6 +348,44 @@
               border-radius: 0.4rem;
               border: 1px solid #e0e0e0;
               cursor: pointer;
+              .project-thumb {
+                width: 100%;
+                height: 16rem;
+                border-radius: 0.4rem;
+                overflow: hidden;
+                img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  display: block;
+                }
+                .project-thumb-empty {
+                  position: relative;
+                  width: 100%;
+                  height: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  overflow: hidden;
+                  background:
+                    radial-gradient(circle at 18% 20%, rgba(25, 118, 210, 0.16) 0%, transparent 50%),
+                    radial-gradient(circle at 82% 82%, rgba(124, 58, 237, 0.16) 0%, transparent 50%),
+                    linear-gradient(135deg, rgba(124, 58, 237, 0.06) 0%, rgba(25, 118, 210, 0.05) 100%);
+
+                  &::before {
+                    content: '';
+                    position: absolute;
+                    inset: 0;
+                    background-image: radial-gradient(rgba(124, 58, 237, 0.16) 1px, transparent 1px);
+                    background-size: 1.4rem 1.4rem;
+                  }
+
+                  svg {
+                    position: relative;
+                    z-index: 1;
+                  }
+                }
+              }
               .main-text {
                 display: -webkit-box;
                 width: 100%;
@@ -128,65 +419,288 @@
           }
         }
       }
-      // 3. 서브 배너 슬라이드
-      .sub-banner-container {
-        position: relative;
-        .swiper-wrapper {
-          .swiper-slide {
-            display: flex;
-            height: 21rem;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.8rem;
-            border: 1px solid #eee;
-            p {
-              font-size: 1.4rem;
-              font-weight: 500;
+      // 4-1. 카드 그리드 (4개 이하) 레이아웃 - 인기 게시판
+      .board-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+        gap: 1.6rem;
+        margin-top: 2.2rem;
+      }
+
+      // 2-1. 프로젝트 카드 그리드 - 3열 고정 (슬라이드 내부에서도 동일하게 재사용)
+      .project-card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.6rem;
+        margin-top: 2.2rem;
+
+        @include bp.tablet-down {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        @include bp.mobile {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      // 카드 스와이퍼 (4개 초과) 공통 레이아웃 - 프로젝트 · 인기 게시판
+      // 타이틀과의 간격은 margin으로 처리 - .carousel-viewport 내부 높이(버튼 중심 계산 기준)에 영향을 주지 않기 위함
+      .project-card-swiper,
+      .board-swiper {
+        margin-top: 2.2rem;
+
+        .swiper-slide {
+          height: auto;
+        }
+
+        // 스와이퍼 슬라이드 내부에서는 바깥 래퍼가 이미 여백을 주므로 그리드 자체의 top 여백은 제거
+        .project-card-grid {
+          margin-top: 0;
+        }
+      }
+
+      // 프로젝트 스와이퍼 전용 페이지네이션 dot
+      // dot는 카드 영역 바깥(음수 bottom)에 절대 위치로 배치해 .carousel-viewport의 높이 계산에 전혀 관여하지 않는다.
+      // 이렇게 하면 방향 버튼은 다른 캐러셀(인기 게시판 등)과 동일하게 top:50%만으로 정확히 중앙 정렬되어,
+      // 섹션별 top 보정값 같은 예외 처리가 필요 없다.
+      .project-card-swiper-inner {
+        .swiper-pagination {
+          position: absolute;
+          bottom: -2rem;
+          left: 0;
+          display: flex;
+          width: 100%;
+          justify-content: center;
+          gap: 0.8rem;
+
+          .swiper-pagination-bullet {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 2rem;
+            background-color: #9e9e9e;
+            cursor: pointer;
+            &.swiper-pagination-bullet-active {
+              background-color: #616161;
             }
+          }
+        }
+      }
+
+      // .project-list가 자체 배경/테두리를 가진 컨테이너가 되었으므로, 방향 버튼이 그 경계 밖으로 튀어나가지 않도록 오프셋을 좁힌다
+      .project-list .carousel-viewport {
+        .swiper-button-prev {
+          left: -1.2rem !important;
+        }
+        .swiper-button-next {
+          right: -1.2rem !important;
+        }
+      }
+
+      .project-card-grid-empty,
+      .board-list-empty {
+        padding: 2rem 0;
+        color: rgba(0, 0, 0, 0.4);
+      }
+
+      // 참여 유도 CTA - 프로젝트 생성 / 게시글 작성 / 스킬 관리로 사용자를 이끄는 액션 카드
+      // 다른 섹션과 같은 컨테이너 박스를 두르지 않고, 위아래 여백을 더 주어 독립된 전환 영역으로 느껴지게 한다
+      .participation-banner {
+        margin: 1.6rem 0;
+
+        .participation-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+          gap: 1.6rem;
+          margin-top: 2.2rem;
+        }
+        .participation-card {
+          width: 100%;
+          min-width: 0;
+          padding: 2.4rem;
+          border-radius: 0.6rem;
+          border: 1px solid rgba(0, 0, 0, 0.22);
+          cursor: pointer;
+          transition:
+            box-shadow 0.15s ease,
+            transform 0.15s ease,
+            border-color 0.15s ease;
+
+          &:hover {
+            border-color: rgba(0, 0, 0, 0.34);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+          }
+
+          .participation-card-illustration {
+            width: 100%;
+            height: 12rem;
+            border-radius: 0.4rem;
+            overflow: hidden;
+            svg {
+              width: 100%;
+              height: 100%;
+              display: block;
+            }
+          }
+          .participation-card-body {
+            flex: 1;
+            .main-text {
+              display: block;
+              font-size: 1.8rem;
+              font-weight: 700;
+              line-height: 130%;
+              color: #000;
+            }
+            p {
+              font-size: 1.2rem;
+              font-weight: 400;
+              line-height: 145%;
+              color: rgba(0, 0, 0, 0.56);
+            }
+          }
+          .participation-card-cta {
+            width: 100%;
+            font-weight: 700;
+          }
+        }
+      }
+
+      // 개발자 리소스 - 홍보 배너가 아닌 유용한 도구 모음(라이브러리) 느낌의 옅은 회색 영역, 프로젝트보다 가벼운 무게
+      .developer-resources {
+        padding: 2.4rem 3.2rem;
+        border-radius: 1.2rem;
+        background: rgba(0, 0, 0, 0.025);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+
+        .title-area {
+          strong {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 120%;
+            color: rgba(0, 0, 0, 0.72);
+          }
+          .section-desc {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 400;
+            line-height: 140%;
+            color: rgba(0, 0, 0, 0.48);
+          }
+        }
+        .resource-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
+          gap: 1.2rem;
+          margin-top: 1.6rem;
+        }
+        .resource-item {
+          display: flex;
+          align-items: center;
+          gap: 1.6rem;
+          padding: 1.6rem;
+          border-radius: 0.6rem;
+          background: #fff;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          text-decoration: none;
+          color: inherit;
+          transition:
+            box-shadow 0.15s ease,
+            transform 0.15s ease,
+            border-color 0.15s ease;
+
+          &:hover {
+            border-color: rgba(0, 0, 0, 0.28);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transform: translateY(-2px);
+          }
+
+          .resource-item-icon {
+            width: 4.4rem;
+            height: 4.4rem;
+            flex-shrink: 0;
+            border-radius: 0.6rem;
+            overflow: hidden;
+          }
+          .resource-item-text {
+            min-width: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+
+            .resource-item-title {
+              font-size: 1.4rem;
+              font-weight: 700;
+              color: rgba(0, 0, 0, 0.8);
+            }
+            .resource-item-desc {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              font-size: 1.1rem;
+              font-weight: 400;
+              color: rgba(0, 0, 0, 0.48);
+            }
+          }
+          .resource-item-arrow {
+            flex-shrink: 0;
+            color: rgba(0, 0, 0, 0.24);
+            transition:
+              color 0.15s ease,
+              transform 0.15s ease;
+          }
+          &:hover .resource-item-arrow {
+            color: rgba(0, 0, 0, 0.56);
+            transform: translate(2px, -2px);
+          }
+        }
+      }
+
+      // 캐러셀 뷰포트 공통 - 프로젝트 · 인기 게시판이 공유하는 방향 버튼 위치/크기
+      // Swiper와 버튼만 감싸므로 타이틀 영역이나 섹션 여백과 무관하게 콘텐츠 높이 기준 정중앙에 고정된다
+      .carousel-viewport {
+        position: relative;
+
+        .swiper-button-prev,
+        .swiper-button-next {
+          width: 3.4rem;
+          height: 3.4rem;
+          &.swiper-button-disabled {
+            display: none;
           }
         }
         .swiper-button-prev {
           left: -4rem !important;
-          &.swiper-button-disabled {
-            display: none;
-          }
         }
         .swiper-button-next {
           right: -4rem !important;
-          &.swiper-button-disabled {
-            display: none;
-          }
         }
       }
       // 4. 인기 게시판
       .popular-boards {
-        .title-area {
-          strong {
-            font-size: 2rem;
-            font-weight: 700;
-            line-height: 120%;
-            color: #000;
-          }
-        }
-
-        .board-list {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 2.4rem;
-          width: 100%;
-        }
-
         .board-box {
           width: 100%;
           min-width: 0;
 
           padding: 2rem;
+          border-radius: 0.6rem;
+          border: 1px solid rgba(0, 0, 0, 0.22);
+          cursor: pointer;
+          transition:
+            box-shadow 0.15s ease,
+            transform 0.15s ease,
+            border-color 0.15s ease;
 
           display: flex;
           flex-direction: column;
           gap: 1.6rem;
 
           box-sizing: border-box;
+
+          &:hover {
+            border-color: rgba(0, 0, 0, 0.34);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+          }
 
           .top {
             display: flex;
@@ -203,9 +717,12 @@
               gap: 1.2rem;
 
               .main-text {
+                display: -webkit-box;
+                width: 100%;
                 overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                white-space: wrap;
 
                 font-size: 2rem;
                 font-weight: 600;
@@ -226,6 +743,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
 
             .left-area {
               min-width: 0;
@@ -234,7 +753,7 @@
             .right-area {
               display: flex;
               align-items: center;
-              gap: 1.2rem;
+              gap: 0.8rem;
             }
 
             .view-count,
@@ -242,36 +761,62 @@
               display: flex;
               align-items: center;
               gap: 0.4rem;
+              padding: 0.3rem 0.8rem;
+              border-radius: 999px;
+              background: rgba(0, 0, 0, 0.04);
             }
 
             p {
-              font-size: 1rem;
-              font-weight: 300;
+              font-size: 1.2rem;
+              font-weight: 500;
               line-height: 100%;
-              color: #000;
+              color: rgba(0, 0, 0, 0.68);
             }
           }
         }
       }
     }
     .main-page {
-      width: 123rem;
+      width: 100%;
       max-width: 123rem;
       padding: 2.4rem 0.5rem 3.1rem 0;
       margin: 0 auto;
       gap: 1rem;
+
+      @include bp.tablet-down {
+        padding: 2rem 1.6rem 3rem;
+      }
+      @include bp.mobile {
+        padding: 1.6rem 1.2rem 2.4rem;
+      }
       /* 1. project */
       // 1-1. project list
       .project-list-box {
         gap: 1.4rem;
+
+        @include bp.tablet-down {
+          flex-direction: column;
+        }
         .project-list {
           width: calc(100% - 27.4rem);
           gap: 1.1rem;
+
+          @include bp.tablet-down {
+            width: 100%;
+          }
           > .project-box {
             min-width: 0;
             padding: 1.6rem 2.4rem;
             gap: 1.2rem;
             cursor: pointer;
+
+            @include bp.mobile {
+              flex-direction: column;
+              .MuiDivider-root {
+                display: none;
+              }
+            }
+
             .left-area {
               min-width: 0;
               gap: 1.5rem;
@@ -286,6 +831,12 @@
                 gap: 0.8rem;
                 .top {
                   gap: 2.4rem;
+
+                  @include bp.mobile {
+                    flex-wrap: wrap;
+                    gap: 0.8rem 2.4rem;
+                  }
+
                   > div {
                     gap: 0.8rem;
                     .title,
@@ -327,7 +878,29 @@
                   white-space: nowrap;
                 }
               }
+
+              @include bp.mobile {
+                width: 100%;
+                min-width: 0;
+                .chip-box > div {
+                  overflow: visible;
+                  white-space: normal;
+                  flex-wrap: wrap;
+                }
+              }
             }
+          }
+        }
+      }
+      // 1-1-1. 목록 하단 (페이지네이션 + 글쓰기) - 프로젝트 · 게시글 목록 공통
+      .list-bottom-box {
+        @include bp.mobile {
+          flex-wrap: wrap;
+          gap: 1.2rem;
+
+          .MuiPagination-root {
+            width: 100%;
+            overflow-x: auto;
           }
         }
       }
@@ -340,6 +913,9 @@
         .project-header {
           .top {
             gap: 1.6rem;
+            .header-main {
+              gap: 1.6rem;
+            }
           }
           .bottom {
             margin-top: 2rem;
@@ -347,6 +923,12 @@
               gap: 1.2rem;
               .user-info {
                 gap: 1.6rem;
+              }
+              // Like는 게시글 상세와 동일하게 참여 지표 라인에 나란히 놓는다
+              .project-like-button {
+                flex-direction: row;
+                align-items: center;
+                gap: 0.4rem;
               }
             }
           }
@@ -395,6 +977,49 @@
             font-size: 1.6rem;
             line-height: 2.6rem;
             color: #364153;
+            min-width: 0;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            word-break: break-word;
+
+            .detail-image-box {
+              display: flex;
+              justify-content: center;
+              width: 100%;
+              margin: 1.6rem 0;
+              overflow: hidden;
+            }
+            .detail-image {
+              display: block;
+              max-width: 100%;
+              width: auto;
+              height: auto;
+              max-height: 60rem;
+              border-radius: 0.8rem;
+              object-fit: contain;
+            }
+          }
+        }
+        // 모집기간/모집인원 등 라벨-값 쌍이 고정폭(40rem)이라 좁은 화면에서 카드 밖으로 넘친다
+        @include bp.tablet-down {
+          .summary-detail-box {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.8rem;
+          }
+          .detail-group {
+            min-width: 0;
+            width: 100%;
+          }
+        }
+        @include bp.mobile {
+          .detail-group {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.4rem;
+          }
+          .group-label {
+            width: auto;
           }
         }
       }
@@ -417,6 +1042,18 @@
             }
           }
         }
+        // 데스크톱 레이아웃 기준 우측 여백(26rem)이라 좁은 화면에서는 뷰포트 밖으로 밀려난다
+        @include bp.tablet-down {
+          right: 1.6rem;
+        }
+        @include bp.mobile {
+          bottom: 2rem;
+          gap: 1.2rem;
+          .float-button {
+            width: 4.8rem;
+            height: 4.8rem;
+          }
+        }
       }
       // 1-3. project create
       .project-create-box,
@@ -426,16 +1063,69 @@
       }
 
       /* 2. board */
+      // 2-0. board/project 상세 헤더 - 제목이 시각적으로 가장 도드라지도록 공통 타이포그래피를 정의한다
+      .board-detail-box .board-header,
+      .project-detail-box .project-header {
+        .main-text {
+          font-size: 2.2rem;
+          font-weight: 800;
+          line-height: 132%;
+          letter-spacing: -0.2px;
+          color: var(--text-primary);
+        }
+        .user-nickname {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: var(--text-primary);
+        }
+        .user-email {
+          font-size: 1.3rem;
+          color: var(--text-secondary);
+        }
+        .view-count p,
+        .reply-count p,
+        .post-date {
+          font-size: 1.3rem;
+          color: var(--text-secondary);
+        }
+      }
       // 2-1. board detail
       .board-detail-box {
         padding: 2rem 2.4rem;
         gap: 2.8rem;
         cursor: default;
+        .board-header {
+          .top {
+            gap: 1.6rem;
+          }
+          .bottom {
+            margin-top: 0.4rem;
+            gap: 1.2rem;
+            .user-info {
+              gap: 1.6rem;
+            }
+            .board-info {
+              gap: 1.6rem;
+              // Like는 조회수·댓글수와 같은 참여 지표 라인에 나란히 놓이므로
+              // HeartButton 기본(아이콘 위 · 카운트 아래) 대신 좌우 나열로 맞춘다
+              .board-like-button {
+                flex-direction: row;
+                align-items: center;
+                gap: 0.4rem;
+              }
+            }
+          }
+        }
         .board-content-box {
           .board-content {
             min-height: 33rem;
+            min-width: 0;
             p {
               font-size: 1.4rem;
+              // 긴 URL/공백 없는 문자열도 흰 배경(카드) 밖으로 넘치지 않게 강제 줄바꿈
+              white-space: pre-wrap;
+              overflow-wrap: break-word;
+              word-break: break-word;
             }
           }
           .write-reply {
@@ -492,6 +1182,12 @@
         }
       }
 
+      &.profile-layout {
+        @include bp.tablet-down {
+          flex-direction: column;
+        }
+      }
+
       /* 3. mypage */
       .myinfo-box {
         position: sticky;
@@ -503,11 +1199,22 @@
           padding: 1.5rem 2.5rem;
           gap: 1rem;
         }
+
+        @include bp.tablet-down {
+          position: static;
+          top: auto;
+          width: 100%;
+          min-width: 0;
+        }
       }
       .mypage-box {
         min-width: 0;
         padding: 2.8rem 3.2rem;
         gap: 1.6rem;
+
+        @include bp.tablet-down {
+          padding: 2rem 1.6rem;
+        }
         // 3-1. home
         .top {
           gap: 0.4rem;
@@ -528,6 +1235,16 @@
               padding: 0.8rem;
               gap: 0.4rem;
               font-size: 1.4rem;
+            }
+
+            // 라벨(16rem)+값이 한 줄이라 좁은 화면에서 값 영역이 지나치게 눌린다
+            @include bp.mobile {
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 0.4rem;
+              .label-area {
+                min-width: 0;
+              }
             }
           }
         }
@@ -708,10 +1425,33 @@
         gap: 2.4rem;
         > div {
           gap: 2.4rem;
+
+          @include bp.tablet-down {
+            flex-wrap: wrap;
+          }
+
           > div {
             padding: 1.2rem;
             gap: 1rem;
+            box-sizing: border-box;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+            @include bp.tablet-down {
+              flex: 1 1 22rem;
+            }
+
+            &:hover {
+              box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+              transform: translateY(-2px);
+            }
+
             .title {
+              // 카드 제목 길이가 달라도(예: "이번 달 신규 팀 매칭") 항상 2줄 높이를 확보해 카드 높이가 들쭉날쭉해지지 않게 한다
+              display: -webkit-box;
+              min-height: 6.64rem;
+              overflow: hidden;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
               font-size: 2rem;
               font-weight: 700;
               line-height: 166%;
@@ -737,18 +1477,52 @@
           }
           &.position-popular-skill-wrap,
           &.popular-skill-wrap {
+            @include bp.mobile {
+              > div {
+                flex: 1 1 100%;
+              }
+            }
+
             > div {
               padding: 1.2rem;
               .skill-container {
                 padding: 1.2rem 4.8rem;
+
+                @include bp.tablet-down {
+                  padding: 1.2rem 1.6rem;
+                  flex-wrap: wrap;
+                }
+
                 .skill-box {
                   overflow: hidden;
                   position: relative;
-                  max-width: 20rem;
+                  box-sizing: border-box;
+                  // 스킬명 길이에 따라 카드 크기가 들쭉날쭉해지지 않도록 폭/높이를 고정한다
+                  width: 20rem;
+                  min-height: 21rem;
+                  flex: 0 0 20rem;
                   padding: 3.35rem;
                   gap: 1.6rem;
                   border-radius: 1.2rem;
+                  cursor: default;
+                  transition:
+                    box-shadow 0.2s ease,
+                    transform 0.2s ease,
+                    border-color 0.2s ease;
+
+                  @include bp.tablet-down {
+                    flex: 1 1 16rem;
+                    width: auto;
+                    max-width: 100%;
+                  }
                   border: 1.5px solid rgba(66, 165, 245, 0.2);
+
+                  &:hover {
+                    border-color: rgba(66, 165, 245, 0.5);
+                    box-shadow: 0 8px 20px rgba(66, 165, 245, 0.18);
+                    transform: translateY(-4px);
+                  }
+
                   .ranking {
                     font-size: 4.8rem;
                     font-weight: 900;
@@ -756,9 +1530,16 @@
                     color: #42a5f5;
                   }
                   .skill-name {
+                    // 긴 스킬명(예: PostgreSQL)도 잘리지 않도록 2줄까지 허용하되,
+                    // 항상 2줄 높이를 예약해 카드마다 높이가 달라지지 않게 한다
+                    display: -webkit-box;
+                    min-height: 5.8rem;
+                    overflow: hidden;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
                     font-size: 2.4rem;
                     font-weight: 700;
-                    line-height: 100%;
+                    line-height: 120%;
                     color: #333;
                   }
                   .popularity-box {
@@ -804,6 +1585,10 @@
                       border-radius: 50%;
                       background-color: rgba(255, 255, 255, 0.2);
                     }
+
+                    &:hover {
+                      box-shadow: 0 10px 24px rgba(124, 58, 237, 0.28);
+                    }
                   }
                 }
               }
@@ -837,7 +1622,7 @@
       }
     }
     .auth-box {
-      width: 40rem;
+      width: min(40rem, calc(100vw - 3.2rem));
       padding: 1.5rem 2rem;
       gap: 1.6rem;
       > div {
@@ -868,7 +1653,8 @@
       }
       // 2. signIn
       &:has(.text-box) {
-        min-width: 57.3rem;
+        width: min(57.3rem, calc(100vw - 3.2rem));
+        min-width: 0;
         gap: 1.6rem;
       }
       .text-box {
@@ -889,7 +1675,124 @@
           font-size: 1.2rem;
         }
       }
+
+      // 3. 이메일 인증 - 아이디 + @ + 도메인 + 인증버튼 한 줄 구성
+      // 좁은 화면에서 네 요소가 한 줄에 다 들어가지 못해 카드 밖으로 넘치므로 모바일에서는 세로로 쌓는다
+      .email-verify-row {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+
+        @include bp.mobile {
+          flex-wrap: wrap;
+
+          > .w-100,
+          > div {
+            flex: 1 1 auto;
+            min-width: 12rem;
+          }
+
+          button {
+            width: 100%;
+          }
+        }
+      }
+
+      // 3. 이메일 인증 - 도메인 셀렉트박스
+      .email-host-select {
+        .MuiOutlinedInput-root {
+          border-radius: 1rem;
+          background: rgba(25, 118, 210, 0.03);
+          transition:
+            border-color 0.15s ease,
+            background 0.15s ease,
+            box-shadow 0.15s ease;
+
+          .MuiOutlinedInput-notchedOutline {
+            border-color: rgba(0, 0, 0, 0.14);
+          }
+
+          &:hover .MuiOutlinedInput-notchedOutline {
+            border-color: rgba(25, 118, 210, 0.4);
+          }
+
+          &.Mui-focused {
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
+
+            .MuiOutlinedInput-notchedOutline {
+              border-color: var(--primary-main);
+              border-width: 1px;
+            }
+          }
+        }
+
+        .MuiSelect-select {
+          font-weight: 500;
+        }
+
+        .MuiSelect-icon {
+          color: var(--primary-main);
+          transition: transform 0.15s ease;
+        }
+
+        .MuiOutlinedInput-root.Mui-focused .MuiSelect-icon {
+          transform: rotate(180deg);
+        }
+      }
+
+      .email-host-custom {
+        .email-host-back-btn {
+          flex-shrink: 0;
+          width: 5.6rem;
+          height: 5.6rem;
+          border-radius: 1rem;
+          border: 1px solid rgba(0, 0, 0, 0.14);
+          color: var(--primary-main);
+          transition:
+            border-color 0.15s ease,
+            background 0.15s ease;
+
+          &:hover {
+            background: rgba(25, 118, 210, 0.06);
+            border-color: rgba(25, 118, 210, 0.4);
+          }
+        }
+      }
     }
+  }
+}
+
+// 이메일 도메인 셀렉트 드롭다운 - MUI Menu는 body에 포탈되므로 .auth-page 밖(top-level)에서 스타일링한다
+.email-host-menu-paper {
+  margin-top: 0.6rem;
+  border-radius: 1.2rem !important;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14) !important;
+  overflow: hidden;
+
+  .MuiMenuItem-root {
+    padding: 0.9rem 1.6rem;
+    font-size: 1.4rem;
+    transition: background 0.12s ease;
+
+    &:hover {
+      background: rgba(25, 118, 210, 0.08);
+    }
+
+    &.Mui-selected {
+      background: rgba(25, 118, 210, 0.12);
+      font-weight: 600;
+
+      &:hover {
+        background: rgba(25, 118, 210, 0.16);
+      }
+    }
+  }
+
+  .email-host-custom-option {
+    gap: 0.6rem;
+    color: var(--primary-main);
+    font-weight: 600;
   }
 }
 
@@ -1010,7 +1913,7 @@
       }
       .bottom-section {
         .left-area {
-          width: 58rem;
+          width: 100%;
           max-width: 58rem;
         }
       }
@@ -1019,52 +1922,68 @@
 }
 
 /* popup */
-// 1. web popup
-body:has(#devHub) {
-  .web-popup {
-    overflow: hidden;
-    position: relative;
-    width: fit-content;
-    .popup-title-box {
-      padding: 12px 24px;
-      background: linear-gradient(to right, rgba(66, 165, 245, 1) 0%, rgba(156, 39, 176, 0.3));
-      .popup-title {
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 100%;
-        color: #fff;
-      }
+// 다이얼로그(WebPopup) - 사용자/관리자 화면 공통. 예전에는 배너(그라디언트/흰색)로 나뉘어 있었으나
+// "일관된 다이얼로그 UI"를 위해 하나의 스타일로 통일한다.
+.web-popup {
+  overflow: hidden;
+  position: relative;
+  width: fit-content;
+  border-radius: 1.6rem;
+  box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.22), 0 4px 16px rgba(15, 23, 42, 0.08);
+
+  // 상단 액센트 바 - 예전 그라디언트 헤더의 브랜드 아이덴티티를 가볍게 되살린다 (variant와 무관하게 항상 동일)
+  &::before {
+    content: '';
+    display: block;
+    height: 0.4rem;
+    background: linear-gradient(90deg, var(--primary-main) 0%, var(--secondary-main) 100%);
+  }
+
+  .popup-title-box {
+    // 위→아래로 옅어지던 그라디언트 대신, 헤더 영역 전체에 고르게 톤이 실리도록 대각선으로 은은하게 채운다
+    padding: 2rem 2rem 2rem 2.4rem;
+    background: linear-gradient(135deg, rgba(25, 118, 210, 0.08) 0%, rgba(156, 39, 176, 0.06) 100%);
+    border-bottom: 1px solid rgba(25, 118, 210, 0.08);
+
+    .popup-heading {
+      gap: 1.2rem;
     }
-    .popup-button-box {
-      padding: 24px;
-      gap: 10px;
+
+    .popup-title {
+      font-size: 1.9rem;
+      font-weight: 800;
+      line-height: 130%;
+      color: var(--text-primary);
+    }
+
+    .popup-close-btn {
+      margin: -0.4rem -0.4rem 0 0;
+      color: var(--text-secondary);
     }
   }
-}
 
-// 2. admin popup
-body:has(#devHubAdmin) {
-  .web-popup {
-    overflow: hidden;
-    position: relative;
-    width: fit-content;
-    .popup-title-box {
-      padding: 20px 24px 10px 20px;
-      background: #fff;
-      .popup-title {
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 100%;
-        color: #000;
-      }
-      .MuiSvgIcon-root {
-        color: #000;
-      }
-    }
-    .popup-button-box {
-      padding: 10px 24px 20px 24px;
-      gap: 10px;
-    }
+  // alert/confirm 등 useModal 메시지 전용 - title 영역과 좌측이 맞도록 동일한 좌우 여백을 사용한다
+  .popup-message {
+    margin: 0;
+    padding: 1.6rem 2rem 0.4rem 2.4rem;
+    font-size: 1.5rem;
+    line-height: 160%;
+    letter-spacing: 0.15px;
+    color: var(--text-secondary);
+    white-space: pre-line;
+  }
+
+  .popup-button-box {
+    padding: 1.6rem 2.4rem 2.4rem;
+    gap: 1.2rem;
+    border-top: 1px solid var(--divider);
+    margin-top: 0.8rem;
+  }
+
+  @include bp.mobile {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 1.6rem 1.6rem 0 0;
   }
 }
 
@@ -1079,6 +1998,11 @@ body:has(#devHubAdmin) {
     position: absolute;
     top: 2rem;
     right: 2rem;
+  }
+
+  @include bp.tablet-down {
+    width: 100%;
+    min-width: 0;
   }
   .filter-box {
     gap: 0.8rem;

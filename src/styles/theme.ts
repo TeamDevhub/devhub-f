@@ -1,6 +1,16 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 640,
+      md: 1024,
+      lg: 1230,
+      xl: 1536,
+    },
+  },
+
   palette: {
     mode: 'light',
 

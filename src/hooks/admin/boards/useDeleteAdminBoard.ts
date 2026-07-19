@@ -21,7 +21,7 @@ export default function useDeleteAdminBoard(onDeleted?: () => void | Promise<voi
             alert('삭제할 게시글을 선택해주세요.');
             return;
         }
-        if (!(await confirm(`선택한 ${boardGuids.length}개의 게시글을 삭제하시겠습니까?`))) return;
+        if (!(await confirm(`선택한 ${boardGuids.length}개의 게시글을 삭제하시겠습니까?`, { variant: 'warning' }))) return;
         await mutate(boardGuids);
     };
 

@@ -1,7 +1,13 @@
 import { Store } from './Store';
 import { getCommonCode } from '@/api/api.common';
+import { BOARD_CATEGORY } from '@/constants/codes';
 import type { CommonCodeResponse, CommonCodeRequest } from '@/types/type.api';
 import type { CommonCode, CommonCodeItem, SelectComponentProps } from '@/types/type._common';
+
+// 서버 공통코드 응답에 그룹이 없을 때를 대비한 로컬 폴백 (codes.ts가 유일한 소스)
+const LOCAL_CODE_FALLBACK: Partial<Record<string, Record<string, string>>> = {
+  BOARD_CATEGORY: Object.fromEntries(Object.values(BOARD_CATEGORY).map(({ CODE, NAME }) => [CODE, NAME])),
+};
 
 interface CodesState {
   codes: CommonCodeResponse | undefined;
@@ -39,7 +45,7 @@ class CodesStore extends Store<CodesState> {
         }
       }
     };
-    return findName(group) || targetCode;
+    return findName(group) || LOCAL_CODE_FALLBACK[groupCode]?.[targetCode] || targetCode;
   };
 
   getSelectOptions = (groupCode: CommonCode): SelectComponentProps[] => {

@@ -1,35 +1,41 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import BoardCard from '@/components/web/boards/BoardCard';
-import useMutationBoards from '@/hooks/web/boards/useMutationBoards';
 import useSelectBoards from '@/hooks/web/boards/useSelectBoards';
 import {Button, Pagination, Paper, Tab, Tabs} from '@mui/material';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 import {COMMON_CODE} from "@/constants/codes.ts";
-import { Link } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/_common/useAuth';
+import { useRequireAuth } from '@/hooks/_common/useRequireAuth';
 
 export default function BoardList(){
     const { isLoggedIn } = useAuth();
+    const { requireAuth } = useRequireAuth();
+    const navigate = useNavigate();
     const {
-        res, request, 
-        setPage, 
-        setTab, 
+        res, request,
+        setPage,
+        setTab,
         title, setTitle,
         handleSearchClick,
-        handleDetail
+        handleDetail,
+        toggleLike
     } = useSelectBoards();
 
-    const { handleLike } = useMutationBoards();
     const { getCodesByGroup } = useCodes();
     const categoryCode = getCodesByGroup(COMMON_CODE.BOARD_CATEGORY);
     const boardCategoryCode = [{code:'', name:'전체'}, ...categoryCode];
+
+    const handleCreateClick = () => requireAuth(() => navigate('/boards/create'));
 
     return (
         <div className='main-page flex-col h-fit'>
         {/* 1. category tabs */}
         <Tabs
             value={request.categoryCd}
-            variant='standard'
+            variant='scrollable'
+            scrollButtons='auto'
+            allowScrollButtonsMobile
             onChange={(_, newValue)=>setTab(newValue)}
             textColor="primary"
             indicatorColor="primary"
@@ -51,14 +57,12 @@ export default function BoardList(){
         </div>
         {/* 4. board list */}
         <div className="board-list flex-col" style={{ gap: '0.8rem' }}>
-            {res?.dataList?.map((item, index) => {
-                return <BoardCard key={index} boardData={item} handleLike={handleLike} handleDetail={()=>handleDetail(item.boardBasicResponseDto.boardGuid)} isLoggedIn={isLoggedIn ?? false}></BoardCard>
+            {res?.dataList?.map((item) => {
+                return <BoardCard key={item.boardBasicResponseDto.boardGuid} boardData={item} toggleLike={toggleLike} handleDetail={()=>handleDetail(item.boardBasicResponseDto.boardGuid)} isLoggedIn={isLoggedIn ?? false}></BoardCard>
             })}
             <div className='list-bottom-box w-100 align-center mt-14'>
                 <Pagination count={res?.pagination?.totalPages} page={request.page} onChange={(_, page) => {setPage(page);}} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
-                <Link to={'/boards/create'} className="flex-1 flex-center">
-                    <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }}>글쓰기</Button>
-                </Link>
+                <Button size='medium' variant='contained' className="flex-1" sx={{ height: '3.6rem !important' }} onClick={handleCreateClick}>글쓰기</Button>
             </div>
         </div>
         </div>

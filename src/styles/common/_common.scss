@@ -1,43 +1,169 @@
 @charset "utf-8";
+@use "breakpoints" as bp;
 
 /* header */
+.menu-toggle-btn {
+  display: none;
+}
+
 .header {
   height: 7rem;
   padding: 1.2rem 3.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--divider);
+
   .header-left-box {
-    gap: 3.2rem;
+    gap: 4.8rem;
     .logo-box {
       a {
-        gap: 0.6rem;
+        gap: 0.8rem;
+        transition: opacity 0.2s ease;
+        &:hover {
+          opacity: 0.8;
+        }
         .logo-icon {
-          width: 3.6rem;
-          height: 3.6rem;
+          width: 3.4rem;
+          height: 3.4rem;
         }
         .logo-text {
-          font-size: 2.4rem;
+          font-size: 2.2rem;
           font-weight: 800;
+          letter-spacing: -0.03em;
           line-height: 100%;
           color: var(--text-primary);
         }
       }
     }
   }
+
+  .menu-box {
+    gap: 2.8rem;
+  }
+
+  .nav-link {
+    position: relative;
+    padding: 0.4rem 0.1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -0.9rem;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--primary-main);
+      transform: scaleX(0);
+      transition: transform 0.2s ease;
+    }
+
+    &:hover {
+      color: var(--text-primary);
+    }
+    &:hover::after {
+      transform: scaleX(0.6);
+    }
+    &.active {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    &.active::after {
+      transform: scaleX(1);
+    }
+  }
+
   .header-right-box {
     gap: 1.6rem;
     > * {
       cursor: pointer;
+    }
+
+    .auth-cta {
+      padding: 0.85rem 2rem;
+      border-radius: 0.8rem;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(25, 118, 210, 0.28);
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  @include bp.tablet-down {
+    padding: 1.2rem 1.6rem;
+    .menu-box {
+      display: none;
+    }
+    .menu-toggle-btn {
+      display: inline-flex;
+    }
+  }
+}
+
+/* header 모바일 드로어 내부 메뉴 (Drawer는 header 밖에 포탈되므로 별도 스코프) */
+.mobile-menu-box {
+  min-width: 22rem;
+  padding: 2.4rem 1.6rem;
+  gap: 0.4rem;
+
+  .nav-link {
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 0.6rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: var(--text-primary);
+    }
+    &.active {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 600;
     }
   }
 }
 
 /* footer */
 footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg, rgba(66, 165, 245, 0.08) 0%, rgba(186, 104, 200, 0.06) 100%);
-  .left-section { width: 70%; 
+  .left-section { width: 70%;
     .footer-logo { font-size: 4rem; font-weight: bold; line-height: 120%; color: #626262; user-select: none; }
     .footer-info { font-size: 1.3rem; font-weight: 300; color: #626262; }
   }
   .right-section {
     a { font-size: 1.5rem; line-height: 100%; font-weight: 500; color: #626262; }
+  }
+
+  @include bp.tablet-down {
+    height: auto;
+    padding: 4rem 2.4rem;
+    flex-direction: column;
+    gap: 2.4rem;
+    .left-section { width: 100%; }
+    .right-section { justify-content: flex-start; }
+  }
+  @include bp.mobile {
+    padding: 3.2rem 1.6rem;
+    .left-section .footer-logo { font-size: 3rem; }
+    .right-section ul { flex-wrap: wrap; gap: 1.2rem !important; }
   }
 }
 
@@ -330,6 +456,14 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
         }
       }
     }
+
+    @include bp.mobile {
+      flex-direction: column;
+      gap: 1.6rem;
+      .label-area {
+        width: 100%;
+      }
+    }
   }
 }
 // 2. 유저 기본 정보 폼
@@ -406,6 +540,17 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
   .report-reason-field {
     min-width: 56rem;
   }
+
+  @include bp.mobile {
+    dl {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .report-reason-field {
+      min-width: 0;
+      width: 100%;
+    }
+  }
 }
 .required {
   font-size: 1.6rem;
@@ -415,15 +560,27 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
   color: rgba(255, 0, 0, 0.87);
 }
 .help-text {
-  gap: 0.6rem;
-  font-size: 1.2rem;
-  line-height: 166%;
-  letter-spacing: 0.4px;
+  position: relative;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 170%;
+  letter-spacing: 0.2px;
   color: var(--text-secondary);
-  .dot {
+
+  // 앞에 점(.dot) 불릿이 있는 형태는 hanging indent로 정렬한다.
+  // (일부 용법은 <br/>로 여러 줄을 담고 있어 flex/gap을 쓰면 각 텍스트 조각이 별개 flex item으로 쪼개져 한 줄에 뭉쳐버린다 - absolute 배치로 우회)
+  &:has(.dot) {
     display: block;
-    width: 0.3rem;
-    height: 0.3rem;
+    padding-left: 1.1rem;
+  }
+
+  .dot {
+    position: absolute;
+    top: 0.75rem;
+    left: 0;
+    display: block;
+    width: 0.4rem;
+    height: 0.4rem;
     background-color: var(--text-secondary);
     border-radius: 50%;
   }
@@ -535,6 +692,69 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+/* icon badge - 톤이 있는 원형 아이콘 배지 (에러 페이지 / 다이얼로그 공용) */
+.icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+
+  &--medium {
+    width: 8.8rem;
+    height: 8.8rem;
+    svg { font-size: 4rem; }
+  }
+  &--small {
+    width: 4.4rem;
+    height: 4.4rem;
+    svg { font-size: 2.2rem; }
+  }
+
+  &--primary {
+    background: rgba(25, 118, 210, 0.12);
+    color: var(--primary-main);
+  }
+  &--secondary {
+    background: rgba(156, 39, 176, 0.12);
+    color: var(--secondary-main);
+  }
+  &--error {
+    background: rgba(211, 47, 47, 0.12);
+    color: var(--error-main);
+  }
+  &--warning {
+    background: rgba(239, 108, 0, 0.12);
+    color: var(--warning-main);
+  }
+  &--success {
+    background: rgba(46, 125, 50, 0.12);
+    color: var(--success-main);
+  }
+}
+
+/* info banner - 페이지 상단의 가벼운 안내 배너 (에러/경고 배지와 톤으로 구분) */
+.info-banner {
+  gap: 1rem;
+  padding: 1.2rem 1.6rem;
+  border-radius: 0.8rem;
+  background: rgba(25, 118, 210, 0.06);
+  border: 1px solid rgba(25, 118, 210, 0.14);
+
+  .info-banner-icon {
+    flex-shrink: 0;
+    font-size: 2rem;
+    color: var(--primary-main);
+  }
+
+  .info-banner-text {
+    margin: 0;
+    font-size: 1.4rem;
+    line-height: 160%;
+    color: var(--text-primary);
   }
 }
 

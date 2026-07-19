@@ -4,10 +4,12 @@ import useFormState from '@/hooks/_common/useFormState.ts';
 import type { ProjectCreate, Position } from "@/types/type.projects";
 import { useMutation } from "@/hooks/_common/api.hook";
 import { useModal } from "@/hooks/_common/useModal"
+import { useRequireAuth } from "@/hooks/_common/useRequireAuth";
 import useFileUpload from "@/hooks/_common/useFileUpload.ts";
 import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
+import { CONTENT_MAX_LENGTH } from "@/constants/contentLimits";
 import { useState } from "react";
 
 export default function useCreateProject() {
@@ -45,7 +47,7 @@ export default function useCreateProject() {
     const validations = {
         title: [Validators.required()],
         category: [Validators.required()],
-        content: [Validators.required()],
+        content: [Validators.required(), Validators.maxLength(CONTENT_MAX_LENGTH)],
         recruitmentTypeCd: [Validators.required()],
         recruitmentStartDate: [Validators.required()],
         recruitmentEndDate: [Validators.required()],
@@ -63,6 +65,7 @@ export default function useCreateProject() {
     const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(initData, { validations, mode: 'manual' });
     const { fileStates, errors: fileErrors, upload, register } = useFileUpload();
     const { alert } = useModal();
+    const { requireAuth } = useRequireAuth();
     const [fileGuids, setFileGuids] = useState<string[]>([]);
     const { mutate: fileDeleteMutate } = useMutation<string, void>(deleteFile);
     const handleSuccessCreateProject = () => {
@@ -81,37 +84,49 @@ export default function useCreateProject() {
             console.log("file delete error");
         }
     }
-    const { mutate: projectMutate, loading, error } = useMutation<ProjectCreate, void>(createProject, handleSuccessCreateProject, handleFailCreateProject);
+    const { mutate: projectMutate, loading: mutateLoading, error } = useMutation<ProjectCreate, void>(createProject, handleSuccessCreateProject, handleFailCreateProject);
+    // useMutation의 loading은 projectMutate 호출 구간만 반영해 파일 업로드 중에는 false다.
+    // 버튼 연타로 인한 중복 등록을 막으려면 업로드~검증~등록 전 구간을 아우르는 별도 가드가 필요하다.
+    const [submitting, setSubmitting] = useState(false);
 
     const onSubmit = async () => {
-        let returnData;
-        if (fileStates && Object.keys(fileStates).length > 0) {
-            returnData = await upload();
-            if (!returnData.success) {
-                alert('파일 업로드에 실패했습니다.');
+        if (submitting) return;
+        setSubmitting(true);
+        try {
+            const allowed = await requireAuth();
+            if (!allowed) return;
+
+            let returnData;
+            if (fileStates && Object.keys(fileStates).length > 0) {
+                returnData = await upload();
+                if (!returnData.success) {
+                    alert('파일 업로드에 실패했습니다.');
+                    return;
+                }
+            }
+            const imageFileGuid = returnData?.data?.fileGuids?.[IMAGE_NAME];
+            const attachmentFileGuid = returnData?.data?.fileGuids?.[ATTACHMENT_NAME];
+            setFileGuids(
+                [imageFileGuid, attachmentFileGuid].filter(
+                    (guid): guid is string => !!guid
+                )
+            );
+
+            checkError();
+            console.log(Object.entries(validateErrors));
+            const error = Object.entries(validateErrors).find(([, value]) => !!value);
+            if (error) {
+                alert(`${error[0]}은/는 ${error[1]}`);
                 return;
             }
-        }
-        const imageFileGuid = returnData?.data?.fileGuids?.[IMAGE_NAME];
-        const attachmentFileGuid = returnData?.data?.fileGuids?.[ATTACHMENT_NAME];
-        setFileGuids(
-            [imageFileGuid, attachmentFileGuid].filter(
-                (guid): guid is string => !!guid
-            )
-        );
 
-        checkError();
-        console.log(Object.entries(validateErrors));
-        const error = Object.entries(validateErrors).find(([, value]) => !!value);
-        if (error) {
-            alert(`${error[0]}은/는 ${error[1]}`);
-            return;
+            const jsonData = { ...state };
+            jsonData.imageFileGuid = imageFileGuid;
+            jsonData.attachmentFileGuid = attachmentFileGuid;
+            await projectMutate(jsonData);
+        } finally {
+            setSubmitting(false);
         }
-
-        const jsonData = { ...state };
-        jsonData.imageFileGuid = imageFileGuid;
-        jsonData.attachmentFileGuid = attachmentFileGuid;
-        await projectMutate(jsonData);
     }
 
     return {
@@ -119,7 +134,7 @@ export default function useCreateProject() {
         setValues: setState,
         onHandleEvent: handleChange,
         onSubmit: onSubmit,
-        loading,
+        loading: submitting || mutateLoading,
         error,
         fileStates,
         imageRef: register(IMAGE_NAME),

@@ -1,16 +1,30 @@
+import { useState } from 'react';
 import logo from '@/assets/images/devHub-logo.png';
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import useSendVerificationCode from '@/hooks/web/signup/useSendVerificationCode';
 import useConfirmVerificationCode from '@/hooks/web/signup/useConfirmVerificationCode';
-import { ArrowForwardIos, MailOutline } from '@mui/icons-material';
-import { Button, Divider, FormControl, MenuItem, Paper, Select } from '@mui/material';
+import { ArrowForwardIos, Edit, KeyboardArrowDown, ListAlt, MailOutline } from '@mui/icons-material';
+import { Button, Divider, FormControl, IconButton, MenuItem, Paper, Select } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 interface Props {
   onVerified: (email: string) => void;
 }
 
-const EMAIL_HOST_OPTIONS = ['gmail.com', 'naver.com'];
+const CUSTOM_DOMAIN_OPTION = '직접 입력';
+
+const EMAIL_HOST_OPTIONS = [
+  'gmail.com',
+  'naver.com',
+  'daum.net',
+  'kakao.com',
+  'nate.com',
+  'hanmail.net',
+  'outlook.com',
+  'hotmail.com',
+  'icloud.com',
+  'yahoo.com',
+];
 
 export default function VerificationPage({ onVerified }: Props) {
   const { emailAddress, isVerificationCodeSent, changeEmailId, changeEmailHost, applySendMail } = useSendVerificationCode();
@@ -18,6 +32,22 @@ export default function VerificationPage({ onVerified }: Props) {
     `${emailAddress.emailId}@${emailAddress.emailHost}`,
     onVerified,
   );
+
+  const [isCustomDomain, setIsCustomDomain] = useState(false);
+
+  const handleSelectHost = (value: string) => {
+    if (value === CUSTOM_DOMAIN_OPTION) {
+      setIsCustomDomain(true);
+      changeEmailHost('');
+      return;
+    }
+    changeEmailHost(value);
+  };
+
+  const handleBackToList = () => {
+    setIsCustomDomain(false);
+    changeEmailHost('');
+  };
 
   return (
     <div className="auth-page flex-center">
@@ -45,28 +75,51 @@ export default function VerificationPage({ onVerified }: Props) {
             </div>
 
             <div className="field-content flex-col">
-              <div className="content-box align-stretch" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <div className="content-box email-verify-row align-stretch">
                 <CustomTextfield placeholder="이메일" value={emailAddress.emailId} onChange={(e) => changeEmailId(e.target.value)} fullWidth />
 
                 <p className="flex-center">@</p>
 
-                <FormControl fullWidth variant="outlined">
-                  <Select
-                    value={emailAddress.emailHost}
-                    onChange={(e) => {
-                      changeEmailHost(e.target.value);
-                    }}
-                    size="medium"
-                    displayEmpty
-                    renderValue={(selected) => (selected === '' ? '이메일을 선택해주세요' : selected)}
-                  >
-                    {EMAIL_HOST_OPTIONS.map((emailHost) => (
-                      <MenuItem key={emailHost} value={emailHost}>
-                        {emailHost}
+                {isCustomDomain ? (
+                  <div className="email-host-custom align-center" style={{ display: 'flex', gap: '0.4rem', width: '100%' }}>
+                    <CustomTextfield
+                      placeholder="도메인을 입력해주세요"
+                      value={emailAddress.emailHost}
+                      onChange={(e) => changeEmailHost(e.target.value)}
+                      fullWidth
+                    />
+                    <IconButton className="email-host-back-btn" onClick={handleBackToList} aria-label="목록에서 선택">
+                      <ListAlt sx={{ fontSize: 20 }} />
+                    </IconButton>
+                  </div>
+                ) : (
+                  <FormControl fullWidth variant="outlined" className="email-host-select">
+                    <Select
+                      value={emailAddress.emailHost}
+                      onChange={(e) => handleSelectHost(e.target.value)}
+                      size="medium"
+                      displayEmpty
+                      IconComponent={KeyboardArrowDown}
+                      renderValue={(selected) => (selected === '' ? '이메일을 선택해주세요' : selected)}
+                      MenuProps={{
+                        PaperProps: {
+                          className: 'email-host-menu-paper',
+                        },
+                      }}
+                    >
+                      {EMAIL_HOST_OPTIONS.map((emailHost) => (
+                        <MenuItem key={emailHost} value={emailHost}>
+                          {emailHost}
+                        </MenuItem>
+                      ))}
+                      <Divider />
+                      <MenuItem value={CUSTOM_DOMAIN_OPTION} className="email-host-custom-option">
+                        <Edit sx={{ fontSize: 16 }} />
+                        직접 입력
                       </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                    </Select>
+                  </FormControl>
+                )}
 
                 <Button size="large" variant="contained" color="primary" onClick={applySendMail} sx={{ height: '56px', minWidth: '120px' }}>
                   인증
