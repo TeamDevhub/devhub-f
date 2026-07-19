@@ -10,9 +10,9 @@ export const PROJECT_RECRUIT_STATUS = {
 } as const;
 
 export const PROJECT_PROGRESS_TYPE = {
-  WAITING: { CODE: '3101', NAME: '모집중' },
-  COMPLETE: { CODE: '3102', NAME: '모집완료' },
-  REJECT: { CODE: '3103', NAME: '승인거절' },
+  ONLINE: { CODE: '3101', NAME: '온라인' },
+  OFFLINE: { CODE: '3102', NAME: '오프라인' },
+  HYBRID: { CODE: '3103', NAME: '온/오프라인 병행' },
 } as const;
 
 export const PROJECT_APPROVAL_STATUS = {

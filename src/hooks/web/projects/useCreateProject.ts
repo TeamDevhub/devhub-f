@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { Validators } from "@/utils/util._common"
 import { ERROR_MESSAGES } from "@/constants/errorMessages";
 import { CONTENT_MAX_LENGTH } from "@/constants/contentLimits";
+import { PROJECT_PROGRESS_TYPE } from "@/constants/codes";
 import { useState } from "react";
 
 export default function useCreateProject() {
@@ -44,6 +45,10 @@ export default function useCreateProject() {
         }
         return null;
     }
+    // 진행방식이 온라인이면 진행지역은 선택사항이다.
+    const progressRegionValidator = (v: string, allState: ProjectCreate) =>
+        allState.progressTypeCd === PROJECT_PROGRESS_TYPE.ONLINE.CODE ? null : Validators.required()(v);
+
     const validations = {
         title: [Validators.required()],
         category: [Validators.required()],
@@ -53,7 +58,7 @@ export default function useCreateProject() {
         recruitmentEndDate: [Validators.required()],
         positionList: [positionValidator],
         progressTypeCd: [Validators.required()],
-        progressRegionCd: [Validators.required()],
+        progressRegionCd: [progressRegionValidator],
         progressStartDate: [Validators.required()],
         progressEndDate: [Validators.required()],
         skillList: [Validators.minArrayLength(1)],
@@ -64,6 +69,15 @@ export default function useCreateProject() {
     const ATTACHMENT_NAME = 'attachment' as const;
     const navigate = useNavigate();
     const { state, setState, handleChange, createToggle, errors: validateErrors, checkError } = useFormState(initData, { validations, mode: 'manual' });
+
+    // 온라인으로 전환 시 이전에 선택했던 진행지역은 더 이상 의미가 없으므로 함께 비운다.
+    const onProgressTypeChange = (value: string) => {
+        if (value === PROJECT_PROGRESS_TYPE.ONLINE.CODE) {
+            setState({ progressTypeCd: value, progressRegionCd: '' });
+        } else {
+            handleChange('progressTypeCd', value);
+        }
+    };
     const { fileStates, errors: fileErrors, upload, register } = useFileUpload();
     const { alert } = useModal();
     const { requireAuth } = useRequireAuth();
@@ -128,6 +142,7 @@ export default function useCreateProject() {
         values: state,
         setValues: setState,
         onHandleEvent: handleChange,
+        onProgressTypeChange,
         onSubmit: onSubmit,
         loading: submitting || mutateLoading,
         error,

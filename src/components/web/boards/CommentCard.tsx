@@ -1,5 +1,5 @@
 import type { comment } from "@/types/type.boards";
-import { Button, Divider } from '@mui/material'
+import { Button } from '@mui/material'
 import { useState } from "react";
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import { elapsedTime } from '@/utils/util.date';
@@ -76,8 +76,6 @@ function InfoPage( {setPage, data, handleDelete, isCommentOwner, isLoggedIn, onC
       )}
         {!isCommentOwner && <Button size='small' color='warning' onClick={() => onClickReport(data.boardGuid, data.commentGuid)}>신고하기</Button>}
       </div>
-
-      <Divider />
     </div>
   )
 }
@@ -92,7 +90,7 @@ interface ModiPageProps {
 }
 function ModifyPage({setPage, data, updateContent, setUpdateContent, error, handleUpdate } : ModiPageProps) {
     return (
-    <div className="reply-box flex-col">
+    <div className="reply-box reply-box--editing flex-col">
       <div className="commenter-info align-center">
         <p className='commenter-id'>{data.userName}</p>
         <p className='comment-time'>{elapsedTime(data.auditInfo.registeredDate)}</p>
@@ -100,10 +98,9 @@ function ModifyPage({setPage, data, updateContent, setUpdateContent, error, hand
       <div className="align-stretch">
         <CustomTextfield size='small' type='text' placeholder='댓글을 입력해 주세요.' value={updateContent}
           onChange={(e)=>setUpdateContent(e.target.value)} error={!!error} helperText={error}/>
-        <Button size='small' onClick={handleUpdate}>수정</Button>
-        <Button size='small' onClick={()=>{setUpdateContent(data.content); setPage("info");}}>취소</Button>
+        <Button size='small' variant='contained' onClick={handleUpdate}>수정</Button>
+        <Button size='small' variant='outlined' onClick={()=>{setUpdateContent(data.content); setPage("info");}}>취소</Button>
       </div>
-      <Divider />
     </div>
   )
 }

@@ -41,8 +41,8 @@ export const getAdminApplicants = (req: AdminApplicantSearchRequest) =>
   );
 
 export const updateApplicantStatus = (req: UpdateApplicantStatusRequest) =>
-  fetcher<void, Pick<UpdateApplicantStatusRequest, 'approvalStatusCd'>>(
-    `/admin/projects/${req.projectGuid}/applicants/${req.applicantGuid}/status`,
-    req,
+  fetcher<void>(
+    `/admin/projects/${req.projectGuid}/applicants/${req.applicationGuid}/status?approved=${req.approved}`,
+    undefined,
     { method: 'put' },
   );
