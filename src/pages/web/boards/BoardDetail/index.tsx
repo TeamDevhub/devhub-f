@@ -21,6 +21,7 @@ import NotFoundPage from '@/pages/error/NotFoundPage';
 import { elapsedTime } from '@/utils/util.date';
 
 const menuIconStyle = { fontSize: 20, color: 'rgba(0, 0, 0, 0.56)' };
+const FILE_API_URL = import.meta.env.VITE_FILE_API_URL;
 
 export default function BoardDetail(){
 
@@ -99,6 +100,7 @@ export default function BoardDetail(){
               <div className="left-area">
                 <CustomAvatar
                   sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
+                  src={board.userFileGuid ? `${FILE_API_URL}${board.userFileGuid}` : undefined}
                   avatarIcon={<Person sx={{ fontSize: 24 }} />}
                 />
               </div>

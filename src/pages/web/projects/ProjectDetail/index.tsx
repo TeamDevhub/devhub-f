@@ -19,6 +19,7 @@ import Loading from '@/components/_common/layout/Loading';
 import NotFoundPage from '@/pages/error/NotFoundPage';
 
 const menuIconStyle = { fontSize: 20, color: 'rgba(0, 0, 0, 0.56)' };
+const FILE_API_URL = import.meta.env.VITE_FILE_API_URL;
 
 export default function ProjectDetail() {
   const navigate = useNavigate();
@@ -80,12 +81,12 @@ export default function ProjectDetail() {
               <div className="left-area">
                 <CustomAvatar
                   sx={{ background: 'linear-gradient(180deg, rgba(66, 165, 245, 0.8) 0%, rgba(186, 104, 200, 0.6) 100%);' }}
+                  src={project.userFileGuid ? `${FILE_API_URL}${project.userFileGuid}` : undefined}
                   avatarIcon={<Person sx={{ fontSize: 24 }} />}
                 />
               </div>
               <div className="right-area">
                 <p className='user-nickname'>{project.username}</p>
-                <p className='user-email'>{project.email}</p>
               </div>
             </div>
             <div className="project-info align-center">
