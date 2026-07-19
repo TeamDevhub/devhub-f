@@ -9,7 +9,7 @@ import { Button, Divider, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export default function Login() {
-  const { loginInfo, changeId, changePassword, applyLogin, oauthLogin } = useLogin();
+  const { loginInfo, errors, changeId, changePassword, applyLogin, oauthLogin } = useLogin();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +33,8 @@ export default function Login() {
               value={loginInfo.email}
               onChange={(e) => changeId(e.target.value)}
               autoComplete="username"
+              error={!!errors.email}
+              helperText={errors.email}
             />
             <CustomTextfield
               name="password"
@@ -41,6 +43,8 @@ export default function Login() {
               value={loginInfo.password}
               onChange={(e) => changePassword(e.target.value)}
               autoComplete="current-password"
+              error={!!errors.password}
+              helperText={errors.password}
             />
           </div>
           <div className="button-box flex-col">

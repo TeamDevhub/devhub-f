@@ -79,7 +79,9 @@ export class FormController<T extends object> {
   handleChange = <K extends keyof T>(key: K, value: T[K]): void => {
     this._state = { ...this._state, [key]: value };
 
-    if (this._mode === 'onChange') {
+    // mode가 'manual'이어도 이미 노출된 에러가 있는 필드는 입력값이 바뀔 때마다 즉시 재검증한다.
+    // (checkError()를 다시 호출하는 다음 제출 시점까지 "필수 입력값입니다" 메시지가 그대로 남아있는 것을 방지)
+    if (this._mode === 'onChange' || this._errors[key]) {
       const error = this._getFieldError(key, value, this._state) || undefined;
       this._errors = { ...this._errors, [key]: error };
     }
@@ -101,9 +103,15 @@ export class FormController<T extends object> {
     this._state = { ...this._state, ...updates };
 
     for (const key of Object.keys(updates) as (keyof T)[]) {
-      this._fieldSnapshots.set(key, { 
-        value: this._state[key], 
-        error: this._errors[key] 
+      // handleChange와 동일한 규칙: onChange 모드거나, 이미 노출된 에러가 있는 필드는 값이 바뀔 때 재검증한다.
+      if (this._mode === 'onChange' || this._errors[key]) {
+        const error = this._getFieldError(key, this._state[key], this._state) || undefined;
+        this._errors = { ...this._errors, [key]: error };
+      }
+
+      this._fieldSnapshots.set(key, {
+        value: this._state[key],
+        error: this._errors[key]
       });
       this._fieldListeners.get(key)?.forEach((l) => l());
     }

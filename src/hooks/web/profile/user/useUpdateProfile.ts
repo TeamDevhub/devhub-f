@@ -1,9 +1,10 @@
 import type { ApiResponse } from '@/types/type.api';
-import { Validators } from '@/utils/util._common';
+import { Validators, AUTH_PATTERNS } from '@/utils/util._common';
 import { useMutation } from '@/hooks/_common/api.hook';
 import useFormState from '@/hooks/_common/useFormState.ts';
 import { useModal } from '@/hooks/_common/useModal';
 import { useAuth } from '@/contexts/AuthContext';
+import { ERROR_MESSAGES } from '@/constants/errorMessages';
 
 import type { UpdateProfileRequest, UserDetailResponse } from '@/types/type.user';
 import { updateProfile } from '@/api/web/api.profile';
@@ -19,12 +20,12 @@ export default function useUpdateProfile(profile: UserDetailResponse) {
   };
 
   const validations = {
-    username: [Validators.required()],
+    username: [Validators.required(), Validators.pattern(AUTH_PATTERNS.USERNAME, ERROR_MESSAGES.VALIDATE_USERNAME_PATTERN)],
     skillList: [Validators.minArrayLength(1)],
     positionList: [Validators.minArrayLength(1)],
   };
 
-  const { state: userInfo, handleChange, createHandler, createToggle, checkError } = useFormState(initData, { validations });
+  const { state: userInfo, errors, handleChange, createHandler, createToggle, checkError } = useFormState(initData, { validations, mode: 'manual' });
 
   const handleSuccessUpdateProfile = async () => {
     await refreshUser();
@@ -56,6 +57,7 @@ export default function useUpdateProfile(profile: UserDetailResponse) {
 
   return {
     userInfo,
+    errors,
     handleChange,
     createHandler,
     createToggle,

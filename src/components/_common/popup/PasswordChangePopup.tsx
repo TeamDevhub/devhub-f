@@ -8,7 +8,7 @@ export interface PasswordPopupProps {
 }
 
 export default function PasswordPopup({ isOpen, onClose }: PasswordPopupProps) {
-  const { passwordInfo, handleChange, applyUpdatePassword, resetPasswordState } = useUpdatePassword(onClose);
+  const { passwordInfo, errors, handleChange, applyUpdatePassword, resetPasswordState } = useUpdatePassword(onClose);
 
   return (
     <WebPopup
@@ -28,6 +28,8 @@ export default function PasswordPopup({ isOpen, onClose }: PasswordPopupProps) {
           value={passwordInfo.currentPassword}
           onChange={(e) => handleChange('currentPassword', e.target.value)}
           placeholder="현재 비밀번호 입력"
+          error={!!errors.currentPassword}
+          helperText={errors.currentPassword}
         />
 
         <p className="label mt-16">새 비밀번호</p>
@@ -36,7 +38,9 @@ export default function PasswordPopup({ isOpen, onClose }: PasswordPopupProps) {
           type="password"
           value={passwordInfo.newPassword}
           onChange={(e) => handleChange('newPassword', e.target.value)}
-          placeholder="특수문자, 숫자 포함 10자 이상"
+          placeholder="8~20자, 특수문자 1개 이상 포함"
+          error={!!errors.newPassword}
+          helperText={errors.newPassword}
         />
 
         <p className="label mt-16">새 비밀번호 확인</p>
@@ -46,6 +50,8 @@ export default function PasswordPopup({ isOpen, onClose }: PasswordPopupProps) {
           value={passwordInfo.confirmPassword}
           onChange={(e) => handleChange('confirmPassword', e.target.value)}
           placeholder="비밀번호 확인"
+          error={!!errors.confirmPassword}
+          helperText={errors.confirmPassword}
         />
       </div>
     </WebPopup>

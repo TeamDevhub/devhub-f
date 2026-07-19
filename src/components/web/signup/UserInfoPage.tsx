@@ -25,7 +25,7 @@ interface Props {
 
 export default function UserInfoPage({ email, tempToken }: Props) {
   const { getCodesByGroup } = useCodes();
-  const { userInfo, handleChange, createToggle, createHandler, applySignup, loading } = useSignup({ email, tempToken });
+  const { userInfo, errors, handleChange, createToggle, createHandler, applySignup, loading } = useSignup({ email, tempToken });
   const { terms, toggleTerms, agreeAllTerms, isAllChecked, isRequiredValid, getAgreementList } = useTerms();
   const [selectedTerms, setSelectedTerms] = useState<TermsResponse | null>(null);
 
@@ -70,22 +70,32 @@ export default function UserInfoPage({ email, tempToken }: Props) {
             <FormSection title="비밀번호 설정" icon={<LockOutline sx={{ fontSize: 20, color: 'var(--primary-main)' }} />}>
               <CustomTextfield
                 type="password"
-                placeholder="특수문자, 숫자 포함 10자 이상"
+                placeholder="8~20자, 특수문자 1개 이상 포함"
                 value={userInfo.password}
                 onChange={(e) => handleChange('password', e.target.value)}
+                error={!!errors.password}
+                helperText={errors.password}
               />
               <CustomTextfield
                 type="password"
                 placeholder="비밀번호 확인"
                 value={userInfo.passwordConfirm}
                 onChange={(e) => handleChange('passwordConfirm', e.target.value)}
+                error={!!errors.passwordConfirm}
+                helperText={errors.passwordConfirm}
               />
             </FormSection>
           )}
 
           {/* 프로필 */}
           <FormSection title="프로필" icon={<PersonOutlined sx={{ fontSize: 20, color: 'var(--primary-main)' }} />} contentGap="0.5rem">
-            <CustomTextfield placeholder="닉네임" value={userInfo.username} onChange={(e) => handleChange('username', e.target.value)} />
+            <CustomTextfield
+              placeholder="닉네임"
+              value={userInfo.username}
+              onChange={(e) => handleChange('username', e.target.value)}
+              error={!!errors.username}
+              helperText={errors.username}
+            />
             <span className="help-text">다른 사용자에게 표시되는 이름입니다</span>
 
             <CustomTextfield
@@ -103,6 +113,7 @@ export default function UserInfoPage({ email, tempToken }: Props) {
             icon={<Favorite sx={{ fontSize: 20, color: 'var(--primary-main)' }} />}
             type="wide"
             helpText="관심 포지션은 필수로 선택해야합니다."
+            error={errors.positionList}
           >
             <div className="chip-box w-100 align-center flex-wrap">
               <SelectableGroup
@@ -131,6 +142,9 @@ export default function UserInfoPage({ email, tempToken }: Props) {
                 />
               </div>
             </div>
+            {errors.skillList && (
+              <span className="help-text" style={{ color: 'var(--error-main)' }}>{errors.skillList}</span>
+            )}
           </FormSection>
 
           <SkillPopup
@@ -179,6 +193,7 @@ export default function UserInfoPage({ email, tempToken }: Props) {
                 </div>
               ))}
             </div>
+            {!isRequiredValid && <span className="help-text help-text--error">필수 약관에 동의해야 가입할 수 있습니다.</span>}
           </FieldBox>
 
           <Divider sx={{ marginY: '0.5rem' }} />

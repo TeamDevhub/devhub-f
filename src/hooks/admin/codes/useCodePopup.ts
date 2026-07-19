@@ -3,6 +3,7 @@ import type {CommonCodeItem, RequestCommonCodeItem} from "@/types/type._common.t
 import {useMutation} from "@/hooks/_common/api.hook.ts";
 import {saveCode} from "@/api/admin/api.codes.ts";
 import {Validators} from "@/utils/util._common.ts";
+import {useModal} from "@/hooks/_common/useModal.ts";
 
 export default function useCodePopup(initCodeItem?:CommonCodeItem, onClose?: (save:boolean) => void) {
 
@@ -22,14 +23,11 @@ export default function useCodePopup(initCodeItem?:CommonCodeItem, onClose?: (sa
     } as RequestCommonCodeItem;
 
     const initialValue = (initCodeItem && Object.keys(initCodeItem).length > 0 && initCodeItem.code)
-    ? initCodeItem 
+    ? initCodeItem
     : {...initData, ...initCodeItem};
 
-    console.log(initCodeItem);
-    console.log(initData);
-    console.log(initialValue);
-
-    const { state, handleChange, reset, checkError } = useFormState<RequestCommonCodeItem>(initialValue, {mode:"manual", validations});
+    const { state, handleChange, reset, errors, checkError } = useFormState<RequestCommonCodeItem>(initialValue, {mode:"manual", validations});
+    const { alert } = useModal();
 
     const handleSuccess= async () => {
         alert("저장이 완료되었습니다.");
@@ -46,7 +44,6 @@ export default function useCodePopup(initCodeItem?:CommonCodeItem, onClose?: (sa
 
     const handleSave = async () => {
         if(checkError()) return false;
-        console.log(state);
         await mutate(state);
     }
 
@@ -54,6 +51,7 @@ export default function useCodePopup(initCodeItem?:CommonCodeItem, onClose?: (sa
         state,
         handleChange,
         reset,
+        errors,
         handleSave,
     }
 }

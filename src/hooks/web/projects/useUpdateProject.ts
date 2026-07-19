@@ -28,7 +28,8 @@ export default function useUpdateProject(
         progressStartDate: [Validators.required()],
         progressEndDate: [Validators.required()],
         skillList: [Validators.minArrayLength(1)],
-        positionList: [(v: Position[]) => v.length >= 1 ? null : ERROR_MESSAGES.VALIDATE_MIN_ARRAY_LENGTH(1)]
+        positionList: [(v: Position[]) => v.length >= 1 ? null : ERROR_MESSAGES.VALIDATE_MIN_ARRAY_LENGTH(1)],
+        applicationFormList: [Validators.minArrayLength(1)],
     }
 
     const IMAGE_NAME = 'image' as const;
@@ -66,6 +67,8 @@ export default function useUpdateProject(
 
     const onSubmit = async () => {
         if (submitting) return;
+        // 파일 업로드 전에 먼저 검증해 불필요한 업로드 API 호출을 막는다.
+        if (checkError()) return;
         setSubmitting(true);
         try {
             const allowed = await requireAuth();
@@ -86,13 +89,6 @@ export default function useUpdateProject(
                     (guid): guid is string => !!guid
                 )
             );
-
-            checkError();
-            const error = Object.entries(validateErrors).find(([, value]) => !!value);
-            if (error) {
-                alert(`${error[0]}은/는 ${error[1]}`);
-                return;
-            }
 
             const jsonData = { ...state };
             jsonData.imageFileGuid = imageFileGuid;

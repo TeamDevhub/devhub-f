@@ -1,5 +1,7 @@
 // hooks/common/useSelect.ts
 import type { ApiResponse } from "@/types/type.api";
+import type { AxiosError } from "axios";
+import { ERROR_MESSAGES } from "@/constants/errorMessages";
 import {useCallback, useEffect, useRef, useState} from "react";
 
 // cacheKey는 동일 키로 서로 다른 req가 들어와도 구분해야 하므로 req를 함께 저장한다.
@@ -103,7 +105,23 @@ export const useMutation = <TReq, TRes>(
       return res;
     } catch (e) {
       setError(e as Error);
-      throw e;
+
+      // 서버가 2xx가 아닌 상태코드로 응답하면 axios가 throw한다(백엔드의 catch-all 예외 핸들러 등).
+      // onFail이 등록돼 있다면 여기서도 반드시 호출해 "버튼 클릭 후 아무 반응 없음"을 방지한다.
+      // onFail이 없는 호출부는 기존처럼 예외를 그대로 던져 자체 try/catch에 위임한다.
+      if (!onFail) throw e;
+
+      const axiosError = e as AxiosError<ApiResponse<TRes>>;
+      const failRes: ApiResponse<TRes> = axiosError.response?.data?.error
+        ? axiosError.response.data
+        : {
+            success: false,
+            code: 'NETWORK_ERROR',
+            error: { code: 'NETWORK_ERROR', message: ERROR_MESSAGES.NETWORK_ERROR },
+          };
+
+      onFail(failRes);
+      return failRes;
     } finally {
       setLoading(false);
     }

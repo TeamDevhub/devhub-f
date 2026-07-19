@@ -567,6 +567,11 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
   letter-spacing: 0.2px;
   color: var(--text-secondary);
 
+  // 셀렉트/칩/파일 등 MUI TextField가 아닌 필드의 필수값 누락 표시용
+  &--error {
+    color: var(--error-main);
+  }
+
   // 앞에 점(.dot) 불릿이 있는 형태는 hanging indent로 정렬한다.
   // (일부 용법은 <br/>로 여러 줄을 담고 있어 flex/gap을 쓰면 각 텍스트 조각이 별개 flex item으로 쪼개져 한 줄에 뭉쳐버린다 - absolute 배치로 우회)
   &:has(.dot) {

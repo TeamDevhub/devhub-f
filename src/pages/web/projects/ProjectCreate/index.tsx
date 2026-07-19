@@ -35,6 +35,7 @@ export default function ProjectCreate() {
     imageRef,
     attachmentRef,
     loading,
+    validateErrors: errors,
   } = useCreateProject()
 
   return (
@@ -59,8 +60,8 @@ export default function ProjectCreate() {
               <p className='label-text'>기본 정보</p>
             </div>
             <div className="field-area flex-col flex-1" style={{ gap: '1.2rem' }}>
-              <CustomTextfield placeholder='제목을 입력해 주세요.' onChange={(e) => onHandleEvent("title", e.target.value)} value={values.title} />
-              <CustomTextfield placeholder='카테고리를 입력해 주세요.' onChange={(e) => onHandleEvent("category", e.target.value)} value={values.category} />
+              <CustomTextfield placeholder='제목을 입력해 주세요.' onChange={(e) => onHandleEvent("title", e.target.value)} value={values.title} error={!!errors.title} helperText={errors.title} />
+              <CustomTextfield placeholder='카테고리를 입력해 주세요.' onChange={(e) => onHandleEvent("category", e.target.value)} value={values.category} error={!!errors.category} helperText={errors.category} />
             </div>
           </div>
           {/* 3. 모집 정보 */}
@@ -79,6 +80,8 @@ export default function ProjectCreate() {
                     slotProps={{
                       textField: {
                         size: 'medium',
+                        error: !!errors.recruitmentStartDate,
+                        helperText: errors.recruitmentStartDate,
                       },
                     }}
                     sx={{
@@ -92,7 +95,9 @@ export default function ProjectCreate() {
                     minDate={values.recruitmentStartDate ?? undefined}
                     slotProps={{
                       textField: {
-                        size: 'medium'
+                        size: 'medium',
+                        error: !!errors.recruitmentEndDate,
+                        helperText: errors.recruitmentEndDate,
                       },
                     }}
                     sx={{
@@ -107,10 +112,12 @@ export default function ProjectCreate() {
                   <p className="field-title">모집인원</p>
                 </div>
                 <PositionGroup positionList={values.positionList || []} onChange={(values: Position[]) => onHandleEvent("positionList", values)} />
+                {errors.positionList && <span className="help-text help-text--error">{errors.positionList}</span>}
               </div>
               <div className="field-box flex-col align-start">
                 <p className="field-title">기술스택</p>
                 <AddableChipGroup values={values.skillList} CodeName={COMMON_CODE.SKILL_CODE} onDelete={createToggle('skillList')} onAdd={skillPopup.toggle} />
+                {errors.skillList && <span className="help-text help-text--error">{errors.skillList}</span>}
               </div>
             </div>
           </div>
@@ -131,7 +138,13 @@ export default function ProjectCreate() {
               <div className="field-box flex-col">
                 <p className="field-title">진행지역</p>
                 <div className="align-stretch">
-                  <CustomTextfield value={getCodeName(COMMON_CODE.REGION_CODE, values.progressRegionCd)} placeholder='지역 명을 입력해 주세요.' readonly />
+                  <CustomTextfield
+                    value={getCodeName(COMMON_CODE.REGION_CODE, values.progressRegionCd)}
+                    placeholder='지역 명을 입력해 주세요.'
+                    readonly
+                    error={!!errors.progressRegionCd}
+                    helperText={errors.progressRegionCd}
+                  />
                   <Button
                     size='large'
                     variant='contained'
@@ -153,6 +166,8 @@ export default function ProjectCreate() {
                     slotProps={{
                       textField: {
                         size: 'medium',
+                        error: !!errors.progressStartDate,
+                        helperText: errors.progressStartDate,
                       },
                     }}
                     sx={{
@@ -166,7 +181,9 @@ export default function ProjectCreate() {
                     minDate={values.progressStartDate ?? undefined}
                     slotProps={{
                       textField: {
-                        size: 'medium'
+                        size: 'medium',
+                        error: !!errors.progressEndDate,
+                        helperText: errors.progressEndDate,
                       },
                     }}
                     sx={{
@@ -186,7 +203,15 @@ export default function ProjectCreate() {
             </div>
             <div className="field-area flex-1">
               <div className="field-box">
-                <CustomTextfield type='textarea' maxLength={CONTENT_MAX_LENGTH} placeholder='상세내용을 입력해 주세요.' onChange={(e) => onHandleEvent("content", e.target.value)} value={values.content} />
+                <CustomTextfield
+                  type='textarea'
+                  maxLength={CONTENT_MAX_LENGTH}
+                  placeholder='상세내용을 입력해 주세요.'
+                  onChange={(e) => onHandleEvent("content", e.target.value)}
+                  value={values.content}
+                  error={!!errors.content}
+                  helperText={errors.content}
+                />
               </div>
             </div>
           </div>
@@ -227,8 +252,11 @@ export default function ProjectCreate() {
                 </div>
               </div>
             </div>
-            <div className="field-area flex flex-1" style={{ gap: '3.2rem' }}>
-              <ApplicationFormGroup onChange={(newValues: string[]) => { onHandleEvent("applicationFormList", newValues) }} />
+            <div className="field-area flex-col flex-1" style={{ gap: '0.4rem' }}>
+              <div className="flex flex-1" style={{ gap: '3.2rem' }}>
+                <ApplicationFormGroup onChange={(newValues: string[]) => { onHandleEvent("applicationFormList", newValues) }} />
+              </div>
+              {errors.applicationFormList && <span className="help-text help-text--error">{errors.applicationFormList}</span>}
             </div>
           </div>
           {/* 9. 추가 양식 */}
