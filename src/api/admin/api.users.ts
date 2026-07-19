@@ -19,7 +19,7 @@ export const updateAdminUser = (userGuid: string, req: AdminUpdateUserRequest) =
   fetcher<void, AdminUpdateUserRequest>(`/admin/users/${userGuid}`, req, { method: 'put' });
 
 export const resetAdminUserPassword = (userGuid: string, req: AdminResetPasswordRequest) =>
-  fetcher<void, AdminResetPasswordRequest>(`/admin/users/${userGuid}/password`, req, { method: 'put' });
+  fetcher<void, AdminResetPasswordRequest>(`/admin/users/${userGuid}/password`, req, { method: 'post' });
 
 export const banAdminUser = (userGuid: string, req: AdminBanUserRequest) =>
   fetcher<void, AdminBanUserRequest>(`/admin/users/${userGuid}/ban`, req, { method: 'post' });

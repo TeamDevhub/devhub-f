@@ -8,12 +8,12 @@ import PositionGroup from '@/components/web/projects/PositionGroup';
 import DragAndDropForm from '@/components/_common/DragAndDropForm'
 import useUpdateProject from '@/hooks/web/projects/useUpdateProject.ts'
 import useDisclosure from '@/hooks/_common/useDisclosure';
-import { COMMON_CODE } from '@/constants/codes';
+import { COMMON_CODE, PROJECT_PROGRESS_TYPE } from '@/constants/codes';
 import { CONTENT_MAX_LENGTH } from '@/constants/contentLimits';
 import { type DateType } from '@/types/type.api';
 import type { Position, ProjectUpdate, ApplicationFormCreate } from '@/types/type.projects';
 import { AddCircle, Remove, Search } from '@mui/icons-material';
-import { Button, Divider, FormControl, FormLabel, IconButton, Paper } from '@mui/material';
+import { Button, Divider, IconButton, Paper } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import AddableChipGroup from "@/components/_common/AddableChipGroup.tsx";
@@ -31,6 +31,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
   const {
     values,
     onHandleEvent,
+    onProgressTypeChange,
     createToggle,
     onSubmit,
     imageRef,
@@ -38,6 +39,8 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
     loading,
     validateErrors: errors,
   } = useUpdateProject(data);
+
+  const isOnline = values.progressTypeCd === PROJECT_PROGRESS_TYPE.ONLINE.CODE;
 
   return (
     <div className='main-page'>
@@ -116,28 +119,39 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
               <p className='label-text'>프로젝트 정보</p>
             </div>
             <div className="field-area flex-col flex-1">
-              <div className="field-box">
-                <FormControl>
-                  <FormLabel id='project-info-radio-group'>진행방식</FormLabel>
-                  <CustomRadioGroup values={progressTypeCdOption} defaultValue={values.progressTypeCd} onChange={(_, value) => { onHandleEvent("progressTypeCd", value) }} />
-                </FormControl>
-              </div>
               <div className="field-box flex-col">
-                <p className="field-title">진행지역</p>
-                <div className="align-stretch">
-                  <CustomTextfield value={getCodeName(COMMON_CODE.REGION_CODE, values.progressRegionCd)} placeholder='지역 명을 입력해 주세요.' readonly />
-                  <Button
-                    size='large'
-                    variant='contained'
-                    color='primary'
-                    startIcon={<Search sx={{ fontSize: 24 }} />}
-                    sx={{ minWidth: '9.9rem !important' }}
-                    onClick={regionPopup.toggle}
-                  >
-                    찾기
-                  </Button>
-                </div>
+                <p className="field-title">진행방식</p>
+                <CustomRadioGroup values={progressTypeCdOption} defaultValue={values.progressTypeCd} onChange={(_, value) => { onProgressTypeChange(value) }} />
               </div>
+              {isOnline ? (
+                <p className="help-text align-center">
+                  <span className='dot'></span>
+                  온라인으로 진행하는 프로젝트는 진행 지역을 선택하지 않아도 됩니다.
+                </p>
+              ) : (
+                <div className="field-box flex-col">
+                  <p className="field-title">진행지역</p>
+                  <div className="align-stretch">
+                    <CustomTextfield
+                      value={getCodeName(COMMON_CODE.REGION_CODE, values.progressRegionCd)}
+                      placeholder='지역 명을 입력해 주세요.'
+                      readonly
+                      error={!!errors.progressRegionCd}
+                      helperText={errors.progressRegionCd}
+                    />
+                    <Button
+                      size='large'
+                      variant='contained'
+                      color='primary'
+                      startIcon={<Search sx={{ fontSize: 24 }} />}
+                      sx={{ minWidth: '9.9rem !important' }}
+                      onClick={regionPopup.toggle}
+                    >
+                      찾기
+                    </Button>
+                  </div>
+                </div>
+              )}
               <div className="field-box flex-col">
                 <p className="field-title">진행기간</p>
                 <div className='align-center'>
@@ -228,11 +242,11 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
                   <div key={index1} className="field-box flex-col mt-5">
                     <div className="align-center">
                       <CustomTextfield value={item.title} disabled />
-                      <IconButton size='small' onClick={() => onHandleEvent("additionalFormList", values.additionalFormList.filter((_, index2: number) => index1 !== index2))}><Remove sx={{ fontSize: 24, color: 'text.disabled' }} /></IconButton>
+                      <IconButton className="icon-remove-btn" size='small' aria-label='추가 양식 삭제' onClick={() => onHandleEvent("additionalFormList", values.additionalFormList.filter((_, index2: number) => index1 !== index2))}><Remove sx={{ fontSize: 24, color: 'text.disabled' }} /></IconButton>
                     </div>
                   </div>
                 )}
-                <IconButton size='small' onClick={additionalPopup.toggle}><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
+                <IconButton className="icon-add-btn" size='small' onClick={additionalPopup.toggle} aria-label='추가 양식 등록'><AddCircle sx={{ fontSize: 35, color: 'primary.main' }} /></IconButton>
               </div>
             </div>
           </div>

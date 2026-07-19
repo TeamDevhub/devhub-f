@@ -1,5 +1,4 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
-import LeftMenuBar from '@/components/_design/LeftMenuBar'
 import { Button, Checkbox, Divider, MenuItem, Pagination, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import useSelectAdminBoards from '@/hooks/admin/boards/useSelectAdminBoards';
 import type {AdminBoard} from "@/types/type.boards.ts";
@@ -28,10 +27,6 @@ export default function BoardManagementPage(){
   const userStatus = getCodesByGroup(COMMON_CODE.USER_STATUS);
 
   return (
-    <div className='admin-page flex'>
-      {/* 1. left area */}
-      <LeftMenuBar selectedKey='boards' />
-      {/* 2. right area */}
       <div className="content-box w-100 flex-col gap-32">
         {/* 2-1. 타이틀 */}
         <strong className="title">게시판 관리</strong>
@@ -159,6 +154,5 @@ export default function BoardManagementPage(){
           </div>
         </div>
       </div>
-    </div>
   )
 }

@@ -21,6 +21,7 @@ import RouteErrorBoundary from '@/pages/error/RouteErrorBoundary';
 import NotFoundPage from '@/pages/error/NotFoundPage';
 import ComingSoonPage from '@/pages/error/ComingSoonPage';
 import RequireAuthRoute from '@/components/_common/auth/RequireAuthRoute';
+import RequireAdminRoute from '@/components/_common/auth/RequireAdminRoute';
 import BoardList from '@/pages/web/boards/BoardList';
 import BoardCreate from '@/pages/web/boards/BoardCreate';
 import BoardDetail from '@/pages/web/boards/BoardDetail';
@@ -38,7 +39,7 @@ import ProjectDetail from '@/pages/web/projects/ProjectDetail';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import ProjectUpdate from '@/pages/web/projects/ProjectUpdate';
 import Signup from '@/pages/web/signup/Signup';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import UserListPage from '@/pages/_design/admin/users/UserListPage';
 import UserReportPage from '@/pages/_design/admin/users/UserReportPage';
 import UserDetailPage from '@/pages/_design/admin/users/UserDetailPage';
@@ -156,83 +157,92 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin',
-    element: <AdminLayout />,
+    element: <RequireAdminRoute />,
     errorElement: <RouteErrorBoundary />,
     children: [
       {
-        path: 'banner',
+        element: <AdminLayout />,
         children: [
           {
             index: true,
-            element: <Banner />,
+            element: <Navigate to="users" replace />,
+          },
+          {
+            path: 'banner',
+            children: [
+              {
+                index: true,
+                element: <Banner />,
+              },
+            ],
+          },
+          {
+            path: 'boards',
+            children: [
+              {
+                index: true,
+                element: <BoardAdmin />,
+              },
+            ],
+          },
+          {
+            path: 'users',
+            children: [
+              {
+                index: true,
+                element: <AdminUserList />,
+              },
+              {
+                path: ':userGuid',
+                element: <AdminUserDetail />,
+              },
+            ],
+          },
+          {
+            path: 'reports',
+            children: [
+              {
+                index: true,
+                element: <AdminReportList />,
+              },
+            ],
+          },
+          {
+            path: 'codes',
+            children: [
+              {
+                index: true,
+                element: <Codes />,
+              },
+            ],
+          },
+          {
+            path: 'forms',
+            children: [
+              {
+                index: true,
+                element: <FormsPage />,
+              },
+            ],
+          },
+          {
+            path: 'projects',
+            children: [
+              {
+                index: true,
+                element: <AdminProjectList />,
+              },
+              {
+                path: ':projectGuid',
+                element: <AdminProjectDetail />,
+              },
+            ],
+          },
+          {
+            path: '*',
+            element: <NotFoundPage />,
           },
         ],
-      },
-      {
-        path: 'boards',
-        children: [
-          {
-            index: true,
-            element: <BoardAdmin />,
-          },
-        ],
-      },
-      {
-        path: 'users',
-        children: [
-          {
-            index: true,
-            element: <AdminUserList />,
-          },
-          {
-            path: ':userGuid',
-            element: <AdminUserDetail />,
-          },
-        ],
-      },
-      {
-        path: 'reports',
-        children: [
-          {
-            index: true,
-            element: <AdminReportList />,
-          },
-        ],
-      },
-      {
-        path: 'codes',
-        children: [
-          {
-            index: true,
-            element: <Codes />,
-          },
-        ],
-      },
-      {
-        path: 'forms',
-        children: [
-          {
-            index: true,
-            element: <FormsPage />,
-          },
-        ],
-      },
-      {
-        path: 'projects',
-        children: [
-          {
-            index: true,
-            element: <AdminProjectList />,
-          },
-          {
-            path: ':projectGuid',
-            element: <AdminProjectDetail />,
-          },
-        ],
-      },
-      {
-        path: '*',
-        element: <NotFoundPage />,
       },
     ],
   },

@@ -5,6 +5,7 @@ export type DateTimeString = string;
 export interface UserBasicResponse {
   userGuid: string;
   username: string;
+  userRole?: 'ADMIN' | 'USER';
   introduction: string | null;
 
   fileGuid: string | null;

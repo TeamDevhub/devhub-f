@@ -62,7 +62,55 @@ const theme = createTheme({
     fontFamily:
       '"Pretendard", sans-serif',
   },
-  
+
+  shape: {
+    borderRadius: 8,
+  },
+
+  components: {
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+      },
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontWeight: 600,
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          fontWeight: 500,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
+        },
+        notchedOutline: {
+          borderColor: '#E5E7EB',
+        },
+      },
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: 16,
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          transition: 'background-color 0.15s ease, color 0.15s ease',
+        },
+      },
+    },
+  },
 });
 
 export default theme;

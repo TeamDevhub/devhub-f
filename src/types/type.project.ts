@@ -65,6 +65,7 @@ export interface UpdateAdminProjectRequest {
 }
 
 export interface AdminApplicantSummary {
+  applicationGuid: string;
   applicantGuid: string;
   userGuid: string;
   email: string;
@@ -88,8 +89,8 @@ export interface AdminApplicantSearchRequest {
 
 export interface UpdateApplicantStatusRequest {
   projectGuid: string;
-  applicantGuid: string;
-  approvalStatusCd: string;
+  applicationGuid: string;
+  approved: boolean;
 }
 
 export interface AdminUserProjectsReqData {
