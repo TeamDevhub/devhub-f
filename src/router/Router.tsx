@@ -19,7 +19,6 @@ import SignInPage2 from '@/pages/_design/web/signup/SignInPage2';
 import SkillTrendsPage from '@/pages/_design/web/skilltrends/SkillTrendsPage';
 import RouteErrorBoundary from '@/pages/error/RouteErrorBoundary';
 import NotFoundPage from '@/pages/error/NotFoundPage';
-import ComingSoonPage from '@/pages/error/ComingSoonPage';
 import RequireAuthRoute from '@/components/_common/auth/RequireAuthRoute';
 import BoardList from '@/pages/web/boards/BoardList';
 import BoardCreate from '@/pages/web/boards/BoardCreate';
@@ -118,7 +117,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'apply',
-            element: <ComingSoonPage />,
+            element: <ProjectApplyPage />,
           },
           {
             path: 'create',
