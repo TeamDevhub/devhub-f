@@ -4,7 +4,7 @@ import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import useSendVerificationCode from '@/hooks/web/signup/useSendVerificationCode';
 import useConfirmVerificationCode from '@/hooks/web/signup/useConfirmVerificationCode';
 import { ArrowForwardIos, Edit, KeyboardArrowDown, ListAlt, MailOutline } from '@mui/icons-material';
-import { Button, Divider, FormControl, IconButton, MenuItem, Paper, Select } from '@mui/material';
+import { Button, Divider, FormControl, FormHelperText, IconButton, MenuItem, Paper, Select } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -27,11 +27,14 @@ const EMAIL_HOST_OPTIONS = [
 ];
 
 export default function VerificationPage({ onVerified }: Props) {
-  const { emailAddress, isVerificationCodeSent, changeEmailId, changeEmailHost, applySendMail } = useSendVerificationCode();
-  const { verificationCode, setVerificationCode, applyConfirmVerification, verifying } = useConfirmVerificationCode(
-    `${emailAddress.emailId}@${emailAddress.emailHost}`,
-    onVerified,
-  );
+  const { emailAddress, errors: emailErrors, isVerificationCodeSent, changeEmailId, changeEmailHost, applySendMail } = useSendVerificationCode();
+  const {
+    verificationCode,
+    setVerificationCode,
+    errors: codeErrors,
+    applyConfirmVerification,
+    verifying,
+  } = useConfirmVerificationCode(`${emailAddress.emailId}@${emailAddress.emailHost}`, onVerified);
 
   const [isCustomDomain, setIsCustomDomain] = useState(false);
 
@@ -76,7 +79,14 @@ export default function VerificationPage({ onVerified }: Props) {
 
             <div className="field-content flex-col">
               <div className="content-box email-verify-row align-stretch">
-                <CustomTextfield placeholder="이메일" value={emailAddress.emailId} onChange={(e) => changeEmailId(e.target.value)} fullWidth />
+                <CustomTextfield
+                  placeholder="이메일"
+                  value={emailAddress.emailId}
+                  onChange={(e) => changeEmailId(e.target.value)}
+                  fullWidth
+                  error={!!emailErrors.emailId}
+                  helperText={emailErrors.emailId}
+                />
 
                 <p className="flex-center">@</p>
 
@@ -87,13 +97,15 @@ export default function VerificationPage({ onVerified }: Props) {
                       value={emailAddress.emailHost}
                       onChange={(e) => changeEmailHost(e.target.value)}
                       fullWidth
+                      error={!!emailErrors.emailHost}
+                      helperText={emailErrors.emailHost}
                     />
                     <IconButton className="email-host-back-btn" onClick={handleBackToList} aria-label="목록에서 선택">
                       <ListAlt sx={{ fontSize: 20 }} />
                     </IconButton>
                   </div>
                 ) : (
-                  <FormControl fullWidth variant="outlined" className="email-host-select">
+                  <FormControl fullWidth variant="outlined" className="email-host-select" error={!!emailErrors.emailHost}>
                     <Select
                       value={emailAddress.emailHost}
                       onChange={(e) => handleSelectHost(e.target.value)}
@@ -118,6 +130,7 @@ export default function VerificationPage({ onVerified }: Props) {
                         직접 입력
                       </MenuItem>
                     </Select>
+                    {emailErrors.emailHost && <FormHelperText>{emailErrors.emailHost}</FormHelperText>}
                   </FormControl>
                 )}
 
@@ -145,6 +158,8 @@ export default function VerificationPage({ onVerified }: Props) {
                       })
                     }
                     fullWidth
+                    error={!!codeErrors.verificationCode}
+                    helperText={codeErrors.verificationCode}
                   />
                 </div>
               )}

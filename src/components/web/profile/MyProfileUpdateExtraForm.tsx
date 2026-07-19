@@ -6,9 +6,10 @@ type MyProfileUpdateExtraLabel = '관심 포지션' | '보유 스킬';
 interface MyProfileUpdateExtraFormProps {
   label: MyProfileUpdateExtraLabel;
   children: React.ReactNode;
+  error?: string;
 }
 
-export default function MyProfileUpdateExtraForm({ label, children }: MyProfileUpdateExtraFormProps) {
+export default function MyProfileUpdateExtraForm({ label, children, error }: MyProfileUpdateExtraFormProps) {
   const renderIcon = (formFieldExtraLabel: MyProfileUpdateExtraLabel) => {
     const iconProps = { sx: { fontSize: 20, color: 'primary.main' } };
 
@@ -28,7 +29,10 @@ export default function MyProfileUpdateExtraForm({ label, children }: MyProfileU
         {renderIcon(label)}
         <p>{label}</p>
       </div>
-      <div className="field-content flex-col">{children}</div>
+      <div className="field-content flex-col">
+        {children}
+        {error && <span className="help-text help-text--error">{error}</span>}
+      </div>
     </div>
   );
 }

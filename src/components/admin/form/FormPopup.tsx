@@ -50,7 +50,7 @@ export default function FormPopup({
     item: FormItem | null;
 }) {
 
-    const { state, handleChange, reset, handleSave, options, handleAddOption, handleRemoveOption, handleOptionChange } = useFormPopup(item, onClose);
+    const { state, handleChange, reset, errors, handleSave, options, handleAddOption, handleRemoveOption, handleOptionChange } = useFormPopup(item, onClose);
 
     const handleClose = () => {
         reset();
@@ -76,6 +76,8 @@ export default function FormPopup({
                                 onChange={(e) => handleChange('fieldName', e.target.value)}
                                 size="small"
                                 readonly={!!item}
+                                error={!!errors.fieldName}
+                                helperText={errors.fieldName}
                             />
                         </dd>
                     </dl>

@@ -14,7 +14,7 @@ export default function useSendVerificationCode() {
   const [isVerificationCodeSent, setIsVerificationCodeSent] = useState(false);
 
   const validations = { emailId: [Validators.required()], emailHost: [Validators.required()] };
-  const { state: emailAddress, setState: setEmailAddress, checkError } = useFormState({ emailId: '', emailHost: '' }, { validations });
+  const { state: emailAddress, setState: setEmailAddress, errors, checkError } = useFormState({ emailId: '', emailHost: '' }, { validations, mode: 'manual' });
 
   const changeEmailId = (value: string) => {
     setEmailAddress((prev) => ({ ...prev, emailId: value }));
@@ -48,6 +48,7 @@ export default function useSendVerificationCode() {
 
   return {
     emailAddress,
+    errors,
     isVerificationCodeSent,
     changeEmailId,
     changeEmailHost,

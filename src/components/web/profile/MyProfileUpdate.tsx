@@ -23,7 +23,7 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
   const passwordChangePopup = useDisclosure();
   const skillPopup = useDisclosure();
 
-  const { userInfo, handleChange, createToggle, createHandler, applyUpdateProfile, loading } = useUpdateProfile(profile);
+  const { userInfo, errors, handleChange, createToggle, createHandler, applyUpdateProfile, loading } = useUpdateProfile(profile);
 
   return (
     <>
@@ -41,7 +41,13 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
         <MyProfileUpdateBaseForm label="내 정보">
           <MyProfileUpdateFieldGroup>
             <div className="flex-col">
-              <CustomTextfield value={userInfo.username} onChange={(e) => handleChange('username', e.target.value)} placeholder="닉네임" />
+              <CustomTextfield
+                value={userInfo.username}
+                onChange={(e) => handleChange('username', e.target.value)}
+                placeholder="닉네임"
+                error={!!errors.username}
+                helperText={errors.username}
+              />
             </div>
           </MyProfileUpdateFieldGroup>
 
@@ -59,7 +65,7 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
         </MyProfileUpdateBaseForm>
 
         {/* 관심 포지션 */}
-        <MyProfileUpdateExtraForm label="관심 포지션">
+        <MyProfileUpdateExtraForm label="관심 포지션" error={errors.positionList}>
           <div className="chip-box w-100 align-center flex-wrap">
             <SelectableGroup
               type="chip"
@@ -71,7 +77,7 @@ export default function MyProfileUpdate({ profile }: MyProfileUpdateProps) {
         </MyProfileUpdateExtraForm>
 
         {/* 보유 스킬 */}
-        <MyProfileUpdateExtraForm label="보유 스킬">
+        <MyProfileUpdateExtraForm label="보유 스킬" error={errors.skillList}>
           <div className="content-box align-stretch">
             <div className="chip-box align-center flex-wrap" style={{ flex: 1, minHeight: '56px' }}>
               <AddableChipGroup

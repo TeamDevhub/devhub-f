@@ -37,7 +37,7 @@ export default function useBannerPopup( initData: Banner | null, onClose: (isUpd
     }
     const {res: fileData} = useSelect(options);
 
-    const { state, handleChange, checkError } = useFormState<Banner>(_init, { mode:'manual', validations });
+    const { state, handleChange, errors, checkError } = useFormState<Banner>(_init, { mode:'manual', validations });
     const { inputRefs, fileStates, register, upload } = useFileUpload();
     const { alert } = useModal();
 
@@ -76,7 +76,7 @@ export default function useBannerPopup( initData: Banner | null, onClose: (isUpd
     }
 
     return {
-        state, handleChange
+        state, handleChange, errors
         , fileName : fileData?.data?.filename
         , handelSave
         , handleDelete

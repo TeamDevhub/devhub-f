@@ -22,6 +22,7 @@ export default function CommentCard({
 
   const {
     updateContent, setUpdateContent,
+    error: updateError,
     handleUpdate
   } = useUpdateComment(commentData.boardGuid, commentData.commentGuid, commentData.content, () => {
     setPage("info");
@@ -39,6 +40,7 @@ export default function CommentCard({
           data={commentData}
           updateContent={updateContent}
           setUpdateContent={setUpdateContent}
+          error={updateError}
           handleUpdate={handleUpdate}
         />
       )}
@@ -82,21 +84,22 @@ function InfoPage( {setPage, data, handleDelete, isCommentOwner, isLoggedIn, onC
 
 interface ModiPageProps {
   setPage: (page: string) => void;
-  data: comment; 
+  data: comment;
   updateContent:string;
   setUpdateContent: (value:string) => void;
+  error?: string;
   handleUpdate: () => void;
 }
-function ModifyPage({setPage, data, updateContent, setUpdateContent, handleUpdate } : ModiPageProps) {
+function ModifyPage({setPage, data, updateContent, setUpdateContent, error, handleUpdate } : ModiPageProps) {
     return (
     <div className="reply-box flex-col">
       <div className="commenter-info align-center">
         <p className='commenter-id'>{data.userName}</p>
         <p className='comment-time'>{elapsedTime(data.auditInfo.registeredDate)}</p>
       </div>
-      <div className="align-stretch">        
+      <div className="align-stretch">
         <CustomTextfield size='small' type='text' placeholder='댓글을 입력해 주세요.' value={updateContent}
-          onChange={(e)=>setUpdateContent(e.target.value)}/>
+          onChange={(e)=>setUpdateContent(e.target.value)} error={!!error} helperText={error}/>
         <Button size='small' onClick={handleUpdate}>수정</Button>
         <Button size='small' onClick={()=>{setUpdateContent(data.content); setPage("info");}}>취소</Button>
       </div>

@@ -4,7 +4,7 @@ import type { ApiResponse } from '@/types/type.api';
 import type { SignupRequest, OauthSignupRequest } from '@/types/type.signup';
 import type { AgreeTermsRequest } from '@/types/type.terms';
 
-import { Validators } from '@/utils/util._common';
+import { Validators, AUTH_PATTERNS } from '@/utils/util._common';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@/hooks/_common/api.hook';
 import useFormState from '@/hooks/_common/useFormState.ts';
@@ -42,19 +42,19 @@ export default function useSignup({ email, tempToken }: SignupParams) {
 
   const validations = tempToken
     ? {
-        username: [Validators.required()],
+        username: [Validators.required(), Validators.pattern(AUTH_PATTERNS.USERNAME, ERROR_MESSAGES.VALIDATE_USERNAME_PATTERN)],
         skillList: [Validators.minArrayLength(1)],
         positionList: [Validators.minArrayLength(1)],
       }
     : {
-        password: [Validators.required(), Validators.minLength(10)],
-        passwordConfirm: [Validators.required()],
-        username: [Validators.required()],
+        password: [Validators.required(), Validators.pattern(AUTH_PATTERNS.PASSWORD, ERROR_MESSAGES.VALIDATE_PASSWORD_PATTERN)],
+        passwordConfirm: [Validators.required(), Validators.match<SignupFormState>('password', ERROR_MESSAGES.PASSWORD_MISMATCH)],
+        username: [Validators.required(), Validators.pattern(AUTH_PATTERNS.USERNAME, ERROR_MESSAGES.VALIDATE_USERNAME_PATTERN)],
         skillList: [Validators.minArrayLength(1)],
         positionList: [Validators.minArrayLength(1)],
       };
 
-  const { state: userInfo, handleChange, createHandler, createToggle, checkError } = useFormState(initData, { validations });
+  const { state: userInfo, errors, handleChange, createHandler, createToggle, checkError } = useFormState(initData, { validations, mode: 'manual' });
 
   const handleSuccessSignup = () => {
     alert(SUCCESS_MESSAGES.SIGNUP_COMPLETE);
@@ -90,11 +90,6 @@ export default function useSignup({ email, tempToken }: SignupParams) {
   const applySignup = async (termsAgreementList: AgreeTermsRequest[]) => {
     if (checkError()) return;
 
-    if (userInfo.password !== userInfo.passwordConfirm) {
-      alert(ERROR_MESSAGES.PASSWORD_MISMATCH);
-      return;
-    }
-
     if (tempToken) {
       const payload: OauthSignupRequest = {
         tempToken: tempToken,
@@ -124,6 +119,7 @@ export default function useSignup({ email, tempToken }: SignupParams) {
 
   return {
     userInfo,
+    errors,
     handleChange,
     createHandler,
     createToggle,
