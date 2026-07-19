@@ -104,7 +104,6 @@ export default function BoardDetail(){
               </div>
               <div className="right-area">
                 <p className='user-nickname'>{board.userName}</p>
-                <p className='user-email'>{res.data.userEmail}</p>
               </div>
             </div>
             <div className="board-info align-center">
