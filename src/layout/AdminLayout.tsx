@@ -1,4 +1,4 @@
-import LeftMenuBar from '@/components/_design/LeftMenuBar.tsx';
+import LeftMenuBar from '@/components/admin/LeftMenuBar';
 import LoadingRenderer from '@/components/_common/layout/LoadingRenderer';
 import ModalRenderer from '@/components/_common/popup/ModalRenderer';
 import { LoadingBridge } from '@/contexts/LoadingContext';
@@ -15,7 +15,7 @@ export default function AdminLayout() {
         </div>
         <main>
           <div className='admin-page flex'>
-            <LeftMenuBar selectedKey='banner' />
+            <LeftMenuBar />
             <Outlet />
           </div>
         </main>

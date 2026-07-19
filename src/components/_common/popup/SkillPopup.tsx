@@ -55,12 +55,12 @@ export default function SkillPopup({
       title='스킬 전체보기'
       onClose={onClose}
     >
-      <div className='flex-col gap-8' style={{padding: "0 20px"}}>
+      <div className='flex-col gap-8' style={{padding: "0 2rem 1.6rem"}}>
         <div className='align-stretch mt-24 gap-4'>
           <CustomTextfield value={keyword} onChange={handleChange} size='small' type='search' placeholder='스킬 검색' />
           <Button size='medium' variant='contained' onClick={handleClick}>검색</Button>
         </div>
-        <div className='flex gap-4'>
+        <div className='flex flex-wrap gap-4'>
           <SelectableGroup type="chip" values={_values} items={filteredSkills} onToggle={handleOnClick} />
         </div>
       </div>

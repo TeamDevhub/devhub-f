@@ -1,6 +1,5 @@
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield';
 import CustomDateRange from '@/components/_common/customMUI/CustomDateRange';
-import LeftMenuBar from '@/components/_design/LeftMenuBar';
 import {
   Button,
   Chip,
@@ -47,9 +46,6 @@ export default function ReportList() {
   const currentPage = res?.pagination?.page ?? 0;
 
   return (
-    <div className="admin-page flex">
-      <LeftMenuBar selectedKey="user-reports" />
-
       <div className="content-box w-100 flex-col gap-32">
         {/* 1. 타이틀 */}
         <strong className="title">신고 관리</strong>
@@ -222,6 +218,5 @@ export default function ReportList() {
           />
         </div>
       </div>
-    </div>
   );
 }

@@ -57,7 +57,7 @@ export default function RegionPopup({
       title='지역 선택'
       onClose={onClose}
     >
-      <div className='flex-col gap-8' style={{padding: "0 20px"}}>
+      <div className='flex-col gap-8' style={{padding: "0 2rem 1.6rem"}}>
         <div className='align-stretch mt-24 gap-4 h-fit' style={{height:'40vh'}}>
           <div style={{flexShrink: '0'}}>
             <Tabs

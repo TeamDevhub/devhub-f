@@ -367,7 +367,7 @@ export default function AdminProjectDetail() {
                           statusLoading ||
                           row.approvalStatusCd === PROJECT_APPROVAL_STATUS.COMPLETE.CODE
                         }
-                        onClick={() => handleApprove(row.applicantGuid)}
+                        onClick={() => handleApprove(row.applicationGuid)}
                       >
                         승인
                       </Button>
@@ -379,7 +379,7 @@ export default function AdminProjectDetail() {
                           statusLoading ||
                           row.approvalStatusCd === PROJECT_APPROVAL_STATUS.REJECT.CODE
                         }
-                        onClick={() => handleReject(row.applicantGuid)}
+                        onClick={() => handleReject(row.applicationGuid)}
                       >
                         거절
                       </Button>

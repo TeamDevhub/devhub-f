@@ -1,7 +1,6 @@
 import { updateApplicantStatus } from '@/api/admin/api.project';
 import { useMutation } from '@/hooks/_common/api.hook';
 import { useModal } from '@/hooks/_common/useModal';
-import { PROJECT_APPROVAL_STATUS } from '@/constants/codes';
 import type { UpdateApplicantStatusRequest } from '@/types/type.project';
 
 export default function useUpdateApplicantStatus(projectGuid: string | undefined, onUpdated?: () => void) {
@@ -25,16 +24,16 @@ export default function useUpdateApplicantStatus(projectGuid: string | undefined
     },
   );
 
-  const handleApprove = async (applicantGuid: string) => {
+  const handleApprove = async (applicationGuid: string) => {
     if (!projectGuid) return;
     if (!(await confirm('해당 지원자를 승인하시겠습니까?'))) return;
-    await mutate({ projectGuid, applicantGuid, approvalStatusCd: PROJECT_APPROVAL_STATUS.COMPLETE.CODE });
+    await mutate({ projectGuid, applicationGuid, approved: true });
   };
 
-  const handleReject = async (applicantGuid: string) => {
+  const handleReject = async (applicationGuid: string) => {
     if (!projectGuid) return;
     if (!(await confirm('해당 지원자를 거절하시겠습니까?'))) return;
-    await mutate({ projectGuid, applicantGuid, approvalStatusCd: PROJECT_APPROVAL_STATUS.REJECT.CODE });
+    await mutate({ projectGuid, applicationGuid, approved: false });
   };
 
   return { handleApprove, handleReject, loading };

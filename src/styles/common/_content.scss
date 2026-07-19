@@ -1143,8 +1143,24 @@
           }
         }
         .board-reply {
+          gap: 1.2rem;
+
           .reply-box {
-            gap: 0;
+            gap: 0.8rem;
+            padding: 1.6rem;
+            border: 1px solid var(--divider);
+            border-radius: 0.8rem;
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+
+            // 댓글마다 전체 테두리로 감싸 구분선 역할을 하므로 내부 Divider는 숨긴다
+            hr {
+              display: none;
+            }
+
+            &:hover {
+              border-color: rgba(25, 118, 210, 0.2);
+            }
+
             .commenter-info {
               gap: 0.4rem;
               p {
@@ -1160,6 +1176,25 @@
                 line-height: 120%;
                 letter-spacing: 0.15px;
                 color: var(--text-primary);
+              }
+            }
+            .action-button-box {
+              gap: 0.4rem !important;
+            }
+
+            // 수정 모드 - 입력 중임을 알 수 있도록 은은한 배경 + 강조 테두리로 감싼다
+            &.reply-box--editing {
+              gap: 0.6rem;
+              background: var(--background-default);
+              border-color: var(--primary-main);
+
+              &:hover {
+                border-color: var(--primary-main);
+              }
+
+              .align-stretch {
+                gap: 0.8rem;
+                align-items: flex-start;
               }
             }
           }
