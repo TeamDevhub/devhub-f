@@ -1,5 +1,22 @@
 import type { DateType } from "@/types/type.api";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+
+// 백엔드 서버(JVM)가 UTC로 동작해 LocalDateTime.now()가 시간대 표기 없는 UTC 벽시계 값으로 내려온다.
+// ("2026-07-19T09:23:45" 형태 — Z/오프셋 없음) 이를 그대로 dayjs()로 파싱하면 브라우저 로컬(KST)
+// 시간으로 잘못 해석되어 실제보다 9시간 이전으로 표시된다. 시간 정보가 있는데 시간대 표기가 없는
+// 문자열만 UTC로 해석해 로컬로 변환하고, 날짜만 있는 문자열(연월일)은 기존과 동일하게 처리한다.
+const hasTimezoneInfo = (value: string): boolean => /Z$|[+-]\d{2}:?\d{2}$/.test(value);
+const hasTimeComponent = (value: string): boolean => value.includes('T');
+
+const parseServerDate = (target: DateType | string) => {
+  if (typeof target === 'string' && hasTimeComponent(target) && !hasTimezoneInfo(target)) {
+    return dayjs.utc(target).local();
+  }
+  return dayjs(target);
+};
 
 /**
  * 현재 날짜를 yyyy-mm-dd 형식으로 반환
@@ -55,7 +72,7 @@ export const isBetween = (target: string, start: string, end: string): boolean =
 // 값이 없거나 파싱할 수 없는 날짜는 화면에 "Invalid Date"로 노출되지 않도록 빈 문자열을 반환한다
 export const convertString = (target: DateType | string, format?:string): string => {
     if (target === null || target === undefined || target === '') return '';
-    const parsed = dayjs(target);
+    const parsed = parseServerDate(target);
     return parsed.isValid() ? parsed.format(format ?? 'YYYY-MM-DD') : '';
 }
 
@@ -64,7 +81,7 @@ export const convertString = (target: DateType | string, format?:string): string
  */
 export const elapsedTime = (date: DateType | string): string => {
   if (date === null || date === undefined || date === '') return '';
-  const start = dayjs(date);
+  const start = parseServerDate(date);
   if (!start.isValid()) return '';
 	const end = dayjs();
   
