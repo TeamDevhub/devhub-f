@@ -117,7 +117,7 @@ export type FilterData = Omit<ProjectSearchRequest, keyof SearchData>;
 // }
 
 export interface ProjectDetailResponse extends ProjectExtra, ProjectFileMetaData {
-  email: string;
+  userFileGuid?: string;
 }
 
 export interface ProjectFormDetailResponse extends ProjectExtra, ProjectFileMetaData {

@@ -4,6 +4,7 @@ export interface BoardBasic {
     boardGuid: string;
     userGuid?: string;
     userName?: string;
+    userFileGuid?: string;
     categoryCd: string;
     title: string;
     content: string;
