@@ -14,7 +14,7 @@ export default function CodePopup({
     item?:CommonCodeItem;
 }) {
 
-    const { state, handleChange, reset, handleSave } = useCodePopup(item, onClose);
+    const { state, handleChange, reset, errors, handleSave } = useCodePopup(item, onClose);
 
     const handleClose = () => {
         reset();
@@ -35,13 +35,13 @@ export default function CodePopup({
                     <dl className='align-center gap-4'>
                         <dt>상위 코드</dt>
                         <dd className='w-100'>
-                            <CustomTextfield value={state.parentCode} onChange={(e)=>{handleChange('parentCode', e.target.value)}} size='small' readonly />
+                            <CustomTextfield value={state.parentCode} onChange={(e)=>{handleChange('parentCode', e.target.value)}} size='small' readonly error={!!errors.parentCode} helperText={errors.parentCode} />
                         </dd>
                     </dl>
                     <dl className='align-center gap-4'>
                         <dt>코드</dt>
                         <dd className='w-100'>
-                            <CustomTextfield value={state.code} onChange={(e)=>{handleChange('code', e.target.value)}} size='small' />
+                            <CustomTextfield value={state.code} onChange={(e)=>{handleChange('code', e.target.value)}} size='small' error={!!errors.code} helperText={errors.code} />
                         </dd>
                     </dl>
                     <dl className='align-center gap-4'>

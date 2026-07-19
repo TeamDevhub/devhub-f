@@ -11,7 +11,7 @@ import { SUCCESS_MESSAGES } from '@/constants/successMessages';
 export default function useConfirmVerificationCode(emailAddress: string, onVerified?: (email: string) => void) {
   const { alert } = useModal();
   const validations = { verificationCode: [Validators.required()] };
-  const { state: verificationCode, setState: setVerificationCode, checkError } = useFormState({ verificationCode: '' }, { validations });
+  const { state: verificationCode, setState: setVerificationCode, errors, checkError } = useFormState({ verificationCode: '' }, { validations, mode: 'manual' });
 
   const handleSuccessVerification = () => {
     alert(SUCCESS_MESSAGES.CONFIRM_VERIFICATION_COMPLETE);
@@ -37,6 +37,7 @@ export default function useConfirmVerificationCode(emailAddress: string, onVerif
   return {
     verificationCode,
     setVerificationCode,
+    errors,
     applyConfirmVerification,
     verifying,
   };

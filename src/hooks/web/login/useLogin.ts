@@ -24,7 +24,7 @@ export default function useLogin() {
     password: [Validators.required()],
   };
 
-  const { state: loginInfo, setState: setLoginInfo, checkError } = useFormState(initData, { validations });
+  const { state: loginInfo, setState: setLoginInfo, errors, checkError } = useFormState(initData, { validations });
 
   const changeId = (value: string) => {
     setLoginInfo((prev) => ({ ...prev, email: value }));
@@ -72,6 +72,7 @@ export default function useLogin() {
 
   return {
     loginInfo,
+    errors,
     changeId,
     changePassword,
     applyLogin,

@@ -57,6 +57,7 @@ export default function useCreateProject() {
         progressStartDate: [Validators.required()],
         progressEndDate: [Validators.required()],
         skillList: [Validators.minArrayLength(1)],
+        applicationFormList: [Validators.minArrayLength(1)],
     }
 
     const IMAGE_NAME = 'image' as const;
@@ -91,6 +92,8 @@ export default function useCreateProject() {
 
     const onSubmit = async () => {
         if (submitting) return;
+        // 파일 업로드 전에 먼저 검증해 불필요한 업로드 API 호출을 막는다.
+        if (checkError()) return;
         setSubmitting(true);
         try {
             const allowed = await requireAuth();
@@ -111,14 +114,6 @@ export default function useCreateProject() {
                     (guid): guid is string => !!guid
                 )
             );
-
-            checkError();
-            console.log(Object.entries(validateErrors));
-            const error = Object.entries(validateErrors).find(([, value]) => !!value);
-            if (error) {
-                alert(`${error[0]}은/는 ${error[1]}`);
-                return;
-            }
 
             const jsonData = { ...state };
             jsonData.imageFileGuid = imageFileGuid;

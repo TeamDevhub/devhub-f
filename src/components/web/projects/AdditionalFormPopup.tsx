@@ -7,6 +7,7 @@ import useFormState from '@/hooks/_common/useFormState.ts';
 import {Divider, IconButton, MenuItem, Select, type SelectChangeEvent} from "@mui/material";
 import {AddCircle, Remove} from '@mui/icons-material';
 import {APPLICATION_FORM_TYPE, APPLICATION_FORM_TYPE_OPTIONS, USE_YN_OPTIONS, type ApplicationFormType}  from '@/constants/projectCreate'
+import { Validators } from '@/utils/util._common';
 
 interface  AdditionnalFormPopupProps {
   isOpen: boolean;
@@ -97,30 +98,40 @@ export default function AdditionalFormPopup ({
     }
 
     const onClosePopup = () => {
-        setState(initData);
+        reset();
         setUseHelpText(true);
         setUseItemList(false);
         onClose();
     }
 
     const onHandleSubmit = () => {
+        if (checkError()) return false;
+
         const {helpText, itemList, ...restState } = state;
         const cleanState = {...restState} as ApplicationFormCreate;
         if(helpText) {
             cleanState.helpText = helpText;
-        } 
+        }
         if(itemList && itemList.filter(item=>item).length > 0) {
             cleanState.itemList = itemList
         }
         onSubmit(cleanState);
+        return true;
     }
 
-    const { state, setState, handleChange } = useFormState(initData);
+    const validations = { title: [Validators.required()] };
+    const { state, reset, errors, handleChange, checkError } = useFormState(initData, { validations, mode: 'manual' });
     return (
         <WebPopup isOpen={isOpen} onClose={onClosePopup} title={"추가양식"} onSubmit={onHandleSubmit}>
             <div className='left-filter-bar flex-col flex-grow' style={{width:'100%'}}>
-                <PopupField title={"제목"}> 
-                    <CustomTextfield placeholder="제목" onChange={(e)=>handleChange("title", e.target.value)} value={state.title}/>
+                <PopupField title={"제목"}>
+                    <CustomTextfield
+                      placeholder="제목"
+                      onChange={(e)=>handleChange("title", e.target.value)}
+                      value={state.title}
+                      error={!!errors.title}
+                      helperText={errors.title}
+                    />
                 </PopupField>
                 <PopupField title={"타입"} subText={"텍스트: 주관식 / 선택박스, 라디오버튼: 객관식"}> 
                     <Select size="medium" className="w-100" defaultValue={initData.typeCd} 

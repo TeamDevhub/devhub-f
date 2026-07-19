@@ -26,7 +26,7 @@ export default function useFormPopup(initData: FormItem | null, onClose: (saved:
         type: [Validators.required()],
     };
 
-    const { state, handleChange: setField, reset: resetState, checkError } = useFormState<RequestSaveForm>(initialValue, { mode: 'manual', validations });
+    const { state, handleChange: setField, reset: resetState, errors, checkError } = useFormState<RequestSaveForm>(initialValue, { mode: 'manual', validations });
     const [options, setOptions] = useState<string[]>(initData?.options ?? ['']);
     const { alert } = useModal();
 
@@ -70,9 +70,8 @@ export default function useFormPopup(initData: FormItem | null, onClose: (saved:
         const payload: RequestSaveForm = OPTION_TYPES.includes(state.type)
             ? { ...state, options }
             : state;
-        console.log('[FormPopup] save payload:', payload);
         await mutate(payload);
     };
 
-    return { state, handleChange, reset, handleSave, options, handleAddOption, handleRemoveOption, handleOptionChange };
+    return { state, handleChange, reset, errors, handleSave, options, handleAddOption, handleRemoveOption, handleOptionChange };
 }

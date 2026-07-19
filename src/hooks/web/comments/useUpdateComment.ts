@@ -3,6 +3,7 @@ import type { CommentUpdate } from "@/types/type.comments";
 import { useMutation } from '@/hooks/_common/api.hook';
 import { useModal } from '@/hooks/_common/useModal';
 import {updateComment} from '@/api/web/api.comments';
+import { ERROR_MESSAGES } from '@/constants/errorMessages';
 
 export default function useUpdateComment(
     boardGuid:string,
@@ -21,12 +22,21 @@ export default function useUpdateComment(
         alert('댓글 수정에 실패했습니다.');
     }
 
-    const [updateContent, setUpdateContent] = useState<string>(content);
+    const [updateContent, setUpdateContentState] = useState<string>(content);
+    const [error, setError] = useState<string | undefined>(undefined);
     const {mutate:requestUpdateComment} = useMutation<CommentUpdate, void>(updateComment, handleSuccessUpdate, handleFailUpdate);
+
+    const setUpdateContent = (value: string) => {
+        setUpdateContentState(value);
+        if (error) setError(undefined);
+    }
 
     //버튼
     const handleUpdate = async () => {
-        if(!updateContent) return;
+        if (!updateContent.trim()) {
+            setError(ERROR_MESSAGES.VALIDATE_REQUIRED);
+            return;
+        }
         await requestUpdateComment({
             boardGuid:boardGuid,
             commentGuid:commentGuid,
@@ -36,6 +46,7 @@ export default function useUpdateComment(
 
     return{
         updateContent, setUpdateContent,
+        error,
         handleUpdate
     };
 }

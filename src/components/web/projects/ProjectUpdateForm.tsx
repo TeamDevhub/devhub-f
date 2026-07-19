@@ -36,6 +36,7 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
     imageRef,
     attachmentRef,
     loading,
+    validateErrors: errors,
   } = useUpdateProject(data);
 
   return (
@@ -60,8 +61,8 @@ export default function ProjectUpdateForm({data}: {data:ProjectUpdate}) {
               <p className='label-text'>기본 정보</p>
             </div>
             <div className="field-area flex-col flex-1" style={{ gap: '1.2rem' }}>
-              <CustomTextfield placeholder='제목을 입력해 주세요.' onChange={(e) => onHandleEvent("title", e.target.value)} value={values.title} />
-              <CustomTextfield placeholder='카테고리를 입력해 주세요.' onChange={(e) => onHandleEvent("category", e.target.value)} value={values.category} />
+              <CustomTextfield placeholder='제목을 입력해 주세요.' onChange={(e) => onHandleEvent("title", e.target.value)} value={values.title} error={!!errors.title} helperText={errors.title} />
+              <CustomTextfield placeholder='카테고리를 입력해 주세요.' onChange={(e) => onHandleEvent("category", e.target.value)} value={values.category} error={!!errors.category} helperText={errors.category} />
             </div>
           </div>
           {/* 3. 모집 정보 */}

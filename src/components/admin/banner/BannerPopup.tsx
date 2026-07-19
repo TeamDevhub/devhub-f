@@ -16,7 +16,7 @@ export default function BannerPopup({
     data: Banner | null;
 }){
 
-    const {state, handelSave, handleDelete, handleChange, inputRefs, fileStates, fileRef, fileName} = useBannerPopup(data, onClose);
+    const {state, handelSave, handleDelete, handleChange, errors, inputRefs, fileStates, fileRef, fileName} = useBannerPopup(data, onClose);
 
     return (
         <WebPopup
@@ -47,7 +47,7 @@ export default function BannerPopup({
                     <dl className='align-center gap-4'>
                         <dt>제목</dt>
                         <dd className='w-100'>
-                            <CustomTextfield value={state.title} onChange={(e)=>{handleChange('title', e.target.value)}} size='small' />
+                            <CustomTextfield value={state.title} onChange={(e)=>{handleChange('title', e.target.value)}} size='small' error={!!errors.title} helperText={errors.title} />
                         </dd>
                     </dl>
                     <dl className='align-center gap-4'>

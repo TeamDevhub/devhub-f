@@ -49,6 +49,7 @@ export default function BoardDetail(){
 
   const {
     content, setContent,
+    error: commentError,
     onSubmit
   } = useCreateComment(boardGuid ?? '', undefined, refetch)
 
@@ -149,7 +150,7 @@ export default function BoardDetail(){
             <strong>댓글</strong>
             <div className="align-stretch">
               <CustomTextfield size='small' placeholder='댓글을 입력하세요.' value={content}
-              onChange={(e)=>setContent(e.target.value)}/>
+              onChange={(e)=>setContent(e.target.value)} error={!!commentError} helperText={commentError}/>
               <Button size='small' variant='contained' color='primary' onClick={onSubmit}>글쓰기</Button>
             </div>
           </div>

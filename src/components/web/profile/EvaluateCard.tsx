@@ -57,7 +57,8 @@ export default function EvaluateCard({
         {!completeRating ? (
           <>
             <Rating name="team-rating" value={_score} precision={0.5} onChange={(_event, newValue) => { setScore(newValue || 0); }} />
-            <Button size='small' variant='contained' color='primary' onClick={() => onClickReview(applicantGuid, _score)}>평가</Button>
+            {_score === 0 && <span className="help-text help-text--error">평가할 별점을 선택해주세요.</span>}
+            <Button size='small' variant='contained' color='primary' disabled={_score === 0} onClick={() => onClickReview(applicantGuid, _score)}>평가</Button>
           </>
         ) : (
           <>

@@ -90,8 +90,18 @@ export const Validators = {
   // 숫자만 입력 체크
   onlyNumber: (msg: string = ERROR_MESSAGES.VALIDATE_ONLY_NUMBER) =>
     (v: string) => /^\d+$/.test(v) ? null : msg,
-    
+
+  // 정규식 패턴 체크 (백엔드 RegexPattern과 동일한 규칙을 프론트에서 선제 검증할 때 사용)
+  pattern: (regex: RegExp, msg: string) =>
+    (v: string) => regex.test(v) ? null : msg,
+
   // 일치 여부 체크 (비밀번호 확인용)
   match: <T>(targetKey: keyof T, msg: string): ValidationRule<unknown, T> =>
       (v, allState) => v === allState[targetKey] ? null : msg,
 };
+
+// 백엔드 RegexPattern(teamdevhub.devhub.api.web.validator.RegexPattern)과 동일한 패턴
+export const AUTH_PATTERNS = {
+  PASSWORD: /^(?=.*[!@#$%^&*()_\-+=<>?{}[\]~])[A-Za-z\d!@#$%^&*()_\-+=<>?{}[\]~]{8,20}$/,
+  USERNAME: /^[a-zA-Z0-9가-힣_]{1,15}$/,
+} as const;
