@@ -31,7 +31,7 @@ export default function ProjectDetail() {
   const { requireAuth } = useRequireAuth();
 
   const handleApplyClick = () => {
-    requireAuth(() => navigate('/projects/apply'));
+    requireAuth(() => navigate(`/projects/apply/${projectGuid}`));
   }
 
   if (!projectGuid) {

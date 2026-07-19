@@ -34,6 +34,7 @@ import HomePage from '@/pages/web/Home';
 import SkillTrendPage from '@/pages/web/SkillTrend';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
+import ProjectApply from '@/pages/web/projects/ProjectApply';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import ProjectUpdate from '@/pages/web/projects/ProjectUpdate';
 import Signup from '@/pages/web/signup/Signup';
@@ -61,7 +62,6 @@ import Codes from '@/pages/admin/Codes';
 import FormsPage from '@/pages/admin/Form';
 
 import ProjectApplyList from '@/pages/web/projects/ProjectApplyList';
-import ProjectApply from '@/pages/web/projects/ProjectApply';
 
 const router = createBrowserRouter([
   {
@@ -116,8 +116,8 @@ const router = createBrowserRouter([
             element: <ProjectDetail />,
           },
           {
-            path: 'apply',
-            element: <ProjectApplyPage />,
+            path: 'apply/:projectGuid',
+            element: <ProjectApply />,
           },
           {
             path: 'create',

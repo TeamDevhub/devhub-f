@@ -2,13 +2,13 @@ import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import { AccessTime, LocationOn, Person, Visibility } from '@mui/icons-material'
 import { Button, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, Paper, Radio, RadioGroup, Stack } from '@mui/material'
-import FieldGroup from '@/components/design/FieldGroup';
-import FormField from '@/components/design/FormField';
+import FieldGroup from '@/components/_design/FieldGroup';
+import FormField from '@/components/_design/FormField';
 import { useParams, useNavigate } from 'react-router-dom';
-import useCreateProjectApplication from '@/hooks/projects/useCreateProjectApplication';
+import useCreateProjectApplication from '@/hooks/web/projects/useCreateProjectApplication';
 import { useCodes } from '@/contexts/CommonCodeContext';
-import { COMMON_CODE } from '@/types/const';
-import { APPLICATION_FORM_TYPE } from '@/types/const.projectCreate';
+import { COMMON_CODE } from '@/constants/codes';
+import { APPLICATION_FORM_TYPE } from '@/constants/projectCreate';
 
 export default function ProjectApply() {
   const { projectGuid } = useParams<{ projectGuid: string }>();
