@@ -7,9 +7,11 @@ import { type MyProject } from '@/types/type.projects';
 import useCloseMyProjects from '@/hooks/web/profile/project/useCloseMyProjects'
 import useUpdateProjectLike from '@/hooks/web/projects/useUpdateProjectLike'
 import useReviewMember from '@/hooks/web/profile/project/useReviewMember'
+import useCancelApplication from '@/hooks/web/profile/project/useCancelApplication'
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/web/projects/ProjectChips";
 import EvaluateCard from '@/components/web/profile/EvaluateCard';
 import { approvalColorMap } from '@/constants/profileProject';
+import { PROJECT_APPROVAL_STATUS } from '@/constants/codes';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export default function ProjectCard({
@@ -29,8 +31,11 @@ export default function ProjectCard({
   approvalState,
   progressState,
   recruitStatus,
+  applicationGuid,
   applicationList,
-}: MyProject) {
+  onReviewSuccess,
+  onCancelSuccess,
+}: MyProject & { onReviewSuccess?: () => void; onCancelSuccess?: () => void }) {
 
 
   // 내가 신청한 프로젝트 中 지원 취소 팝업
@@ -41,7 +46,8 @@ export default function ProjectCard({
   const [openEvaluatePopup, setOpenEvaluatePopup] = useState(false);
 
   const { projectCloseMutate } = useCloseMyProjects();
-  const { reviewMemberMutate } = useReviewMember();
+  const { reviewMemberMutate } = useReviewMember(onReviewSuccess);
+  const { cancelApplicationMutate } = useCancelApplication(onCancelSuccess);
   const { toggleLike } = useUpdateProjectLike();
   const {getCodeName} = useCodes();
 
@@ -52,6 +58,10 @@ export default function ProjectCard({
   const onClickCloseProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     projectCloseMutate(projectGuid);
+  }
+  const onClickApplicants = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    location.href = '/projects/applyList/' + projectGuid;
   }
 
   const onClickEvaluatePopup = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -109,7 +119,7 @@ export default function ProjectCard({
             </div>
           </div>
           <div className="bottom align-center">
-            <Button fullWidth size='small' variant='outlined' color='primary'>신청자</Button>
+            <Button fullWidth size='small' variant='outlined' color='primary' onClick={onClickApplicants}>신청자</Button>
             <Button fullWidth size='small' variant='outlined' color='primary' onClick={onClickUpdateProject}>수정</Button>
             <Button fullWidth size='small' variant='contained' color='primary' onClick={onClickCloseProject}>마감</Button>
           </div>
@@ -120,7 +130,9 @@ export default function ProjectCard({
           <div className="right-area flex-center" style={{ paddingTop: 0, paddingBottom: 0 }}>
             <div className='w-100 flex-col align-center'>
               <div className="count" style={{ color: approvalColorMap[approvalState], padding: '1.05rem 3.5rem' }}>{getCodeName('PROJECT_APPROVAL_STATUS', approvalState)}</div>
-              <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenCancelPopup}>신청 취소</Button>
+              {approvalState === PROJECT_APPROVAL_STATUS.WAITING.CODE && (
+                <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenCancelPopup}>신청 취소</Button>
+              )}
             </div>
           </div>
 
@@ -128,7 +140,7 @@ export default function ProjectCard({
           <WebPopup
             isOpen={openCancelPopup}
             onClose={() => setOpenCancelPopup(false)}
-            onSubmit={() => { }}
+            onSubmit={() => { if (applicationGuid) cancelApplicationMutate(applicationGuid); }}
             title='프로젝트 지원 취소'
             submitText='확인'
           >
@@ -172,7 +184,8 @@ export default function ProjectCard({
                     applicantGuid={application.applicantGuid}
                     userID={application.userName}
                     userEmail={application.email}
-                    score={application.score}
+                    score={application.score ?? undefined}
+                    completeRating={application.score != null}
                     mannerTemperature={application.mannerDegree}
                     onClickReview={onClickEvaluateButton}
                   />

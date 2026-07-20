@@ -1,11 +1,11 @@
-import useSelectUserProfile from '@/hooks/web/profile/user/useSelectProfile';
+import { useAuth } from '@/hooks/_common/useAuth';
 import MyProfileUpdate from '@/components/web/profile/MyProfileUpdate';
 
 export default function MyProfileUpdateWrapper() {
-  const { res, loading, error } = useSelectUserProfile();
+  const { profile, initialized } = useAuth();
 
-  if (loading) return null;
-  if (error || !res?.data) return null;
+  if (!initialized) return null;
+  if (!profile) return null;
 
-  return <MyProfileUpdate profile={res.data} />;
+  return <MyProfileUpdate profile={profile} />;
 }

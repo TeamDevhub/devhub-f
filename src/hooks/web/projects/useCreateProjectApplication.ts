@@ -1,14 +1,13 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { APPLICATION_FORM_TYPE, type ApplicationFormType } from "@/constants/projectCreate";
-import type {
-  CreateApplicationAnswerRequest,
-  CreateApplicationRequest,
-} from "@/types/type.projects";
+import { PROJECT_RECRUIT_STATUS } from "@/constants/codes";
+import type { CreateApplicationAnswerRequest, CreateApplicationRequest } from "@/types/type.projects";
+import type { ApiResponse } from "@/types/type.api";
 import { useMutation } from "@/hooks/_common/api.hook";
 import { createProjectApplication } from "@/api/web/api.projects";
 import useSelectProjectFormDetail from "@/hooks/web/projects/useSelectProjectFormDetail";
-import useSelectUserProfile from "@/hooks/web/profile/user/useSelectProfile";
+import { useAuth } from "@/hooks/_common/useAuth";
 import { useModal } from "@/hooks/_common/useModal";
 import { useRequireAuth } from "@/hooks/_common/useRequireAuth";
 
@@ -16,6 +15,9 @@ type ApplyPosition = {
   requirementGuid: string;
   positionCd: string;
   level: string;
+  capacity?: number;
+  currentCount?: number;
+  full?: boolean;
 };
 
 type ApplyFormField = {
@@ -27,12 +29,17 @@ type ApplyFormField = {
   itemList?: string[];
 };
 
-// 백엔드 응답에 존재하지만 프론트 타입에는 정확히 반영되지 않은 필드까지 안전하게 읽기 위한 원본 형태
+// 백엔드 positionList는 requirementGuid/position/level/capacity/full을 반환하지만,
+// 프론트 Position 타입은 프로젝트 생성 폼과 공유하며 requirementGuid/full 필드가 없어
+// 안전하게 원본 형태로 읽는다 (project 생성/수정 폼에서 쓰는 공유 타입은 건드리지 않는다).
 type RawPosition = {
   requirementGuid?: string;
   position?: string;
   positionCd?: string;
   level?: string;
+  capacity?: number;
+  currentCount?: number;
+  full?: boolean;
 };
 
 type RawForm = {
@@ -50,22 +57,20 @@ export default function useCreateProjectApplication(projectGuid: string) {
   const { requireAuth } = useRequireAuth();
 
   const { res: formRes } = useSelectProjectFormDetail(projectGuid);
-  const { res: profileRes } = useSelectUserProfile();
+  const { user, skillList } = useAuth();
 
   const project = formRes?.data;
-  const profile = profileRes?.data;
 
-  const projectTitle = project?.title ?? "";
-  const registrantUsername = project?.username ?? "";
-  const registrantEmail = project?.email ?? "";
-  const registeredDate = project?.registeredDate ?? "";
+  // 자기 자신의 프로젝트 지원 금지, 모집중 상태에서만 지원 가능 - 최종 검증은 백엔드가 수행하며
+  // 여기서는 신청 자체를 막고 이유를 안내하기 위한 선제적 UI 가드다.
+  const isOwner = !!user && !!project?.userGuid && user.userGuid === project.userGuid;
+  const isRecruiting = project?.recruitStatus === PROJECT_RECRUIT_STATUS.RECRUITING.CODE;
+  const canApply = !isOwner && isRecruiting;
 
-  const applicantUsername = profile?.user?.username ?? "";
-  const applicantEmail = "";
-  const applicantMannerDegree =
-    profile?.user?.mannerDegree != null ? String(profile.user.mannerDegree) : "";
-  const applicantIntroduction = profile?.user?.introduction ?? "";
-  const applicantSkillList = profile?.skillList ?? [];
+  const applicantUsername = user?.username ?? "";
+  const applicantMannerDegree = user?.mannerDegree != null ? String(user.mannerDegree) : "";
+  const applicantIntroduction = user?.introduction ?? "";
+  const applicantSkillList = skillList ?? [];
 
   const positions: ApplyPosition[] = useMemo(() => {
     const list = (project?.positionList ?? []) as unknown as RawPosition[];
@@ -73,6 +78,9 @@ export default function useCreateProjectApplication(projectGuid: string) {
       requirementGuid: p.requirementGuid ?? "",
       positionCd: p.positionCd ?? p.position ?? "",
       level: p.level ?? "",
+      capacity: p.capacity,
+      currentCount: p.currentCount,
+      full: p.full,
     }));
   }, [project]);
 
@@ -111,8 +119,8 @@ export default function useCreateProjectApplication(projectGuid: string) {
     alert("지원이 완료되었습니다.");
     navigate(`/projects/detail/${projectGuid}`);
   };
-  const handleFail = () => {
-    alert("지원에 실패했습니다.");
+  const handleFail = (res: ApiResponse<void>) => {
+    alert(res.error?.message || "지원에 실패했습니다.");
   };
 
   const { mutate, loading } = useMutation<CreateApplicationRequest, void>(
@@ -124,6 +132,15 @@ export default function useCreateProjectApplication(projectGuid: string) {
   const onSubmit = async () => {
     const allowed = await requireAuth();
     if (!allowed) return;
+
+    if (isOwner) {
+      alert("본인이 등록한 프로젝트에는 지원할 수 없습니다.");
+      return;
+    }
+    if (!isRecruiting) {
+      alert("모집 중인 프로젝트가 아닙니다.");
+      return;
+    }
 
     if (!requirementGuid) {
       alert("지원 포지션을 선택해 주세요.");
@@ -153,12 +170,11 @@ export default function useCreateProjectApplication(projectGuid: string) {
   };
 
   return {
-    projectTitle,
-    registrantUsername,
-    registrantEmail,
-    registeredDate,
+    project,
+    canApply,
+    isOwner,
+    isRecruiting,
     applicantUsername,
-    applicantEmail,
     applicantMannerDegree,
     applicantIntroduction,
     applicantSkillList,

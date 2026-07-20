@@ -49,15 +49,26 @@ export default function useSelectBanner () {
         setSubSearchParams(subBannerState);
     }
 
+    // MUI Pagination은 1부터 시작하지만 백엔드는 0부터 시작하므로 여기서 변환한다.
+    const setMainPage = (page: number) => {
+        setMainSearchParams((prev) => ({ ...prev, page: page - 1 }));
+    }
+
+    const setSubPage = (page: number) => {
+        setSubSearchParams((prev) => ({ ...prev, page: page - 1 }));
+    }
+
     return {
         mainBannerState,
         mainBannerChange,
         mainBannerRes,
         mainSearch,
+        setMainPage,
         subBannerState,
         subBannerChange,
         subBannerRes,
         subSearch,
+        setSubPage,
         mainRefetch,
         subRefetch
     }

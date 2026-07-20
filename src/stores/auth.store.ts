@@ -7,6 +7,11 @@ import type { UserBasicResponse } from '@/types/type.user';
 
 interface AuthState {
   user: UserBasicResponse | undefined;
+  // /user/profile 응답 중 user 기본정보 외 나머지 필드 — 프로필 상세가 필요한 화면(내 정보 홈, 수정, 지원서 작성)이
+  // 각자 따로 /user/profile을 재요청하지 않고 로그인 시 이미 받아온 데이터를 재사용하도록 함께 보관한다.
+  positionList: string[];
+  skillList: string[];
+  passwordLoginAvailable: boolean;
   isLoggedIn: boolean;
   initialized: boolean;
 }
@@ -15,7 +20,14 @@ class AuthStore extends Store<AuthState> {
   private isInitializing = false;
 
   constructor() {
-    super({ user: undefined, isLoggedIn: false, initialized: false });
+    super({
+      user: undefined,
+      positionList: [],
+      skillList: [],
+      passwordLoginAvailable: false,
+      isLoggedIn: false,
+      initialized: false,
+    });
   }
 
   // util.api.ts의 단일 promise 큐를 그대로 사용 — 인터셉터의 401 재발급과
@@ -28,7 +40,13 @@ class AuthStore extends Store<AuthState> {
   private _fetchUserWithRetry = async (): Promise<void> => {
     try {
       const res = await getUserProfile();
-      this._setState({ user: res.data?.user ?? undefined, isLoggedIn: true });
+      this._setState({
+        user: res.data?.user ?? undefined,
+        positionList: res.data?.positionList ?? [],
+        skillList: res.data?.skillList ?? [],
+        passwordLoginAvailable: res.data?.passwordLoginAvailable ?? false,
+        isLoggedIn: true,
+      });
     } catch {
       this.logout();
     }
@@ -95,6 +113,9 @@ class AuthStore extends Store<AuthState> {
 
     this._setState({
       user: undefined,
+      positionList: [],
+      skillList: [],
+      passwordLoginAvailable: false,
       isLoggedIn: false,
     });
   };

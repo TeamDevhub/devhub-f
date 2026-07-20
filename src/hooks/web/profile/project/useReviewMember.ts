@@ -4,12 +4,13 @@ import { useModal } from "@/hooks/_common/useModal";
 import type { ApiResponse } from "@/types/type.api";
 
 export default function useReviewMember(
-
+    onDone?: () => void,
 ) {
     const { alert } = useModal();
 
     const handleSuccessReviewMember = () => {
         alert('평가가 등록되었습니다.');
+        onDone?.();
     }
 
     const handleFailReviewMember = (res: ApiResponse<void>) => {

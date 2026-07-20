@@ -14,11 +14,12 @@ export default function useSelectParticipateProjects() {
     apiFn: getUserParticapateProjects,
     req: request,
   }
-  const { res } = useSelect<MyProject, SearchUserData>(options);
+  const { res, refetch } = useSelect<MyProject, SearchUserData>(options);
 
+  // MUI Pagination은 1부터 시작하지만 백엔드는 0부터 시작하므로 여기서 변환한다.
   const setPage = (page: number) => {
-    setRequest((prev) => ({ ...prev, page: page }));
+    setRequest((prev) => ({ ...prev, page: page - 1 }));
   }
 
-  return { res, setPage };
+  return { res, request, setPage, refetch };
 }

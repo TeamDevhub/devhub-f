@@ -19,6 +19,8 @@ import SignInPage2 from '@/pages/_design/web/signup/SignInPage2';
 import SkillTrendsPage from '@/pages/_design/web/skilltrends/SkillTrendsPage';
 import RouteErrorBoundary from '@/pages/error/RouteErrorBoundary';
 import NotFoundPage from '@/pages/error/NotFoundPage';
+import ProjectApply from '@/pages/web/projects/ProjectApply';
+import ProjectApplyList from '@/pages/web/projects/ProjectApplyList';
 import RequireAuthRoute from '@/components/_common/auth/RequireAuthRoute';
 import RequireAdminRoute from '@/components/_common/auth/RequireAdminRoute';
 import BoardList from '@/pages/web/boards/BoardList';
@@ -119,6 +121,10 @@ const router = createBrowserRouter([
           {
             path: 'apply/:projectGuid',
             element: <ProjectApply />,
+          },
+          {
+            path: 'applyList/:projectGuid',
+            element: <ProjectApplyList />,
           },
           {
             path: 'create',

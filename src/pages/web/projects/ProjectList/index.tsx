@@ -81,7 +81,7 @@ export default function ProjectList() {
             return <ProjectCard key={item.projectGuid} projectData={item} toggleLike={toggleLike} isLoggedIn={isLoggedIn ?? false}></ProjectCard>
           })}
           <div className='list-bottom-box w-100 align-center mt-a'>
-            <Pagination page={request.page} count={res?.pagination?.totalPages} onChange={(_, v) => { setPage(v) }} color='primary' className='w-100 flex-center' showFirstButton showLastButton />
+            <Pagination page={request.page + 1} count={res?.pagination?.totalPages} onChange={(_, v) => { setPage(v) }} color='primary' className='w-100 flex-center' showFirstButton showLastButton />
             <Button size='medium' variant='contained' sx={{ height: '3.6rem !important' }} onClick={handleCreateClick}>글쓰기</Button>
           </div>
         </div>

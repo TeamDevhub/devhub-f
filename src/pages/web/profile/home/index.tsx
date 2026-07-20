@@ -1,7 +1,7 @@
 import { Chip, Divider, Paper } from '@mui/material';
 import MyProfileBaseForm from '@/components/web/profile/MyProfileBaseForm';
 import MyProfileListBox from '@/components/web/profile/MyProfileListBox';
-import useSelectUserProfile from '@/hooks/web/profile/user/useSelectProfile';
+import { useAuth } from '@/hooks/_common/useAuth';
 import useSelectApplyProjects from '@/hooks/web/profile/project/useSelectApplyProjects';
 import useSelectMyProjects from '@/hooks/web/profile/project/useSelectMyProjects';
 import { COMMON_CODE } from '@/constants/codes';
@@ -9,10 +9,9 @@ import { useCodes } from '@/contexts/CommonCodeContext';
 
 export default function MyProfileHome() {
   const { getCodeName } = useCodes();
-  const { res } = useSelectUserProfile();
+  const { profile } = useAuth();
   const { res: projectRes } = useSelectMyProjects();
   const { res: applyRes } = useSelectApplyProjects();
-  const profile = res?.data;
 
   return (
     <Paper className="mypage-box flex-col flex-1" elevation={4}>
