@@ -52,7 +52,7 @@ export const useSelect = <TRes, TReq>({
       const res = await apiFnRef.current(reqRef.current);
       if (requestIdRef.current !== requestId) return;
       setData(res);
-      console.log('data>>>', res);
+
       if (cacheKey) {
         cacheStore.set(cacheKey, { reqKey, data: res });
       }

@@ -312,17 +312,17 @@ function ApplicantCard({
                       avatarIcon={<Person sx={{ fontSize: 24 }} />}
                     />
                     <div className="flex-col">
-                      <p className='user-nickname'>{userInfo?.userName}</p>
+                      <p className='user-nickname'>{applicant.userName}</p>
                       {/* 이메일 주소는 어디에서도 노출하지 않는다 */}
                     </div>
                   </div>
                   <div className="bottom manner-box flex-col">
                     <div className="manner-text justify-between">
                       <p className='text'>매너온도</p>
-                      <p className='manner-temperature'>{userInfo?.mannerDegree}°C</p>
+                      <p className='manner-temperature'>{applicant.mannerDegree}°C</p>
                     </div>
                     <div className="manner-figure">
-                      <span className='current-figure h-100' style={{ width: `${Math.min(Number(userInfo?.mannerDegree) || 0, 100)}%` }}></span>
+                      <span className='current-figure h-100' style={{ width: `${Math.min(Number(applicant.mannerDegree) || 0, 100)}%` }}></span>
                     </div>
                   </div>
                 </div>
@@ -331,20 +331,21 @@ function ApplicantCard({
                   <div className="position-box align-start">
                     <p className="title">지원 포지션</p>
                     <div className="content align-center">
-                      {userInfo?.positionCd && <Chip size='small' variant='outlined' color='primary' label={getCodeName(COMMON_CODE.POSITION_CODE, userInfo.positionCd)} />}
+                      {applicant.position && <Chip size='small' variant='outlined' color='primary' label={getCodeName(COMMON_CODE.POSITION_CODE, applicant.position)} />}
+                      {applicant.levelCd && <Chip size='small' variant='filled' label={getCodeName(COMMON_CODE.POSITION_LEVEL_CODE, applicant.levelCd)} />}
                     </div>
                   </div>
                   <div className="skill-box align-start">
                     <p className="title">보유 스킬</p>
                     <div className="content align-center">
-                      {userInfo?.userSkillList?.map((skill, i) => (
+                      {(applicant.skillList ?? []).map((skill, i) => (
                         <Chip key={i} size='small' variant='outlined' color='secondary' label={getCodeName(COMMON_CODE.SKILL_CODE, skill)} />
                       ))}
                     </div>
                   </div>
                   <div className="introduce-box align-start">
                     <p className="title">자기 소개</p>
-                    <div className="content">{userInfo?.introduction}</div>
+                    <div className="content">{userInfo?.introduction || '작성된 자기소개가 없습니다.'}</div>
                   </div>
                 </div>
               </div>
@@ -352,6 +353,9 @@ function ApplicantCard({
           </div>
           {/* 2. 추가 정보 */}
           <div className="inform-wrap flex-col">
+            {answerList.length === 0 && (
+              <p className="applicant-list-empty">작성된 지원 답변이 없습니다.</p>
+            )}
             {answerList.map((answer, i) => (
               <React.Fragment key={i}>
                 <div className="inform-box align-start">

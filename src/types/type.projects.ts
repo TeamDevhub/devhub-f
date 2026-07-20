@@ -35,25 +35,6 @@ export interface Position {
   isFull?: boolean;
 }
 
-export interface PositionDetail {
-  requirementGuid: string;
-  positionCd: string;
-  level: string;
-  capacity: number;
-  full: boolean;
-}
-
-export interface ApplicationFormResponse {
-  projectApplicationFormGuid: string;
-  applicationFormGuid: string;
-  typeCd: string;
-  title: string;
-  helpText?: string;
-  isCustomized?: boolean;
-  isUsed?: boolean;
-  itemList?: string[];
-}
-
 export interface ProjectDetail extends ProjectBasic {
   skillList: string[];
   positionList: Position[];
@@ -150,64 +131,6 @@ export interface ProjectFormDetailResponse extends ProjectExtra, ProjectFileMeta
 export interface ProjectUpdate extends ProjectExtra, ProjectFileMetaData {
   applicationFormList: string[];
   additionalFormList: ApplicationFormCreate[];
-}
-
-export interface ProjectApplicationListRequest {
-  page: number;
-  size: number;
-}
-
-export interface ProjectApplicationListResponseData {
-  projectDetailDto: ProjectDetailResponse;
-  applicationList: ProjectApplicationListItem[];
-}
-
-export interface ProjectApplicationListItem {
-  applicationGuid?: string;
-  userName?: string;
-  email?: string;
-  mannerDegree?: string;
-  applyDate?: string;
-  position?: string;
-  skillList?: string[];
-}
-
-export interface ProjectApplicationAnswerDetailItem {
-  applicationAnswerGuid?: string;
-  projectApplicationFormGuid?: string;
-  fileGuid?: string;
-  content?: string;
-  userName?: string;
-  email?: string;
-  mannerDegree?: string;
-  userSkillList?: string[];
-  positionCd?: string;
-  introduction?: string;
-}
-
-export interface ProjectApplicationResponse {
-  projectApplicationBasicDto?: {
-    applicationGuid?: string;
-    requirementGuid?: string;
-    applicantGuid?: string;
-    approverGuid?: string;
-    decisionDate?: string;
-    applyDate?: string;
-  };
-  projectApplicationAnswerList?: ProjectApplicationAnswerDetailItem[];
-}
-
-export interface CreateApplicationAnswerRequest {
-  projectApplicationFormGuid: string;
-  applicationFormGuid: string;
-  content: string;
-  fileGuid?: string;
-}
-
-export interface CreateApplicationRequest {
-  projectGuid: string;
-  requirementGuid: string;
-  answers: CreateApplicationAnswerRequest[];
 }
 
 // Profile
