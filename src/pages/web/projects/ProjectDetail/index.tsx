@@ -15,6 +15,8 @@ import { useCodes } from "@/contexts/CommonCodeContext.ts";
 import HeartButton from "@/components/_common/button/HeartButton.tsx";
 import { useAuth } from '@/hooks/_common/useAuth';
 import { useRequireAuth } from '@/hooks/_common/useRequireAuth';
+import { useModal } from '@/hooks/_common/useModal';
+import { PROJECT_RECRUIT_STATUS } from '@/constants/codes';
 import Loading from '@/components/_common/layout/Loading';
 import NotFoundPage from '@/pages/error/NotFoundPage';
 
@@ -30,10 +32,22 @@ export default function ProjectDetail() {
   const { onDeleteProject } = useDeleteProject(projectGuid || "");
   const { isLoggedIn, user } = useAuth();
   const { requireAuth } = useRequireAuth();
+  const { alert } = useModal();
 
-  // 지원하기 기능은 아직 준비 중 - Coming Soon 페이지로 안내한다
+  const isOwner = !!user && !!res?.data && user.userGuid === res.data.userGuid;
+  const isRecruiting = res?.data?.recruitStatus === PROJECT_RECRUIT_STATUS.RECRUITING.CODE;
+  const canApply = !isOwner && isRecruiting;
+
   const handleApplyClick = () => {
-    requireAuth(() => navigate('/projects/apply'));
+    if (isOwner) {
+      alert('본인이 등록한 프로젝트에는 지원할 수 없습니다.');
+      return;
+    }
+    if (!isRecruiting) {
+      alert('모집 중인 프로젝트가 아니라 지원할 수 없습니다.');
+      return;
+    }
+    requireAuth(() => navigate(`/projects/apply/${projectGuid}`));
   }
 
   if (!projectGuid) {
@@ -207,8 +221,8 @@ export default function ProjectDetail() {
       </Paper>
       {/* 2. floating action buttons */}
       <div className='floating-button-box flex-col'>
-        <Tooltip arrow placement='right' title='지원하기'>
-          <Paper className='float-button apply-button flex-center active' elevation={5} onClick={handleApplyClick}>
+        <Tooltip arrow placement='right' title={canApply ? '지원하기' : (isOwner ? '본인 프로젝트에는 지원할 수 없습니다' : '모집 중인 프로젝트가 아닙니다')}>
+          <Paper className={`float-button apply-button flex-center ${canApply ? 'active' : 'is-disabled'}`} elevation={5} onClick={handleApplyClick}>
             <ContentPaste sx={{ fontSize: 24, color: 'rgba(0, 0, 0, 0.56)' }} />
           </Paper>
         </Tooltip>

@@ -329,6 +329,84 @@ footer { height: 20rem; padding: 6rem 4.4rem; background: linear-gradient(90deg,
     }
   }
 }
+// 1-3-1. 프로젝트 지원 - 지원 포지션/숙련도 선택 카드 (RadioGroup을 감싸는 선택형 카드 리스트)
+.position-select-legend {
+  gap: 0;
+  padding: 0 1.6rem 0.6rem 4.8rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+
+  .legend-position { flex: 1; }
+  .legend-level { width: 9rem; }
+  .legend-capacity { width: 8rem; text-align: right; }
+}
+.position-select-group {
+  gap: 0.8rem;
+}
+.position-select-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 4rem 1rem 0.4rem;
+  border: 1px solid var(--divider);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: rgba(25, 118, 210, 0.32);
+    background-color: var(--background-default);
+  }
+
+  &.is-selected {
+    border-color: var(--primary-main);
+    background-color: var(--primary-light);
+    box-shadow: 0 0 0 1px var(--primary-main);
+  }
+
+  &.is-full {
+    cursor: not-allowed;
+    opacity: 0.56;
+    &:hover {
+      border-color: var(--divider);
+      background-color: transparent;
+    }
+  }
+
+  .position-select-name {
+    flex: 1;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 130%;
+    color: var(--text-primary);
+  }
+
+  .position-select-level {
+    width: 9rem;
+    font-weight: 600;
+    background-color: rgba(25, 118, 210, 0.1);
+    color: var(--primary-dark);
+  }
+
+  .position-select-capacity {
+    width: 8rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    text-align: right;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  .position-select-check {
+    position: absolute;
+    top: 50%;
+    right: 1.2rem;
+    transform: translateY(-50%);
+    color: var(--primary-main);
+  }
+}
 // 1-4. 공통 "삭제/제거" 아이콘 버튼 - 모집 포지션/추가양식 등 항목 제거용 -버튼
 .icon-remove-btn {
   transition: background-color 0.15s ease, color 0.15s ease;

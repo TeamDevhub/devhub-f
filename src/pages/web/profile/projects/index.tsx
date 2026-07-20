@@ -17,10 +17,10 @@ export default function MyProfileProjectListPage() {
   const handleTabChange = (_event: React.SyntheticEvent<Element, Event>, value: TabType) => {
     setTabValue(value);
   }
-  const { res: myRes, setPage: setMyPage } = useSelectMyProjects();
-  const { res: likeRes, setPage: setLikePage } = useSelectLikeProjects();
-  const { res: applyRes, setPage: setApplyPage } = useSelectApplyProjects();
-  const { res: participateRes, setPage: setParticipatePage } = useSelectParticipateProjects();
+  const { res: myRes, request: myRequest, setPage: setMyPage } = useSelectMyProjects();
+  const { res: likeRes, request: likeRequest, setPage: setLikePage } = useSelectLikeProjects();
+  const { res: applyRes, request: applyRequest, setPage: setApplyPage, refetch: refetchApplyProjects } = useSelectApplyProjects();
+  const { res: participateRes, request: participateRequest, setPage: setParticipatePage, refetch: refetchParticipateProjects } = useSelectParticipateProjects();
   return (
     <>
       <Paper className='mypage-box flex-col flex-grow' elevation={4}>
@@ -44,7 +44,7 @@ export default function MyProfileProjectListPage() {
             })}
           </div>
           {/* 2-4. pagination */}
-          <Pagination count={myRes?.pagination?.totalPages} onChange={(_, v) => { setMyPage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
+          <Pagination page={myRequest.page + 1} count={myRes?.pagination?.totalPages} onChange={(_, v) => { setMyPage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
         </TabPanel>
 
         {/* 2-3-2. 내가 신청한 프로젝트 */}
@@ -54,11 +54,11 @@ export default function MyProfileProjectListPage() {
           </strong>
           <div className="list-box flex-col">
             {applyRes?.dataList?.map((item) => {
-              return <ProjectCard key={item.projectGuid} {...item} variant={"apply"} ></ProjectCard>
+              return <ProjectCard key={item.projectGuid} {...item} variant={"apply"} onCancelSuccess={refetchApplyProjects} />
             })}
           </div>
           {/* 2-4. pagination */}
-          <Pagination count={applyRes?.pagination?.totalPages} onChange={(_, v) => { setApplyPage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
+          <Pagination page={applyRequest.page + 1} count={applyRes?.pagination?.totalPages} onChange={(_, v) => { setApplyPage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
         </TabPanel>
         {/* 2-3-3. 관심 프로젝트 */}
         <TabPanel value={tabValue} index={2}>
@@ -71,7 +71,7 @@ export default function MyProfileProjectListPage() {
             })}
           </div>
           {/* 2-4. pagination */}
-          <Pagination count={likeRes?.pagination?.totalPages} onChange={(_, v) => { setLikePage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
+          <Pagination page={likeRequest.page + 1} count={likeRes?.pagination?.totalPages} onChange={(_, v) => { setLikePage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
         </TabPanel>
         {/* 2-3-4. 참여한 프로젝트 */}
         <TabPanel value={tabValue} index={3}>
@@ -80,13 +80,11 @@ export default function MyProfileProjectListPage() {
           </strong>
           <div className="list-box flex-col">
             {participateRes?.dataList?.map((item) => {
-              return <ProjectCard key={item.projectGuid} {...item} variant={"participate"} >
-
-              </ProjectCard>
+              return <ProjectCard key={item.projectGuid} {...item} variant={"participate"} onReviewSuccess={refetchParticipateProjects} />
             })}
           </div>
           {/* 2-4. pagination */}
-          <Pagination count={participateRes?.pagination?.totalPages} onChange={(_, v) => { setParticipatePage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
+          <Pagination page={participateRequest.page + 1} count={participateRes?.pagination?.totalPages} onChange={(_, v) => { setParticipatePage(v) }} showFirstButton showLastButton color='primary' className='w-100 mt-a flex-center' />
         </TabPanel>
 
       </Paper>

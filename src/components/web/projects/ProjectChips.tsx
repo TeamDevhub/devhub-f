@@ -117,7 +117,7 @@ export const PositionChips = (
 			<div className="position-box align-center" key={`${item.position}-${item.level}-${index}`}>
 				<Chip size='small' variant='outlined' color='primary' label={positionLabel} />
 				<Chip size='small' variant='filled' label={positionLevel} />
-				<p>{item.capacity}명</p>
+				<p>{item.currentCount ?? 0} / {item.capacity}명</p>
 			</div>
 		)
 	});

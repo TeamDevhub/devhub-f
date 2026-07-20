@@ -1,4 +1,4 @@
-import type { ApplicationFormBasic, ApplicationFormRequest, ProjectCreate, ProjectDetailResponse, ProjectExtra, ProjectSearchRequest, ProjectUpdate, ProjectFormDetailResponse, SearchUserData, MyProject } from "@/types/type.projects";
+import type { ApplicationFormBasic, ApplicationFormRequest, ProjectCreate, ProjectDetailResponse, ProjectExtra, ProjectSearchRequest, ProjectUpdate, ProjectFormDetailResponse, SearchUserData, MyProject, CreateApplicationRequest, ProjectApplicationListRequest, ProjectApplicationListResponse, ApproveApplicationRequest, ProjectApplicationResponse } from "@/types/type.projects";
 import fetcher from "@/utils/util.api";
 
 export const getProjects = (req: ProjectSearchRequest) =>
@@ -110,4 +110,44 @@ export const reviewMember = (req: { projectGuid: string, userGuid: string, score
     `/projects/${req.projectGuid}/members/${req.userGuid}`,
     { score: req.score },
     { method: "post" }
+  );
+
+// 프로젝트 지원 (POST /projects/{projectGuid}/applications)
+export const createProjectApplication = (req: CreateApplicationRequest) =>
+  fetcher<void, Omit<CreateApplicationRequest, 'projectGuid'>>(
+    `/projects/${req.projectGuid}/applications`,
+    { requirementGuid: req.requirementGuid, answers: req.answers },
+    { method: "post" }
+  );
+
+// 프로젝트 지원자 목록 조회 (GET /projects/{projectGuid}/applications) - 프로젝트 리더 전용
+export const getProjectApplicationList = (req: ProjectApplicationListRequest) =>
+  fetcher<ProjectApplicationListResponse>(
+    `/projects/${req.projectGuid}/applications`,
+    { page: req.page, size: req.size },
+    { method: "get" }
+  );
+
+// 지원 승인/거절 (PUT /projects/applications/{applicationGuid}/approve) - 프로젝트 리더 전용
+export const approveProjectApplication = (req: ApproveApplicationRequest) =>
+  fetcher<void>(
+    `/projects/applications/${req.applicationGuid}/approve?approved=${req.approved}`,
+    undefined,
+    { method: "put" }
+  );
+
+// 지원 상세 조회 (GET /projects/applications/{applicationGuid}) - 답변 내역 포함
+export const getProjectApplication = (applicationGuid: string) =>
+  fetcher<ProjectApplicationResponse>(
+    `/projects/applications/${applicationGuid}`,
+    undefined,
+    { method: "get" }
+  );
+
+// 지원 취소 (PUT /projects/applications/{applicationGuid}/cancel) - 본인 지원 건만, 승인대기 상태만 가능
+export const cancelProjectApplication = (applicationGuid: string) =>
+  fetcher<void>(
+    `/projects/applications/${applicationGuid}/cancel`,
+    undefined,
+    { method: "put" }
   );

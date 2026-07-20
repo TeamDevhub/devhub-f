@@ -61,8 +61,9 @@ export default function useSelectProjects(
 
   const toggleLike = (projectGuid: string) => requireAuth(() => projectLikeMutate(projectGuid));
 
+  // MUI Pagination은 1부터 시작하지만 백엔드는 0부터 시작하므로 여기서 변환한다.
   const setPage = (page: number) => {
-    setRequest((prev) => ({ ...prev, page: page }));
+    setRequest((prev) => ({ ...prev, page: page - 1 }));
   }
 
   const setOrder = (order: string) => {

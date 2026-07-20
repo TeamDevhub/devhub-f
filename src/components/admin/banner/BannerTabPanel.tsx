@@ -31,6 +31,7 @@ export default function BannerTabPanel({
     onCreate,
     onOptionChange,
     onSearch,
+    onPageChange,
 }:{
     tab: number,
     index: number,
@@ -40,8 +41,8 @@ export default function BannerTabPanel({
     onCreate : () => void,
     onOptionChange : (row:Banner) => void,
     onSearch : () => void,
+    onPageChange : (page: number) => void,
 }) {
-    console.log(data?.pagination);
     return (
         <TabPanel value={tab} index={index} className='flex-col gap-32'>
             {tab === index &&
@@ -124,7 +125,15 @@ export default function BannerTabPanel({
                             </Table>
                         </TableContainer>
                         <div className="align-center">
-                            <Pagination count={data?.pagination?.totalPages} showFirstButton showLastButton color='primary' className='w-100 flex-center' />
+                            <Pagination
+                                page={(data?.pagination?.page ?? 0) + 1}
+                                count={data?.pagination?.totalPages}
+                                onChange={(_, page) => onPageChange(page)}
+                                showFirstButton
+                                showLastButton
+                                color='primary'
+                                className='w-100 flex-center'
+                            />
                             <Button size='medium' variant='contained' color='primary' className='ml-a' onClick={onCreate}>생성</Button>
                         </div>
                     </div>

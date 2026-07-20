@@ -1,9 +1,8 @@
-import { AccessTime, LocationOn } from '@mui/icons-material';
-import { Chip } from '@mui/material';
-import CustomAvatar from '@/components/_common/customMUI/CustomAvatar';
+import { AccessTime } from '@mui/icons-material';
 import type {MyProject} from '@/types/type.projects'
 import { approvalColorMap } from '@/constants/profileProject';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
+import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from '@/components/web/projects/ProjectChips';
 
 export default function MyProfileListCard({
   variant,
@@ -12,6 +11,9 @@ export default function MyProfileListCard({
   recruitmentEndDate,
   progressStartDate,
   progressEndDate,
+  progressRegionCd,
+  recruitmentTypeCd,
+  recruitStatus,
   currentRecriutNumber,
   totalRecriutNumber,
   applicantNumber,
@@ -25,22 +27,10 @@ export default function MyProfileListCard({
     <div className="project-box2 w-100 justify-between">
       <div className="left-area flex-col">
         <div className="chip-box align-center">
-          <Chip size="small" variant="filled" color="primary" label="모집중" />
-          <Chip
-            size="small"
-            variant="filled"
-            color="default"
-            label="서울"
-            icon={<CustomAvatar size={18} sx={{ backgroundColor: '#AEAEAE' }} avatarIcon={<LocationOn sx={{ fontSize: 18, color: '#fff' }} />} />}
-          />
-          <Chip size="small" variant="filled" color="error" label="추가모집" />
-          <Chip
-            size="small"
-            variant="filled"
-            color="warning"
-            label="D-13"
-            icon={<CustomAvatar size={18} sx={{ backgroundColor: '#E65100' }} avatarIcon={<AccessTime sx={{ fontSize: 18, color: '#fff' }} />} />}
-          />
+          <RecruitStatusChip recruitStatusCode={recruitStatus} />
+          <ProgressRegionChip regionCd={progressRegionCd} />
+          <RecruitmentChip recruitTypeCd={recruitmentTypeCd} />
+          <DDayChip recruitmentEndDate={recruitmentEndDate} />
         </div>
 
         <strong className="main-text text-ellipsis">{title}</strong>
