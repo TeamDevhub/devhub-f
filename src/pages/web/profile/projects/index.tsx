@@ -19,7 +19,7 @@ export default function MyProfileProjectListPage() {
   }
   const { res: myRes, request: myRequest, setPage: setMyPage } = useSelectMyProjects();
   const { res: likeRes, request: likeRequest, setPage: setLikePage } = useSelectLikeProjects();
-  const { res: applyRes, request: applyRequest, setPage: setApplyPage } = useSelectApplyProjects();
+  const { res: applyRes, request: applyRequest, setPage: setApplyPage, refetch: refetchApplyProjects } = useSelectApplyProjects();
   const { res: participateRes, request: participateRequest, setPage: setParticipatePage, refetch: refetchParticipateProjects } = useSelectParticipateProjects();
   return (
     <>
@@ -54,7 +54,7 @@ export default function MyProfileProjectListPage() {
           </strong>
           <div className="list-box flex-col">
             {applyRes?.dataList?.map((item) => {
-              return <ProjectCard key={item.projectGuid} {...item} variant={"apply"} ></ProjectCard>
+              return <ProjectCard key={item.projectGuid} {...item} variant={"apply"} onCancelSuccess={refetchApplyProjects} />
             })}
           </div>
           {/* 2-4. pagination */}

@@ -7,9 +7,11 @@ import { type MyProject } from '@/types/type.projects';
 import useCloseMyProjects from '@/hooks/web/profile/project/useCloseMyProjects'
 import useUpdateProjectLike from '@/hooks/web/projects/useUpdateProjectLike'
 import useReviewMember from '@/hooks/web/profile/project/useReviewMember'
+import useCancelApplication from '@/hooks/web/profile/project/useCancelApplication'
 import { DDayChip, ProgressRegionChip, RecruitmentChip, RecruitStatusChip } from "@/components/web/projects/ProjectChips";
 import EvaluateCard from '@/components/web/profile/EvaluateCard';
 import { approvalColorMap } from '@/constants/profileProject';
+import { PROJECT_APPROVAL_STATUS } from '@/constants/codes';
 import {useCodes} from "@/contexts/CommonCodeContext.ts";
 
 export default function ProjectCard({
@@ -29,9 +31,11 @@ export default function ProjectCard({
   approvalState,
   progressState,
   recruitStatus,
+  applicationGuid,
   applicationList,
   onReviewSuccess,
-}: MyProject & { onReviewSuccess?: () => void }) {
+  onCancelSuccess,
+}: MyProject & { onReviewSuccess?: () => void; onCancelSuccess?: () => void }) {
 
 
   // 내가 신청한 프로젝트 中 지원 취소 팝업
@@ -43,6 +47,7 @@ export default function ProjectCard({
 
   const { projectCloseMutate } = useCloseMyProjects();
   const { reviewMemberMutate } = useReviewMember(onReviewSuccess);
+  const { cancelApplicationMutate } = useCancelApplication(onCancelSuccess);
   const { toggleLike } = useUpdateProjectLike();
   const {getCodeName} = useCodes();
 
@@ -125,7 +130,9 @@ export default function ProjectCard({
           <div className="right-area flex-center" style={{ paddingTop: 0, paddingBottom: 0 }}>
             <div className='w-100 flex-col align-center'>
               <div className="count" style={{ color: approvalColorMap[approvalState], padding: '1.05rem 3.5rem' }}>{getCodeName('PROJECT_APPROVAL_STATUS', approvalState)}</div>
-              <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenCancelPopup}>신청 취소</Button>
+              {approvalState === PROJECT_APPROVAL_STATUS.WAITING.CODE && (
+                <Button size='small' variant='outlined' color='primary' className='w-100' onClick={clickOpenCancelPopup}>신청 취소</Button>
+              )}
             </div>
           </div>
 
@@ -133,7 +140,7 @@ export default function ProjectCard({
           <WebPopup
             isOpen={openCancelPopup}
             onClose={() => setOpenCancelPopup(false)}
-            onSubmit={() => { }}
+            onSubmit={() => { if (applicationGuid) cancelApplicationMutate(applicationGuid); }}
             title='프로젝트 지원 취소'
             submitText='확인'
           >

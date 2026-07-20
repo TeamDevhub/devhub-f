@@ -6,10 +6,13 @@ import type { ProjectApplicationListRequest, ProjectApplicationListResponse } fr
 export const projectApplicationListCacheKey = (projectGuid: string) => `project-application-list-${projectGuid}`;
 
 export default function useSelectProjectApplicationList(projectGuid?: string) {
+  // position별로 그룹핑해서 보여주는 화면 특성상 페이지 경계에서 한 포지션 그룹이 잘리면
+  // 그룹별 인원수/카드 목록이 페이지마다 달라 보이므로, 실제로 페이징이 필요한 규모가 되기 전까지는
+  // 한 페이지에 최대한 모아 보여준다 (진짜 대량일 때는 여전히 정상적으로 페이징된다).
   const [request, setRequest] = useState<ProjectApplicationListRequest>({
     projectGuid: projectGuid ?? "",
     page: 0,
-    size: 10,
+    size: 50,
   });
 
   const options = useMemo(() => ({

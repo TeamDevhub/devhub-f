@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { APPLICATION_FORM_TYPE, type ApplicationFormType } from "@/constants/projectCreate";
+import { PROJECT_RECRUIT_STATUS } from "@/constants/codes";
 import type { CreateApplicationAnswerRequest, CreateApplicationRequest } from "@/types/type.projects";
+import type { ApiResponse } from "@/types/type.api";
 import { useMutation } from "@/hooks/_common/api.hook";
 import { createProjectApplication } from "@/api/web/api.projects";
 import useSelectProjectFormDetail from "@/hooks/web/projects/useSelectProjectFormDetail";
@@ -14,6 +16,7 @@ type ApplyPosition = {
   positionCd: string;
   level: string;
   capacity?: number;
+  currentCount?: number;
   full?: boolean;
 };
 
@@ -35,6 +38,7 @@ type RawPosition = {
   positionCd?: string;
   level?: string;
   capacity?: number;
+  currentCount?: number;
   full?: boolean;
 };
 
@@ -57,6 +61,12 @@ export default function useCreateProjectApplication(projectGuid: string) {
 
   const project = formRes?.data;
 
+  // 자기 자신의 프로젝트 지원 금지, 모집중 상태에서만 지원 가능 - 최종 검증은 백엔드가 수행하며
+  // 여기서는 신청 자체를 막고 이유를 안내하기 위한 선제적 UI 가드다.
+  const isOwner = !!user && !!project?.userGuid && user.userGuid === project.userGuid;
+  const isRecruiting = project?.recruitStatus === PROJECT_RECRUIT_STATUS.RECRUITING.CODE;
+  const canApply = !isOwner && isRecruiting;
+
   const applicantUsername = user?.username ?? "";
   const applicantMannerDegree = user?.mannerDegree != null ? String(user.mannerDegree) : "";
   const applicantIntroduction = user?.introduction ?? "";
@@ -69,6 +79,7 @@ export default function useCreateProjectApplication(projectGuid: string) {
       positionCd: p.positionCd ?? p.position ?? "",
       level: p.level ?? "",
       capacity: p.capacity,
+      currentCount: p.currentCount,
       full: p.full,
     }));
   }, [project]);
@@ -108,8 +119,8 @@ export default function useCreateProjectApplication(projectGuid: string) {
     alert("지원이 완료되었습니다.");
     navigate(`/projects/detail/${projectGuid}`);
   };
-  const handleFail = () => {
-    alert("지원에 실패했습니다.");
+  const handleFail = (res: ApiResponse<void>) => {
+    alert(res.error?.message || "지원에 실패했습니다.");
   };
 
   const { mutate, loading } = useMutation<CreateApplicationRequest, void>(
@@ -121,6 +132,15 @@ export default function useCreateProjectApplication(projectGuid: string) {
   const onSubmit = async () => {
     const allowed = await requireAuth();
     if (!allowed) return;
+
+    if (isOwner) {
+      alert("본인이 등록한 프로젝트에는 지원할 수 없습니다.");
+      return;
+    }
+    if (!isRecruiting) {
+      alert("모집 중인 프로젝트가 아닙니다.");
+      return;
+    }
 
     if (!requirementGuid) {
       alert("지원 포지션을 선택해 주세요.");
@@ -151,6 +171,9 @@ export default function useCreateProjectApplication(projectGuid: string) {
 
   return {
     project,
+    canApply,
+    isOwner,
+    isRecruiting,
     applicantUsername,
     applicantMannerDegree,
     applicantIntroduction,

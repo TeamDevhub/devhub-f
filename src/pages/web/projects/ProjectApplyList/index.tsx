@@ -4,7 +4,7 @@ import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import { AccessTime, Person } from '@mui/icons-material'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Scrollbar } from 'swiper/modules';
-import 'swiper/swiper-bundle.css';
+import 'swiper/swiper.css';
 import WebPopup from '@/components/_common/popup/WebPopup'
 import CustomTextfield from '@/components/_common/customMUI/CustomTextfield'
 import React, { useMemo, useState } from 'react'
@@ -24,6 +24,9 @@ const APPROVAL_STATUS_COLOR: Record<string, 'default' | 'success' | 'error'> = {
   [PROJECT_APPROVAL_STATUS.COMPLETE.CODE]: 'success',
   [PROJECT_APPROVAL_STATUS.REJECT.CODE]: 'error',
 };
+
+// 한 화면에 보이는 카드 수 - 지원자 수가 이 값 이하면 스와이프가 필요 없으므로 이동 버튼을 숨긴다.
+const VISIBLE_SLIDES = 4;
 
 export default function ProjectApplyList() {
   const { projectGuid } = useParams<{ projectGuid: string }>();
@@ -88,9 +91,13 @@ export default function ProjectApplyList() {
           <p className="applicant-list-empty">아직 지원한 사람이 없습니다.</p>
         )}
         {Object.entries(grouped).map(([position, applicants], index) => {
+          // 승인/정원 인원은 이 포지션의 프로젝트 전체 기준값이어야 한다 - 현재 페이지에 걸린
+          // 지원자만으로 세면 페이지를 넘길 때마다 숫자가 달라져 보이는 버그가 생긴다.
           const positionEntries = (projectDetail?.positionList ?? []).filter(p => p.position === position);
           const totalRecruitNumber = positionEntries.reduce((sum, p) => sum + (p.capacity ?? 0), 0);
-          const currentRecruitNumber = applicants.filter(a => a.statusCd === PROJECT_APPROVAL_STATUS.COMPLETE.CODE).length;
+          const currentRecruitNumber = positionEntries.reduce((sum, p) => sum + (p.currentCount ?? 0), 0);
+
+          const needsNavigation = applicants.length > VISIBLE_SLIDES;
 
           return (
             <ApplicantList
@@ -105,11 +112,11 @@ export default function ProjectApplyList() {
                 observeParents
                 spaceBetween={12}
                 centeredSlides={false}
-                slidesPerView={4}
-                navigation={{
+                slidesPerView={VISIBLE_SLIDES}
+                navigation={needsNavigation ? {
                   nextEl: `.next-${index}`,
                   prevEl: `.prev-${index}`,
-                }}
+                } : false}
                 className='applicant-swiper'
                 scrollbar={{ draggable: true }}
                 modules={[Navigation, Scrollbar]}
@@ -126,8 +133,12 @@ export default function ProjectApplyList() {
                   </SwiperSlide>
                 ))}
               </Swiper>
-              <div className={`swiper-button-prev prev-${index}`}></div>
-              <div className={`swiper-button-next next-${index}`}></div>
+              {needsNavigation && (
+                <>
+                  <div className={`swiper-button-prev prev-${index}`}></div>
+                  <div className={`swiper-button-next next-${index}`}></div>
+                </>
+              )}
             </ApplicantList>
           );
         })}
@@ -229,9 +240,10 @@ function ApplicantCard({
     <>
       <Paper className='applicant-swiper-slide flex-col' elevation={4}>
         <div className="top align-center justify-between">
-          <p className="application-date">지원일자 <em>{applicant.applyDate ? convertString(applicant.applyDate) : ''}</em></p>
+          <p className="application-date"><em>{applicant.applyDate ? convertString(applicant.applyDate) : ''}</em> 지원</p>
           <Chip
             size='small'
+            className='applicant-status-chip'
             label={getCodeName(COMMON_CODE.PROJECT_APPROVAL_STATUS, applicant.statusCd)}
             color={APPROVAL_STATUS_COLOR[applicant.statusCd] ?? 'default'}
           />

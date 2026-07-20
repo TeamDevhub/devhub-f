@@ -143,3 +143,11 @@ export const getProjectApplication = (applicationGuid: string) =>
     undefined,
     { method: "get" }
   );
+
+// 지원 취소 (PUT /projects/applications/{applicationGuid}/cancel) - 본인 지원 건만, 승인대기 상태만 가능
+export const cancelProjectApplication = (applicationGuid: string) =>
+  fetcher<void>(
+    `/projects/applications/${applicationGuid}/cancel`,
+    undefined,
+    { method: "put" }
+  );

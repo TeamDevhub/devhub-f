@@ -30,6 +30,8 @@ export interface Position {
   position: string;
   level: string;
   capacity: number;
+  // 승인된(취소되지 않은) 지원자 수 - 모집 포지션의 현재 인원 표시용
+  currentCount?: number;
   isFull?: boolean;
 }
 
@@ -236,6 +238,8 @@ export interface MyProject {
   approvalState?: ProjectApprovalStatusCode;
   progressState?: ProgressStateType;
   recruitStatus: ProjectRecruitStatusCode;
+  // 'apply' variant에서만 채워진다 - 지원 취소 시 어떤 지원 건인지 식별하기 위함
+  applicationGuid?: string;
   applicationList?: MyApplication[];
   children?: React.ReactNode;
 };
