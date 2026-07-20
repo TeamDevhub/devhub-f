@@ -30,7 +30,8 @@ export default function ProjectCard({
   progressState,
   recruitStatus,
   applicationList,
-}: MyProject) {
+  onReviewSuccess,
+}: MyProject & { onReviewSuccess?: () => void }) {
 
 
   // 내가 신청한 프로젝트 中 지원 취소 팝업
@@ -41,7 +42,7 @@ export default function ProjectCard({
   const [openEvaluatePopup, setOpenEvaluatePopup] = useState(false);
 
   const { projectCloseMutate } = useCloseMyProjects();
-  const { reviewMemberMutate } = useReviewMember();
+  const { reviewMemberMutate } = useReviewMember(onReviewSuccess);
   const { toggleLike } = useUpdateProjectLike();
   const {getCodeName} = useCodes();
 
@@ -52,6 +53,10 @@ export default function ProjectCard({
   const onClickCloseProject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     projectCloseMutate(projectGuid);
+  }
+  const onClickApplicants = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    location.href = '/projects/applyList/' + projectGuid;
   }
 
   const onClickEvaluatePopup = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -109,7 +114,7 @@ export default function ProjectCard({
             </div>
           </div>
           <div className="bottom align-center">
-            <Button fullWidth size='small' variant='outlined' color='primary'>신청자</Button>
+            <Button fullWidth size='small' variant='outlined' color='primary' onClick={onClickApplicants}>신청자</Button>
             <Button fullWidth size='small' variant='outlined' color='primary' onClick={onClickUpdateProject}>수정</Button>
             <Button fullWidth size='small' variant='contained' color='primary' onClick={onClickCloseProject}>마감</Button>
           </div>
@@ -172,7 +177,8 @@ export default function ProjectCard({
                     applicantGuid={application.applicantGuid}
                     userID={application.userName}
                     userEmail={application.email}
-                    score={application.score}
+                    score={application.score ?? undefined}
+                    completeRating={application.score != null}
                     mannerTemperature={application.mannerDegree}
                     onClickReview={onClickEvaluateButton}
                   />

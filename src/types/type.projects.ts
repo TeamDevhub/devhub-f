@@ -1,4 +1,4 @@
-import type { DateType } from "@/types/type.api";
+import type { DateType, Pagination } from "@/types/type.api";
 import type { ApplicationFormType } from "@/constants/projectCreate"
 import type { ProjectRecruitStatusCode, ProjectApprovalStatusCode } from '@/types/type._common';
 
@@ -121,6 +121,7 @@ export interface ProjectDetailResponse extends ProjectExtra, ProjectFileMetaData
 }
 
 export interface ProjectFormDetailResponse extends ProjectExtra, ProjectFileMetaData {
+  email?: string;
   applicationFormList: ApplicationFormBasic[];
   additionalFormList: ApplicationFormCreate[];
 }
@@ -138,8 +139,84 @@ export interface MyApplication {
   applicantGuid: string;
   userName: string;
   email: string;
-  score: number;
+  // 백엔드는 아직 평가하지 않은 팀원의 경우 score를 null로 반환한다 (ProjectApplicationScore.score: Double).
+  score: number | null;
   mannerDegree: string;
+}
+
+// 프로젝트 지원 (applicant-facing)
+export interface CreateApplicationAnswerRequest {
+  projectApplicationFormGuid: string;
+  applicationFormGuid: string;
+  content: string;
+  fileGuid?: string;
+}
+
+export interface CreateApplicationRequest {
+  projectGuid: string;
+  requirementGuid: string;
+  answers: CreateApplicationAnswerRequest[];
+}
+
+// 프로젝트 지원자 관리 (owner-facing) - ProjectApplicationDetailResponseDto와 1:1 대응
+export interface ProjectApplicant {
+  applicationGuid: string;
+  requirementGuid?: string;
+  applicantGuid?: string;
+  approverGuid?: string;
+  decisionDate?: string;
+  statusCd: string;
+  userName?: string;
+  email?: string;
+  mannerDegree?: string;
+  skillList?: string[];
+  position?: string;
+  levelCd?: string;
+  applyDate?: string;
+}
+
+export interface ProjectApplicationListRequest {
+  projectGuid: string;
+  page: number;
+  size: number;
+}
+
+export interface ProjectApplicationListResponse {
+  projectDetailDto: ProjectDetailResponse;
+  applicationList: ProjectApplicant[];
+  pagination: Pagination;
+}
+
+export interface ApproveApplicationRequest {
+  projectGuid: string;
+  applicationGuid: string;
+  approved: boolean;
+}
+
+// 지원 상세 조회 - ProjectApplicationDetailWrapperResponseDto와 1:1 대응
+export interface ProjectApplicationAnswerDetailItem {
+  applicationAnswerGuid?: string;
+  projectApplicationFormGuid?: string;
+  fileGuid?: string;
+  content?: string;
+  userName?: string;
+  email?: string;
+  mannerDegree?: string;
+  userSkillList?: string[];
+  positionCd?: string;
+  introduction?: string;
+}
+
+export interface ProjectApplicationResponse {
+  projectApplicationBasicDto?: {
+    applicationGuid?: string;
+    requirementGuid?: string;
+    applicantGuid?: string;
+    approverGuid?: string;
+    decisionDate?: string;
+    applyDate?: string;
+  };
+  projectApplicationAnswerList?: ProjectApplicationAnswerDetailItem[];
 }
 
 export interface MyProject {

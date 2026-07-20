@@ -31,9 +31,8 @@ export default function ProjectDetail() {
   const { isLoggedIn, user } = useAuth();
   const { requireAuth } = useRequireAuth();
 
-  // 지원하기 기능은 아직 준비 중 - Coming Soon 페이지로 안내한다
   const handleApplyClick = () => {
-    requireAuth(() => navigate('/projects/apply'));
+    requireAuth(() => navigate(`/projects/apply/${projectGuid}`));
   }
 
   if (!projectGuid) {

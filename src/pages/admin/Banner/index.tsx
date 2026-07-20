@@ -16,10 +16,12 @@ export default function BannerManagementPage(){
         mainBannerChange,
         mainBannerRes,
         mainSearch,
+        setMainPage,
         subBannerState,
         subBannerChange,
         subBannerRes,
         subSearch,
+        setSubPage,
         mainRefetch,
         subRefetch,
     } = useSelectBanner();
@@ -54,9 +56,9 @@ export default function BannerManagementPage(){
                 <Tab label="서브 배너" />
             </Tabs>
             {/* 메인 배녀 */}
-            <BannerTabPanel key='main' data={mainBannerRes} tab={tab} index={0} state={mainBannerState} onChange={mainBannerChange} onOptionChange={handleOpen} onCreate={()=>{handleOpen(null)}} onSearch={mainSearch}/>
+            <BannerTabPanel key='main' data={mainBannerRes} tab={tab} index={0} state={mainBannerState} onChange={mainBannerChange} onOptionChange={handleOpen} onCreate={()=>{handleOpen(null)}} onSearch={mainSearch} onPageChange={setMainPage}/>
             {/* 서브 배너 */}
-            <BannerTabPanel key='sub' data={subBannerRes} tab={tab} index={1} state={subBannerState} onChange={subBannerChange} onOptionChange={handleOpen} onCreate={()=>{handleOpen({bannerType:"SUB"})}} onSearch={subSearch}/>
+            <BannerTabPanel key='sub' data={subBannerRes} tab={tab} index={1} state={subBannerState} onChange={subBannerChange} onOptionChange={handleOpen} onCreate={()=>{handleOpen({bannerType:"SUB"})}} onSearch={subSearch} onPageChange={setSubPage}/>
             <BannerPopup key={isOpen ? 'open' : 'close'} isOpen={isOpen} onClose={handleClose} data={banner}/>
         </div>
     )

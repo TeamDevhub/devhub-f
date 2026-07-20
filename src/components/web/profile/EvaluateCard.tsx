@@ -1,4 +1,4 @@
-import { Button, Chip, Paper, Rating } from '@mui/material'
+import { Button, Paper, Rating } from '@mui/material'
 import { Person } from '@mui/icons-material'
 import CustomAvatar from '@/components/_common/customMUI/CustomAvatar'
 import { useState } from 'react'
@@ -16,7 +16,7 @@ type EvaluateCardProps = {
 export default function EvaluateCard({
   applicantGuid,
   userID,
-  userEmail,
+  // userEmail은 더 이상 화면에 노출하지 않는다 (이메일 비노출 정책)
   mannerTemperature,
   score,
   completeRating = false,
@@ -35,7 +35,8 @@ export default function EvaluateCard({
         </div>
         <div className="right-area">
           <p className='user-nickname'>{userID}</p>
-          <p className='user-email'>{userEmail}</p>
+          {/* 이메일 주소는 어디에서도 노출하지 않는다 */}
+          {/* <p className='user-email'>{userEmail}</p> */}
         </div>
       </div>
       <div className="manner-box flex-col">
@@ -45,12 +46,11 @@ export default function EvaluateCard({
             <p className='manner-temperature'>{mannerTemperature}°C</p>
           </div>
           <div className="manner-figure">
-            <span className='current-figure h-100'></span>
+            <span
+              className='current-figure h-100'
+              style={{ width: `${Math.min(Number(mannerTemperature) || 0, 100)}%` }}
+            />
           </div>
-        </div>
-        <div className="bottom align-center justify-between">
-          <p className='text'>참여 포지션</p>
-          <Chip size='small' variant='outlined' color='primary' label='서버개발자' />
         </div>
       </div>
       <div className="rating-box flex-col">
@@ -62,7 +62,7 @@ export default function EvaluateCard({
           </>
         ) : (
           <>
-            <Rating name="team-rating" defaultValue={2.5} disabled precision={0.5} />
+            <Rating name="team-rating" value={score ?? 0} disabled precision={0.5} />
             <strong className='rating-text flex-center'>평가 완료</strong>
           </>
         )}
