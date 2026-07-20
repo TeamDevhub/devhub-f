@@ -1,10 +1,17 @@
-import type { ApplicationFormBasic, ApplicationFormRequest, ProjectCreate, ProjectDetailResponse, ProjectExtra, ProjectSearchRequest, ProjectUpdate, ProjectFormDetailResponse, SearchUserData, MyProject } from "@/types/type.projects";
+import type { ApplicationFormBasic, ApplicationFormRequest, ProjectApplicationListRequest, ProjectApplicationListResponseData, ProjectApplicationResponse, ProjectCreate, ProjectDetailResponse, ProjectExtra, ProjectSearchRequest, ProjectUpdate, ProjectFormDetailResponse, CreateApplicationRequest, SearchUserData, MyProject } from "@/types/type.projects";
 import fetcher from "@/utils/util.api";
 
 export const getProjects = (req: ProjectSearchRequest) =>
   fetcher<ProjectExtra, ProjectSearchRequest>(
-    "/projects",
+    "/projects/list",
     req,
+    { method: "get" }
+  );
+
+export const getProjectApplicationList = (req: { projectGuid: string } & ProjectApplicationListRequest) =>
+  fetcher<ProjectApplicationListResponseData, ProjectApplicationListRequest>(
+    `/projects/${req.projectGuid}/applications`,
+    { page: req.page, size: req.size },
     { method: "get" }
   );
 
@@ -82,6 +89,27 @@ export const getApplicationForms = (req: ApplicationFormRequest) =>
     '/applicationForms',
     req,
     { method: "get" }
+  );
+
+export const getProjectApplication = (applicationGuid: string) =>
+  fetcher<ProjectApplicationResponse>(
+    `/projects/applications/${applicationGuid}`,
+    undefined,
+    { method: "get" }
+  );
+
+export const createProjectApplication = (req: CreateApplicationRequest) =>
+  fetcher<void, Omit<CreateApplicationRequest, 'projectGuid'>>(
+    `/projects/${req.projectGuid}/applications`,
+    { requirementGuid: req.requirementGuid, answers: req.answers },
+    { method: "post" }
+  );
+
+export const approveProjectApplication = (req: { projectGuid: string; applicationGuid: string; approved: boolean }) =>
+  fetcher<void>(
+    `/projects/applications/${req.applicationGuid}/approve?approved=${req.approved}`,
+    undefined,
+    { method: "put" }
   );
 
 export const deleteProject = (projectId: string) =>

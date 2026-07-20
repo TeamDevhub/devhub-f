@@ -19,7 +19,6 @@ import SignInPage2 from '@/pages/_design/web/signup/SignInPage2';
 import SkillTrendsPage from '@/pages/_design/web/skilltrends/SkillTrendsPage';
 import RouteErrorBoundary from '@/pages/error/RouteErrorBoundary';
 import NotFoundPage from '@/pages/error/NotFoundPage';
-import ComingSoonPage from '@/pages/error/ComingSoonPage';
 import RequireAuthRoute from '@/components/_common/auth/RequireAuthRoute';
 import RequireAdminRoute from '@/components/_common/auth/RequireAdminRoute';
 import BoardList from '@/pages/web/boards/BoardList';
@@ -36,6 +35,7 @@ import HomePage from '@/pages/web/Home';
 import SkillTrendPage from '@/pages/web/SkillTrend';
 import ProjectCreate from '@/pages/web/projects/ProjectCreate';
 import ProjectDetail from '@/pages/web/projects/ProjectDetail';
+import ProjectApply from '@/pages/web/projects/ProjectApply';
 import ProjectList from '@/pages/web/projects/ProjectList';
 import ProjectUpdate from '@/pages/web/projects/ProjectUpdate';
 import Signup from '@/pages/web/signup/Signup';
@@ -61,6 +61,8 @@ import DesignMainPage from '@/pages/_design/web/main/DesignMainPage';
 import AdminLayout from '@/layout/AdminLayout';
 import Codes from '@/pages/admin/Codes';
 import FormsPage from '@/pages/admin/Form';
+
+import ProjectApplyList from '@/pages/web/projects/ProjectApplyList';
 
 const router = createBrowserRouter([
   {
@@ -115,8 +117,8 @@ const router = createBrowserRouter([
             element: <ProjectDetail />,
           },
           {
-            path: 'apply',
-            element: <ComingSoonPage />,
+            path: 'apply/:projectGuid',
+            element: <ProjectApply />,
           },
           {
             path: 'create',
@@ -126,7 +128,15 @@ const router = createBrowserRouter([
             path: 'update/:projectGuid',
             element: <ProjectUpdate />,
           },
-        ],
+          {
+            path: 'applyList/:projectGuid',
+            element: <ProjectApplyList />,
+          },
+          {
+            path: 'apply',
+            element: <ProjectApply />,
+          },
+        ]
       },
       {
         path: 'boards',
