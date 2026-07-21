@@ -351,8 +351,8 @@ const { handleReport } = useReportBoard();
 3. **테스트 도입** — Vitest + React Testing Library + MSW. 우선순위는 `util.api.ts`(순수 변환) → `api.hook.ts`(캐시/invalidate) → `FormController`/`Validators` → 도메인 훅 → 페이지 통합 순서 (`docs/skills/generate-tests.md` 참조)
 4. **번들 최적화** — Router에서 페이지 컴포넌트 lazy import + `vite-bundle-visualizer`로 무거운 의존성(MUI x-charts, swiper 등) 분석
 5. **ESLint 강화** — type-aware 룰(`recommendedTypeChecked` 또는 `strictTypeChecked`)로 격상 검토
-7. **`_design`/`contexts/` 점진적 정리** — 마이그레이션 완료 영역부터 호환 re-export 제거 (단, 팀 합의 필요)
-8. **CI 도입** — GitHub Actions로 PR마다 `npm run build` + `npm run lint` 자동 실행
+6. **`_design`/`contexts/` 점진적 정리** — 마이그레이션 완료 영역부터 호환 re-export 제거 (단, 팀 합의 필요)
+7. **CI 도입** — GitHub Actions로 PR마다 `npm run build` + `npm run lint` 자동 실행
 
 ---
 
@@ -404,7 +404,7 @@ const { handleReport } = useReportBoard();
 6. `src/router/Router.tsx`에 라우트 등록
 7. (필요 시) `src/constants/codes.ts`에 enum, `errorMessages`/`successMessages`에 문구 추가
 
-### 어디에 두지 말 것
+### 비고
 
 - 페이지 안에 `useState` + `useEffect` + `apiFn().then(...)` 조합
 - `_common/` 또는 `utils/`에 도메인 의존 코드
