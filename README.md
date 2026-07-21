@@ -10,12 +10,12 @@
 DevHub는 개발자가 프로젝트를 모집하고, 게시판과 댓글로 소통하며, 자신의 프로필과 활동을 관리하는 팀 매칭 웹 서비스다.
 이 레포는 그 사용자/관리자 화면을 담당하는 단일 페이지 애플리케이션이며, 회원가입부터 프로젝트·게시판 CRUD, 관리자 운영 콘솔까지 실제 라우트에 연결되어 동작한다.
 
-| 항목 | 내용 |
-| ---- | ---- |
+| 항목        | 내용                                                    |
+| ----------- | ------------------------------------------------------- |
 | 서비스 성격 | 개발자 팀 매칭 플랫폼 (프로젝트 모집 · 게시판 · 프로필) |
-| 담당 범위 | 사용자 화면 + 관리자 콘솔을 포함하는 프론트엔드 SPA |
-| 아키텍처 | API → Hook → Component 3계층, 예외 없이 전 도메인 적용 |
-| 상태 | 실서비스 라우트 대부분 연결 완료, 일부 기능은 준비 중 |
+| 담당 범위   | 사용자 화면 + 관리자 콘솔을 포함하는 프론트엔드 SPA     |
+| 아키텍처    | API → Hook → Component 3계층, 예외 없이 전 도메인 적용  |
+| 상태        | 실서비스 라우트 대부분 연결 완료, 일부 기능은 준비 중   |
 
 ---
 
@@ -36,20 +36,20 @@ DevHub는 개발자가 프로젝트를 모집하고, 게시판과 댓글로 소�
 
 ## Tech Stack
 
-| 영역 | 기술 | 버전 |
-| ---- | ---- | ---- |
-| 프레임워크 | React | 19.2 |
-| 언어 | TypeScript | 5.9 (strict + `verbatimModuleSyntax`) |
-| 빌드/번들 | Vite | 7.2 + `@vitejs/plugin-react` |
-| 라우팅 | React Router | v7 (`createBrowserRouter`) |
-| UI | Material-UI | v7 (`@mui/material`, `@mui/icons-material`, `@mui/x-charts`, `@mui/x-date-pickers`) |
-| HTTP | Axios | 1.13 (전역 인터셉터) |
-| 상태 관리 | 외부 싱글턴 스토어 + `useSyncExternalStore` | 자체 구현, `src/stores/Store.ts` |
-| 스타일 | SCSS + Emotion (MUI) | sass 1.97 / `@emotion/*` 11.x |
-| 날짜 | Dayjs + MUI DatePicker | 1.11 / `@mui/x-date-pickers` 8.x |
-| 슬라이더 | Swiper | 12.x |
-| 이미지 크롭 | react-easy-crop | 5.x |
-| 린트 | ESLint flat config + typescript-eslint + react-hooks + react-refresh | 9.x |
+| 영역        | 기술                                                                 | 버전                                                                                |
+| ----------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| 프레임워크  | React                                                                | 19.2                                                                                |
+| 언어        | TypeScript                                                           | 5.9 (strict + `verbatimModuleSyntax`)                                               |
+| 빌드/번들   | Vite                                                                 | 7.2 + `@vitejs/plugin-react`                                                        |
+| 라우팅      | React Router                                                         | v7 (`createBrowserRouter`)                                                          |
+| UI          | Material-UI                                                          | v7 (`@mui/material`, `@mui/icons-material`, `@mui/x-charts`, `@mui/x-date-pickers`) |
+| HTTP        | Axios                                                                | 1.13 (전역 인터셉터)                                                                |
+| 상태 관리   | 외부 싱글턴 스토어 + `useSyncExternalStore`                          | 자체 구현, `src/stores/Store.ts`                                                    |
+| 스타일      | SCSS + Emotion (MUI)                                                 | sass 1.97 / `@emotion/*` 11.x                                                       |
+| 날짜        | Dayjs + MUI DatePicker                                               | 1.11 / `@mui/x-date-pickers` 8.x                                                    |
+| 슬라이더    | Swiper                                                               | 12.x                                                                                |
+| 이미지 크롭 | react-easy-crop                                                      | 5.x                                                                                 |
+| 린트        | ESLint flat config + typescript-eslint + react-hooks + react-refresh | 9.x                                                                                 |
 
 > 자동 테스트 프레임워크는 아직 도입되지 않았다(`package.json`에 `test` 스크립트 없음). 검증은 빌드/린트와 수동 시나리오로 수행한다.
 
@@ -64,34 +64,34 @@ DevHub는 개발자가 프로젝트를 모집하고, 게시판과 댓글로 소�
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │ Page / Component   src/pages/{web|admin}/...                   │
-│   - 훅 호출 + JSX 조합                                         │
-│   - 비즈니스 로직 / API 호출 금지                              │
+│   - 훅 호출 + JSX 조합                                          │
+│   - 비즈니스 로직 / API 호출 금지                                │
 └────────────────────────────────────────────────────────────────┘
                 ↓ 훅 호출
 ┌────────────────────────────────────────────────────────────────┐
 │ Domain Hook        src/hooks/{web|admin}/{domain}/             │
-│   - 도메인 로직 (페이징, 검색, 폼, 검증, 모달 흐름)            │
-│   - 내부에서 _common 훅(useSelect/useMutation/useFormState/...)│
+│   - 도메인 로직 (페이징, 검색, 폼, 검증, 모달 흐름)               │
+│   - 내부에서 _common 훅(useSelect/useMutation/useFormState/...) │
 └────────────────────────────────────────────────────────────────┘
                 ↓ apiFn 전달
 ┌────────────────────────────────────────────────────────────────┐
 │ Common Hooks       src/hooks/_common/api.hook.ts               │
 │   - useSelect / useMutation                                    │
-│   - 모듈 레벨 cacheStore (Map) + invalidateKeys                │
+│   - 모듈 레벨 cacheStore (Map) + invalidateKeys                 │
 └────────────────────────────────────────────────────────────────┘
                 ↓ apiFn 호출
 ┌────────────────────────────────────────────────────────────────┐
 │ API Layer          src/api/{web|admin}/api.{domain}.ts         │
-│   - fetcher 한 번 호출 (1 함수 = 1 엔드포인트)                 │
+│   - fetcher 한 번 호출 (1 함수 = 1 엔드포인트)                   │
 └────────────────────────────────────────────────────────────────┘
                 ↓
 ┌────────────────────────────────────────────────────────────────┐
-│ Fetcher            src/utils/util.api.ts                        │
-│   - axios 인스턴스 + 인터셉터                                  │
-│   - 토큰 헤더 자동 주입 (sessionStorage accessToken)           │
-│   - 전역 로딩 카운터 (loadingHandler)                          │
-│   - Dayjs → 'YYYY-MM-DD' / null·undefined·'' 키 제거           │
-│   - FormData 분기 (Content-Type 자동)                          │
+│ Fetcher            src/utils/util.api.ts                       │
+│   - axios 인스턴스 + 인터셉터                                    │
+│   - 토큰 헤더 자동 주입 (sessionStorage accessToken)             │
+│   - 전역 로딩 카운터 (loadingHandler)                            │
+│   - Dayjs → 'YYYY-MM-DD' / null·undefined·'' 키 제거            │
+│   - FormData 분기 (Content-Type 자동)                           │
 └────────────────────────────────────────────────────────────────┘
 ```
 
@@ -106,12 +106,12 @@ DevHub는 개발자가 프로젝트를 모집하고, 게시판과 댓글로 소�
 
 React Context로 Provider를 쌓지 않는다. 대신 `src/stores/Store.ts`의 베이스 클래스를 상속한 싱글턴 인스턴스를 만들고, React는 `useSyncExternalStore`로 구독한다.
 
-| 스토어 | 훅 | 역할 |
-| ------ | -- | ---- |
-| `auth.store.ts` | `useAuth()` | 로그인 상태, 유저 정보, init/login/logout/reissue |
-| `loading.store.ts` | `useLoading()` | 전역 로딩 스피너(axios 자동 연동) |
-| `codes.store.ts` | `useCodes()` | 공통 코드(enum) 캐싱 |
-| `modal.store.ts` | `useModal()` | 확인/알림 팝업 |
+| 스토어             | 훅             | 역할                                              |
+| ------------------ | -------------- | ------------------------------------------------- |
+| `auth.store.ts`    | `useAuth()`    | 로그인 상태, 유저 정보, init/login/logout/reissue |
+| `loading.store.ts` | `useLoading()` | 전역 로딩 스피너(axios 자동 연동)                 |
+| `codes.store.ts`   | `useCodes()`   | 공통 코드(enum) 캐싱                              |
+| `modal.store.ts`   | `useModal()`   | 확인/알림 팝업                                    |
 
 `src/contexts/`는 하위 호환 re-export 전용이다. 새 코드는 `@/hooks/_common/use*`에서 직접 import한다.
 
@@ -174,11 +174,11 @@ src/
 
 ### 타입 vs 상수 분리(엄격)
 
-| 위치 | 내용 |
-| ---- | ---- |
-| `src/types/type.{domain}.ts` | `interface`, `type` — 컴파일 타임 정의만 |
-| `src/constants/codes.ts` | `as const` 객체 (`BOARD_CATEGORY`, `COMMON_CODE`, `ERROR_CODE`, `PROJECT_*`) |
-| `src/constants/errorMessages.ts` / `successMessages.ts` | 사용자 노출 한국어 문구 |
+| 위치                                                    | 내용                                                                         |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `src/types/type.{domain}.ts`                            | `interface`, `type` — 컴파일 타임 정의만                                     |
+| `src/constants/codes.ts`                                | `as const` 객체 (`BOARD_CATEGORY`, `COMMON_CODE`, `ERROR_CODE`, `PROJECT_*`) |
+| `src/constants/errorMessages.ts` / `successMessages.ts` | 사용자 노출 한국어 문구                                                      |
 
 > `tsconfig`의 `erasableSyntaxOnly: true` 때문에 `enum` 키워드는 사용할 수 없다 — `as const` 객체 패턴이 표준이다.
 
@@ -236,12 +236,12 @@ VITE_FILE_API_URL=http://localhost:8080/files/
 
 ### Scripts
 
-| 명령 | 설명 |
-| ---- | ---- |
-| `npm run dev` | Vite 개발 서버 (기본 `http://localhost:5173`) |
-| `npm run build` | `tsc -b && vite build` — 타입 체크 + 프로덕션 번들 |
-| `npm run preview` | 빌드 결과 로컬 미리보기 |
-| `npm run lint` | ESLint flat config 실행 |
+| 명령              | 설명                                               |
+| ----------------- | -------------------------------------------------- |
+| `npm run dev`     | Vite 개발 서버 (기본 `http://localhost:5173`)      |
+| `npm run build`   | `tsc -b && vite build` — 타입 체크 + 프로덕션 번들 |
+| `npm run preview` | 빌드 결과 로컬 미리보기                            |
+| `npm run lint`    | ESLint flat config 실행                            |
 
 > `npm test`는 정의되어 있지 않다. 자동 테스트 도입 전이며, 검증은 빌드/린트 + 수동 시나리오로 수행한다.
 
@@ -359,16 +359,16 @@ const { handleReport } = useReportBoard();
 
 ## Docs Reference
 
-| 문서 | 용도 |
-| ---- | ---- |
-| [`CLAUDE.md`](CLAUDE.md) | 프로젝트 규칙(모든 룰의 단일 출처) |
-| [`docs/structure.md`](docs/structure.md) | 디렉토리·라우트·전역 스토어·타입 구조 상세 |
-| [`docs/hooks.md`](docs/hooks.md) | 공통 훅 카탈로그 + Fetcher 사용법 |
-| [`docs/agents/feature-agent.md`](docs/agents/feature-agent.md) | 새 기능을 추가할 때의 표준 절차 |
-| [`docs/agents/refactor-agent.md`](docs/agents/refactor-agent.md) | 동작 보존 리팩터의 Smell 카탈로그/체크리스트 |
-| [`docs/agents/review-agent.md`](docs/agents/review-agent.md) | PR 리뷰 5축 + 11개 체크리스트 |
-| [`docs/skills/*`](docs/skills) | 기능 구현 / 안전한 리팩터 / 리뷰 / 테스트 도입 / 디버깅 워크플로 |
-| [`docs/memory/*`](docs/memory) | 스타일·아키텍처·워크플로 메모리 |
+| 문서                                                             | 용도                                                             |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [`CLAUDE.md`](CLAUDE.md)                                         | 프로젝트 규칙(모든 룰의 단일 출처)                               |
+| [`docs/structure.md`](docs/structure.md)                         | 디렉토리·라우트·전역 스토어·타입 구조 상세                       |
+| [`docs/hooks.md`](docs/hooks.md)                                 | 공통 훅 카탈로그 + Fetcher 사용법                                |
+| [`docs/agents/feature-agent.md`](docs/agents/feature-agent.md)   | 새 기능을 추가할 때의 표준 절차                                  |
+| [`docs/agents/refactor-agent.md`](docs/agents/refactor-agent.md) | 동작 보존 리팩터의 Smell 카탈로그/체크리스트                     |
+| [`docs/agents/review-agent.md`](docs/agents/review-agent.md)     | PR 리뷰 5축 + 11개 체크리스트                                    |
+| [`docs/skills/*`](docs/skills)                                   | 기능 구현 / 안전한 리팩터 / 리뷰 / 테스트 도입 / 디버깅 워크플로 |
+| [`docs/memory/*`](docs/memory)                                   | 스타일·아키텍처·워크플로 메모리                                  |
 
 ---
 
