@@ -325,6 +325,7 @@ const { handleReport } = useReportBoard();
 - **인증**: 이메일 로그인/회원가입, OAuth 로그인(Google/GitHub/Kakao), sessionStorage 기반 토큰 저장, 쿠키 기반 조용한 재로그인(`authStore.init()`), 401 발생 시 자동 토큰 재발급 + 원 요청 재시도(동시 요청 dedup 포함), 로그인 전용 라우트 가드(`RequireAuthRoute`)
 - **게시판**: 목록(검색/카테고리 탭/페이지네이션), 상세, 작성/수정/삭제, 좋아요, 댓글 작성/수정/삭제 — 게시글 삭제 시 댓글·좋아요까지 함께 정리되는 안전한 cascade 삭제
 - **프로젝트**: 목록/상세/생성/수정/삭제/모집 마감, 좋아요, 신청 양식 조회 — 수정·삭제·마감 모두 작성자 또는 관리자만 가능하도록 서버 측에서 검증
+- **프로젝트 지원(신청)**: 지원 제출(포지션 선택 + 커스텀 양식 응답), 지원자 목록 조회·승인/거절·상세 답변 확인(프로젝트 리더 전용), 본인 지원 취소 — 자기 프로젝트 지원 금지·모집중 상태 아닐 시 차단 등 선제적 UI 가드 포함
 - **프로필**: 홈, 정보 수정, 내가 등록한 프로젝트, 내가 쓴 게시글
 - **스킬 트렌드**: 실데이터 기반 차트 페이지(`/skilltrend`, MUI x-charts)
 - **관리자 콘솔(`/admin`)**: 배너, 게시판, 유저(목록/상세), 신고, 공통코드, 신청 양식, 프로젝트(목록/상세) — 전 영역이 role 기반으로 보호되는 실제 운영 화면
@@ -333,7 +334,6 @@ const { handleReport } = useReportBoard();
 
 ### 미구현 / 제한된 기능
 
-- **프로젝트 지원(신청) 제출**: 지원 폼 조회까지만 연결되어 있고, 실제 지원 제출 플로우는 "준비 중" 안내 페이지로 대체
 - **알림 UI**: API·훅·컴포넌트는 존재하나 헤더에서 임시로 비활성화 상태(주석 처리)
 - **약관(Terms) 페이지**: 관리자/사용자 화면 모두 디자인 시안 단계, 실 라우트 미연결
 - **비밀번호 찾기**: 진입 링크만 있고 대상 화면 미구현
@@ -346,12 +346,11 @@ const { handleReport } = useReportBoard();
 
 우선순위가 높은 후속 작업이다.
 
-1. **프로젝트 지원(신청) 제출 플로우 구현** — 신청 폼 조회는 이미 연결되어 있으므로 제출 API 연동 + `ComingSoonPage` 대체가 남은 작업
-2. **알림 UI 재활성화** — `UserInfo.tsx`에 주석 처리된 알림 드롭다운을 실데이터로 복원
-3. **약관 페이지 실연결** — `_design/admin/terms`, 사용자용 약관 조회 화면을 실제 라우트로 승격
-4. **테스트 도입** — Vitest + React Testing Library + MSW. 우선순위는 `util.api.ts`(순수 변환) → `api.hook.ts`(캐시/invalidate) → `FormController`/`Validators` → 도메인 훅 → 페이지 통합 순서 (`docs/skills/generate-tests.md` 참조)
-5. **번들 최적화** — Router에서 페이지 컴포넌트 lazy import + `vite-bundle-visualizer`로 무거운 의존성(MUI x-charts, swiper 등) 분석
-6. **ESLint 강화** — type-aware 룰(`recommendedTypeChecked` 또는 `strictTypeChecked`)로 격상 검토
+1. **알림 UI 재활성화** — `UserInfo.tsx`에 주석 처리된 알림 드롭다운을 실데이터로 복원
+2. **약관 페이지 실연결** — `_design/admin/terms`, 사용자용 약관 조회 화면을 실제 라우트로 승격
+3. **테스트 도입** — Vitest + React Testing Library + MSW. 우선순위는 `util.api.ts`(순수 변환) → `api.hook.ts`(캐시/invalidate) → `FormController`/`Validators` → 도메인 훅 → 페이지 통합 순서 (`docs/skills/generate-tests.md` 참조)
+4. **번들 최적화** — Router에서 페이지 컴포넌트 lazy import + `vite-bundle-visualizer`로 무거운 의존성(MUI x-charts, swiper 등) 분석
+5. **ESLint 강화** — type-aware 룰(`recommendedTypeChecked` 또는 `strictTypeChecked`)로 격상 검토
 7. **`_design`/`contexts/` 점진적 정리** — 마이그레이션 완료 영역부터 호환 re-export 제거 (단, 팀 합의 필요)
 8. **CI 도입** — GitHub Actions로 PR마다 `npm run build` + `npm run lint` 자동 실행
 
